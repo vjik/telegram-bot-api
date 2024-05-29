@@ -1,0 +1,12 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Type\Game;
+
+/**
+ * @see https://core.telegram.org/bots/api#callbackgame
+ */
+final readonly class CallbackGame
+{
+}
