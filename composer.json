@@ -1,0 +1,43 @@
+{
+    "name": "vjik/telegram-bot-api",
+    "type": "library",
+    "description": "PHP library for working with Telegram API",
+    "keywords": [
+        "telegram",
+        "bot",
+        "api"
+    ],
+    "license": "BSD-3-Clause",
+    "support": {
+        "issues": "https://github.com/vjik/php-telegram-bot-api/issues?state=open",
+        "source": "https://github.com/vjik/php-telegram-bot-api"
+    },
+    "minimum-stability": "stable",
+    "require": {
+        "php": "^8.2"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.5",
+        "roave/infection-static-analysis-plugin": "^1.35",
+        "vimeo/psalm": "^5.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "Vjik\\TelegramBot\\Api\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vjik\\TelegramBot\\Api\\Tests\\": "tests"
+        }
+    },
+    "scripts": {
+    },
+    "config": {
+        "sort-packages": true,
+        "allow-plugins": {
+            "infection/extension-installer": true,
+            "composer/package-versions-deprecated": true
+        }
+    }
+}
