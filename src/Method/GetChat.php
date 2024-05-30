@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 
 /**
  * @see https://core.telegram.org/bots/api#getchat
@@ -34,9 +35,8 @@ final readonly class GetChat implements TelegramRequestWithResultPreparingInterf
         ];
     }
 
-    public function prepareResult(mixed $result): mixed
+    public function prepareResult(mixed $result): ChatFullInfo
     {
-        return null;
-//        return static fn(mixed $result) => ChatF::fromTelegramResult($result);
+        return ChatFullInfo::fromTelegramResult($result);
     }
 }

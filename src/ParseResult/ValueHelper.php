@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\ParseResult;
 
 use DateTimeImmutable;
+use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
@@ -354,6 +355,20 @@ final class ValueHelper
     }
 
     /**
+     * @return ReactionType[]|null
+     */
+    public static function getArrayOfReactionTypesOrNull(array $result, string $key): ?array
+    {
+        $reactionTypes = ValueHelper::getArrayOrNull($result, $key);
+        return $reactionTypes === null
+            ? null
+            : array_map(
+                static fn($item) => ReactionTypeFactory::fromTelegramResult($item),
+                $reactionTypes
+            );
+    }
+
+    /**
      * @return ReactionCount[]
      */
     public static function getArrayOfReactionCounts(array $result, string $key): array
@@ -362,6 +377,18 @@ final class ValueHelper
         return array_map(
             static fn($item) => ReactionCount::fromTelegramResult($item),
             $reactionCounts
+        );
+    }
+
+    /**
+     * @return BusinessOpeningHoursInterval[]
+     */
+    public static function getArrayOfBusinessOpeningHoursIntervals(array $result, string $key): array
+    {
+        $intervals = ValueHelper::getArray($result, $key);
+        return array_map(
+            static fn($item) => BusinessOpeningHoursInterval::fromTelegramResult($item),
+            $intervals
         );
     }
 
