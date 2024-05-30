@@ -8,6 +8,7 @@ use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
 final class TelegramBotApi
@@ -61,10 +62,9 @@ final class TelegramBotApi
             );
         }
 
-        $successCallback = $request->getSuccessCallback();
-        return $successCallback === null
-            ? $decodedBody['result']
-            : $successCallback($decodedBody['result']);
+        return $request instanceof TelegramRequestWithResultPreparingInterface
+            ? $request->prepareResult($decodedBody['result'])
+            : $decodedBody['result'];
     }
 
     private function prepareFailResult(

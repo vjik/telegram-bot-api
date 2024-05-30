@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Update;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getwebhookinfo
  */
-final readonly class GetWebhookInfo implements TelegramRequestInterface
+final readonly class GetWebhookInfo implements TelegramRequestWithResultPreparingInterface
 {
     public function getHttpMethod(): HttpMethod
     {
@@ -28,8 +27,8 @@ final readonly class GetWebhookInfo implements TelegramRequestInterface
         return [];
     }
 
-    public function getSuccessCallback(): ?callable
+    public function prepareResult(mixed $result): WebhookInfo
     {
-        return static fn(mixed $result) => WebhookInfo::fromTelegramResult($result);
+        return WebhookInfo::fromTelegramResult($result);
     }
 }

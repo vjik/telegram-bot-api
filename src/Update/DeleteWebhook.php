@@ -33,9 +33,4 @@ final readonly class DeleteWebhook implements TelegramRequestInterface
             'drop_pending_updates' => $this->dropPendingUpdates,
         ]);
     }
-
-    public function getSuccessCallback(): ?callable
-    {
-        return null;
-    }
 }

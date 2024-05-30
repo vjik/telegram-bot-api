@@ -43,9 +43,4 @@ final readonly class SetWebhook implements TelegramRequestInterface
             'secret_token' => $this->secretToken,
         ]);
     }
-
-    public function getSuccessCallback(): ?callable
-    {
-        return null;
-    }
 }

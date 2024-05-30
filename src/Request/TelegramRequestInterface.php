@@ -14,6 +14,4 @@ interface TelegramRequestInterface
     public function getApiMethod(): string;
 
     public function getData(): array;
-
-    public function getSuccessCallback(): ?callable;
 }

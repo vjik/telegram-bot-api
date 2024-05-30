@@ -5,13 +5,13 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Update;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getupdates
  */
-final readonly class GetUpdates implements TelegramRequestInterface
+final readonly class GetUpdates implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param string[]|null $allowedUpdates
@@ -44,14 +44,15 @@ final readonly class GetUpdates implements TelegramRequestInterface
         ]);
     }
 
-    public function getSuccessCallback(): ?callable
+    /**
+     * @return Update[]
+     */
+    public function prepareResult(mixed $result): array
     {
-        return static function (mixed $result): array {
-            ValueHelper::assertArrayResult($result);
-            return array_map(
-                static fn(mixed $row) => Update::fromTelegramResult($row),
-                $result,
-            );
-        };
+        ValueHelper::assertArrayResult($result);
+        return array_map(
+            static fn(mixed $row) => Update::fromTelegramResult($row),
+            $result,
+        );
     }
 }

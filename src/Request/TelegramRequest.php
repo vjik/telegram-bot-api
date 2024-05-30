@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Request;
 
-final readonly class TelegramRequest implements TelegramRequestInterface
+final readonly class TelegramRequest implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @var callable|null
@@ -35,8 +35,10 @@ final readonly class TelegramRequest implements TelegramRequestInterface
         return $this->data;
     }
 
-    public function getSuccessCallback(): ?callable
+    public function prepareResult(mixed $result): mixed
     {
-        return $this->successCallback;
+        return $this->successCallback === null
+            ? $result
+            : call_user_func($this->successCallback, $result);
     }
 }

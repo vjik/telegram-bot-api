@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchat
  */
-final readonly class GetChat implements TelegramRequestInterface
+final readonly class GetChat implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
         private int|string $chatId,
@@ -34,7 +34,7 @@ final readonly class GetChat implements TelegramRequestInterface
         ];
     }
 
-    public function getSuccessCallback(): ?callable
+    public function prepareResult(mixed $result): mixed
     {
         return null;
 //        return static fn(mixed $result) => ChatF::fromTelegramResult($result);
