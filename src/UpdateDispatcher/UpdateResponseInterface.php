@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Update;
+namespace Vjik\TelegramBot\Api\UpdateDispatcher;
 
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
