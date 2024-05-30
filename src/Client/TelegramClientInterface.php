@@ -8,5 +8,5 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
 interface TelegramClientInterface
 {
-    public function send(TelegramRequestInterface $request): array;
+    public function send(TelegramRequestInterface $request): TelegramResponse;
 }

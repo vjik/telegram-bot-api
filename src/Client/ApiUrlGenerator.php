@@ -6,14 +6,21 @@ namespace Vjik\TelegramBot\Api\Client;
 
 final readonly class ApiUrlGenerator
 {
+    private string $baseUrl;
+
     public function __construct(
-        private string $token,
-        private string $baseUrl,
+        string $token,
+        string $url,
     ) {
+        $this->baseUrl = $url . '/bot' . $token . '/';
     }
 
-    public function generate(string $method): string
+    public function generate(string $method, array $queryParameters = []): string
     {
-        return $this->baseUrl . '/bot' . $this->token . '/' . $method;
+        $result = $this->baseUrl . $method;
+        if (!empty($queryParameters)) {
+            $result .= '?' . http_build_query($queryParameters);
+        }
+        return $result;
     }
 }

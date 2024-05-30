@@ -26,7 +26,7 @@ final readonly class GetUpdates implements TelegramRequestInterface
 
     public function getHttpMethod(): HttpMethod
     {
-        return HttpMethod::POST;
+        return HttpMethod::GET;
     }
 
     public function getApiMethod(): string
