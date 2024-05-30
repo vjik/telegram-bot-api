@@ -5,6 +5,7 @@
 /vendor
 /composer.lock
 
-# phpunit
+# PhpUnit
+/phpunit.phar
 /phpunit.xml
-/.phpunit.result.cache
+/.phpunit.cache
