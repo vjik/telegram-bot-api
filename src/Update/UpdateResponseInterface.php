@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Update;
 
-use Vjik\TelegramBot\Api\Client\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
 interface UpdateResponseInterface
 {

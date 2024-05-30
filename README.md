@@ -55,3 +55,8 @@ The code is statically analyzed with [Psalm](https://psalm.dev/). To run static 
 
 The _____ is free software. It is released under the terms of the BSD License.
 Please see [`LICENSE`](./LICENSE.md) for more information.
+
+## Credits
+
+The package is heavily inspired by [Botasis](https://github.com/botasis) code originally created 
+by [Viktor Babanov](https://github.com/viktorprogger).
