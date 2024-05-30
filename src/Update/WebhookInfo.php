@@ -28,8 +28,9 @@ final readonly class WebhookInfo
     ) {
     }
 
-    public static function fromTelegramResult(array $result): self
+    public static function fromTelegramResult(mixed $result): self
     {
+        ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'url'),
             ValueHelper::getBoolean($result, 'has_custom_certificate'),

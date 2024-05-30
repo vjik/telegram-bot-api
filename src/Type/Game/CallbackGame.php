@@ -9,4 +9,8 @@ namespace Vjik\TelegramBot\Api\Type\Game;
  */
 final readonly class CallbackGame
 {
+    public static function fromTelegramResult(mixed $result): self
+    {
+        return new self();
+    }
 }

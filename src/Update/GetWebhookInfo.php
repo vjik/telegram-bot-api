@@ -30,9 +30,6 @@ final readonly class GetWebhookInfo implements TelegramRequestInterface
 
     public function getSuccessCallback(): ?callable
     {
-        return static function (mixed $result): WebhookInfo {
-            ValueHelper::assertArrayResult($result);
-            return WebhookInfo::fromTelegramResult($result);
-        };
+        return static fn(mixed $result) => WebhookInfo::fromTelegramResult($result);
     }
 }

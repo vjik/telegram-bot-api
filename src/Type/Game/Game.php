@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Game;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\Animation;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
@@ -25,5 +26,20 @@ final readonly class Game
         public ?array $textEntities,
         public ?Animation $animation,
     ) {
+    }
+
+    public static function fromTelegramResult(mixed $result): self
+    {
+        ValueHelper::assertArrayResult($result);
+        return new self(
+            ValueHelper::getString($result, 'title'),
+            ValueHelper::getString($result, 'description'),
+            ValueHelper::getArrayOfPhotoSizes($result, 'photo'),
+            ValueHelper::getStringOrNull($result, 'text'),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities'),
+            array_key_exists('animation', $result)
+                ? Animation::fromTelegramResult($result['animation'])
+                : null,
+        );
     }
 }

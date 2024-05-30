@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Passport;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+
 /**
  * @see https://core.telegram.org/bots/api#encryptedpassportelement
  */
@@ -25,5 +27,28 @@ final readonly class EncryptedPassportElement
         public ?array $translation,
         public string $hash,
     ) {
+    }
+
+    public static function fromTelegramResult(mixed $result): self
+    {
+        ValueHelper::assertArrayResult($result);
+        return new self(
+            ValueHelper::getString($result, 'type'),
+            ValueHelper::getStringOrNull($result, 'data'),
+            ValueHelper::getStringOrNull($result, 'phone_number'),
+            ValueHelper::getStringOrNull($result, 'email'),
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'files'),
+            array_key_exists('front_side', $result)
+                ? PassportFile::fromTelegramResult($result['front_side'])
+                : null,
+            array_key_exists('reverse_side', $result)
+                ? PassportFile::fromTelegramResult($result['reverse_side'])
+                : null,
+            array_key_exists('selfie', $result)
+                ? PassportFile::fromTelegramResult($result['selfie'])
+                : null,
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'translation'),
+            ValueHelper::getString($result, 'hash'),
+        );
     }
 }
