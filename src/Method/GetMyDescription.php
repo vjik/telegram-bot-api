@@ -6,12 +6,12 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
-use Vjik\TelegramBot\Api\Type\BotName;
+use Vjik\TelegramBot\Api\Type\BotDescription;
 
 /**
- * @see https://core.telegram.org/bots/api#getmyname
+ * @see https://core.telegram.org/bots/api#botname
  */
-final readonly class GetMyName implements TelegramRequestWithResultPreparingInterface
+final readonly class GetMyDescription implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
         private ?string $languageCode = null,
@@ -25,7 +25,7 @@ final readonly class GetMyName implements TelegramRequestWithResultPreparingInte
 
     public function getApiMethod(): string
     {
-        return 'getMyName';
+        return 'getMyDescription';
     }
 
     public function getData(): array
@@ -35,8 +35,8 @@ final readonly class GetMyName implements TelegramRequestWithResultPreparingInte
         ]);
     }
 
-    public function prepareResult(mixed $result): BotName
+    public function prepareResult(mixed $result): BotDescription
     {
-        return BotName::fromTelegramResult($result);
+        return BotDescription::fromTelegramResult($result);
     }
 }
