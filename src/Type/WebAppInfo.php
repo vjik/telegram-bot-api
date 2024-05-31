@@ -16,6 +16,13 @@ final readonly class WebAppInfo
     ) {
     }
 
+    public function toRequestArray(): array
+    {
+        return [
+            'url' => $this->url,
+        ];
+    }
+
     public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);

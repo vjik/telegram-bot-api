@@ -14,16 +14,32 @@ final readonly class InlineKeyboardButton
 {
     public function __construct(
         public string $text,
-        public ?string $url,
-        public ?string $callbackData,
-        public ?WebAppInfo $webApp,
-        public ?LoginUrl $loginUrl,
-        public ?string $switchInlineQuery,
-        public ?string $switchInlineQueryCurrentChat,
-        public ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat,
-        public ?CallbackGame $callbackGame,
-        public ?bool $pay,
+        public ?string $url = null,
+        public ?string $callbackData = null,
+        public ?WebAppInfo $webApp = null,
+        public ?LoginUrl $loginUrl = null,
+        public ?string $switchInlineQuery = null,
+        public ?string $switchInlineQueryCurrentChat = null,
+        public ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
+        public ?CallbackGame $callbackGame = null,
+        public ?bool $pay = null,
     ) {
+    }
+
+    public function toRequestArray(): array
+    {
+        return array_filter([
+            'text' => $this->text,
+            'url' => $this->url,
+            'callback_data' => $this->callbackData,
+            'web_app' => $this->webApp?->toRequestArray(),
+            'login_url' => $this->loginUrl?->toRequestArray(),
+            'switch_inline_query' => $this->switchInlineQuery,
+            'switch_inline_query_current_chat' => $this->switchInlineQueryCurrentChat,
+            'switch_inline_query_chosen_chat' => $this->switchInlineQueryChosenChat?->toRequestArray(),
+            'callback_game' => $this->callbackGame?->toRequestArray(),
+            'pay' => $this->pay,
+        ]);
     }
 
     public static function fromTelegramResult(mixed $result): self

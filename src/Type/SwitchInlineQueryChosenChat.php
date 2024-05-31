@@ -12,12 +12,23 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class SwitchInlineQueryChosenChat
 {
     public function __construct(
-        public ?string $query,
-        public ?bool $allowUserChats,
-        public ?bool $allowBotChats,
-        public ?bool $allowGroupChats,
-        public ?bool $allowChannelChats,
+        public ?string $query = null,
+        public ?bool $allowUserChats = null,
+        public ?bool $allowBotChats = null,
+        public ?bool $allowGroupChats = null,
+        public ?bool $allowChannelChats = null,
     ) {
+    }
+
+    public function toRequestArray(): array
+    {
+        return array_filter([
+            'query' => $this->query,
+            'allow_user_chats' => $this->allowUserChats,
+            'allow_bot_chats' => $this->allowBotChats,
+            'allow_group_chats' => $this->allowGroupChats,
+            'allow_channel_chats' => $this->allowChannelChats,
+        ]);
     }
 
     public static function fromTelegramResult(mixed $result): self

@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Type;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 /**
- * https://core.telegram.org/bots/api#inlinekeyboardmarkup
+ * @see https://core.telegram.org/bots/api#inlinekeyboardmarkup
  */
 final readonly class InlineKeyboardMarkup
 {
@@ -18,6 +18,19 @@ final readonly class InlineKeyboardMarkup
     public function __construct(
         public array $inlineKeyboard,
     ) {
+    }
+
+    public function toRequestArray(): array
+    {
+        return array_filter([
+           'inline_keyboard' => array_map(
+               static fn(array $buttons) => array_map(
+                   static fn(InlineKeyboardButton $button) => $button->toRequestArray(),
+                   $buttons
+               ),
+               $this->inlineKeyboard
+           ),
+        ]);
     }
 
     public static function fromTelegramResult(mixed $result): self
