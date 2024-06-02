@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
+use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
@@ -18,6 +19,7 @@ use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
+use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -108,6 +110,16 @@ final class TelegramBotApi
     public function getMyName(?string $languageCode = null): FailResult|BotName
     {
         return $this->send(new GetMyName($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmyshortdescription
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
+    {
+        return $this->send(new GetMyShortDescription($languageCode));
     }
 
     /**
