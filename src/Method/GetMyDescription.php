@@ -9,7 +9,7 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 
 /**
- * @see https://core.telegram.org/bots/api#botname
+ * @see https://core.telegram.org/bots/api#getmydescription
  */
 final readonly class GetMyDescription implements TelegramRequestWithResultPreparingInterface
 {

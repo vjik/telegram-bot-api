@@ -6,10 +6,29 @@ namespace Vjik\TelegramBot\Api;
 
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\GetChat;
+use Vjik\TelegramBot\Api\Method\GetMe;
+use Vjik\TelegramBot\Api\Method\GetMyDescription;
+use Vjik\TelegramBot\Api\Method\GetMyName;
+use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\Method\SetMyDescription;
+use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\BotDescription;
+use Vjik\TelegramBot\Api\Type\BotName;
+use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\ForceReply;
+use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
+use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
+use Vjik\TelegramBot\Api\Type\Message;
+use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
+use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
+use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
+use Vjik\TelegramBot\Api\Type\User;
 
 final class TelegramBotApi
 {
@@ -49,6 +68,105 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getchat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getChat(int|string $chatId): FailResult|ChatFullInfo
+    {
+        return $this->send(new GetChat($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getchat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMe(): FailResult|User
+    {
+        return $this->send(new GetMe());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmydescription
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMyDescription(?string $languageCode = null): FailResult|BotDescription
+    {
+        return $this->send(new GetMyDescription($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmyname
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMyName(?string $languageCode = null): FailResult|BotName
+    {
+        return $this->send(new GetMyName($languageCode));
+    }
+
+    /**
+     * @param MessageEntity[]|null $entities
+     *
+     * @see https://core.telegram.org/bots/api#sendmessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendMessages(
+        int|string $chatId,
+        string $text,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendMessage(
+                $chatId,
+                $text,
+                $businessConnectionId,
+                $messageThreadId,
+                $parseMode,
+                $entities,
+                $linkPreviewOptions,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setmydescription
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setMyDescription(?string $description = null, ?string $languageCode = null): FailResult|true
+    {
+        return $this->send(new SetMyDescription($description, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setmyname
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setMyName(?string $name = null, ?string $languageCode = null): FailResult|true
+    {
+        return $this->send(new SetMyName($name, $languageCode));
     }
 
     private function prepareSuccessResult(

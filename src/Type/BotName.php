@@ -16,7 +16,7 @@ final readonly class BotName
     ) {
     }
 
-    public static function fromTelegramResult(array $result): self
+    public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);
         return new self(
