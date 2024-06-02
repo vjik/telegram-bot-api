@@ -14,6 +14,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
+use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -179,6 +180,18 @@ final class TelegramBotApi
     public function setMyName(?string $name = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new SetMyName($name, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setmyshortdescription
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setMyShortDescription(
+        ?string $shortDescription = null,
+        ?string $languageCode = null
+    ): FailResult|true {
+        return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
     }
 
     private function prepareSuccessResult(
