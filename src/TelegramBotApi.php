@@ -8,16 +8,20 @@ use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetMe;
+use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\BotCommand;
+use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
@@ -94,6 +98,16 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#getmycommands
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|array
+    {
+        return $this->send(new GetMyCommands($scope, $languageCode));
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#getmydescription
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -160,6 +174,19 @@ final class TelegramBotApi
                 $replyMarkup,
             )
         );
+    }
+
+    /**
+     * @param BotCommand[] $commands
+     *
+     * @see https://core.telegram.org/bots/api#setmycommands
+     */
+    public function setMyCommands(
+        array $commands,
+        ?BotCommandScope $scope = null,
+        ?string $languageCode = null,
+    ): FailResult|true {
+        return $this->send(new SetMyCommands($commands, $scope, $languageCode));
     }
 
     /**
