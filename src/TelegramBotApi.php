@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api;
 
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Method\GetMyCommands;
@@ -75,6 +76,16 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletemycommands
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
+    {
+        return $this->send(new DeleteMyCommands($scope, $languageCode));
     }
 
     /**
