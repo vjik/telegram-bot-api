@@ -14,6 +14,7 @@ use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
@@ -40,6 +41,8 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Update\GetUpdates;
+use Vjik\TelegramBot\Api\Update\Update;
 
 final class TelegramBotApi
 {
@@ -159,6 +162,64 @@ final class TelegramBotApi
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
         return $this->send(new GetMyShortDescription($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getupdates
+     *
+     * @param string[]|null $allowedUpdates
+     * @return FailResult|Update[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getUpdates(
+        ?int $offset = null,
+        ?int $limit = null,
+        ?int $timeout = null,
+        ?array $allowedUpdates = null,
+    ): FailResult|array {
+        return $this->send(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendlocation
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendLocation(
+        int|string $chatId,
+        float $latitude,
+        float $longitude,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?float $horizontalAccuracy = null,
+        ?int $livePeriod = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendLocation(
+                $chatId,
+                $latitude,
+                $longitude,
+                $businessConnectionId,
+                $messageThreadId,
+                $horizontalAccuracy,
+                $livePeriod,
+                $heading,
+                $proximityAlertRadius,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
     }
 
     /**
