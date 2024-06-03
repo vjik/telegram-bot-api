@@ -9,6 +9,7 @@ use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
+use Vjik\TelegramBot\Api\Method\GetFile;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
@@ -31,6 +32,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -128,6 +130,16 @@ final class TelegramBotApi
     public function getChatMenuButton(?int $chatId = null): FailResult|MenuButton
     {
         return $this->send(new GetChatMenuButton($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getfile
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getFile(string $fileId): FailResult|File
+    {
+        return $this->send(new GetFile($fileId));
     }
 
     /**
