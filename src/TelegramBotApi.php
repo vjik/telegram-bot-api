@@ -41,8 +41,12 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Update\DeleteWebhook;
 use Vjik\TelegramBot\Api\Update\GetUpdates;
+use Vjik\TelegramBot\Api\Update\GetWebhookInfo;
+use Vjik\TelegramBot\Api\Update\SetWebhook;
 use Vjik\TelegramBot\Api\Update\Update;
+use Vjik\TelegramBot\Api\Update\WebhookInfo;
 
 final class TelegramBotApi
 {
@@ -92,6 +96,16 @@ final class TelegramBotApi
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new DeleteMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletewebhook
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
+    {
+        return $this->send(new DeleteWebhook($dropPendingUpdates));
     }
 
     /**
@@ -179,6 +193,16 @@ final class TelegramBotApi
         ?array $allowedUpdates = null,
     ): FailResult|array {
         return $this->send(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getwebhookinfo
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getWebhookInfo(): FailResult|WebhookInfo
+    {
+        return $this->send(new GetWebhookInfo());
     }
 
     /**
@@ -316,6 +340,24 @@ final class TelegramBotApi
         ?string $languageCode = null
     ): FailResult|true {
         return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setwebhook
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setWebhook(
+        string $url,
+        ?string $ipAddress = null,
+        ?int $maxConnections = null,
+        ?array $allowUpdates = null,
+        ?bool $dropPendingUpdates = null,
+        ?string $secretToken = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken)
+        );
     }
 
     private function prepareSuccessResult(

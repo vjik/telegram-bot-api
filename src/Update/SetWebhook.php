@@ -5,12 +5,12 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Update;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setwebhook
  */
-final readonly class SetWebhook implements TelegramRequestInterface
+final readonly class SetWebhook implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
         private string $url,
@@ -42,5 +42,10 @@ final readonly class SetWebhook implements TelegramRequestInterface
             'drop_pending_updates' => $this->dropPendingUpdates,
             'secret_token' => $this->secretToken,
         ]);
+    }
+
+    public function prepareResult(mixed $result): true
+    {
+        return true;
     }
 }
