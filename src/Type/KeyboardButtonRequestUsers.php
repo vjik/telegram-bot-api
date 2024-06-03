@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Type;
+
+/**
+ * @see https://core.telegram.org/bots/api#keyboardbuttonrequestusers
+ */
+final readonly class KeyboardButtonRequestUsers
+{
+    public function __construct(
+        public int $requestId,
+        public ?bool $userIsBot = null,
+        public ?bool $userIsPremium = null,
+        public ?int $maxQuantity = null,
+        public ?bool $requestName = null,
+        public ?bool $requestUsername = null,
+        public ?bool $requestPhoto = null,
+    ) {
+    }
+
+    public function toRequestArray(): array
+    {
+        return array_filter([
+            'request_id' => $this->requestId,
+            'user_is_bot' => $this->userIsBot,
+            'user_is_premium' => $this->userIsPremium,
+            'max_quantity' => $this->maxQuantity,
+            'request_name' => $this->requestName,
+            'request_username' => $this->requestUsername,
+            'request_photo' => $this->requestPhoto,
+        ]);
+    }
+}

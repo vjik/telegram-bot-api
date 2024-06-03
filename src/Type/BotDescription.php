@@ -7,27 +7,20 @@ namespace Vjik\TelegramBot\Api\Type;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 /**
- * @see https://core.telegram.org/bots/api#webappinfo
+ * @see https://core.telegram.org/bots/api#botdescription
  */
-final readonly class WebAppInfo
+final readonly class BotDescription
 {
     public function __construct(
-        public string $url,
+        public string $description,
     ) {
-    }
-
-    public function toRequestArray(): array
-    {
-        return [
-            'url' => $this->url,
-        ];
     }
 
     public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);
         return new self(
-            ValueHelper::getString($result, 'url'),
+            ValueHelper::getString($result, 'description'),
         );
     }
 }

@@ -2,18 +2,19 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Update;
+namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
- * @see https://core.telegram.org/bots/api#deletewebhook
+ * @see https://core.telegram.org/bots/api#setmyshortdescription
  */
-final readonly class DeleteWebhook implements TelegramRequestWithResultPreparingInterface
+final readonly class SetMyShortDescription implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
-        private ?bool $dropPendingUpdates = null,
+        private ?string $shortDescription = null,
+        private ?string $languageCode = null,
     ) {
     }
 
@@ -24,13 +25,14 @@ final readonly class DeleteWebhook implements TelegramRequestWithResultPreparing
 
     public function getApiMethod(): string
     {
-        return 'deleteWebhook';
+        return 'setMyShortDescription';
     }
 
     public function getData(): array
     {
         return array_filter([
-            'drop_pending_updates' => $this->dropPendingUpdates,
+            'short_description' => $this->shortDescription,
+            'language_code' => $this->languageCode,
         ]);
     }
 

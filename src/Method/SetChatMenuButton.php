@@ -2,18 +2,20 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Update;
+namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\MenuButton;
 
 /**
- * @see https://core.telegram.org/bots/api#deletewebhook
+ * @see https://core.telegram.org/bots/api#setchatmenubutton
  */
-final readonly class DeleteWebhook implements TelegramRequestWithResultPreparingInterface
+final readonly class SetChatMenuButton implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
-        private ?bool $dropPendingUpdates = null,
+        private ?int $chatId = null,
+        private ?MenuButton $menuButton = null,
     ) {
     }
 
@@ -24,13 +26,14 @@ final readonly class DeleteWebhook implements TelegramRequestWithResultPreparing
 
     public function getApiMethod(): string
     {
-        return 'deleteWebhook';
+        return 'setChatMenuButton';
     }
 
     public function getData(): array
     {
         return array_filter([
-            'drop_pending_updates' => $this->dropPendingUpdates,
+            'chat_id' => $this->chatId,
+            'menu_button' => $this->menuButton?->toRequestArray(),
         ]);
     }
 
