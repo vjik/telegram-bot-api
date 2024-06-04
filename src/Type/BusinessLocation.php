@@ -13,7 +13,7 @@ final class BusinessLocation
 {
     public function __construct(
         public string $address,
-        public ?Location $location,
+        public ?Location $location = null,
     ) {
     }
 
