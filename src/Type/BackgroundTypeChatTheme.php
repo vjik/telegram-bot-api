@@ -12,7 +12,6 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class BackgroundTypeChatTheme implements BackgroundType
 {
     public function __construct(
-        public string $type,
         public string $themeName,
     ) {
     }
@@ -26,7 +25,6 @@ final readonly class BackgroundTypeChatTheme implements BackgroundType
     {
         ValueHelper::assertArrayResult($result);
         return new self(
-            ValueHelper::getString($result, 'type'),
             ValueHelper::getString($result, 'theme_name'),
         );
     }

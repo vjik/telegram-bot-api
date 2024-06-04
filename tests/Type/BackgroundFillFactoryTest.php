@@ -6,6 +6,7 @@ namespace Type;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\BackgroundFillFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillFreeformGradient;
 use Vjik\TelegramBot\Api\Type\BackgroundFillGradient;
@@ -47,5 +48,14 @@ final class BackgroundFillFactoryTest extends TestCase
     {
         $result = BackgroundFillFactory::fromTelegramResult($result);
         $this->assertInstanceOf($expectedClass, $result);
+    }
+
+    public function testInvalidType(): void
+    {
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Unknown background fill type.');
+        BackgroundFillFactory::fromTelegramResult([
+            'type' => 'invalid',
+        ]);
     }
 }

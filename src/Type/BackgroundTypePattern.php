@@ -16,8 +16,8 @@ final readonly class BackgroundTypePattern implements BackgroundType
         public Document $document,
         public BackgroundFill $fill,
         public int $intensity,
-        public ?true $isInverted,
-        public ?true $isMoving,
+        public ?true $isInverted = null,
+        public ?true $isMoving = null,
     ) {
     }
 
