@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Client;
 
+/**
+ * @see https://core.telegram.org/bots/api#making-requests
+ */
 final readonly class ApiUrlGenerator
 {
     private string $baseUrl;
