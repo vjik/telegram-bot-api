@@ -215,7 +215,7 @@ final class ValueHelper
 
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string[]');
         }
 
         foreach ($value as $v) {

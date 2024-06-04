@@ -377,4 +377,120 @@ final class ValueHelperTest extends TestCase
             $exception->getMessage()
         );
     }
+
+    public function testGetArrayOfArrays(): void
+    {
+        $result = [
+            'key' => [['hello'], []],
+            'array-of-not-arrays' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertSame([['hello'], []], ValueHelper::getArrayOfArrays($result, 'key'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrays($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrays($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrays($result, 'array-of-not-arrays');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "array-of-not-arrays". Expected type is "array[]", but got "array".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfStringsOrNull(): void
+    {
+        $result = [
+            'key' => ['hello', 'test'],
+            'array-of-not-strings' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertSame(['hello', 'test'], ValueHelper::getArrayOfStringsOrNull($result, 'key'));
+        $this->assertNull(ValueHelper::getArrayOfStringsOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStringsOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "string[]", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStringsOrNull($result, 'array-of-not-strings');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "array-of-not-strings". Expected type is "string[]", but got "array".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfIntegers(): void
+    {
+        $result = [
+            'key' => [1, 2],
+            'array-of-strings' => ['a', 'b'],
+            'number' => 7,
+        ];
+
+        $this->assertSame([1, 2], ValueHelper::getArrayOfIntegers($result, 'key'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfIntegers($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfIntegers($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfIntegers($result, 'array-of-strings');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "array-of-strings". Expected type is "int[]", but got "array".',
+            $exception->getMessage()
+        );
+    }
 }
