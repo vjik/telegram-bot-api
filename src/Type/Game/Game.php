@@ -22,9 +22,9 @@ final readonly class Game
         public string $title,
         public string $description,
         public array $photo,
-        public ?string $text,
-        public ?array $textEntities,
-        public ?Animation $animation,
+        public ?string $text = null,
+        public ?array $textEntities = null,
+        public ?Animation $animation = null,
     ) {
     }
 
