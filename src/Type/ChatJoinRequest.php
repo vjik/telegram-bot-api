@@ -18,8 +18,8 @@ final readonly class ChatJoinRequest
         public User $from,
         public int $userChatId,
         public DateTimeImmutable $date,
-        public ?string $bio,
-        public ?ChatInviteLink $inviteLink,
+        public ?string $bio = null,
+        public ?ChatInviteLink $inviteLink = null,
     ) {
     }
 
