@@ -4,12 +4,24 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\ParseResult;
 
+use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
+use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
+use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
+use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
+use Vjik\TelegramBot\Api\Type\PhotoSize;
+use Vjik\TelegramBot\Api\Type\ReactionCount;
+use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
+use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
+use Vjik\TelegramBot\Api\Type\SharedUser;
+use Vjik\TelegramBot\Api\Type\User;
 
 final class ValueHelperTest extends TestCase
 {
@@ -18,7 +30,7 @@ final class ValueHelperTest extends TestCase
         ValueHelper::assertArrayResult([]);
 
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got string.');
+        $this->expectExceptionMessage('Expected result as array. Got "string".');
         ValueHelper::assertArrayResult('hello');
     }
 
@@ -490,6 +502,600 @@ final class ValueHelperTest extends TestCase
         $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
         $this->assertSame(
             'Invalid type of value for key "array-of-strings". Expected type is "int[]", but got "array".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfMessageEntitiesOrNull(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => 'bold', 'offset' => 0, 'length' => 5],
+                ['type' => 'italic', 'offset' => 6, 'length' => 5],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new MessageEntity('bold', 0, 5), new MessageEntity('italic', 6, 5)],
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'key')
+        );
+        $this->assertNull(ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfPhotoSizes(): void
+    {
+        $result = [
+            'key' => [
+                ['file_id' => '1', 'file_unique_id' => 'x1', 'width' => 10, 'height' => 10],
+                ['file_id' => '2', 'file_unique_id' => 'x2', 'width' => 15, 'height' => 17],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new PhotoSize('1', 'x1', 10, 10), new PhotoSize('2', 'x2', 15, 17)],
+            ValueHelper::getArrayOfPhotoSizes($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPhotoSizes($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPhotoSizes($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPhotoSizes($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfPhotoSizesOrNull(): void
+    {
+        $result = [
+            'key' => [
+                ['file_id' => '1', 'file_unique_id' => 'x1', 'width' => 10, 'height' => 10],
+                ['file_id' => '2', 'file_unique_id' => 'x2', 'width' => 15, 'height' => 17],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new PhotoSize('1', 'x1', 10, 10), new PhotoSize('2', 'x2', 15, 17)],
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'key')
+        );
+        $this->assertNull(ValueHelper::getArrayOfPhotoSizesOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfUsers(): void
+    {
+        $result = [
+            'key' => [
+                ['id' => 1, 'is_bot' => true, 'first_name' => 'A'],
+                ['id' => 2, 'is_bot' => false, 'first_name' => 'B'],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new User(1, true, 'A'), new User(2, false, 'B')],
+            ValueHelper::getArrayOfUsers($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfUsers($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfUsers($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfUsers($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfUsersOrNull(): void
+    {
+        $result = [
+            'key' => [
+                ['id' => 1, 'is_bot' => true, 'first_name' => 'A'],
+                ['id' => 2, 'is_bot' => false, 'first_name' => 'B'],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new User(1, true, 'A'), new User(2, false, 'B')],
+            ValueHelper::getArrayOfUsersOrNull($result, 'key')
+        );
+        $this->assertNull(ValueHelper::getArrayOfUsersOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfUsersOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfUsersOrNull($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfSharedUsers(): void
+    {
+        $result = [
+            'key' => [
+                ['user_id' => 1],
+                ['user_id' => 2],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new SharedUser(1), new SharedUser(2)],
+            ValueHelper::getArrayOfSharedUsers($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfSharedUsers($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfSharedUsers($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfSharedUsers($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfEncryptedPassportElements(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => 'passport', 'hash' => 'x1'],
+                ['type' => 'address', 'hash' => 'x2'],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new EncryptedPassportElement('passport', 'x1'), new EncryptedPassportElement('address', 'x2')],
+            ValueHelper::getArrayOfEncryptedPassportElements($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfEncryptedPassportElements($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfEncryptedPassportElements($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfEncryptedPassportElements($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfReactionTypes(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => 'emoji', 'emoji' => '❤'],
+                ['type' => 'custom_emoji', 'custom_emoji_id' => '=)'],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new ReactionTypeEmoji('❤'), new ReactionTypeCustomEmoji('=)')],
+            ValueHelper::getArrayOfReactionTypes($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionTypes($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionTypes($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionTypes($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfReactionTypesOrNull(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => 'emoji', 'emoji' => '❤'],
+                ['type' => 'custom_emoji', 'custom_emoji_id' => '=)'],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new ReactionTypeEmoji('❤'), new ReactionTypeCustomEmoji('=)')],
+            ValueHelper::getArrayOfReactionTypesOrNull($result, 'key')
+        );
+        $this->assertNull(ValueHelper::getArrayOfReactionTypesOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionTypesOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionTypesOrNull($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfReactionCounts(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => ['type' => 'emoji', 'emoji' => '❤'], 'total_count' => 7],
+                ['type' => ['type' => 'custom_emoji', 'custom_emoji_id' => '=)'], 'total_count' => 12],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [
+                new ReactionCount(new ReactionTypeEmoji('❤'), 7),
+                new ReactionCount(new ReactionTypeCustomEmoji('=)'), 12)
+            ],
+            ValueHelper::getArrayOfReactionCounts($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionCounts($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionCounts($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfReactionCounts($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfBusinessOpeningHoursIntervals(): void
+    {
+        $result = [
+            'key' => [
+                ['opening_minute' => 100, 'closing_minute' => 200],
+                ['opening_minute' => 50, 'closing_minute' => 70],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new BusinessOpeningHoursInterval(100, 200), new BusinessOpeningHoursInterval(50, 70)],
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfPassportFilesOrNull(): void
+    {
+        $result = [
+            'key' => [
+                ['file_id' => '1', 'file_unique_id' => 'x1', 'file_size' => 100, 'file_date' => 1068605423],
+                ['file_id' => '2', 'file_unique_id' => 'x2', 'file_size' => 134, 'file_date' => 1118844017],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [
+                new PassportFile('1', 'x1', 100, new DateTimeImmutable('2003-11-12T02:50:23.000000+0000')),
+                new PassportFile('2', 'x2', 134, new DateTimeImmutable('2005-06-15T14:00:17.000000+0000'))
+            ],
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'key')
+        );
+        $this->assertNull(ValueHelper::getArrayOfPassportFilesOrNull($result, 'unknown'));
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfArrayOfInlineKeyboardButtons(): void
+    {
+        $result = [
+            'key' => [
+                [['text' => 'a']],
+                [['text' => 'b']],
+            ],
+            'array-of-array-of-ints' => [[1], [2]],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [[new InlineKeyboardButton('a')], [new InlineKeyboardButton('b')]],
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'array-of-array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "array-of-ints". Expected type is "array[]", but got "array".',
             $exception->getMessage()
         );
     }

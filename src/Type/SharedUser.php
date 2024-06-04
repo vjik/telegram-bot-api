@@ -16,10 +16,10 @@ final readonly class SharedUser
      */
     public function __construct(
         public int $userId,
-        public ?string $firstName,
-        public ?string $lastName,
-        public ?string $username,
-        public ?array $photo,
+        public ?string $firstName = null,
+        public ?string $lastName = null,
+        public ?string $username = null,
+        public ?array $photo = null,
     ) {
     }
 

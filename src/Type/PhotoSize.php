@@ -16,7 +16,7 @@ final readonly class PhotoSize
         public string $fileUniqueId,
         public int $width,
         public int $height,
-        public ?int $fileSize,
+        public ?int $fileSize = null,
     ) {
     }
 

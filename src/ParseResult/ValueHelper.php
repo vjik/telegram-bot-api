@@ -26,7 +26,7 @@ final class ValueHelper
     {
         if (!is_array($result)) {
             throw new TelegramParseResultException(
-                'Expected result as array. Got ' . get_debug_type($result) . '.'
+                'Expected result as array. Got "' . get_debug_type($result) . '".'
             );
         }
     }

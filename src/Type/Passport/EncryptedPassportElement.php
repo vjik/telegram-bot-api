@@ -17,15 +17,15 @@ final readonly class EncryptedPassportElement
      */
     public function __construct(
         public string $type,
-        public ?string $data,
-        public ?string $phoneNumber,
-        public ?string $email,
-        public ?array $files,
-        public ?PassportFile $frontSide,
-        public ?PassportFile $reverseSide,
-        public ?PassportFile $selfie,
-        public ?array $translation,
         public string $hash,
+        public ?string $data = null,
+        public ?string $phoneNumber = null,
+        public ?string $email = null,
+        public ?array $files = null,
+        public ?PassportFile $frontSide = null,
+        public ?PassportFile $reverseSide = null,
+        public ?PassportFile $selfie = null,
+        public ?array $translation = null,
     ) {
     }
 
@@ -34,6 +34,7 @@ final readonly class EncryptedPassportElement
         ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'type'),
+            ValueHelper::getString($result, 'hash'),
             ValueHelper::getStringOrNull($result, 'data'),
             ValueHelper::getStringOrNull($result, 'phone_number'),
             ValueHelper::getStringOrNull($result, 'email'),
@@ -48,7 +49,6 @@ final readonly class EncryptedPassportElement
                 ? PassportFile::fromTelegramResult($result['selfie'])
                 : null,
             ValueHelper::getArrayOfPassportFilesOrNull($result, 'translation'),
-            ValueHelper::getString($result, 'hash'),
         );
     }
 }
