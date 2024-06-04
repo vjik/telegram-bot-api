@@ -14,10 +14,10 @@ final readonly class Location
     public function __construct(
         public float $latitude,
         public float $longitude,
-        public ?float $horizontalAccuracy,
-        public ?int $livePeriod,
-        public ?int $heading,
-        public ?int $proximityAlertRadius,
+        public ?float $horizontalAccuracy = null,
+        public ?int $livePeriod = null,
+        public ?int $heading = null,
+        public ?int $proximityAlertRadius = null,
     ) {
     }
 
