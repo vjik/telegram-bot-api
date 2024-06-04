@@ -15,10 +15,10 @@ final readonly class SuccessfulPayment
         public string $currency,
         public int $totalAmount,
         public string $invoicePayload,
-        public ?string $shippingOptionId,
-        public ?OrderInfo $orderInfo,
         public string $telegramPaymentChargeId,
         public string $providerPaymentChargeId,
+        public ?string $shippingOptionId = null,
+        public ?OrderInfo $orderInfo = null,
     ) {
     }
 
@@ -29,12 +29,12 @@ final readonly class SuccessfulPayment
             ValueHelper::getString($result, 'currency'),
             ValueHelper::getInteger($result, 'total_amount'),
             ValueHelper::getString($result, 'invoice_payload'),
+            ValueHelper::getString($result, 'telegram_payment_charge_id'),
+            ValueHelper::getString($result, 'provider_payment_charge_id'),
             ValueHelper::getStringOrNull($result, 'shipping_option_id'),
             array_key_exists('order_info', $result)
                 ? OrderInfo::fromTelegramResult($result['order_info'])
                 : null,
-            ValueHelper::getString($result, 'telegram_payment_charge_id'),
-            ValueHelper::getString($result, 'provider_payment_charge_id'),
         );
     }
 }

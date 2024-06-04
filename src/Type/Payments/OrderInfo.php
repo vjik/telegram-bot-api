@@ -12,10 +12,10 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class OrderInfo
 {
     public function __construct(
-        public ?string $name,
-        public ?string $phoneNumber,
-        public ?string $email,
-        public ?ShippingAddress $shippingAddress,
+        public ?string $name = null,
+        public ?string $phoneNumber = null,
+        public ?string $email = null,
+        public ?ShippingAddress $shippingAddress = null,
     ) {
     }
 
