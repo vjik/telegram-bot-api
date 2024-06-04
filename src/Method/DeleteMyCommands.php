@@ -31,10 +31,13 @@ final readonly class DeleteMyCommands implements TelegramRequestWithResultPrepar
 
     public function getData(): array
     {
-        return array_filter([
-            'scope' => $this->scope?->toRequestArray(),
-            'language_code' => $this->languageCode,
-        ]);
+        return array_filter(
+            [
+                'scope' => $this->scope?->toRequestArray(),
+                'language_code' => $this->languageCode,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): true

@@ -51,23 +51,26 @@ final readonly class SendMessage implements TelegramRequestWithResultPreparingIn
 
     public function getData(): array
     {
-        return array_filter([
-            'business_connection_id' => $this->businessConnectionId,
-            'chat_id' => $this->chatId,
-            'message_thread_id' => $this->messageThreadId,
-            'text' => $this->text,
-            'parse_mode' => $this->parseMode,
-            'entities' => $this->entities === null ? null : array_map(
-                static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                $this->entities,
-            ),
-            'link_preview_options' => $this->linkPreviewOptions?->toRequestArray(),
-            'disable_notification' => $this->disableNotification,
-            'protect_content' => $this->protectContent,
-            'message_effect_id' => $this->messageEffectId,
-            'reply_parameters' => $this->replyParameters?->toRequestArray(),
-            'reply_markup' => $this->replyMarkup?->toRequestArray(),
-        ]);
+        return array_filter(
+            [
+                'business_connection_id' => $this->businessConnectionId,
+                'chat_id' => $this->chatId,
+                'message_thread_id' => $this->messageThreadId,
+                'text' => $this->text,
+                'parse_mode' => $this->parseMode,
+                'entities' => $this->entities === null ? null : array_map(
+                    static fn(MessageEntity $entity) => $entity->toRequestArray(),
+                    $this->entities,
+                ),
+                'link_preview_options' => $this->linkPreviewOptions?->toRequestArray(),
+                'disable_notification' => $this->disableNotification,
+                'protect_content' => $this->protectContent,
+                'message_effect_id' => $this->messageEffectId,
+                'reply_parameters' => $this->replyParameters?->toRequestArray(),
+                'reply_markup' => $this->replyMarkup?->toRequestArray(),
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): Message

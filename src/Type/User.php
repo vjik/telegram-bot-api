@@ -29,20 +29,23 @@ final readonly class User
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'id' => $this->id,
-            'is_bot' => $this->isBot,
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
-            'username' => $this->username,
-            'language_code' => $this->languageCode,
-            'is_premium' => $this->isPremium,
-            'added_to_attachment_menu' => $this->addedToAttachmentMenu,
-            'can_join_groups' => $this->canJoinGroups,
-            'can_read_all_group_messages' => $this->canReadAllGroupMessages,
-            'supports_inline_queries' => $this->supportsInlineQueries,
-            'can_connect_to_business' => $this->canConnectToBusiness,
-        ]);
+        return array_filter(
+            [
+                'id' => $this->id,
+                'is_bot' => $this->isBot,
+                'first_name' => $this->firstName,
+                'last_name' => $this->lastName,
+                'username' => $this->username,
+                'language_code' => $this->languageCode,
+                'is_premium' => $this->isPremium,
+                'added_to_attachment_menu' => $this->addedToAttachmentMenu,
+                'can_join_groups' => $this->canJoinGroups,
+                'can_read_all_group_messages' => $this->canReadAllGroupMessages,
+                'supports_inline_queries' => $this->supportsInlineQueries,
+                'can_connect_to_business' => $this->canConnectToBusiness,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public static function fromTelegramResult(mixed $result): self

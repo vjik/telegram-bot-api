@@ -33,10 +33,13 @@ final readonly class GetMyCommands implements TelegramRequestWithResultPreparing
 
     public function getData(): array
     {
-        return array_filter([
-            'scope' => $this->scope?->toRequestArray(),
-            'language_code' => $this->languageCode,
-        ]);
+        return array_filter(
+            [
+                'scope' => $this->scope?->toRequestArray(),
+                'language_code' => $this->languageCode,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     /**

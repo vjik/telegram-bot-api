@@ -30,10 +30,13 @@ final readonly class SetMyDescription implements TelegramRequestWithResultPrepar
 
     public function getData(): array
     {
-        return array_filter([
-            'description' => $this->description,
-            'language_code' => $this->languageCode,
-        ]);
+        return array_filter(
+            [
+                'description' => $this->description,
+                'language_code' => $this->languageCode,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): true

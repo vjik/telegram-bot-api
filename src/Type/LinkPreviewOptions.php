@@ -22,13 +22,16 @@ final readonly class LinkPreviewOptions
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'is_disabled' => $this->isDisabled,
-            'url' => $this->url,
-            'prefer_small_media' => $this->preferSmallMedia,
-            'prefer_large_media' => $this->preferLargeMedia,
-            'show_above_text' => $this->showAboveText,
-        ]);
+        return array_filter(
+            [
+                'is_disabled' => $this->isDisabled,
+                'url' => $this->url,
+                'prefer_small_media' => $this->preferSmallMedia,
+                'prefer_large_media' => $this->preferLargeMedia,
+                'show_above_text' => $this->showAboveText,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public static function fromTelegramResult(mixed $result): self

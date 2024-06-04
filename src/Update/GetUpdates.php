@@ -36,12 +36,15 @@ final readonly class GetUpdates implements TelegramRequestWithResultPreparingInt
 
     public function getData(): array
     {
-        return array_filter([
-            'offset' => $this->offset,
-            'limit' => $this->limit,
-            'timeout' => $this->timeout,
-            'allowed_updates' => $this->allowedUpdates,
-        ]);
+        return array_filter(
+            [
+                'offset' => $this->offset,
+                'limit' => $this->limit,
+                'timeout' => $this->timeout,
+                'allowed_updates' => $this->allowedUpdates,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     /**

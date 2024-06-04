@@ -29,9 +29,12 @@ final readonly class DeleteWebhook implements TelegramRequestWithResultPreparing
 
     public function getData(): array
     {
-        return array_filter([
-            'drop_pending_updates' => $this->dropPendingUpdates,
-        ]);
+        return array_filter(
+            [
+                'drop_pending_updates' => $this->dropPendingUpdates,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): true

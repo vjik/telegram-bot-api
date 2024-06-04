@@ -65,9 +65,14 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
                 $streamBuilder->addResource($key, json_encode($value, JSON_THROW_ON_ERROR));
             }
             foreach ($files as $key => $file) {
-                $streamBuilder->addResource($key, $file->resource, array_filter([
-                    'filename' => $file->filename,
-                ]));
+                $streamBuilder->addResource(
+                    $key,
+                    $file->resource,
+                    array_filter(
+                        ['filename' => $file->filename],
+                        static fn(mixed $value): bool => $value !== null,
+                    )
+                );
             }
             $body = $streamBuilder->build();
             $contentType = 'multipart/form-data; boundary=' . $streamBuilder->getBoundary() . '; charset=utf-8';

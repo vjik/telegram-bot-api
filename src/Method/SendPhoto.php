@@ -54,32 +54,38 @@ final readonly class SendPhoto implements TelegramRequestWithFilesInterface, Tel
 
     public function getData(): array
     {
-        return array_filter([
-            'chat_id' => $this->chatId,
-            'photo' => is_string($this->photo) ? $this->photo : null,
-            'business_connection_id' => $this->businessConnectionId,
-            'message_thread_id' => $this->messageThreadId,
-            'caption' => $this->caption,
-            'parse_mode' => $this->parseMode,
-            'caption_entities' => $this->captionEntities === null ? null : array_map(
-                static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                $this->captionEntities,
-            ),
-            'show_caption_above_media' => $this->showCaptionAboveMedia,
-            'has_spoiler' => $this->hasSpoiler,
-            'disable_notification' => $this->disableNotification,
-            'protect_content' => $this->protectContent,
-            'message_effect_id' => $this->messageEffectId,
-            'reply_parameters' => $this->replyParameters?->toRequestArray(),
-            'reply_markup' => $this->replyMarkup?->toRequestArray(),
-        ]);
+        return array_filter(
+            [
+                'chat_id' => $this->chatId,
+                'photo' => is_string($this->photo) ? $this->photo : null,
+                'business_connection_id' => $this->businessConnectionId,
+                'message_thread_id' => $this->messageThreadId,
+                'caption' => $this->caption,
+                'parse_mode' => $this->parseMode,
+                'caption_entities' => $this->captionEntities === null ? null : array_map(
+                    static fn(MessageEntity $entity) => $entity->toRequestArray(),
+                    $this->captionEntities,
+                ),
+                'show_caption_above_media' => $this->showCaptionAboveMedia,
+                'has_spoiler' => $this->hasSpoiler,
+                'disable_notification' => $this->disableNotification,
+                'protect_content' => $this->protectContent,
+                'message_effect_id' => $this->messageEffectId,
+                'reply_parameters' => $this->replyParameters?->toRequestArray(),
+                'reply_markup' => $this->replyMarkup?->toRequestArray(),
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function getFiles(): array
     {
-        return array_filter([
-            'photo' => $this->photo instanceof InputFile ? $this->photo : null,
-        ]);
+        return array_filter(
+            [
+                'photo' => $this->photo instanceof InputFile ? $this->photo : null,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): Message

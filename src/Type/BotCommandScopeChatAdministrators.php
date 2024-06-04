@@ -21,9 +21,12 @@ final readonly class BotCommandScopeChatAdministrators implements BotCommandScop
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'type' => $this->getType(),
-            'chat_id' => $this->chatId,
-        ]);
+        return array_filter(
+            [
+                'type' => $this->getType(),
+                'chat_id' => $this->chatId,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

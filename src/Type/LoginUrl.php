@@ -21,12 +21,15 @@ final readonly class LoginUrl
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'url' => $this->url,
-            'forward_text' => $this->forwardText,
-            'bot_username' => $this->botUsername,
-            'request_write_access' => $this->requestWriteAccess,
-        ]);
+        return array_filter(
+            [
+                'url' => $this->url,
+                'forward_text' => $this->forwardText,
+                'bot_username' => $this->botUsername,
+                'request_write_access' => $this->requestWriteAccess,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public static function fromTelegramResult(mixed $result): self

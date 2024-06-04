@@ -16,8 +16,11 @@ final readonly class KeyboardButtonPollType
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'type' => $this->type,
-        ]);
+        return array_filter(
+            [
+                'type' => $this->type,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

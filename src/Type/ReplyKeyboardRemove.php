@@ -16,9 +16,12 @@ final readonly class ReplyKeyboardRemove
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'remove_keyboard' => true,
-            'selective' => $this->selective,
-        ]);
+        return array_filter(
+            [
+                'remove_keyboard' => true,
+                'selective' => $this->selective,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

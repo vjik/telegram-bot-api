@@ -22,14 +22,17 @@ final readonly class KeyboardButtonRequestUsers
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'request_id' => $this->requestId,
-            'user_is_bot' => $this->userIsBot,
-            'user_is_premium' => $this->userIsPremium,
-            'max_quantity' => $this->maxQuantity,
-            'request_name' => $this->requestName,
-            'request_username' => $this->requestUsername,
-            'request_photo' => $this->requestPhoto,
-        ]);
+        return array_filter(
+            [
+                'request_id' => $this->requestId,
+                'user_is_bot' => $this->userIsBot,
+                'user_is_premium' => $this->userIsPremium,
+                'max_quantity' => $this->maxQuantity,
+                'request_name' => $this->requestName,
+                'request_username' => $this->requestUsername,
+                'request_photo' => $this->requestPhoto,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }
