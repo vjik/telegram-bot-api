@@ -122,7 +122,7 @@ final class ValueHelper
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
         }
         return $value;
     }
@@ -134,7 +134,7 @@ final class ValueHelper
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
         }
         return $value;
     }
