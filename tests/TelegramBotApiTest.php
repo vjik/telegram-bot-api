@@ -348,6 +348,80 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(7, $result->messageId);
     }
 
+    public function testSetChatMenuButton(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatMenuButton();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetMyCommands(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMyCommands([
+            new BotCommand('test', 'Test description'),
+        ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetMyDescription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMyDescription();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetMyName(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMyName();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetMyShortDescription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMyShortDescription();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetWebhook(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setWebhook('https://example.com/webhook');
+
+        $this->assertTrue($result);
+    }
+
     private function createApi(array|string $response, int $statusCode = 200): TelegramBotApi
     {
         return new TelegramBotApi(
