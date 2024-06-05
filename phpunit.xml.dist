@@ -27,4 +27,10 @@
             <directory suffix=".php">./src</directory>
         </include>
     </source>
+
+    <groups>
+        <exclude>
+            <group>realApi</group>
+        </exclude>
+    </groups>
 </phpunit>
