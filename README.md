@@ -23,6 +23,40 @@ composer require vjik/telegram-bot-api
 
 ## General usage
 
+```php
+use Vjik\TelegramBot\Api\Client\PsrTelegramClient;
+use Vjik\TelegramBot\Api\TelegramBotApi;
+use Vjik\TelegramBot\Api\Type\InputFile
+
+$telegramClient = new PsrTelegramClient(
+    '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw', // Telegram bot authentication token
+    $psr18HttpClient,
+    $psr17RequestFactory,
+    $psr17StreamFactory,
+);
+
+$api = new TelegramBotApi($telegramClient);
+
+// Specify a URL and receive incoming updates via an outgoing webhook
+$api->setWebhook('https://example.com/webhook');
+
+// Receive incoming updates
+// Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects
+$updates = $api->getUpdates();
+
+// Send text message
+$api->sendMessage(
+    chatId: 22351, 
+    text: 'Hello, world!',
+);
+
+// Send local photo
+$api->sendPhoto(
+    chatId: 22351, 
+    photo: new InputFile(fopen('/path/to/photo.jpg', 'r')),
+);
+```
+
 ## Documentation
 
 - [Internals](docs/internals.md)
