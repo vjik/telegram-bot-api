@@ -17,7 +17,7 @@ final readonly class MessageOriginChannel implements MessageOrigin
         public DateTimeImmutable $date,
         public Chat $chat,
         public int $messageId,
-        public ?string $authorSignature,
+        public ?string $authorSignature = null,
     ) {
     }
 
