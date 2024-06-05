@@ -16,9 +16,9 @@ final readonly class PollAnswer
      */
     public function __construct(
         public string $pollId,
-        public ?Chat $voterChat,
-        public ?User $user,
         public array $optionIds,
+        public ?Chat $voterChat = null,
+        public ?User $user = null,
     ) {
     }
 
@@ -27,13 +27,13 @@ final readonly class PollAnswer
         ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'poll_id'),
+            ValueHelper::getArrayOfIntegers($result, 'option_ids'),
             array_key_exists('voter_chat', $result)
                 ? Chat::fromTelegramResult($result['voter_chat'])
                 : null,
             array_key_exists('user', $result)
                 ? User::fromTelegramResult($result['user'])
                 : null,
-            ValueHelper::getArrayOfIntegers($result, 'option_ids'),
         );
     }
 }

@@ -12,25 +12,25 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class Poll
 {
     /**
-     * @param MessageEntity[] $questionEntities
+     * @param MessageEntity[]|null $questionEntities
      * @param PollOption[] $options
-     * @param MessageEntity[] $explanationEntities
+     * @param MessageEntity[]|null $explanationEntities
      */
     public function __construct(
         public string $id,
         public string $question,
-        public ?array $questionEntities,
         public array $options,
         public int $totalVoterCount,
         public bool $isClosed,
         public bool $isAnonymous,
         public string $type,
         public bool $allowsMultipleAnswers,
-        public ?int $correctOptionId,
-        public ?string $explanation,
-        public ?array $explanationEntities,
-        public ?int $openPeriod,
-        public ?int $closeDate,
+        public ?array $questionEntities = null,
+        public ?int $correctOptionId = null,
+        public ?string $explanation = null,
+        public ?array $explanationEntities = null,
+        public ?int $openPeriod = null,
+        public ?int $closeDate = null,
     ) {
     }
 
@@ -40,7 +40,6 @@ final readonly class Poll
         return new self(
             ValueHelper::getString($result, 'id'),
             ValueHelper::getString($result, 'question'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'question_entities'),
             array_map(
                 static fn ($option) => PollOption::fromTelegramResult($option),
                 ValueHelper::getArray($result, 'options')
@@ -50,6 +49,7 @@ final readonly class Poll
             ValueHelper::getBoolean($result, 'is_anonymous'),
             ValueHelper::getString($result, 'type'),
             ValueHelper::getBoolean($result, 'allows_multiple_answers'),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'question_entities'),
             ValueHelper::getIntegerOrNull($result, 'correct_option_id'),
             ValueHelper::getStringOrNull($result, 'explanation'),
             ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'explanation_entities'),
