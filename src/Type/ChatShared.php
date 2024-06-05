@@ -17,9 +17,9 @@ final readonly class ChatShared
     public function __construct(
         public int $requestId,
         public int $chatId,
-        public ?string $title,
-        public ?string $username,
-        public ?array $photo,
+        public ?string $title = null,
+        public ?string $username = null,
+        public ?array $photo = null,
     ) {
     }
 

@@ -19,9 +19,9 @@ final readonly class ChatMemberUpdated
         public DateTimeImmutable $date,
         public ChatMember $oldChatMember,
         public ChatMember $newChatMember,
-        public ?ChatInviteLink $inviteLink,
-        public ?bool $viaJoinRequest,
-        public ?bool $viaChatFolderInviteLink,
+        public ?ChatInviteLink $inviteLink = null,
+        public ?bool $viaJoinRequest = null,
+        public ?bool $viaChatFolderInviteLink = null,
     ) {
     }
 

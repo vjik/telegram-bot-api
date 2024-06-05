@@ -12,20 +12,20 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class ChatPermissions
 {
     public function __construct(
-        public ?bool $canSendMessages,
-        public ?bool $canSendAudios,
-        public ?bool $canSendDocuments,
-        public ?bool $canSendPhotos,
-        public ?bool $canSendVideos,
-        public ?bool $canSendVideoNotes,
-        public ?bool $canSendVoiceNotes,
-        public ?bool $canSendPolls,
-        public ?bool $canSendOtherMessages,
-        public ?bool $canAddWebPagePreviews,
-        public ?bool $canChangeInfo,
-        public ?bool $canInviteUsers,
-        public ?bool $canPinMessages,
-        public ?bool $canManageTopics
+        public ?bool $canSendMessages = null,
+        public ?bool $canSendAudios = null,
+        public ?bool $canSendDocuments = null,
+        public ?bool $canSendPhotos = null,
+        public ?bool $canSendVideos = null,
+        public ?bool $canSendVideoNotes = null,
+        public ?bool $canSendVoiceNotes = null,
+        public ?bool $canSendPolls = null,
+        public ?bool $canSendOtherMessages = null,
+        public ?bool $canAddWebPagePreviews = null,
+        public ?bool $canChangeInfo = null,
+        public ?bool $canInviteUsers = null,
+        public ?bool $canPinMessages = null,
+        public ?bool $canManageTopics = null,
     ) {
     }
 
