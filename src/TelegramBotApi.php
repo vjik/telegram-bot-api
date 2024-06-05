@@ -439,13 +439,13 @@ final class TelegramBotApi
         array $decodedBody
     ): FailResult {
         return new FailResult(
+            $request,
+            $response,
             (isset($decodedBody['description']) && is_string($decodedBody['description']))
                 ? $decodedBody['description']
                 : null,
-            $decodedBody['error_code'] ?? null,
             ResponseParameters::fromDecodedBody($decodedBody),
-            $request,
-            $response,
+            $decodedBody['error_code'] ?? null,
         );
     }
 }
