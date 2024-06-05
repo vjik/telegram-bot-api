@@ -18,6 +18,7 @@ use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
+use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Update\Update;
 use Vjik\TelegramBot\Api\Update\WebhookInfo;
@@ -285,6 +286,66 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(WebhookInfo::class, $result);
         $this->assertSame('https://example.com/', $result->url);
+    }
+
+    public function testSendLocation(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_id' => 7,
+                'date' => 1620000000,
+                'chat' => [
+                    'id' => 1,
+                    'type' => 'private',
+                ],
+            ],
+        ]);
+
+        $result = $api->sendLocation(12, 1.1, 2.2);
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertSame(7, $result->messageId);
+    }
+
+    public function testSendMessages(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_id' => 7,
+                'date' => 1620000000,
+                'chat' => [
+                    'id' => 1,
+                    'type' => 'private',
+                ],
+            ],
+        ]);
+
+        $result = $api->sendMessages(12, 'hello');
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertSame(7, $result->messageId);
+    }
+
+    public function testSendPhoto(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_id' => 7,
+                'date' => 1620000000,
+                'chat' => [
+                    'id' => 1,
+                    'type' => 'private',
+                ],
+            ],
+        ]);
+
+        $result = $api->sendPhoto(12, 'https://example.com/i.png');
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertSame(7, $result->messageId);
     }
 
     private function createApi(array|string $response, int $statusCode = 200): TelegramBotApi
