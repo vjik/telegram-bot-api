@@ -19,12 +19,12 @@ final readonly class WebhookInfo
         public string $url,
         public bool $hasCustomCertificate,
         public int $pendingUpdateCount,
-        public ?string $ipAddress,
-        public ?DateTimeImmutable $lastErrorDate,
-        public ?string $lastErrorMessage,
-        public ?DateTimeImmutable $lastSynchronizationErrorDate,
-        public ?int $maxConnections,
-        public ?array $allowedUpdates,
+        public ?string $ipAddress = null,
+        public ?DateTimeImmutable $lastErrorDate = null,
+        public ?string $lastErrorMessage = null,
+        public ?DateTimeImmutable $lastSynchronizationErrorDate = null,
+        public ?int $maxConnections = null,
+        public ?array $allowedUpdates = null,
     ) {
     }
 
