@@ -14,6 +14,13 @@ final class WebAppInfoTest extends TestCase
         $webAppInfo = new WebAppInfo('https://example.com');
 
         $this->assertSame('https://example.com', $webAppInfo->url);
+
+        $this->assertSame(
+            [
+                'url' => 'https://example.com',
+            ],
+            $webAppInfo->toRequestArray(),
+        );
     }
 
     public function testFromTelegramResult(): void

@@ -21,6 +21,15 @@ final class MessageEntityTest extends TestCase
         $this->assertNull($messageEntity->user);
         $this->assertNull($messageEntity->language);
         $this->assertNull($messageEntity->customEmojiId);
+
+        $this->assertSame(
+            [
+                'type' => 'bold',
+                'offset' => 0,
+                'length' => 4,
+            ],
+            $messageEntity->toRequestArray(),
+        );
     }
 
     public function testToRequestArray(): void

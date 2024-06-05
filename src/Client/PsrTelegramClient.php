@@ -68,10 +68,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
                 $streamBuilder->addResource(
                     $key,
                     $file->resource,
-                    array_filter(
-                        ['filename' => $file->filename],
-                        static fn(mixed $value): bool => $value !== null,
-                    )
+                    $file->filename === null ? [] : ['filename' => $file->filename],
                 );
             }
             $body = $streamBuilder->build();

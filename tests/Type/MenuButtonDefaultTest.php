@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 
 final class MenuButtonDefaultTest extends TestCase
@@ -25,5 +26,12 @@ final class MenuButtonDefaultTest extends TestCase
         ]);
 
         $this->assertSame('default', $button->getType());
+    }
+
+    public function testFromTelegramResultWithInvalidResult(): void
+    {
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Expected result as array. Got "string".');
+        MenuButtonDefault::fromTelegramResult('hello');
     }
 }
