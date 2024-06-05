@@ -5,6 +5,7 @@
 [![Build status](https://github.com/vjik/telegram-bot-api/workflows/build/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3Abuild)
 [![Code coverage](https://codecov.io/gh/vjik/telegram-bot-api/graph/badge.svg?token=5SV9NWKMQZ)](https://codecov.io/gh/vjik/telegram-bot-api)
 [![type-coverage](https://shepherd.dev/github/vjik/telegram-bot-api/coverage.svg)](https://shepherd.dev/github/vjik/telegram-bot-api)
+[![Mutation score](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvjik%2Ftelegram-bot-api%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vjik/telegram-bot-api/master)
 [![static analysis](https://github.com/vjik/telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
 [![psalm-level](https://shepherd.dev/github/vjik/telegram-bot-api/level.svg)](https://shepherd.dev/github/vjik/telegram-bot-api)
 
