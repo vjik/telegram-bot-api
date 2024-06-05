@@ -10,8 +10,8 @@ namespace Vjik\TelegramBot\Api\Type;
 final readonly class ResponseParameters
 {
     public function __construct(
-        public ?int $migrateToChatId,
-        public ?int $retryAfter,
+        public ?int $migrateToChatId = null,
+        public ?int $retryAfter = null,
     ) {
     }
 
