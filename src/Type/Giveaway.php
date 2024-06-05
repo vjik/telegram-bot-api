@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
+use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 /**
@@ -17,13 +18,13 @@ final readonly class Giveaway
      */
     public function __construct(
         public array $chats,
-        public int $winnersSelectionDate,
+        public DateTimeImmutable $winnersSelectionDate,
         public int $winnerCount,
-        public ?true $onlyNewMembers,
-        public ?true $hasPublicWinners,
-        public ?string $prizeDescription,
-        public ?array $countryCodes,
-        public ?int $premiumSubscriptionMonthCount,
+        public ?true $onlyNewMembers = null,
+        public ?true $hasPublicWinners = null,
+        public ?string $prizeDescription = null,
+        public ?array $countryCodes = null,
+        public ?int $premiumSubscriptionMonthCount = null,
     ) {
     }
 
@@ -35,7 +36,7 @@ final readonly class Giveaway
                 static fn($p) => Chat::fromTelegramResult($p),
                 ValueHelper::getArray($result, 'chats')
             ),
-            ValueHelper::getInteger($result, 'winners_selection_date'),
+            ValueHelper::getDateTimeImmutable($result, 'winners_selection_date'),
             ValueHelper::getInteger($result, 'winner_count'),
             ValueHelper::getTrueOrNull($result, 'only_new_members'),
             ValueHelper::getTrueOrNull($result, 'has_public_winners'),

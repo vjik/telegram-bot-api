@@ -12,9 +12,9 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class GiveawayCompleted
 {
     public function __construct(
-        public int $winner_count,
-        public ?int $unclaimedPrizeCount,
-        public ?Message $giveawayMessage,
+        public int $winnerCount,
+        public ?int $unclaimedPrizeCount = null,
+        public ?Message $giveawayMessage = null,
     ) {
     }
 
