@@ -22,13 +22,10 @@ final readonly class BotCommandScopeChatMember implements BotCommandScope
 
     public function toRequestArray(): array
     {
-        return array_filter(
-            [
-                'type' => $this->getType(),
-                'chat_id' => $this->chatId,
-                'user_id' => $this->userId,
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
+        return [
+            'type' => $this->getType(),
+            'chat_id' => $this->chatId,
+            'user_id' => $this->userId,
+        ];
     }
 }

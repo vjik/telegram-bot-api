@@ -22,18 +22,15 @@ final readonly class InlineKeyboardMarkup
 
     public function toRequestArray(): array
     {
-        return array_filter(
-            [
-                'inline_keyboard' => array_map(
-                    static fn(array $buttons) => array_map(
-                        static fn(InlineKeyboardButton $button) => $button->toRequestArray(),
-                        $buttons
-                    ),
-                    $this->inlineKeyboard
+        return [
+            'inline_keyboard' => array_map(
+                static fn(array $buttons) => array_map(
+                    static fn(InlineKeyboardButton $button) => $button->toRequestArray(),
+                    $buttons
                 ),
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
+                $this->inlineKeyboard
+            ),
+        ];
     }
 
     public static function fromTelegramResult(mixed $result): self
