@@ -33,4 +33,14 @@ final class TelegramRequestTest extends TestCase
 
         $this->assertSame(33, $request->prepareResult(32));
     }
+
+    public function testWithoutSuccessCallback(): void
+    {
+        $request = new TelegramRequest(
+            HttpMethod::POST,
+            'getMe',
+        );
+
+        $this->assertSame(32, $request->prepareResult(32));
+    }
 }
