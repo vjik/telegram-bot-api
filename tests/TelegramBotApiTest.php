@@ -11,9 +11,16 @@ use Vjik\TelegramBot\Api\InvalidResponseFormatException;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
+use Vjik\TelegramBot\Api\Type\BotCommand;
+use Vjik\TelegramBot\Api\Type\BotDescription;
+use Vjik\TelegramBot\Api\Type\BotName;
+use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Update\Update;
+use Vjik\TelegramBot\Api\Update\WebhookInfo;
 
 final class TelegramBotApiTest extends TestCase
 {
@@ -141,6 +148,143 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->getChatMenuButton();
 
         $this->assertInstanceOf(MenuButtonDefault::class, $result);
+    }
+
+    public function testGetFile(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'file_id' => 'f1',
+                'file_unique_id' => 'fullX1',
+                'file_size' => 123,
+                'file_path' => 'path/to/file',
+            ],
+        ]);
+
+        $result = $api->getFile('f1');
+
+        $this->assertInstanceOf(File::class, $result);
+        $this->assertSame('f1', $result->fileId);
+    }
+
+    public function testGetMe(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => 1,
+                'is_bot' => false,
+                'first_name' => 'Sergei',
+            ],
+        ]);
+
+        $result = $api->getMe();
+
+        $this->assertInstanceOf(User::class, $result);
+        $this->assertSame(1, $result->id);
+    }
+
+    public function testGetMyCommands(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'command' => 'start',
+                    'description' => 'Start command',
+                ],
+            ],
+        ]);
+
+        $result = $api->getMyCommands();
+
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(BotCommand::class, $result[0]);
+        $this->assertSame('start', $result[0]->command);
+    }
+
+    public function testGetMyDescription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'description' => 'test',
+            ],
+        ]);
+
+        $result = $api->getMyDescription();
+
+        $this->assertInstanceOf(BotDescription::class, $result);
+        $this->assertSame('test', $result->description);
+    }
+
+    public function testGetMyName(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'name' => 'test',
+            ],
+        ]);
+
+        $result = $api->getMyName();
+
+        $this->assertInstanceOf(BotName::class, $result);
+        $this->assertSame('test', $result->name);
+    }
+
+    public function testGetMyShortDescription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'short_description' => 'test',
+            ],
+        ]);
+
+        $result = $api->getMyShortDescription();
+
+        $this->assertInstanceOf(BotShortDescription::class, $result);
+        $this->assertSame('test', $result->shortDescription);
+    }
+
+    public function testGetUpdates(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                ['update_id' => 1],
+                ['update_id' => 2],
+            ],
+        ]);
+
+        $result = $api->getUpdates();
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertInstanceOf(Update::class, $result[0]);
+        $this->assertInstanceOf(Update::class, $result[1]);
+        $this->assertSame(1, $result[0]->updateId);
+        $this->assertSame(2, $result[1]->updateId);
+    }
+
+    public function testGetWebhookInfo(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'url' => 'https://example.com/',
+                'has_custom_certificate' => true,
+                'pending_update_count' => 12,
+            ],
+        ]);
+
+        $result = $api->getWebhookInfo();
+
+        $this->assertInstanceOf(WebhookInfo::class, $result);
+        $this->assertSame('https://example.com/', $result->url);
     }
 
     private function createApi(array|string $response, int $statusCode = 200): TelegramBotApi
