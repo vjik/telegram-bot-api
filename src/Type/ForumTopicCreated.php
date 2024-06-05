@@ -14,7 +14,7 @@ final readonly class ForumTopicCreated
     public function __construct(
         public string $name,
         public int $iconColor,
-        public ?string $iconCustomEmojiId,
+        public ?string $iconCustomEmojiId = null,
     ) {
     }
 

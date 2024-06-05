@@ -12,8 +12,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class ForumTopicEdited
 {
     public function __construct(
-        public ?string $name,
-        public ?string $iconCustomEmojiId,
+        public ?string $name = null,
+        public ?string $iconCustomEmojiId = null,
     ) {
     }
 
