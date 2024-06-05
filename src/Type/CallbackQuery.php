@@ -34,7 +34,7 @@ final readonly class CallbackQuery
             ValueHelper::getString($result, 'chat_instance'),
             array_key_exists('message', $result)
                 ? MaybeInaccessibleMessageFactory::fromTelegramResult($result['message'])
-                : throw new NotFoundKeyInResultException('message'),
+                : null,
             ValueHelper::getStringOrNull($result, 'inline_message_id'),
             ValueHelper::getStringOrNull($result, 'data'),
             ValueHelper::getStringOrNull($result, 'game_short_name'),
