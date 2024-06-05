@@ -322,7 +322,7 @@ final class TelegramBotApiTest extends TestCase
             ],
         ]);
 
-        $result = $api->sendMessages(12, 'hello');
+        $result = $api->sendMessage(12, 'hello');
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertSame(7, $result->messageId);

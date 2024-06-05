@@ -23,36 +23,47 @@ composer require vjik/telegram-bot-api
 
 ## General usage
 
-## Testing
+```php
+use Vjik\TelegramBot\Api\Client\PsrTelegramClient;
+use Vjik\TelegramBot\Api\TelegramBotApi;
+use Vjik\TelegramBot\Api\Type\InputFile
 
-### Unit testing
+$telegramClient = new PsrTelegramClient(
+    '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw', // Telegram bot authentication token
+    $psr18HttpClient,
+    $psr17RequestFactory,
+    $psr17StreamFactory,
+);
 
-The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
+$api = new TelegramBotApi($telegramClient);
 
-```shell
-./vendor/bin/phpunit
+// Specify a URL and receive incoming updates via an outgoing webhook
+$api->setWebhook('https://example.com/webhook');
+
+// Receive incoming updates
+// Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects
+$updates = $api->getUpdates();
+
+// Send text message
+$api->sendMessage(
+    chatId: 22351, 
+    text: 'Hello, world!',
+);
+
+// Send local photo
+$api->sendPhoto(
+    chatId: 22351, 
+    photo: new InputFile(fopen('/path/to/photo.jpg', 'r')),
+);
 ```
 
-### Mutation testing
+## Documentation
 
-The package tests are checked with [Infection](https://infection.github.io/) mutation framework with
-[Infection Static Analysis Plugin](https://github.com/Roave/infection-static-analysis-plugin). To run it:
-
-```shell
-./vendor/bin/roave-infection-static-analysis-plugin
-```
-
-### Static analysis
-
-The code is statically analyzed with [Psalm](https://psalm.dev/). To run static analysis:
-
-```shell
-./vendor/bin/psalm
-```
+- [Internals](docs/internals.md)
 
 ## License
 
-The Vjik Telegram Bot API is free software. It is released under the terms of the BSD License.
+The `vjik/telegram-bot-api` is free software. It is released under the terms of the BSD License.
 Please see [`LICENSE`](./LICENSE.md) for more information.
 
 ## Credits

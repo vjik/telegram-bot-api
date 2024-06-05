@@ -267,7 +267,7 @@ final class TelegramBotApi
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
-    public function sendMessages(
+    public function sendMessage(
         int|string $chatId,
         string $text,
         ?string $businessConnectionId = null,
