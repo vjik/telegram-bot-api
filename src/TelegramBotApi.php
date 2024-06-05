@@ -70,20 +70,20 @@ final class TelegramBotApi
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
             throw new InvalidResponseFormatException(
-                'Failed to decode JSON response. Status code: ' . $response->statusCode,
+                'Failed to decode JSON response. Status code: ' . $response->statusCode . '.',
                 previous: $e
             );
         }
 
         if (!is_array($decodedBody)) {
-            throw new TelegramRuntimeException(
-                'Expected telegram response as array. Got ' . get_debug_type($decodedBody) . '.'
+            throw new InvalidResponseFormatException(
+                'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".'
             );
         }
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             throw new InvalidResponseFormatException(
-                'Incorrect "ok" field in response. Status code: ' . $response->statusCode,
+                'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
             );
         }
 
@@ -424,7 +424,7 @@ final class TelegramBotApi
     ): mixed {
         if (!array_key_exists('result', $decodedBody)) {
             throw new InvalidResponseFormatException(
-                'Not found "result" field in response. Status code: ' . $response->statusCode,
+                'Not found "result" field in response. Status code: ' . $response->statusCode . '.',
             );
         }
 
@@ -439,13 +439,13 @@ final class TelegramBotApi
         array $decodedBody
     ): FailResult {
         return new FailResult(
+            $request,
+            $response,
             (isset($decodedBody['description']) && is_string($decodedBody['description']))
                 ? $decodedBody['description']
                 : null,
-            $decodedBody['error_code'] ?? null,
             ResponseParameters::fromDecodedBody($decodedBody),
-            $request,
-            $response,
+            $decodedBody['error_code'] ?? null,
         );
     }
 }

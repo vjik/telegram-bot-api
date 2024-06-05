@@ -16,9 +16,9 @@ final readonly class TextQuote
      */
     public function __construct(
         public string $text,
-        public ?array $entities,
         public int $position,
-        public ?true $isManual,
+        public ?array $entities = null,
+        public ?true $isManual = null,
     ) {
     }
 
@@ -27,8 +27,8 @@ final readonly class TextQuote
         ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'text'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'entities'),
             ValueHelper::getInteger($result, 'position'),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'entities'),
             ValueHelper::getTrueOrNull($result, 'is_manual'),
         );
     }

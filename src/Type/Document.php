@@ -14,10 +14,10 @@ final readonly class Document
     public function __construct(
         public string $fileId,
         public string $fileUniqueId,
-        public ?PhotoSize $thumbnail,
-        public ?string $fileName,
-        public ?string $mimeType,
-        public ?int $fileSize,
+        public ?PhotoSize $thumbnail = null,
+        public ?string $fileName = null,
+        public ?string $mimeType = null,
+        public ?int $fileSize = null,
     ) {
     }
 

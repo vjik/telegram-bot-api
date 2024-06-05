@@ -17,9 +17,9 @@ final readonly class ChosenInlineResult
     public function __construct(
         public string $resultId,
         public User $from,
-        public ?Location $location,
-        public ?string $inlineMessageId,
         public string $query,
+        public ?Location $location = null,
+        public ?string $inlineMessageId = null,
     ) {
     }
 
@@ -31,11 +31,11 @@ final readonly class ChosenInlineResult
             array_key_exists('from', $result)
                 ? User::fromTelegramResult($result['from'])
                 : throw new NotFoundKeyInResultException('from'),
+            ValueHelper::getString($result, 'query'),
             array_key_exists('location', $result)
                 ? Location::fromTelegramResult($result['location'])
                 : null,
             ValueHelper::getStringOrNull($result, 'inline_message_id'),
-            ValueHelper::getString($result, 'query'),
         );
     }
 }

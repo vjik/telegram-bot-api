@@ -24,15 +24,18 @@ final readonly class MessageEntity
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'type' => $this->type,
-            'offset' => $this->offset,
-            'length' => $this->length,
-            'url' => $this->url,
-            'user' => $this->user?->toRequestArray(),
-            'language' => $this->language,
-            'custom_emoji_id' => $this->customEmojiId,
-        ]);
+        return array_filter(
+            [
+                'type' => $this->type,
+                'offset' => $this->offset,
+                'length' => $this->length,
+                'url' => $this->url,
+                'user' => $this->user?->toRequestArray(),
+                'language' => $this->language,
+                'custom_emoji_id' => $this->customEmojiId,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public static function fromTelegramResult(mixed $result): self

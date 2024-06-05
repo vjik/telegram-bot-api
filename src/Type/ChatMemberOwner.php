@@ -15,7 +15,7 @@ final readonly class ChatMemberOwner implements ChatMember
     public function __construct(
         public User $user,
         public bool $isAnonymous,
-        public ?string $customTitle,
+        public ?string $customTitle = null,
     ) {
     }
 

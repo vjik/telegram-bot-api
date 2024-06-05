@@ -30,9 +30,12 @@ final readonly class GetMyName implements TelegramRequestWithResultPreparingInte
 
     public function getData(): array
     {
-        return array_filter([
-            'language_code' => $this->languageCode,
-        ]);
+        return array_filter(
+            [
+                'language_code' => $this->languageCode,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): BotName

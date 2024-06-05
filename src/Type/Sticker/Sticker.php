@@ -21,14 +21,14 @@ final readonly class Sticker
         public int $height,
         public bool $isAnimated,
         public bool $isVideo,
-        public ?PhotoSize $thumbnail,
-        public ?string $emoji,
-        public ?string $setName,
-        public ?File $premiumAnimation,
-        public ?MaskPosition $maskPosition,
-        public ?string $customEmojiId,
-        public ?bool $needsRepainting,
-        public ?int $fileSize,
+        public ?PhotoSize $thumbnail = null,
+        public ?string $emoji = null,
+        public ?string $setName = null,
+        public ?File $premiumAnimation = null,
+        public ?MaskPosition $maskPosition = null,
+        public ?string $customEmojiId = null,
+        public ?bool $needsRepainting = null,
+        public ?int $fileSize = null,
     ) {
     }
 

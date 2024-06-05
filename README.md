@@ -1,12 +1,12 @@
 # Vjik Telegram Bot API
 
-[![Latest Stable Version](https://poser.pugx.org/vjik/_____/v/stable.png)](https://packagist.org/packages/vjik/_____)
-[![Total Downloads](https://poser.pugx.org/vjik/_____/downloads.png)](https://packagist.org/packages/vjik/_____)
-[![Build status](https://github.com/vjik/_____/workflows/build/badge.svg)](https://github.com/vjik/_____/actions?query=workflow%3Abuild)
-[![Mutation testing badge](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvjik%2F_____%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vjik/_____/master)
-[![type-coverage](https://shepherd.dev/github/vjik/_____/coverage.svg)](https://shepherd.dev/github/vjik/_____)
-[![static analysis](https://github.com/vjik/_____/workflows/static%20analysis/badge.svg)](https://github.com/vjik/_____/actions?query=workflow%3A%22static+analysis%22)
-[![psalm-level](https://shepherd.dev/github/vjik/_____/level.svg)](https://shepherd.dev/github/vjik/_____)
+[![Latest Stable Version](https://poser.pugx.org/vjik/telegram-bot-api/v/stable.png)](https://packagist.org/packages/vjik/telegram-bot-api)
+[![Total Downloads](https://poser.pugx.org/vjik/telegram-bot-api/downloads.png)](https://packagist.org/packages/vjik/telegram-bot-api)
+[![Build status](https://github.com/vjik/php-telegram-bot-api/workflows/build/badge.svg)](https://github.com/vjik/php-telegram-bot-api/actions?query=workflow%3Abuild)
+[![Code coverage](https://codecov.io/gh/vjik/php-telegram-bot-api/graph/badge.svg?token=5SV9NWKMQZ)](https://codecov.io/gh/vjik/php-telegram-bot-api)
+[![type-coverage](https://shepherd.dev/github/vjik/php-telegram-bot-api/coverage.svg)](https://shepherd.dev/github/vjik/php-telegram-bot-api)
+[![static analysis](https://github.com/vjik/php-telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/php-telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
+[![psalm-level](https://shepherd.dev/github/vjik/php-telegram-bot-api/level.svg)](https://shepherd.dev/github/vjik/php-telegram-bot-api)
 
 The package ...
 

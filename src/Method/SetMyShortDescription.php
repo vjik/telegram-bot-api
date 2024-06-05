@@ -30,10 +30,13 @@ final readonly class SetMyShortDescription implements TelegramRequestWithResultP
 
     public function getData(): array
     {
-        return array_filter([
-            'short_description' => $this->shortDescription,
-            'language_code' => $this->languageCode,
-        ]);
+        return array_filter(
+            [
+                'short_description' => $this->shortDescription,
+                'language_code' => $this->languageCode,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): true

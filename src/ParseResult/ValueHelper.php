@@ -26,7 +26,7 @@ final class ValueHelper
     {
         if (!is_array($result)) {
             throw new TelegramParseResultException(
-                'Expected result as array. Got ' . get_debug_type($result) . '.'
+                'Expected result as array. Got "' . get_debug_type($result) . '".'
             );
         }
     }
@@ -122,7 +122,7 @@ final class ValueHelper
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
         }
         return $value;
     }
@@ -134,7 +134,7 @@ final class ValueHelper
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
         }
         return $value;
     }
@@ -215,7 +215,7 @@ final class ValueHelper
 
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string[]');
         }
 
         foreach ($value as $v) {

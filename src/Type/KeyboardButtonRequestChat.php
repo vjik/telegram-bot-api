@@ -26,18 +26,21 @@ final readonly class KeyboardButtonRequestChat
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'request_id' => $this->requestId,
-            'chat_is_channel' => $this->chatIsChannel,
-            'chat_is_forum' => $this->chatIsForum,
-            'chat_has_username' => $this->chatHasUsername,
-            'chat_is_created' => $this->chatIsCreated,
-            'user_administrator_rights' => $this->userAdministratorRights?->toRequestArray(),
-            'bot_administrator_rights' => $this->botAdministratorRights?->toRequestArray(),
-            'bot_is_member' => $this->botIsMember,
-            'request_title' => $this->requestTitle,
-            'request_username' => $this->requestUsername,
-            'request_photo' => $this->requestPhoto,
-        ]);
+        return array_filter(
+            [
+                'request_id' => $this->requestId,
+                'chat_is_channel' => $this->chatIsChannel,
+                'chat_is_forum' => $this->chatIsForum,
+                'chat_has_username' => $this->chatHasUsername,
+                'chat_is_created' => $this->chatIsCreated,
+                'user_administrator_rights' => $this->userAdministratorRights?->toRequestArray(),
+                'bot_administrator_rights' => $this->botAdministratorRights?->toRequestArray(),
+                'bot_is_member' => $this->botIsMember,
+                'request_title' => $this->requestTitle,
+                'request_username' => $this->requestUsername,
+                'request_photo' => $this->requestPhoto,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

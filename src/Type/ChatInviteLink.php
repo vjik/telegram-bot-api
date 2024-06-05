@@ -14,15 +14,15 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class ChatInviteLink
 {
     public function __construct(
-        public string $inviteLlink,
+        public string $inviteLink,
         public User $creator,
         public bool $createsJoinRequest,
         public bool $isPrimary,
         public bool $isRevoked,
-        public ?string $name,
-        public ?DateTimeImmutable $expireDate,
-        public ?int $memberLimit,
-        public ?int $pendingJoinRequestCount,
+        public ?string $name = null,
+        public ?DateTimeImmutable $expireDate = null,
+        public ?int $memberLimit = null,
+        public ?int $pendingJoinRequestCount = null,
     ) {
     }
 

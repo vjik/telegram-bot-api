@@ -1,0 +1,43 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Tests\Method;
+
+use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Request\HttpMethod;
+
+final class SetMyShortDescriptionTest extends TestCase
+{
+    public function testBase(): void
+    {
+        $method = new SetMyShortDescription();
+
+        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
+        $this->assertSame('setMyShortDescription', $method->getApiMethod());
+        $this->assertSame([], $method->getData());
+    }
+
+    public function testFull(): void
+    {
+        $method = new SetMyShortDescription('test', 'ru');
+
+        $this->assertSame(
+            [
+                'short_description' => 'test',
+                'language_code' => 'ru',
+            ],
+            $method->getData()
+        );
+    }
+
+    public function testPrepareResult(): void
+    {
+        $method = new SetMyShortDescription();
+
+        $preparedResult = $method->prepareResult([]);
+
+        $this->assertTrue($preparedResult);
+    }
+}

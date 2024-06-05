@@ -14,8 +14,8 @@ final class File
     public function __construct(
         public string $fileId,
         public string $fileUniqueId,
-        public ?int $fileSize,
-        public ?string $filePath,
+        public ?int $fileSize = null,
+        public ?string $filePath = null,
     ) {
     }
 

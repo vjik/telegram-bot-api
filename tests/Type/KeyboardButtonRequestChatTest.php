@@ -1,0 +1,109 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Tests\Type;
+
+use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
+use Vjik\TelegramBot\Api\Type\KeyboardButtonRequestChat;
+
+final class KeyboardButtonRequestChatTest extends TestCase
+{
+    public function testBase(): void
+    {
+        $keyboardButtonRequestChat = new KeyboardButtonRequestChat(1, true);
+
+        $this->assertSame(1, $keyboardButtonRequestChat->requestId);
+        $this->assertTrue($keyboardButtonRequestChat->chatIsChannel);
+        $this->assertNull($keyboardButtonRequestChat->chatIsForum);
+        $this->assertNull($keyboardButtonRequestChat->chatHasUsername);
+        $this->assertNull($keyboardButtonRequestChat->chatIsCreated);
+        $this->assertNull($keyboardButtonRequestChat->userAdministratorRights);
+        $this->assertNull($keyboardButtonRequestChat->botAdministratorRights);
+        $this->assertNull($keyboardButtonRequestChat->botIsMember);
+        $this->assertNull($keyboardButtonRequestChat->requestTitle);
+        $this->assertNull($keyboardButtonRequestChat->requestUsername);
+        $this->assertNull($keyboardButtonRequestChat->requestPhoto);
+
+        $this->assertSame(
+            [
+                'request_id' => 1,
+                'chat_is_channel' => true,
+            ],
+            $keyboardButtonRequestChat->toRequestArray(),
+        );
+    }
+
+    public function testFilled(): void
+    {
+        $userAdministratorRights = new ChatAdministratorRights(
+            true,
+            false,
+            true,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            true,
+            true,
+        );
+        $botAdministratorRights = new ChatAdministratorRights(
+            true,
+            false,
+            true,
+            true,
+            true,
+            false,
+            true,
+            false,
+            true,
+            true,
+            true,
+        );
+        $keyboardButtonRequestChat = new KeyboardButtonRequestChat(
+            1,
+            true,
+            false,
+            true,
+            true,
+            $userAdministratorRights,
+            $botAdministratorRights,
+            true,
+            false,
+            false,
+            true,
+        );
+
+        $this->assertSame(1, $keyboardButtonRequestChat->requestId);
+        $this->assertTrue($keyboardButtonRequestChat->chatIsChannel);
+        $this->assertFalse($keyboardButtonRequestChat->chatIsForum);
+        $this->assertTrue($keyboardButtonRequestChat->chatHasUsername);
+        $this->assertTrue($keyboardButtonRequestChat->chatIsCreated);
+        $this->assertSame($userAdministratorRights, $keyboardButtonRequestChat->userAdministratorRights);
+        $this->assertSame($botAdministratorRights, $keyboardButtonRequestChat->botAdministratorRights);
+        $this->assertTrue($keyboardButtonRequestChat->botIsMember);
+        $this->assertFalse($keyboardButtonRequestChat->requestTitle);
+        $this->assertFalse($keyboardButtonRequestChat->requestUsername);
+        $this->assertTrue($keyboardButtonRequestChat->requestPhoto);
+
+        $this->assertSame(
+            [
+                'request_id' => 1,
+                'chat_is_channel' => true,
+                'chat_is_forum' => false,
+                'chat_has_username' => true,
+                'chat_is_created' => true,
+                'user_administrator_rights' => $userAdministratorRights->toRequestArray(),
+                'bot_administrator_rights' => $botAdministratorRights->toRequestArray(),
+                'bot_is_member' => true,
+                'request_title' => false,
+                'request_username' => false,
+                'request_photo' => true,
+            ],
+            $keyboardButtonRequestChat->toRequestArray(),
+        );
+    }
+}

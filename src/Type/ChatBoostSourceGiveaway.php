@@ -13,8 +13,8 @@ final readonly class ChatBoostSourceGiveaway implements ChatBoostSource
 {
     public function __construct(
         public int $giveawayMessageId,
-        public ?User $user,
-        public ?true $isUnclaimed,
+        public ?User $user = null,
+        public ?true $isUnclaimed = null,
     ) {
     }
 

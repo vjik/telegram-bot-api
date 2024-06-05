@@ -17,10 +17,13 @@ final readonly class ForceReply
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'force_reply' => true,
-            'input_field_placeholder' => $this->inputFieldPlaceholder,
-            'selective' => $this->selective,
-        ]);
+        return array_filter(
+            [
+                'force_reply' => true,
+                'input_field_placeholder' => $this->inputFieldPlaceholder,
+                'selective' => $this->selective,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

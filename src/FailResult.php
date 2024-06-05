@@ -11,11 +11,11 @@ use Vjik\TelegramBot\Api\Type\ResponseParameters;
 final readonly class FailResult
 {
     public function __construct(
-        public ?string $description,
-        public mixed $error_code,
-        public ?ResponseParameters $parameters,
         public TelegramRequestInterface $request,
         public TelegramResponse $response,
+        public ?string $description = null,
+        public ?ResponseParameters $parameters = null,
+        public mixed $error_code = null,
     ) {
     }
 }

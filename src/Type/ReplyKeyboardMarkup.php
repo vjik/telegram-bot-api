@@ -25,19 +25,22 @@ final readonly class ReplyKeyboardMarkup
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'keyboard' => array_map(
-                static fn(array $buttons) => array_map(
-                    static fn(KeyboardButton $button) => $button->toRequestArray(),
-                    $buttons
+        return array_filter(
+            [
+                'keyboard' => array_map(
+                    static fn(array $buttons) => array_map(
+                        static fn(KeyboardButton $button) => $button->toRequestArray(),
+                        $buttons
+                    ),
+                    $this->keyboard
                 ),
-                $this->keyboard
-            ),
-            'is_persistent' => $this->isPersistent,
-            'resize_keyboard' => $this->resizeKeyboard,
-            'one_time_keyboard' => $this->oneTimeKeyboard,
-            'input_field_placeholder' => $this->inputFieldPlaceholder,
-            'selective' => $this->selective,
-        ]);
+                'is_persistent' => $this->isPersistent,
+                'resize_keyboard' => $this->resizeKeyboard,
+                'one_time_keyboard' => $this->oneTimeKeyboard,
+                'input_field_placeholder' => $this->inputFieldPlaceholder,
+                'selective' => $this->selective,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

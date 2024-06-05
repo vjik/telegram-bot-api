@@ -13,9 +13,9 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 final readonly class BusinessIntro
 {
     public function __construct(
-        public ?string $title,
-        public ?string $message,
-        public ?Sticker $sticker,
+        public ?string $title = null,
+        public ?string $message = null,
+        public ?Sticker $sticker = null,
     ) {
     }
 

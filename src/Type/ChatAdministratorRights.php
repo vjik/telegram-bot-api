@@ -30,22 +30,25 @@ final readonly class ChatAdministratorRights
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'is_anonymous' => $this->isAnonymous,
-            'can_manage_chat' => $this->canManageChat,
-            'can_delete_messages' => $this->canDeleteMessages,
-            'can_manage_video_chats' => $this->canManageVideoChats,
-            'can_restrict_members' => $this->canRestrictMembers,
-            'can_promote_members' => $this->canPromoteMembers,
-            'can_change_info' => $this->canChangeInfo,
-            'can_invite_users' => $this->canInviteUsers,
-            'can_post_stories' => $this->canPostStories,
-            'can_edit_stories' => $this->canEditStories,
-            'can_delete_stories' => $this->canDeleteStories,
-            'can_post_messages' => $this->canPostMessages,
-            'can_edit_messages' => $this->canEditMessages,
-            'can_pin_messages' => $this->canPinMessages,
-            'can_manage_topics' => $this->canManageTopics,
-        ]);
+        return array_filter(
+            [
+                'is_anonymous' => $this->isAnonymous,
+                'can_manage_chat' => $this->canManageChat,
+                'can_delete_messages' => $this->canDeleteMessages,
+                'can_manage_video_chats' => $this->canManageVideoChats,
+                'can_restrict_members' => $this->canRestrictMembers,
+                'can_promote_members' => $this->canPromoteMembers,
+                'can_change_info' => $this->canChangeInfo,
+                'can_invite_users' => $this->canInviteUsers,
+                'can_post_stories' => $this->canPostStories,
+                'can_edit_stories' => $this->canEditStories,
+                'can_delete_stories' => $this->canDeleteStories,
+                'can_post_messages' => $this->canPostMessages,
+                'can_edit_messages' => $this->canEditMessages,
+                'can_pin_messages' => $this->canPinMessages,
+                'can_manage_topics' => $this->canManageTopics,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

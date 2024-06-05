@@ -12,9 +12,9 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 final readonly class WriteAccessAllowed
 {
     public function __construct(
-        public ?bool $fromRequest,
-        public ?string $webAppName,
-        public ?bool $fromAttachmentMenu,
+        public ?bool $fromRequest = null,
+        public ?string $webAppName = null,
+        public ?bool $fromAttachmentMenu = null,
     ) {
     }
 

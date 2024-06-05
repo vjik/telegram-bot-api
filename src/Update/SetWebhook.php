@@ -34,14 +34,17 @@ final readonly class SetWebhook implements TelegramRequestWithResultPreparingInt
 
     public function getData(): array
     {
-        return array_filter([
-            'url' => $this->url,
-            'ip_address' => $this->ipAddress,
-            'max_connections' => $this->maxConnections,
-            'allowed_updates' => $this->allowUpdates,
-            'drop_pending_updates' => $this->dropPendingUpdates,
-            'secret_token' => $this->secretToken,
-        ]);
+        return array_filter(
+            [
+                'url' => $this->url,
+                'ip_address' => $this->ipAddress,
+                'max_connections' => $this->maxConnections,
+                'allowed_updates' => $this->allowUpdates,
+                'drop_pending_updates' => $this->dropPendingUpdates,
+                'secret_token' => $this->secretToken,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): true

@@ -20,11 +20,11 @@ final readonly class MessageReactionUpdated
     public function __construct(
         public Chat $chat,
         public int $messageId,
-        public ?User $user,
-        public ?Chat $actorChat,
         public DateTimeImmutable $date,
         public array $oldReaction,
         public array $newReaction,
+        public ?User $user = null,
+        public ?Chat $actorChat = null,
     ) {
     }
 
@@ -36,15 +36,15 @@ final readonly class MessageReactionUpdated
                 ? Chat::fromTelegramResult($result['chat'])
                 : throw new NotFoundKeyInResultException('chat'),
             ValueHelper::getInteger($result, 'message_id'),
+            ValueHelper::getDateTimeImmutable($result, 'date'),
+            ValueHelper::getArrayOfReactionTypes($result, 'old_reaction'),
+            ValueHelper::getArrayOfReactionTypes($result, 'new_reaction'),
             array_key_exists('user', $result)
                 ? User::fromTelegramResult($result['user'])
                 : null,
             array_key_exists('actor_chat', $result)
                 ? Chat::fromTelegramResult($result['actor_chat'])
                 : null,
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getArrayOfReactionTypes($result, 'old_reaction'),
-            ValueHelper::getArrayOfReactionTypes($result, 'new_reaction'),
         );
     }
 }

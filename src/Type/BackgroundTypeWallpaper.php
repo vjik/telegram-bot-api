@@ -13,8 +13,8 @@ final readonly class BackgroundTypeWallpaper implements BackgroundType
     public function __construct(
         public Document $document,
         public int $darkThemeDimming,
-        public ?true $isBlurred,
-        public ?true $isMoving,
+        public ?true $isBlurred = null,
+        public ?true $isMoving = null,
     ) {
     }
 

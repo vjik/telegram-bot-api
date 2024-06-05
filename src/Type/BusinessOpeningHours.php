@@ -25,7 +25,7 @@ final readonly class BusinessOpeningHours
         ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'time_zone_name'),
-            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'business_hours')
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'opening_hours')
         );
     }
 }

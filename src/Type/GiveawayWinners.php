@@ -22,12 +22,12 @@ final readonly class GiveawayWinners
         public DateTimeImmutable $winnersSelectionDate,
         public int $winnerCount,
         public array $winners,
-        public ?int $additionalChatCount,
-        public ?int $premiumSubscriptionMonthCount,
-        public ?int $unclaimedPrizeCount,
-        public ?true $onlyNewMembers,
-        public ?true $wasRefunded,
-        public ?string $prizeDescription,
+        public ?int $additionalChatCount = null,
+        public ?int $premiumSubscriptionMonthCount = null,
+        public ?int $unclaimedPrizeCount = null,
+        public ?true $onlyNewMembers = null,
+        public ?true $wasRefunded = null,
+        public ?string $prizeDescription = null,
     ) {
     }
 

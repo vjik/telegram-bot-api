@@ -13,13 +13,13 @@ final readonly class PollOption
 {
     /**
      * @param string $text
-     * @param MessageEntity[]|null $textEntities
      * @param int $voterCount
+     * @param MessageEntity[]|null $textEntities
      */
     public function __construct(
         public string $text,
-        public ?array $textEntities,
         public int $voterCount,
+        public ?array $textEntities = null,
     ) {
     }
 
@@ -28,8 +28,8 @@ final readonly class PollOption
         ValueHelper::assertArrayResult($result);
         return new self(
             ValueHelper::getString($result, 'text'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities'),
             ValueHelper::getInteger($result, 'voter_count'),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities'),
         );
     }
 }

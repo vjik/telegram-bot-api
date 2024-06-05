@@ -31,9 +31,12 @@ final readonly class GetChatMenuButton implements TelegramRequestWithResultPrepa
 
     public function getData(): array
     {
-        return array_filter([
-            'chat_id' => $this->chatId,
-        ]);
+        return array_filter(
+            [
+                'chat_id' => $this->chatId,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): MenuButton

@@ -17,10 +17,10 @@ final readonly class Animation
         public int $width,
         public int $height,
         public int $duration,
-        public ?PhotoSize $thumbnail,
-        public ?string $fileName,
-        public ?string $mimeType,
-        public ?int $fileSize,
+        public ?PhotoSize $thumbnail = null,
+        public ?string $fileName = null,
+        public ?string $mimeType = null,
+        public ?int $fileSize = null,
     ) {
     }
 

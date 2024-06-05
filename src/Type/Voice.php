@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Psalm\Internal\Type\ParseTree\Value;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 /**
@@ -16,8 +15,8 @@ final readonly class Voice
         public string $fileId,
         public string $fileUniqueId,
         public int $duration,
-        public ?string $mimeType,
-        public ?int $fileSize,
+        public ?string $mimeType = null,
+        public ?int $fileSize = null,
     ) {
     }
 

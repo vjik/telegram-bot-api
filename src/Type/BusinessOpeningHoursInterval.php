@@ -21,8 +21,8 @@ final readonly class BusinessOpeningHoursInterval
     {
         ValueHelper::assertArrayResult($result);
         return new self(
-            ValueHelper::getInteger($result, 'open_minute'),
-            ValueHelper::getInteger($result, 'close_minute')
+            ValueHelper::getInteger($result, 'opening_minute'),
+            ValueHelper::getInteger($result, 'closing_minute')
         );
     }
 }

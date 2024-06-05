@@ -25,17 +25,20 @@ final readonly class ReplyParameters
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'message_id' => $this->messageId,
-            'chat_id' => $this->chatId,
-            'allow_sending_without_reply' => $this->allowSendingWithoutReply,
-            'quote' => $this->quote,
-            'quote_parse_mode' => $this->quoteParseMode,
-            'quote_entities' => $this->quoteEntities === null ? null : array_map(
-                static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                $this->quoteEntities
-            ),
-            'quote_position' => $this->quotePosition,
-        ]);
+        return array_filter(
+            [
+                'message_id' => $this->messageId,
+                'chat_id' => $this->chatId,
+                'allow_sending_without_reply' => $this->allowSendingWithoutReply,
+                'quote' => $this->quote,
+                'quote_parse_mode' => $this->quoteParseMode,
+                'quote_entities' => $this->quoteEntities === null ? null : array_map(
+                    static fn(MessageEntity $entity) => $entity->toRequestArray(),
+                    $this->quoteEntities
+                ),
+                'quote_position' => $this->quotePosition,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 }

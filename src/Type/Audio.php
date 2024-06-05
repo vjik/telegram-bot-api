@@ -15,12 +15,12 @@ final readonly class Audio
         public string $fileId,
         public string $fileUniqueId,
         public int $duration,
-        public ?string $performer,
-        public ?string $title,
-        public ?string $fileName,
-        public ?string $mimeType,
-        public ?int $fileSize,
-        public ?PhotoSize $thumbnail,
+        public ?string $performer = null,
+        public ?string $title = null,
+        public ?string $fileName = null,
+        public ?string $mimeType = null,
+        public ?int $fileSize = null,
+        public ?PhotoSize $thumbnail = null,
     ) {
     }
 

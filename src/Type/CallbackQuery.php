@@ -15,11 +15,11 @@ final readonly class CallbackQuery
     public function __construct(
         public string $id,
         public User $from,
-        public Message|InaccessibleMessage|null $message,
-        public ?string $inlineMessageId,
         public string $chatInstance,
-        public ?string $data,
-        public ?string $gameShortName,
+        public Message|InaccessibleMessage|null $message = null,
+        public ?string $inlineMessageId = null,
+        public ?string $data = null,
+        public ?string $gameShortName = null,
     ) {
     }
 
@@ -31,11 +31,11 @@ final readonly class CallbackQuery
             array_key_exists('from', $result)
                 ? User::fromTelegramResult($result['from'])
                 : throw new NotFoundKeyInResultException('from'),
+            ValueHelper::getString($result, 'chat_instance'),
             array_key_exists('message', $result)
                 ? MaybeInaccessibleMessageFactory::fromTelegramResult($result['message'])
-                : throw new NotFoundKeyInResultException('message'),
+                : null,
             ValueHelper::getStringOrNull($result, 'inline_message_id'),
-            ValueHelper::getString($result, 'chat_instance'),
             ValueHelper::getStringOrNull($result, 'data'),
             ValueHelper::getStringOrNull($result, 'game_short_name'),
         );

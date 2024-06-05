@@ -21,9 +21,9 @@ final readonly class BotCommandScopeChat implements BotCommandScope
 
     public function toRequestArray(): array
     {
-        return array_filter([
+        return [
             'type' => $this->getType(),
             'chat_id' => $this->chatId,
-        ]);
+        ];
     }
 }

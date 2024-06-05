@@ -48,22 +48,25 @@ final readonly class SendLocation implements TelegramRequestWithResultPreparingI
 
     public function getData(): array
     {
-        return array_filter([
-            'business_connection_id' => $this->businessConnectionId,
-            'chat_id' => $this->chatId,
-            'message_thread_id' => $this->messageThreadId,
-            'latitude' => $this->latitude,
-            'longitude' => $this->longitude,
-            'horizontal_accuracy' => $this->horizontalAccuracy,
-            'live_period' => $this->livePeriod,
-            'heading' => $this->heading,
-            'proximity_alert_radius' => $this->proximityAlertRadius,
-            'disable_notification' => $this->disableNotification,
-            'protect_content' => $this->protectContent,
-            'message_effect_id' => $this->messageEffectId,
-            'reply_parameters' => $this->replyParameters?->toRequestArray(),
-            'reply_markup' => $this->replyMarkup?->toRequestArray(),
-        ]);
+        return array_filter(
+            [
+                'business_connection_id' => $this->businessConnectionId,
+                'chat_id' => $this->chatId,
+                'message_thread_id' => $this->messageThreadId,
+                'latitude' => $this->latitude,
+                'longitude' => $this->longitude,
+                'horizontal_accuracy' => $this->horizontalAccuracy,
+                'live_period' => $this->livePeriod,
+                'heading' => $this->heading,
+                'proximity_alert_radius' => $this->proximityAlertRadius,
+                'disable_notification' => $this->disableNotification,
+                'protect_content' => $this->protectContent,
+                'message_effect_id' => $this->messageEffectId,
+                'reply_parameters' => $this->replyParameters?->toRequestArray(),
+                'reply_markup' => $this->replyMarkup?->toRequestArray(),
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public function prepareResult(mixed $result): Message

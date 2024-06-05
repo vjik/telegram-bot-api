@@ -28,18 +28,21 @@ final readonly class InlineKeyboardButton
 
     public function toRequestArray(): array
     {
-        return array_filter([
-            'text' => $this->text,
-            'url' => $this->url,
-            'callback_data' => $this->callbackData,
-            'web_app' => $this->webApp?->toRequestArray(),
-            'login_url' => $this->loginUrl?->toRequestArray(),
-            'switch_inline_query' => $this->switchInlineQuery,
-            'switch_inline_query_current_chat' => $this->switchInlineQueryCurrentChat,
-            'switch_inline_query_chosen_chat' => $this->switchInlineQueryChosenChat?->toRequestArray(),
-            'callback_game' => $this->callbackGame?->toRequestArray(),
-            'pay' => $this->pay,
-        ]);
+        return array_filter(
+            [
+                'text' => $this->text,
+                'url' => $this->url,
+                'callback_data' => $this->callbackData,
+                'web_app' => $this->webApp?->toRequestArray(),
+                'login_url' => $this->loginUrl?->toRequestArray(),
+                'switch_inline_query' => $this->switchInlineQuery,
+                'switch_inline_query_current_chat' => $this->switchInlineQueryCurrentChat,
+                'switch_inline_query_chosen_chat' => $this->switchInlineQueryChosenChat?->toRequestArray(),
+                'callback_game' => $this->callbackGame?->toRequestArray(),
+                'pay' => $this->pay,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
     }
 
     public static function fromTelegramResult(mixed $result): self

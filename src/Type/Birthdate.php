@@ -14,7 +14,7 @@ final readonly class Birthdate
     public function __construct(
         public int $day,
         public int $month,
-        public ?int $year,
+        public ?int $year = null,
     ) {
     }
 
