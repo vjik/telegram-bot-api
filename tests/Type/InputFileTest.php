@@ -27,4 +27,20 @@ final class InputFileTest extends TestCase
         $this->assertSame($stream, $file->resource);
         $this->assertSame('file.txt', $file->filename);
     }
+
+    public function testFromLocalFile(): void
+    {
+        $file = InputFile::fromLocalFile(__FILE__);
+
+        $this->assertIsResource($file->resource);
+        $this->assertNull($file->filename);
+    }
+
+    public function testFromLocalFileWithName(): void
+    {
+        $file = InputFile::fromLocalFile(__FILE__, 'test.php');
+
+        $this->assertIsResource($file->resource);
+        $this->assertSame('test.php', $file->filename);
+    }
 }
