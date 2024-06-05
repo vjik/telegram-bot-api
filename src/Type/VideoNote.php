@@ -16,8 +16,8 @@ final readonly class VideoNote
         public string $fileUniqueId,
         public int $length,
         public int $duration,
-        public ?PhotoSize $thumbnail,
-        public ?int $fileSize,
+        public ?PhotoSize $thumbnail = null,
+        public ?int $fileSize = null,
     ) {
     }
 

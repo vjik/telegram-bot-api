@@ -16,10 +16,10 @@ final readonly class Venue
         public Location $location,
         public string $title,
         public string $address,
-        public ?string $foursquareId,
-        public ?string $foursquareType,
-        public ?string $googlePlaceId,
-        public ?string $googlePlaceType,
+        public ?string $foursquareId = null,
+        public ?string $foursquareType = null,
+        public ?string $googlePlaceId = null,
+        public ?string $googlePlaceType = null,
     ) {
     }
 
