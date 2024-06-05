@@ -17,7 +17,6 @@ use Vjik\TelegramBot\Api\Type\ChatMemberRestricted;
 
 final class ChatMemberFactoryTest extends TestCase
 {
-
     public static function dataBase(): array
     {
         return [
