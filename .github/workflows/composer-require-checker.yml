@@ -1,13 +1,12 @@
 on:
   pull_request:
   push:
-    branches:
-      - master
+    branches: [ 'master' ]
 
-name: static analysis
+name: Composer require checker
 
 jobs:
-  mutation:
+  composer-require-checker:
     name: PHP ${{ matrix.php }}-${{ matrix.os }}
 
     runs-on: ${{ matrix.os }}
@@ -27,15 +26,15 @@ jobs:
       - name: Install PHP with extensions.
         uses: shivammathur/setup-php@v2
         with:
-          coverage: none
           php-version: ${{ matrix.php }}
-          tools: composer:v2, cs2pr
+          tools: composer:v2
+          coverage: none
 
       - name: Determine composer cache directory on Linux.
         run: echo "COMPOSER_CACHE_DIR=$(composer config cache-dir)" >> $GITHUB_ENV
 
       - name: Cache dependencies installed with composer.
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: ${{ env.COMPOSER_CACHE_DIR }}
           key: php${{ matrix.php }}-composer-${{ hashFiles('composer.json') }}
@@ -48,5 +47,5 @@ jobs:
       - name: Install dependencies with composer.
         run: composer update --prefer-dist --no-interaction --no-progress --optimize-autoloader --ansi
 
-      - name: Static analysis.
-        run: vendor/bin/psalm --shepherd --stats --output-format=checkstyle --php-version=${{ matrix.php }} | cs2pr --graceful-warnings --colorize
+      - name: Check dependencies.
+        run: vendor/bin/composer-require-checker

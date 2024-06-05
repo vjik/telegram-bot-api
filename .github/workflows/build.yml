@@ -16,7 +16,6 @@ jobs:
         os:
           - ubuntu-latest
           - windows-latest
-
         php:
           - "8.2"
           - "8.3"

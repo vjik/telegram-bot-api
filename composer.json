@@ -17,10 +17,12 @@
         "php": "^8.2",
         "php-http/multipart-stream-builder": "^1.3",
         "psr/http-client": "^1.0",
-        "psr/http-factory": "^1.1"
+        "psr/http-factory": "^1.1",
+        "psr/http-message": "^1.1|^2.0"
     },
     "require-dev": {
         "httpsoft/http-message": "^1.1",
+        "maglnet/composer-require-checker": "^4.11",
         "php-http/curl-client": "^2.3",
         "phpunit/phpunit": "^10.5",
         "roave/infection-static-analysis-plugin": "^1.35",
