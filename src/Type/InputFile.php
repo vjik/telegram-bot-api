@@ -19,4 +19,9 @@ final readonly class InputFile
         public ?string $filename = null,
     ) {
     }
+
+    public static function fromLocalFile(string $path, ?string $filename = null): self
+    {
+        return new self(fopen($path, 'r'), $filename);
+    }
 }

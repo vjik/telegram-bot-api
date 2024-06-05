@@ -53,7 +53,7 @@ $api->sendMessage(
 // Send local photo
 $api->sendPhoto(
     chatId: 22351, 
-    photo: new InputFile(fopen('/path/to/photo.jpg', 'r')),
+    photo: InputFile::fromLocalFile('/path/to/photo.jpg'),
 );
 ```
 
