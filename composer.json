@@ -9,8 +9,8 @@
     ],
     "license": "BSD-3-Clause",
     "support": {
-        "issues": "https://github.com/vjik/php-telegram-bot-api/issues?state=open",
-        "source": "https://github.com/vjik/php-telegram-bot-api"
+        "issues": "https://github.com/vjik/telegram-bot-api/issues?state=open",
+        "source": "https://github.com/vjik/telegram-bot-api"
     },
     "minimum-stability": "stable",
     "require": {

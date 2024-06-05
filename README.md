@@ -1,14 +1,14 @@
-# Vjik Telegram Bot API
+# Telegram Bot API for PHP
 
 [![Latest Stable Version](https://poser.pugx.org/vjik/telegram-bot-api/v/stable.png)](https://packagist.org/packages/vjik/telegram-bot-api)
 [![Total Downloads](https://poser.pugx.org/vjik/telegram-bot-api/downloads.png)](https://packagist.org/packages/vjik/telegram-bot-api)
-[![Build status](https://github.com/vjik/php-telegram-bot-api/workflows/build/badge.svg)](https://github.com/vjik/php-telegram-bot-api/actions?query=workflow%3Abuild)
-[![Code coverage](https://codecov.io/gh/vjik/php-telegram-bot-api/graph/badge.svg?token=5SV9NWKMQZ)](https://codecov.io/gh/vjik/php-telegram-bot-api)
-[![type-coverage](https://shepherd.dev/github/vjik/php-telegram-bot-api/coverage.svg)](https://shepherd.dev/github/vjik/php-telegram-bot-api)
-[![static analysis](https://github.com/vjik/php-telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/php-telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
-[![psalm-level](https://shepherd.dev/github/vjik/php-telegram-bot-api/level.svg)](https://shepherd.dev/github/vjik/php-telegram-bot-api)
+[![Build status](https://github.com/vjik/telegram-bot-api/workflows/build/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3Abuild)
+[![Code coverage](https://codecov.io/gh/vjik/telegram-bot-api/graph/badge.svg?token=5SV9NWKMQZ)](https://codecov.io/gh/vjik/telegram-bot-api)
+[![type-coverage](https://shepherd.dev/github/vjik/telegram-bot-api/coverage.svg)](https://shepherd.dev/github/vjik/telegram-bot-api)
+[![static analysis](https://github.com/vjik/telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
+[![psalm-level](https://shepherd.dev/github/vjik/telegram-bot-api/level.svg)](https://shepherd.dev/github/vjik/telegram-bot-api)
 
-The package ...
+The package provides a simple and convenient way to interact with the Telegram Bot API.
 
 ## Requirements
 
