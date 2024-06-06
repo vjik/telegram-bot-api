@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Update;
 
+use JsonException;
+use Psr\Http\Message\ServerRequestInterface;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\BusinessMessagesDeleted;
@@ -126,5 +129,31 @@ final readonly class Update
                 ? ChatBoostRemoved::fromTelegramResult($result['removed_chat_boost'])
                 : null,
         );
+    }
+
+    /**
+     * Create a new `Update` object from JSON string.
+     *
+     * @throws TelegramParseResultException
+     */
+    public static function fromJson(string $json): Update
+    {
+        try {
+            $decodedJson = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
+        }
+
+        return self::fromTelegramResult($decodedJson);
+    }
+
+    /**
+     * Create a new `Update` object from PSR-7 server request.
+     *
+     * @throws TelegramParseResultException
+     */
+    public static function fromServerRequest(ServerRequestInterface $request): Update
+    {
+        return self::fromJson((string) $request->getBody());
     }
 }

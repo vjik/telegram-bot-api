@@ -4,7 +4,11 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Update;
 
+use HttpSoft\Message\StreamTrait;
 use PHPUnit\Framework\TestCase;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Message\StreamInterface;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Update\Update;
 
 final class UpdateTest extends TestCase
@@ -338,5 +342,37 @@ final class UpdateTest extends TestCase
         $this->assertSame(71326, $update->chatJoinRequest?->chat->id);
         $this->assertSame(23682, $update->chatBoost?->chat->id);
         $this->assertSame(1735, $update->removedChatBoost?->chat->id);
+    }
+
+    public function testFromJsonString(): void
+    {
+        $update = Update::fromJson('{"update_id":33990940}');
+        $this->assertSame(33990940, $update->updateId);
+
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Failed to decode JSON.');
+        Update::fromJson('asdf{');
+    }
+
+    public function testFromServerRequest(): void
+    {
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getBody')->willReturn(
+            new class () implements StreamInterface {
+                use StreamTrait;
+
+                public function __toString(): string
+                {
+                    return '{"update_id":33990940}';
+                }
+            }
+        );
+
+        $update = Update::fromServerRequest($request);
+        $this->assertSame(33990940, $update->updateId);
+
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Failed to decode JSON.');
+        Update::fromJson('asdf{');
     }
 }

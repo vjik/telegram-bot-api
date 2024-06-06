@@ -111,6 +111,32 @@ $result = $api->send($request);
 
 I'm gradually adding new methods, but you can also help with this by creating a pull request.
 
+### Create `Update` object on webhook
+
+You can create an `Update` object from the incoming webhook PSR-7 request:
+
+```php
+use Vjik\TelegramBot\Api\Update\Update;
+
+try {
+    $update = Update::fromServerRequest($request);
+} catch (TelegramParseResultException $e) {
+    // ... 
+}
+```
+
+or from JSON string received from POST request body:
+
+```php
+use Vjik\TelegramBot\Api\Update\Update;
+
+try {
+    $update = Update::fromJson($jsonString);
+} catch (TelegramParseResultException $e) {
+    // ... 
+}
+```
+
 ## Documentation
 
 - [Internals](docs/internals.md)
