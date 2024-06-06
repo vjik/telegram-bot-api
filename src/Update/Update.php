@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Update;
 
+use JsonException;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\BusinessMessagesDeleted;
@@ -133,8 +135,12 @@ final readonly class Update
      */
     public static function fromJson(string $json): Update
     {
-        return self::fromTelegramResult(
-            json_decode($json, true, flags: JSON_THROW_ON_ERROR)
-        );
+        try {
+            $decodedJson = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $e) {
+            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
+        }
+
+        return self::fromTelegramResult($decodedJson);
     }
 }
