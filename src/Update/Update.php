@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Update;
 
 use JsonException;
+use Psr\Http\Message\ServerRequestInterface;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
@@ -142,5 +143,13 @@ final readonly class Update
         }
 
         return self::fromTelegramResult($decodedJson);
+    }
+
+    /**
+     * Create a new `Update` object from PSR-7 server request.
+     */
+    public static function fromServerRequest(ServerRequestInterface $request): Update
+    {
+        return self::fromJson((string) $request->getBody());
     }
 }
