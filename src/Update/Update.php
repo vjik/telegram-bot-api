@@ -127,4 +127,14 @@ final readonly class Update
                 : null,
         );
     }
+
+    /**
+     * Create a new `Update` object from JSON string.
+     */
+    public static function fromJson(string $json): Update
+    {
+        return self::fromTelegramResult(
+            json_decode($json, true, flags: JSON_THROW_ON_ERROR)
+        );
+    }
 }
