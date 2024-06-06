@@ -133,6 +133,8 @@ final readonly class Update
 
     /**
      * Create a new `Update` object from JSON string.
+     *
+     * @throws TelegramParseResultException
      */
     public static function fromJson(string $json): Update
     {
@@ -147,6 +149,8 @@ final readonly class Update
 
     /**
      * Create a new `Update` object from PSR-7 server request.
+     *
+     * @throws TelegramParseResultException
      */
     public static function fromServerRequest(ServerRequestInterface $request): Update
     {
