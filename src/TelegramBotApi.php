@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
@@ -219,6 +220,27 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->send(new GetWebhookInfo());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendchataction
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendChatAction(
+        int|string $chatId,
+        string $action,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+    ): FailResult|true {
+        return $this->send(
+            new SendChatAction(
+                $chatId,
+                $action,
+                $businessConnectionId,
+                $messageThreadId
+            )
+        );
     }
 
     /**
