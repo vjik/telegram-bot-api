@@ -15,9 +15,11 @@ use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
+use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
@@ -220,6 +222,37 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#senddice
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendDice(
+        int|string $chatId,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $emoji = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendDice(
+                $chatId,
+                $businessConnectionId,
+                $messageThreadId,
+                $emoji,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#sendlocation
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -333,6 +366,51 @@ final class TelegramBotApi
                 $captionEntities,
                 $showCaptionAboveMedia,
                 $hasSpoiler,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendvenue
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendVenue(
+        int|string $chatId,
+        float $latitude,
+        float $longitude,
+        string $title,
+        string $address,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $foursquareId = null,
+        ?string $foursquareType = null,
+        ?string $googlePlaceId = null,
+        ?string $googlePlaceType = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendVenue(
+                $chatId,
+                $latitude,
+                $longitude,
+                $title,
+                $address,
+                $businessConnectionId,
+                $messageThreadId,
+                $foursquareId,
+                $foursquareType,
+                $googlePlaceId,
+                $googlePlaceType,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
