@@ -3,15 +3,15 @@
 ## Manual testing with real telegram bot API
 
 - Open directory `/tests/RealTelegramApi/`.
-- Copy `token.dist.php` to `token.php`.
-- Add your bot authentication token to `token.php`, for example:
+- Copy `RealTelegramApiTest.dist.php` to `RealTelegramApiTest.php`.
+- Add your bot authentication token to constant `TOKEN` in `RealTelegramApiTest.php`, for example:
 
 ```php
-<?php
-
-declare(strict_types=1);
-
-return '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
+// ...
+final class RealTelegramApiTest extends TestCase
+{
+    private const TOKEN = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
+// ...
 ```
 
 - Put your test code into `testBase()` method in `RealTelegramApiTest.php`.

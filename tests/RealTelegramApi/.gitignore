@@ -1,1 +1,3 @@
-token.php
+*
+!.gitignore
+!RealTelegramApiTest.dist.php
