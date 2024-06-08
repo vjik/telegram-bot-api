@@ -288,6 +288,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https://example.com/', $result->url);
     }
 
+    public function testSendChatAction(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->sendChatAction(12, 'typing');
+
+        $this->assertTrue($result);
+    }
+
     public function testSendDice(): void
     {
         $api = $this->createApi([
