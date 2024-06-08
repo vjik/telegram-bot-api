@@ -18,6 +18,8 @@ use Vjik\TelegramBot\Api\TelegramBotApi;
  */
 final class RealTelegramApiTest extends TestCase
 {
+    private const TOKEN = '';
+
     public function testBase(): void
     {
         $api = $this->createApi();
@@ -29,11 +31,10 @@ final class RealTelegramApiTest extends TestCase
 
     private function createApi(): TelegramBotApi
     {
-        $tokenPath = __DIR__ . '/token.php';
         $streamFactory = new StreamFactory();
         return new TelegramBotApi(
             new PsrTelegramClient(
-                file_exists($tokenPath) ? require $tokenPath : '',
+                self::TOKEN,
                 new Client(
                     new ResponseFactory(),
                     $streamFactory,
