@@ -14,22 +14,15 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
- * @see https://core.telegram.org/bots/api#sendvenue
+ * @see https://core.telegram.org/bots/api#senddice
  */
-final readonly class SendVenue implements TelegramRequestWithResultPreparingInterface
+final readonly class SendDice implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
         private int|string $chatId,
-        private float $latitude,
-        private float $longitude,
-        private string $title,
-        private string $address,
         private ?string $businessConnectionId = null,
         private ?int $messageThreadId = null,
-        private ?string $foursquareId = null,
-        private ?string $foursquareType = null,
-        private ?string $googlePlaceId = null,
-        private ?string $googlePlaceType = null,
+        private ?string $emoji = null,
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
         private ?string $messageEffectId = null,
@@ -45,7 +38,7 @@ final readonly class SendVenue implements TelegramRequestWithResultPreparingInte
 
     public function getApiMethod(): string
     {
-        return 'sendVenue';
+        return 'sendDice';
     }
 
     public function getData(): array
@@ -55,14 +48,7 @@ final readonly class SendVenue implements TelegramRequestWithResultPreparingInte
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
-                'latitude' => $this->latitude,
-                'longitude' => $this->longitude,
-                'title' => $this->title,
-                'address' => $this->address,
-                'foursquare_id' => $this->foursquareId,
-                'foursquare_type' => $this->foursquareType,
-                'google_place_id' => $this->googlePlaceId,
-                'google_place_type' => $this->googlePlaceType,
+                'emoji' => $this->emoji,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'message_effect_id' => $this->messageEffectId,
@@ -73,7 +59,7 @@ final readonly class SendVenue implements TelegramRequestWithResultPreparingInte
         );
     }
 
-    public function prepareResult(mixed $result): Message
+    public function prepareResult(mixed $result): mixed
     {
         return Message::fromTelegramResult($result);
     }
