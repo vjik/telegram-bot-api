@@ -10,7 +10,8 @@
     "license": "BSD-3-Clause",
     "support": {
         "issues": "https://github.com/vjik/telegram-bot-api/issues?state=open",
-        "source": "https://github.com/vjik/telegram-bot-api"
+        "source": "https://github.com/vjik/telegram-bot-api",
+        "chat": "https://t.me/predvoditelev_chat"
     },
     "minimum-stability": "stable",
     "require": {

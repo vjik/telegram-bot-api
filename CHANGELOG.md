@@ -1,5 +1,5 @@
 # Telegram Bot API for PHP Change Log
 
-## 1.0.0 under development
+## 0.1.0 June 10, 2024 
 
 - Initial release.

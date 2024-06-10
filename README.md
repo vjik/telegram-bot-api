@@ -141,6 +141,8 @@ try {
 
 - [Internals](docs/internals.md)
 
+If you have any questions or problems with the package, use [author telegram chat](https://t.me/predvoditelev_chat) for communication.
+
 ## License
 
 The `vjik/telegram-bot-api` is free software. It is released under the terms of the BSD License.
