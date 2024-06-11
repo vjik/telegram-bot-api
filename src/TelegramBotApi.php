@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
+use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
@@ -239,6 +240,44 @@ final class TelegramBotApi
                 $action,
                 $businessConnectionId,
                 $messageThreadId
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendcontact
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendContact(
+        int|string $chatId,
+        string $phoneNumber,
+        string $firstName,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $lastName = null,
+        ?string $vcard = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message
+    {
+        return $this->send(
+            new SendContact(
+                $chatId,
+                $phoneNumber,
+                $firstName,
+                $businessConnectionId,
+                $messageThreadId,
+                $lastName,
+                $vcard,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
             )
         );
     }
