@@ -20,6 +20,7 @@ use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Update\Update;
 use Vjik\TelegramBot\Api\Update\WebhookInfo;
 
@@ -269,6 +270,31 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(Update::class, $result[1]);
         $this->assertSame(1, $result[0]->updateId);
         $this->assertSame(2, $result[1]->updateId);
+    }
+
+    public function testGetUserProfilePhotos(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'total_count' => 1,
+                'photos' => [
+                    [
+                        [
+                            'file_id' => 'f1',
+                            'file_unique_id' => 'fullX1',
+                            'file_size' => 123,
+                            'width' => 100,
+                            'height' => 200,
+                        ],
+                    ],
+                ],
+            ],
+        ]);
+
+        $result = $api->getUserProfilePhotos(7);
+
+        $this->assertInstanceOf(UserProfilePhotos::class, $result);
     }
 
     public function testGetWebhookInfo(): void

@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
@@ -49,6 +50,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Update\DeleteWebhook;
 use Vjik\TelegramBot\Api\Update\GetUpdates;
 use Vjik\TelegramBot\Api\Update\GetWebhookInfo;
@@ -211,6 +213,21 @@ final class TelegramBotApi
         ?array $allowedUpdates = null,
     ): FailResult|array {
         return $this->send(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getuserprofilephotos
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getUserProfilePhotos(
+        int $userId,
+        ?int $offset = null,
+        ?int $limit = null
+    ): FailResult|UserProfilePhotos {
+        return $this->send(
+            new GetUserProfilePhotos($userId, $offset, $limit)
+        );
     }
 
     /**
