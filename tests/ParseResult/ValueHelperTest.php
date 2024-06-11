@@ -1099,4 +1099,78 @@ final class ValueHelperTest extends TestCase
             $exception->getMessage()
         );
     }
+
+    public function testGetArrayOfArrayOfPhotoSize(): void
+    {
+
+        $result = [
+            'key' => [
+                [
+                    [
+                        'file_id' => 'f1',
+                        'file_unique_id' => 'fu1',
+                        'width' => 100,
+                        'height' => 200,
+                    ],
+                ],
+                [
+                    [
+                        'file_id' => 'f2',
+                        'file_unique_id' => 'fu2',
+                        'width' => 1,
+                        'height' => 2,
+                    ],
+                ],
+            ],
+            'array-of-array-of-ints' => [[1], [2]],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [[new PhotoSize('f1','fu1',100,200)], [new PhotoSize('f2','fu2', 1,2)]],
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'array-of-array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "array-of-ints". Expected type is "array[]", but got "array".',
+            $exception->getMessage()
+        );
+    }
 }

@@ -421,4 +421,20 @@ final class ValueHelper
             $arrayOfArrays
         );
     }
+
+    /**
+     * @return array[]
+     * @psalm-return array<array-key, array<array-key, PhotoSize>>
+     */
+    public static function getArrayOfArrayOfPhotoSize(array $result, string $key): array
+    {
+        $arrayOfArrays = ValueHelper::getArrayOfArrays($result, $key);
+        return array_map(
+            static fn(array $array) => array_map(
+                static fn($item) => PhotoSize::fromTelegramResult($item),
+                $array
+            ),
+            $arrayOfArrays
+        );
+    }
 }
