@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api;
 
+use DateTimeImmutable;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
@@ -22,6 +23,7 @@ use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
+use Vjik\TelegramBot\Api\Method\SendPoll;
 use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
@@ -41,6 +43,7 @@ use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
+use Vjik\TelegramBot\Api\Type\InputPollOption;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -444,6 +447,67 @@ final class TelegramBotApi
                 $captionEntities,
                 $showCaptionAboveMedia,
                 $hasSpoiler,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @param InputPollOption[] $options
+     * @param MessageEntity[]|null $questionEntities
+     * @param MessageEntity[]|null $explanationEntities
+     *
+     * @see https://core.telegram.org/bots/api#sendpoll
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendPoll(
+        int|string $chatId,
+        string $question,
+        array $options,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $questionParseMode = null,
+        ?array $questionEntities = null,
+        ?bool $isAnonymous = null,
+        ?string $type = null,
+        ?bool $allowsMultipleAnswers = null,
+        ?int $correctOptionId = null,
+        ?string $explanation = null,
+        ?string $explanationParseMode = null,
+        ?array $explanationEntities = null,
+        ?int $openPeriod = null,
+        ?DateTimeImmutable $closeDate = null,
+        ?bool $isClosed = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendPoll(
+                $chatId,
+                $question,
+                $options,
+                $businessConnectionId,
+                $messageThreadId,
+                $questionParseMode,
+                $questionEntities,
+                $isAnonymous,
+                $type,
+                $allowsMultipleAnswers,
+                $correctOptionId,
+                $explanation,
+                $explanationParseMode,
+                $explanationEntities,
+                $openPeriod,
+                $closeDate,
+                $isClosed,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
