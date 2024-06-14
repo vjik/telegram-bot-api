@@ -17,6 +17,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
@@ -241,6 +242,54 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->send(new GetWebhookInfo());
+    }
+
+    /**
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @see https://core.telegram.org/bots/api#sendaudio
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendAudio(
+        int|string $chatId,
+        string|InputFile $audio,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?string $performer = null,
+        ?string $title = null,
+        string|InputFile|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message
+    {
+        return $this->send(
+            new SendAudio(
+                $chatId,
+                $audio,
+                $businessConnectionId,
+                $messageThreadId,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $duration,
+                $performer,
+                $title,
+                $thumbnail,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
     }
 
     /**
