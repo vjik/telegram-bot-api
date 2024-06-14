@@ -6,6 +6,7 @@
 - New #17: Add `getUserProfilePhotos` method and `UserProfilePhotos` type.
 - New #18: Add `sendPoll` method and `InputPollOption` type.
 - New #19: Add `sendAudio` method.
+- New #20: Add `sendDocument` method.
 
 ## 0.1.0 June 10, 2024 
 
