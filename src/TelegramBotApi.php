@@ -21,6 +21,7 @@ use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
+use Vjik\TelegramBot\Api\Method\SendDocument;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
@@ -373,6 +374,49 @@ final class TelegramBotApi
                 $businessConnectionId,
                 $messageThreadId,
                 $emoji,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @see https://core.telegram.org/bots/api#senddocument
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendDocument(
+        int|string $chatId,
+        string|InputFile $document,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        string|InputFile|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $disableContentTypeDetection = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendDocument(
+                $chatId,
+                $document,
+                $businessConnectionId,
+                $messageThreadId,
+                $thumbnail,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $disableContentTypeDetection,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,

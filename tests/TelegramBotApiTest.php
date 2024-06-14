@@ -386,6 +386,26 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(7, $result->messageId);
     }
 
+    public function testSendDocument(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_id' => 7,
+                'date' => 1620000000,
+                'chat' => [
+                    'id' => 1,
+                    'type' => 'private',
+                ],
+            ],
+        ]);
+
+        $result = $api->sendDocument(12, 'https://example.com/file.doc');
+
+        $this->assertInstanceOf(Message::class, $result);
+        $this->assertSame(7, $result->messageId);
+    }
+
     public function testSendLocation(): void
     {
         $api = $this->createApi([
