@@ -27,6 +27,7 @@ use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
 use Vjik\TelegramBot\Api\Method\SendPoll;
 use Vjik\TelegramBot\Api\Method\SendVenue;
+use Vjik\TelegramBot\Api\Method\SendVideo;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
@@ -646,6 +647,59 @@ final class TelegramBotApi
                 $foursquareType,
                 $googlePlaceId,
                 $googlePlaceType,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @see https://core.telegram.org/bots/api#sendvideo
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendVideo(
+        int|string $chatId,
+        string|InputFile $video,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        string|InputFile|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $supportsStreaming = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendVideo(
+                $chatId,
+                $video,
+                $businessConnectionId,
+                $messageThreadId,
+                $duration,
+                $width,
+                $height,
+                $thumbnail,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $showCaptionAboveMedia,
+                $hasSpoiler,
+                $supportsStreaming,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
