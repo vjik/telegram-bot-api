@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
+use Vjik\TelegramBot\Api\Type\Payments\StarTransaction;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionType;
@@ -389,6 +390,18 @@ final class ValueHelper
         return array_map(
             static fn($item) => BusinessOpeningHoursInterval::fromTelegramResult($item),
             $intervals
+        );
+    }
+
+    /**
+     * @return StarTransaction[]
+     */
+    public static function getArrayOfStarTransactions(array $result, string $key): array
+    {
+        $transactions = ValueHelper::getArray($result, $key);
+        return array_map(
+            static fn($item) => StarTransaction::fromTelegramResult($item),
+            $transactions
         );
     }
 

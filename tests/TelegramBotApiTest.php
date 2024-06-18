@@ -19,6 +19,7 @@ use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
+use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Update\Update;
@@ -250,6 +251,20 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(BotShortDescription::class, $result);
         $this->assertSame('test', $result->shortDescription);
+    }
+
+    public function testGetStarTransactions(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'transactions' => [],
+            ],
+        ]);
+
+        $result = $api->getStarTransactions();
+
+        $this->assertInstanceOf(StarTransactions::class, $result);
     }
 
     public function testGetUpdates(): void
