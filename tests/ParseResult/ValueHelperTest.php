@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
+use Vjik\TelegramBot\Api\Type\Payments\StarTransaction;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
@@ -989,6 +990,56 @@ final class ValueHelperTest extends TestCase
         $exception = null;
         try {
             ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfStarTransactions(): void
+    {
+        $result = [
+            'key' => [
+                ['id' => 'i1', 'amount' => 2, 'date' => 1717498851],
+                ['id' => 'i2', 'amount' => 3, 'date' => 1717498852],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [
+                new StarTransaction('i1', 2, new DateTimeImmutable('@1717498851')),
+                new StarTransaction('i2', 3, new DateTimeImmutable('@1717498852')),
+            ],
+            ValueHelper::getArrayOfStarTransactions($result, 'key'),
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStarTransactions($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStarTransactions($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStarTransactions($result, 'array-of-ints');
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);

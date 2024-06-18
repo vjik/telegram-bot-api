@@ -17,6 +17,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendContact;
@@ -51,6 +52,7 @@ use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
@@ -202,6 +204,18 @@ final class TelegramBotApi
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
         return $this->send(new GetMyShortDescription($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getstartransactions
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getStarTransactions(?int $offset = null, ?int $limit = null): FailResult|StarTransactions
+    {
+        return $this->send(
+            new GetStarTransactions($offset, $limit)
+        );
     }
 
     /**
