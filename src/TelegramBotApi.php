@@ -17,6 +17,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
@@ -258,6 +259,16 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->send(new GetWebhookInfo());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#logout
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function logOut(): FailResult|true
+    {
+        return $this->send(new LogOut());
     }
 
     /**
