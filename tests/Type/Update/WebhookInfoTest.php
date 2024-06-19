@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Update;
+namespace Vjik\TelegramBot\Api\Tests\Type\Update;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Update\WebhookInfo;
+use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class WebhookInfoTest extends TestCase
 {

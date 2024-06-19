@@ -61,12 +61,12 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
-use Vjik\TelegramBot\Api\Update\DeleteWebhook;
-use Vjik\TelegramBot\Api\Update\GetUpdates;
-use Vjik\TelegramBot\Api\Update\GetWebhookInfo;
-use Vjik\TelegramBot\Api\Update\SetWebhook;
-use Vjik\TelegramBot\Api\Update\Update;
-use Vjik\TelegramBot\Api\Update\WebhookInfo;
+use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
+use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
+use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
+use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
+use Vjik\TelegramBot\Api\Type\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class TelegramBotApi
 {
