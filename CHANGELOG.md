@@ -10,7 +10,7 @@
 - New #21: Add `sendVideo` method.
 - New #22: Add `getStarTransactions` method and `StarTransactions`, `StarTransaction`, `TransactionPartner`, 
   `RevenueWithdrawalState` types.
-- New #23: Add `logOut` method.
+- New #23: Add `logOut` and `close` methods.
 
 ## 0.1.0 June 10, 2024 
 

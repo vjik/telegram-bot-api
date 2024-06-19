@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api;
 use DateTimeImmutable;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
@@ -105,6 +106,16 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#close
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function close(): FailResult|true
+    {
+        return $this->send(new Close());
     }
 
     /**

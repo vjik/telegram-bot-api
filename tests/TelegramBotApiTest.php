@@ -97,6 +97,18 @@ final class TelegramBotApiTest extends TestCase
         $api->send(new GetMe());
     }
 
+    public function testClose(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->close();
+
+        $this->assertTrue($result);
+    }
+
     public function testDeleteMyCommands(): void
     {
         $api = $this->createApi([
