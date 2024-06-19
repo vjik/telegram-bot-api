@@ -22,8 +22,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
-use Vjik\TelegramBot\Api\Update\Update;
-use Vjik\TelegramBot\Api\Update\WebhookInfo;
+use Vjik\TelegramBot\Api\Type\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class TelegramBotApiTest extends TestCase
 {

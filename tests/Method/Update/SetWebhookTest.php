@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Update;
+namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Update\SetWebhook;
+use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
 
 final class SetWebhookTest extends TestCase
 {

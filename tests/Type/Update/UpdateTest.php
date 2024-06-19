@@ -2,14 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Update;
+namespace Vjik\TelegramBot\Api\Tests\Type\Update;
 
 use HttpSoft\Message\StreamTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
-use Vjik\TelegramBot\Api\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\Update;
 
 final class UpdateTest extends TestCase
 {

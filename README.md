@@ -116,7 +116,7 @@ I'm gradually adding new methods, but you can also help with this by creating a 
 You can create an `Update` object from the incoming webhook PSR-7 request:
 
 ```php
-use Vjik\TelegramBot\Api\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\Update;
 
 try {
     $update = Update::fromServerRequest($request);
@@ -128,7 +128,7 @@ try {
 or from JSON string received from POST request body:
 
 ```php
-use Vjik\TelegramBot\Api\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\Update;
 
 try {
     $update = Update::fromJson($jsonString);
