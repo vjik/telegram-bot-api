@@ -97,6 +97,18 @@ final class TelegramBotApiTest extends TestCase
         $api->send(new GetMe());
     }
 
+    public function testClose(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->close();
+
+        $this->assertTrue($result);
+    }
+
     public function testDeleteMyCommands(): void
     {
         $api = $this->createApi([
@@ -327,6 +339,18 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(WebhookInfo::class, $result);
         $this->assertSame('https://example.com/', $result->url);
+    }
+
+    public function testLogOut(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->logOut();
+
+        $this->assertTrue($result);
     }
 
     public function testSendAudio(): void

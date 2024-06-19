@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api;
 use DateTimeImmutable;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
@@ -17,6 +18,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
@@ -104,6 +106,16 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#close
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function close(): FailResult|true
+    {
+        return $this->send(new Close());
     }
 
     /**
@@ -258,6 +270,16 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->send(new GetWebhookInfo());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#logout
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function logOut(): FailResult|true
+    {
+        return $this->send(new LogOut());
     }
 
     /**
