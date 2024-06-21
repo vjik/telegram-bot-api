@@ -11,7 +11,7 @@
 - New #22: Add `getStarTransactions` method and `StarTransactions`, `StarTransaction`, `TransactionPartner`, 
   `RevenueWithdrawalState` types.
 - New #23: Add `logOut` and `close` methods.
-- New #25: Add `forwardMessage` method.
+- New #25: Add `forwardMessage` and `forwardMessages` methods, and `MessageId` type.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 

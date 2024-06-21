@@ -19,6 +19,7 @@ use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
+use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
@@ -139,6 +140,30 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertSame(7, $result->messageId);
+    }
+
+    public function testForwardMessages(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'message_id' => 7,
+                ],
+                [
+                    'message_id' => 8,
+                ],
+            ],
+        ]);
+
+        $result = $api->forwardMessages(100, 200, [1, 2]);
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertInstanceOf(MessageId::class, $result[0]);
+        $this->assertInstanceOf(MessageId::class, $result[1]);
+        $this->assertSame(7, $result[0]->messageId);
+        $this->assertSame(8, $result[1]->messageId);
     }
 
     public function testDeleteWebhook(): void
