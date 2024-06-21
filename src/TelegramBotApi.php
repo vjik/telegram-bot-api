@@ -9,6 +9,8 @@ use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
+use Vjik\TelegramBot\Api\Method\ForwardMessage;
+use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\GetFile;
@@ -54,6 +56,7 @@ use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
@@ -126,6 +129,60 @@ final class TelegramBotApi
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new DeleteMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#forwardmessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function forwardMessage(
+        int|string $chatId,
+        int|string $fromChatId,
+        int $messageId,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+    ): FailResult|Message
+    {
+        return $this->send(
+            new ForwardMessage(
+                $chatId,
+                $fromChatId,
+                $messageId,
+                $messageThreadId,
+                $disableNotification,
+                $protectContent,
+            )
+        );
+    }
+
+    /**
+     * @param int[] $messageIds
+     * @return FailResult|MessageId[]
+     *
+     * @see https://core.telegram.org/bots/api#forwardmessages
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function forwardMessages(
+        int|string $chatId,
+        int|string $fromChatId,
+        array $messageIds,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+    ): FailResult|array {
+        return $this->send(
+            new ForwardMessages(
+                $chatId,
+                $fromChatId,
+                $messageIds,
+                $messageThreadId,
+                $disableNotification,
+                $protectContent,
+            )
+        );
     }
 
     /**
