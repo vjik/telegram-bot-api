@@ -9,6 +9,7 @@ use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
+use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\GetFile;
@@ -126,6 +127,32 @@ final class TelegramBotApi
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new DeleteMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#forwardmessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function forwardMessage(
+        int|string $chatId,
+        int|string $fromChatId,
+        int $messageId,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+    ): FailResult|Message
+    {
+        return $this->send(
+            new ForwardMessage(
+                $chatId,
+                $fromChatId,
+                $messageId,
+                $messageThreadId,
+                $disableNotification,
+                $protectContent,
+            )
+        );
     }
 
     /**
