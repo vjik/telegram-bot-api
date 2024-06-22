@@ -110,6 +110,45 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testCopyMessage(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_id' => 7,
+            ],
+        ]);
+
+        $result = $api->copyMessage(100, 200, 1);
+
+        $this->assertInstanceOf(MessageId::class, $result);
+        $this->assertSame(7, $result->messageId);
+    }
+
+    public function testCopyMessages(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'message_id' => 7,
+                ],
+                [
+                    'message_id' => 8,
+                ],
+            ],
+        ]);
+
+        $result = $api->copyMessages(100, 200, [1, 2]);
+
+        $this->assertIsArray($result);
+        $this->assertCount(2, $result);
+        $this->assertInstanceOf(MessageId::class, $result[0]);
+        $this->assertInstanceOf(MessageId::class, $result[1]);
+        $this->assertSame(7, $result[0]->messageId);
+        $this->assertSame(8, $result[1]->messageId);
+    }
+
     public function testDeleteMyCommands(): void
     {
         $api = $this->createApi([
