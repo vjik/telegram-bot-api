@@ -8,6 +8,8 @@ use DateTimeImmutable;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\Close;
+use Vjik\TelegramBot\Api\Method\CopyMessage;
+use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
@@ -119,6 +121,75 @@ final class TelegramBotApi
     public function close(): FailResult|true
     {
         return $this->send(new Close());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#copymessage
+     *
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function copyMessage(
+        int|string $chatId,
+        int|string $fromChatId,
+        int $messageId,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|MessageId {
+        return $this->send(
+            new CopyMessage(
+                $chatId,
+                $fromChatId,
+                $messageId,
+                $messageThreadId,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $showCaptionAboveMedia,
+                $disableNotification,
+                $protectContent,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#copymessages
+     *
+     * @param int[] $messageIds
+     * @return FailResult|MessageId[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function copyMessages(
+        int|string $chatId,
+        int|string $fromChatId,
+        array $messageIds,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?bool $removeCaption = null,
+    ): FailResult|array {
+        return $this->send(
+            new CopyMessages(
+                $chatId,
+                $fromChatId,
+                $messageIds,
+                $messageThreadId,
+                $disableNotification,
+                $protectContent,
+                $removeCaption,
+            )
+        );
     }
 
     /**

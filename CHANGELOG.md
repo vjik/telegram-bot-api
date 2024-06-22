@@ -12,6 +12,7 @@
   `RevenueWithdrawalState` types.
 - New #23: Add `logOut` and `close` methods.
 - New #25: Add `forwardMessage` and `forwardMessages` methods, and `MessageId` type.
+- New #26: Add `copyMessage` and `copyMessages` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 
