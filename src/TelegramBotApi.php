@@ -24,6 +24,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Method\SendContact;
@@ -408,6 +409,57 @@ final class TelegramBotApi
     public function logOut(): FailResult|true
     {
         return $this->send(new LogOut());
+    }
+
+    /**
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @see https://core.telegram.org/bots/api#sendanimation
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendAnimation(
+        int|string $chatId,
+        InputFile|string $animation,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $width = null,
+        ?int $height = null,
+        InputFile|string|null $thumbnail = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $hasSpoiler = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendAnimation(
+                $chatId,
+                $animation,
+                $businessConnectionId,
+                $messageThreadId,
+                $duration,
+                $width,
+                $height,
+                $thumbnail,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $showCaptionAboveMedia,
+                $hasSpoiler,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
     }
 
     /**
