@@ -36,6 +36,7 @@ use Vjik\TelegramBot\Api\Method\SendPhoto;
 use Vjik\TelegramBot\Api\Method\SendPoll;
 use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SendVideo;
+use Vjik\TelegramBot\Api\Method\SendVoice;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
@@ -916,6 +917,48 @@ final class TelegramBotApi
                 $showCaptionAboveMedia,
                 $hasSpoiler,
                 $supportsStreaming,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @see https://core.telegram.org/bots/api#sendvoice
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendVoice(
+        int|string $chatId,
+        string|InputFile $voice,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?int $duration = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message
+    {
+        return $this->send(
+            new SendVoice(
+                $chatId,
+                $voice,
+                $businessConnectionId,
+                $messageThreadId,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $duration,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
