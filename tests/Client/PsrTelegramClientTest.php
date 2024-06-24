@@ -188,8 +188,8 @@ final class PsrTelegramClientTest extends TestCase
             new TelegramRequest(
                 HttpMethod::POST,
                 'sendPhoto',
-                ['chat_id' => 123],
                 [
+                    'chat_id' => 123,
                     'photo' => new InputFile(
                         (new StreamFactory())->createStream('test-file-body'),
                         'face.png',

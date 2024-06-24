@@ -11,7 +11,7 @@ use Psr\Http\Message\RequestInterface as HttpRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithFilesInterface;
+use Vjik\TelegramBot\Api\Type\InputFile;
 
 final readonly class PsrTelegramClient implements TelegramClientInterface
 {
@@ -50,11 +50,18 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
         );
 
         $data = $request->getData();
-        $files = $request instanceof TelegramRequestWithFilesInterface ? $request->getFiles() : [];
+
+        $files = [];
+        foreach ($data as $key => $value) {
+            if ($value instanceof InputFile) {
+                $files[$key] = $value;
+                unset($data[$key]);
+            }
+        }
+
         if (empty($data) && empty($files)) {
             return $httpRequest;
         }
-
         if (empty($files)) {
             $content = json_encode($data, JSON_THROW_ON_ERROR);
             $body = $this->streamFactory->createStream($content);

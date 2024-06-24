@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithFilesInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -19,7 +18,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendvoice
  */
-final readonly class SendVoice implements TelegramRequestWithResultPreparingInterface, TelegramRequestWithFilesInterface
+final readonly class SendVoice implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities
@@ -58,7 +57,7 @@ final readonly class SendVoice implements TelegramRequestWithResultPreparingInte
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
-                'voice' => is_string($this->voice) ? $this->voice : null,
+                'voice' => $this->voice,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(
@@ -71,16 +70,6 @@ final readonly class SendVoice implements TelegramRequestWithResultPreparingInte
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
-    }
-
-    public function getFiles(): array
-    {
-        return array_filter(
-            [
-                'voice' => $this->voice instanceof InputFile ? $this->voice : null,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

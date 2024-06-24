@@ -4,11 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Request;
 
-use Vjik\TelegramBot\Api\Type\InputFile;
-
-final readonly class TelegramRequest implements
-    TelegramRequestWithFilesInterface,
-    TelegramRequestWithResultPreparingInterface
+final readonly class TelegramRequest implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @var callable|null
@@ -17,13 +13,11 @@ final readonly class TelegramRequest implements
 
     /**
      * @psalm-param array<string,mixed> $data
-     * @psalm-param array<string,InputFile> $files
      */
     public function __construct(
         private HttpMethod $httpMethod,
         private string $apiMethod,
         private array $data = [],
-        private array $files = [],
         ?callable $successCallback = null,
     ) {
         $this->successCallback = $successCallback;
@@ -42,11 +36,6 @@ final readonly class TelegramRequest implements
     public function getData(): array
     {
         return $this->data;
-    }
-
-    public function getFiles(): array
-    {
-        return $this->files;
     }
 
     public function prepareResult(mixed $result): mixed

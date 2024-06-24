@@ -28,7 +28,6 @@ final class SendPhotoTest extends TestCase
             ],
             $method->getData(),
         );
-        $this->assertSame([], $method->getFiles());
     }
 
     public function testFull(): void
@@ -57,6 +56,7 @@ final class SendPhotoTest extends TestCase
         $this->assertSame(
             [
                 'chat_id' => 12,
+                'photo' => $photo,
                 'business_connection_id' => 'bcid1',
                 'message_thread_id' => 99,
                 'caption' => 'Caption',
@@ -71,12 +71,6 @@ final class SendPhotoTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData()
-        );
-        $this->assertSame(
-            [
-                'photo' => $photo,
-            ],
-            $method->getFiles(),
         );
     }
 

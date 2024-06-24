@@ -28,7 +28,6 @@ final class SendAudioTest extends TestCase
             ],
             $method->getData(),
         );
-        $this->assertSame([], $method->getFiles());
     }
 
     public function testFull(): void
@@ -62,12 +61,14 @@ final class SendAudioTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'audio' => $audio,
                 'caption' => 'Caption',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],
                 'duration' => 56,
                 'performer' => 'The performer',
                 'title' => 'The track',
+                'thumbnail' => $thumbnail,
                 'disable_notification' => true,
                 'protect_content' => false,
                 'message_effect_id' => 'meID',
@@ -75,13 +76,6 @@ final class SendAudioTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData(),
-        );
-        $this->assertSame(
-            [
-                'audio' => $audio,
-                'thumbnail' => $thumbnail,
-            ],
-            $method->getFiles(),
         );
     }
 

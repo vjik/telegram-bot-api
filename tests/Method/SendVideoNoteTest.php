@@ -27,7 +27,6 @@ final class SendVideoNoteTest extends TestCase
             ],
             $method->getData(),
         );
-        $this->assertSame([], $method->getFiles());
     }
 
     public function testFull(): void
@@ -56,8 +55,10 @@ final class SendVideoNoteTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'video_note' => $video,
                 'duration' => 500,
                 'length' => 240,
+                'thumbnail' => $thumbnail,
                 'disable_notification' => false,
                 'protect_content' => true,
                 'message_effect_id' => 'meID',
@@ -65,13 +66,6 @@ final class SendVideoNoteTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData(),
-        );
-        $this->assertSame(
-            [
-                'video_note' => $video,
-                'thumbnail' => $thumbnail,
-            ],
-            $method->getFiles(),
         );
     }
 

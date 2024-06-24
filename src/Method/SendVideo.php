@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithFilesInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -19,7 +18,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendvideo
  */
-final readonly class SendVideo implements TelegramRequestWithResultPreparingInterface, TelegramRequestWithFilesInterface
+final readonly class SendVideo implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities
@@ -64,11 +63,11 @@ final readonly class SendVideo implements TelegramRequestWithResultPreparingInte
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
-                'video' => is_string($this->video) ? $this->video : null,
+                'video' => $this->video,
                 'duration' => $this->duration,
                 'width' => $this->width,
                 'height' => $this->height,
-                'thumbnail' => is_string($this->thumbnail) ? $this->thumbnail : null,
+                'thumbnail' => $this->thumbnail,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(
@@ -83,17 +82,6 @@ final readonly class SendVideo implements TelegramRequestWithResultPreparingInte
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
-    }
-
-    public function getFiles(): array
-    {
-        return array_filter(
-            [
-                'video' => $this->video instanceof InputFile ? $this->video : null,
-                'thumbnail' => $this->thumbnail instanceof InputFile ? $this->thumbnail : null,
             ],
             static fn(mixed $value): bool => $value !== null,
         );
