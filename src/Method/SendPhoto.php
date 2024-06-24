@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithFilesInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -19,7 +18,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendphoto
  */
-final readonly class SendPhoto implements TelegramRequestWithFilesInterface, TelegramRequestWithResultPreparingInterface
+final readonly class SendPhoto implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities
@@ -57,7 +56,7 @@ final readonly class SendPhoto implements TelegramRequestWithFilesInterface, Tel
         return array_filter(
             [
                 'chat_id' => $this->chatId,
-                'photo' => is_string($this->photo) ? $this->photo : null,
+                'photo' => $this->photo,
                 'business_connection_id' => $this->businessConnectionId,
                 'message_thread_id' => $this->messageThreadId,
                 'caption' => $this->caption,
@@ -73,16 +72,6 @@ final readonly class SendPhoto implements TelegramRequestWithFilesInterface, Tel
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
-    }
-
-    public function getFiles(): array
-    {
-        return array_filter(
-            [
-                'photo' => $this->photo instanceof InputFile ? $this->photo : null,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

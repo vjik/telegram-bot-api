@@ -28,7 +28,6 @@ final class SendAnimationTest extends TestCase
             ],
             $method->getData(),
         );
-        $this->assertSame([], $method->getFiles());
     }
 
     public function testFull(): void
@@ -64,9 +63,11 @@ final class SendAnimationTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'animation'=> $animation,
                 'duration' => 100,
                 'width' => 240,
                 'height' => 320,
+                'thumbnail' => $thumbnail,
                 'caption' => 'Caption',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],
@@ -79,13 +80,6 @@ final class SendAnimationTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData(),
-        );
-        $this->assertSame(
-            [
-                'animation' => $animation,
-                'thumbnail' => $thumbnail,
-            ],
-            $method->getFiles(),
         );
     }
 

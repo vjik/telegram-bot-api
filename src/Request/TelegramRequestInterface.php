@@ -13,8 +13,5 @@ interface TelegramRequestInterface
      */
     public function getApiMethod(): string;
 
-    /**
-     * @psalm-return array<string, mixed>
-     */
     public function getData(): array;
 }

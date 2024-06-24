@@ -28,7 +28,6 @@ final class SendVoiceTest extends TestCase
             ],
             $method->getData(),
         );
-        $this->assertSame([], $method->getFiles());
     }
 
     public function testFull(): void
@@ -58,6 +57,7 @@ final class SendVoiceTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'voice' => $voice,
                 'caption' => 'Caption',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],
@@ -69,12 +69,6 @@ final class SendVoiceTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData(),
-        );
-        $this->assertSame(
-            [
-                'voice' => $voice,
-            ],
-            $method->getFiles(),
         );
     }
 

@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithFilesInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -19,9 +18,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#senddocument
  */
-final readonly class SendDocument implements
-    TelegramRequestWithResultPreparingInterface,
-    TelegramRequestWithFilesInterface
+final readonly class SendDocument implements    TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities
@@ -61,8 +58,8 @@ final readonly class SendDocument implements
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
-                'document' => is_string($this->document) ? $this->document : null,
-                'thumbnail' => is_string($this->thumbnail) ? $this->thumbnail : null,
+                'document' => $this->document,
+                'thumbnail' => $this->thumbnail,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(
@@ -75,17 +72,6 @@ final readonly class SendDocument implements
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-            ],
-            static fn(mixed $value): bool => $value !== null,
-        );
-    }
-
-    public function getFiles(): array
-    {
-        return array_filter(
-            [
-                'document' => $this->document instanceof InputFile ? $this->document : null,
-                'thumbnail' => $this->thumbnail instanceof InputFile ? $this->thumbnail : null,
             ],
             static fn(mixed $value): bool => $value !== null,
         );
