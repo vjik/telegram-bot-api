@@ -11,6 +11,9 @@ final readonly class TelegramRequest implements TelegramRequestWithResultPrepari
      */
     private mixed $successCallback;
 
+    /**
+     * @psalm-param array<string,mixed> $data
+     */
     public function __construct(
         private HttpMethod $httpMethod,
         private string $apiMethod,
