@@ -16,6 +16,8 @@
 - New #27: Add `sendAnimation` method.
 - New #28: Add `sendVoice` method.
 - New #29: Add `sendVideoNote` method.
+- New #31: Add `sendMediaGroup` method and `InputMediaAnimation`, `InputMediaAudio`, `InputMediaDocument`,
+  `InputMediaPhoto`, `InputMediaVideo` types.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
