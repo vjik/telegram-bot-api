@@ -36,6 +36,7 @@ use Vjik\TelegramBot\Api\Method\SendPhoto;
 use Vjik\TelegramBot\Api\Method\SendPoll;
 use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SendVideo;
+use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
@@ -216,8 +217,7 @@ final class TelegramBotApi
         ?int $messageThreadId = null,
         ?bool $disableNotification = null,
         ?bool $protectContent = null,
-    ): FailResult|Message
-    {
+    ): FailResult|Message {
         return $this->send(
             new ForwardMessage(
                 $chatId,
@@ -487,8 +487,7 @@ final class TelegramBotApi
         ?string $messageEffectId = null,
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ): FailResult|Message
-    {
+    ): FailResult|Message {
         return $this->send(
             new SendAudio(
                 $chatId,
@@ -550,8 +549,7 @@ final class TelegramBotApi
         ?string $messageEffectId = null,
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ): FailResult|Message
-    {
+    ): FailResult|Message {
         return $this->send(
             new SendContact(
                 $chatId,
@@ -927,6 +925,43 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#sendvideonote
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendVideoNote(
+        int|string $chatId,
+        string|InputFile $videoNote,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?int $duration = null,
+        ?int $length = null,
+        string|InputFile|null $thumbnail = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendVideoNote(
+                $chatId,
+                $videoNote,
+                $businessConnectionId,
+                $messageThreadId,
+                $duration,
+                $length,
+                $thumbnail,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendvoice
@@ -947,8 +982,7 @@ final class TelegramBotApi
         ?string $messageEffectId = null,
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ): FailResult|Message
-    {
+    ): FailResult|Message {
         return $this->send(
             new SendVoice(
                 $chatId,
