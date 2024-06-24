@@ -31,6 +31,7 @@ use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendDocument;
 use Vjik\TelegramBot\Api\Method\SendLocation;
+use Vjik\TelegramBot\Api\Method\SendMediaGroup;
 use Vjik\TelegramBot\Api\Method\SendMessage;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
 use Vjik\TelegramBot\Api\Method\SendPoll;
@@ -56,6 +57,10 @@ use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
+use Vjik\TelegramBot\Api\Type\InputMediaAudio;
+use Vjik\TelegramBot\Api\Type\InputMediaDocument;
+use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
+use Vjik\TelegramBot\Api\Type\InputMediaVideo;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
@@ -680,6 +685,38 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
             )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendmediagroup
+     *
+     * @param InputMediaAudio[]|InputMediaDocument[]|InputMediaPhoto[]|InputMediaVideo[] $media
+     * @return FailResult|Message[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendMediaGroup(
+        int|string $chatId,
+        array $media,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+    ): FailResult|array {
+        return $this->send(
+            new SendMediaGroup(
+                $chatId,
+                $media,
+                $businessConnectionId,
+                $messageThreadId,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+            ),
         );
     }
 
