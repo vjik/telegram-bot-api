@@ -15,6 +15,13 @@ final class ReactionTypeEmojiTest extends TestCase
 
         $this->assertSame('emoji', $reaction->getType());
         $this->assertSame('👍', $reaction->emoji);
+        $this->assertSame(
+            [
+                'type' => 'emoji',
+                'emoji' => '👍',
+            ],
+            $reaction->toRequestArray(),
+        );
     }
 
     public function testFromTelegramResult(): void

@@ -746,6 +746,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testSetMessageReaction(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMessageReaction(12, 270);
+
+        $this->assertTrue($result);
+    }
+
     public function testSetMyCommands(): void
     {
         $api = $this->createApi([

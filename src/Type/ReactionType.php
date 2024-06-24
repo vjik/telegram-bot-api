@@ -10,4 +10,6 @@ namespace Vjik\TelegramBot\Api\Type;
 interface ReactionType
 {
     public function getType(): string;
+
+    public function toRequestArray(): array;
 }
