@@ -16,7 +16,6 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 final readonly class PsrTelegramClient implements TelegramClientInterface
 {
     private ApiUrlGenerator $apiUrlGenerator;
-    private FilesExtractor $filesExtractor;
 
     public function __construct(
         private string $token,
@@ -26,7 +25,6 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
         private string $baseUrl = 'https://api.telegram.org',
     ) {
         $this->apiUrlGenerator = new ApiUrlGenerator($this->token, $this->baseUrl);
-        $this->filesExtractor = new FilesExtractor();
     }
 
     public function send(TelegramRequestInterface $request): TelegramResponse
@@ -52,7 +50,15 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
         );
 
         $data = $request->getData();
-        $files = $this->filesExtractor->extract($data);
+
+        $files = [];
+        foreach ($data as $key => $value) {
+            if ($value instanceof InputFile) {
+                $files[$key] = $value;
+                unset($data[$key]);
+            }
+        }
+
         if (empty($data) && empty($files)) {
             return $httpRequest;
         }
@@ -65,7 +71,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             foreach ($data as $key => $value) {
                 $streamBuilder->addResource((string) $key, json_encode($value, JSON_THROW_ON_ERROR));
             }
-            foreach ($this->prepareFiles($files) as $key => $file) {
+            foreach ($files as $key => $file) {
                 $streamBuilder->addResource(
                     (string) $key,
                     $file->resource,
@@ -80,24 +86,6 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             ->withHeader('Content-Length', (string) $body->getSize())
             ->withHeader('Content-Type', $contentType)
             ->withBody($body);
-    }
-
-    /**
-     * @psalm-param array<array-key,array<array-key,InputFile>|InputFile> $files
-     * @psalm-return array<array-key,InputFile>
-     */
-    private function prepareFiles(array $files, string|int|null $prefix = null): array
-    {
-        $result = [];
-        foreach ($files as $key => $file) {
-            $resultKey = $prefix === null ? $key : ($prefix . '[' . $key . ']');
-            if ($file instanceof InputFile) {
-                $result[$resultKey] = $file;
-                continue;
-            }
-            $result = [...$result, ...$this->prepareFiles($file, $resultKey)];
-        }
-        return $result;
     }
 
     private function createGetRequest(TelegramRequestInterface $request): HttpRequestInterface
