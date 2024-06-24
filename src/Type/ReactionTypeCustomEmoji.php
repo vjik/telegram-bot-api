@@ -21,6 +21,14 @@ final readonly class ReactionTypeCustomEmoji implements ReactionType
         return 'custom_emoji';
     }
 
+    public function toRequestArray(): array
+    {
+        return [
+            'type' => $this->getType(),
+            'custom_emoji_id' => $this->customEmojiId,
+        ];
+    }
+
     public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);
