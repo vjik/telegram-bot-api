@@ -40,6 +40,7 @@ use Vjik\TelegramBot\Api\Method\SendVideo;
 use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
+use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
@@ -68,6 +69,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
+use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
@@ -1047,6 +1049,24 @@ final class TelegramBotApi
     public function setChatMenuButton(?int $chatId = null, ?MenuButton $menuButton = null): FailResult|true
     {
         return $this->send(new SetChatMenuButton($chatId, $menuButton));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setmessagereaction
+     *
+     * @param ReactionType[]|null $reaction
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setMessageReaction(
+        int|string $chatId,
+        int $messageId,
+        ?array $reaction = null,
+        ?bool $isBig = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetMessageReaction($chatId, $messageId, $reaction, $isBig)
+        );
     }
 
     /**
