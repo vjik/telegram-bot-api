@@ -450,6 +450,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testPromoteChatMember(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->promoteChatMember(1, 2);
+
+        $this->assertTrue($result);
+    }
+
     public function testRestrictChatMember(): void
     {
         $api = $this->createApi([
