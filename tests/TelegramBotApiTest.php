@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -445,6 +446,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->logOut();
+
+        $this->assertTrue($result);
+    }
+
+    public function testRestrictChatMember(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->restrictChatMember(1, 2, new ChatPermissions());
 
         $this->assertTrue($result);
     }
