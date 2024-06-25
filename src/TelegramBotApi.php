@@ -26,6 +26,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
@@ -57,6 +58,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -436,6 +438,23 @@ final class TelegramBotApi
     public function logOut(): FailResult|true
     {
         return $this->send(new LogOut());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#restrictchatmember
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function restrictChatMember(
+        int|string $chatId,
+        int $userId,
+        ChatPermissions $permissions,
+        ?bool $useIndependentChatPermissions = null,
+        ?DateTimeImmutable $untilDate = null,
+    ): FailResult|true {
+        return $this->send(
+            new RestrictChatMember($chatId, $userId, $permissions, $useIndependentChatPermissions, $untilDate)
+        );
     }
 
     /**
