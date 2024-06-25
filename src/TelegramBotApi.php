@@ -26,6 +26,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
@@ -438,6 +439,53 @@ final class TelegramBotApi
     public function logOut(): FailResult|true
     {
         return $this->send(new LogOut());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#promotechatmember
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function promoteChatMember(
+        int|string $chatId,
+        int $userId,
+        ?bool $isAnonymous = null,
+        ?bool $canManageChat = null,
+        ?bool $canDeleteMessages = null,
+        ?bool $canManageVideoChats = null,
+        ?bool $canRestrictMembers = null,
+        ?bool $canPromoteMembers = null,
+        ?bool $canChangeInfo = null,
+        ?bool $canInviteUsers = null,
+        ?bool $canPostStories = null,
+        ?bool $canEditStories = null,
+        ?bool $canDeleteStories = null,
+        ?bool $canPostMessages = null,
+        ?bool $canEditMessages = null,
+        ?bool $canPinMessages = null,
+        ?bool $canManageTopics = null,
+    ): FailResult|true {
+        return $this->send(
+            new PromoteChatMember(
+                $chatId,
+                $userId,
+                $isAnonymous,
+                $canManageChat,
+                $canDeleteMessages,
+                $canManageVideoChats,
+                $canRestrictMembers,
+                $canPromoteMembers,
+                $canChangeInfo,
+                $canInviteUsers,
+                $canPostStories,
+                $canEditStories,
+                $canDeleteStories,
+                $canPostMessages,
+                $canEditMessages,
+                $canPinMessages,
+                $canManageTopics
+            )
+        );
     }
 
     /**
