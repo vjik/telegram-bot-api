@@ -29,6 +29,29 @@ final readonly class ChatPermissions
     ) {
     }
 
+    public function toRequestArray(): array
+    {
+        return array_filter(
+            [
+                'can_send_messages' => $this->canSendMessages,
+                'can_send_audios' => $this->canSendAudios,
+                'can_send_documents' => $this->canSendDocuments,
+                'can_send_photos' => $this->canSendPhotos,
+                'can_send_videos' => $this->canSendVideos,
+                'can_send_video_notes' => $this->canSendVideoNotes,
+                'can_send_voice_notes' => $this->canSendVoiceNotes,
+                'can_send_polls' => $this->canSendPolls,
+                'can_send_other_messages' => $this->canSendOtherMessages,
+                'can_add_web_page_previews' => $this->canAddWebPagePreviews,
+                'can_change_info' => $this->canChangeInfo,
+                'can_invite_users' => $this->canInviteUsers,
+                'can_pin_messages' => $this->canPinMessages,
+                'can_manage_topics' => $this->canManageTopics,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
+    }
+
     public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);
