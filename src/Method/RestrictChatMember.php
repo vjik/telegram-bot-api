@@ -47,7 +47,7 @@ final readonly class RestrictChatMember implements TelegramRequestWithResultPrep
         );
     }
 
-    public function prepareResult($result): bool
+    public function prepareResult(mixed $result): true
     {
         return true;
     }
