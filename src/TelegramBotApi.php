@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api;
 
 use DateTimeImmutable;
+use DateTimeInterface;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
@@ -45,6 +47,7 @@ use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -121,6 +124,22 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#banchatmember
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function banChatMember(
+        int|string $chatId,
+        int $userId,
+        ?DateTimeInterface $untilDate = null,
+        ?bool $revokeMessages = null,
+    ): FailResult|true {
+        return $this->send(
+            new BanChatMember($chatId, $userId, $untilDate, $revokeMessages)
+        );
     }
 
     /**
@@ -1131,6 +1150,21 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unbanchatmember
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unbanChatMember(
+        int|string $chatId,
+        int $userId,
+        ?bool $onlyIfBanned = null,
+    ): FailResult|true {
+        return $this->send(
+            new UnbanChatMember($chatId, $userId, $onlyIfBanned)
         );
     }
 

@@ -98,6 +98,18 @@ final class TelegramBotApiTest extends TestCase
         $api->send(new GetMe());
     }
 
+    public function testBanChatMember(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->banChatMember(1, 2);
+
+        $this->assertTrue($result);
+    }
+
     public function testClose(): void
     {
         $api = $this->createApi([
@@ -816,6 +828,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setWebhook('https://example.com/webhook');
+
+        $this->assertTrue($result);
+    }
+
+    public function testUnbanChatMember(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->unbanChatMember(1, 2);
 
         $this->assertTrue($result);
     }
