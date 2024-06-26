@@ -46,6 +46,7 @@ use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
 use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
+use Vjik\TelegramBot\Api\Method\SetChatPermissions;
 use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
@@ -157,18 +158,6 @@ final class TelegramBotApi
     {
         return $this->send(
             new BanChatSenderChat($chatId, $senderChatId),
-        );
-    }
-
-    /**
-     * @see https://core.telegram.org/bots/api#unbanchatsenderchat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
-     */
-    public function unbanChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
-    {
-        return $this->send(
-            new UnbanChatSenderChat($chatId, $senderChatId),
         );
     }
 
@@ -1180,6 +1169,21 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#setchatpermissions
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setChatPermissions(
+        int|string $chatId,
+        ChatPermissions $permissions,
+        ?bool $useIndependentChatPermissions = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetChatPermissions($chatId, $permissions, $useIndependentChatPermissions)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#setmessagereaction
      *
      * @param ReactionType[]|null $reaction
@@ -1274,6 +1278,18 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new UnbanChatMember($chatId, $userId, $onlyIfBanned)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unbanchatsenderchat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unbanChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
+    {
+        return $this->send(
+            new UnbanChatSenderChat($chatId, $senderChatId),
         );
     }
 
