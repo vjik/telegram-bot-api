@@ -100,6 +100,18 @@ final class TelegramBotApiTest extends TestCase
         $api->send(new GetMe());
     }
 
+    public function testApproveChatJoinRequest(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->approveChatJoinRequest(1, 2);
+
+        $this->assertTrue($result);
+    }
+
     public function testBanChatMember(): void
     {
         $api = $this->createApi([
@@ -196,6 +208,18 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(ChatInviteLink::class, $result);
         $this->assertSame('https//t.me/+example', $result->inviteLink);
+    }
+
+    public function testDeclineChatJoinRequest(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->declineChatJoinRequest(1, 2);
+
+        $this->assertTrue($result);
     }
 
     public function testDeleteMyCommands(): void

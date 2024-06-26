@@ -8,12 +8,14 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
+use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
@@ -139,6 +141,18 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#approvechatjoinrequest
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function approveChatJoinRequest(int|string $chatId, int $userId): FailResult|true
+    {
+        return $this->send(
+            new ApproveChatJoinRequest($chatId, $userId)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#banchatmember
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -259,6 +273,18 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#declinechatjoinrequest
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function declineChatJoinRequest(int|string $chatId, int $userId): FailResult|true
+    {
+        return $this->send(
+            new DeclineChatJoinRequest($chatId, $userId)
         );
     }
 
