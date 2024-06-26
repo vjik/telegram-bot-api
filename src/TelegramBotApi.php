@@ -43,6 +43,7 @@ use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SendVideo;
 use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
+use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
@@ -1124,6 +1125,21 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
             )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setChatAdministratorCustomTitle(
+        int|string $chatId,
+        int $userId,
+        string $customTitle
+    ): FailResult|true {
+        return $this->send(
+            new SetChatAdministratorCustomTitle($chatId, $userId, $customTitle)
         );
     }
 
