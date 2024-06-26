@@ -111,6 +111,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testBanChatSenderChat(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->banChatSenderChat(1, 2);
+
+        $this->assertTrue($result);
+    }
+
     public function testClose(): void
     {
         $api = $this->createApi([
@@ -877,6 +889,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->unbanChatMember(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testUnbanChatSenderChat(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->unbanChatSenderChat(1, 2);
 
         $this->assertTrue($result);
     }

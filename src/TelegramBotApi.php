@@ -9,6 +9,7 @@ use DateTimeInterface;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
+use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
@@ -51,6 +52,7 @@ use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
+use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -143,6 +145,30 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new BanChatMember($chatId, $userId, $untilDate, $revokeMessages)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#banchatsenderchat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function banChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
+    {
+        return $this->send(
+            new BanChatSenderChat($chatId, $senderChatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unbanchatsenderchat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unbanChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
+    {
+        return $this->send(
+            new UnbanChatSenderChat($chatId, $senderChatId),
         );
     }
 

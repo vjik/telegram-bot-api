@@ -23,6 +23,7 @@
 - New #34: Add `restrictChatMember` method and `ChatPermissions::toRequestArray()` method.
 - New #35: Add `promoteChatMember` method.
 - New #36: Add `setChatAdministratorCustomTitle` method.
+- New #37: Add `banChatSenderChat` and `unbanChatSenderChat` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
