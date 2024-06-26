@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SendVenue;

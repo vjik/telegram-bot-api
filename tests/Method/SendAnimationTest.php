@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
