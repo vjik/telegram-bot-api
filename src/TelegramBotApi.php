@@ -13,7 +13,10 @@ use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
+use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
+use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
+use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\GetChat;
@@ -29,6 +32,7 @@ use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
+use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
@@ -63,6 +67,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
@@ -241,6 +246,23 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#createchatinvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createChatInviteLink(
+        int|string $chatId,
+        ?string $name = null,
+        ?DateTimeImmutable $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#deletemycommands
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -248,6 +270,36 @@ final class TelegramBotApi
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new DeleteMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editchatinvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editChatInviteLink(
+        int|string $chatId,
+        string $inviteLink,
+        ?string $name = null,
+        ?DateTimeImmutable $expireDate = null,
+        ?int $memberLimit = null,
+        ?bool $createsJoinRequest = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#exportchatinvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function exportChatInviteLink(int|string $chatId): FailResult|string
+    {
+        return $this->send(
+            new ExportChatInviteLink($chatId)
+        );
     }
 
     /**
@@ -518,6 +570,18 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new RestrictChatMember($chatId, $userId, $permissions, $useIndependentChatPermissions, $untilDate)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#revokechatinvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function revokeChatInviteLink(int|string $chatId, string $inviteLink): FailResult|ChatInviteLink
+    {
+        return $this->send(
+            new RevokeChatInviteLink($chatId, $inviteLink)
         );
     }
 

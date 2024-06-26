@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
+use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
@@ -174,6 +175,29 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(8, $result[1]->messageId);
     }
 
+    public function testCreateChatInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 1,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->createChatInviteLink(1);
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame('https//t.me/+example', $result->inviteLink);
+    }
+
     public function testDeleteMyCommands(): void
     {
         $api = $this->createApi([
@@ -184,6 +208,41 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->deleteMyCommands();
 
         $this->assertTrue($result);
+    }
+
+    public function testEditChatInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 23,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->editChatInviteLink(1, 'https//t.me/+example');
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame(23, $result->creator->id);
+    }
+
+    public function testExportChatInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => 'https//t.me/+example',
+        ]);
+
+        $result = $api->exportChatInviteLink(1);
+
+        $this->assertSame('https//t.me/+example', $result);
     }
 
     public function testForwardMessage(): void
@@ -484,6 +543,29 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->restrictChatMember(1, 2, new ChatPermissions());
 
         $this->assertTrue($result);
+    }
+
+    public function testRevokeChatInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 23,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->revokeChatInviteLink(1, 'https//t.me/+example');
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame(23, $result->creator->id);
     }
 
     public function testSendAnimation(): void
