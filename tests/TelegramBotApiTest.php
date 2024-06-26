@@ -771,6 +771,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(7, $result->messageId);
     }
 
+    public function testSetChatAdministratorCustomTitle(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatAdministratorCustomTitle(1, 2, 'test');
+
+        $this->assertTrue($result);
+    }
+
     public function testSetChatMenuButton(): void
     {
         $api = $this->createApi([
