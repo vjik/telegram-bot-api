@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ReactionType;
@@ -54,6 +55,7 @@ final readonly class SetMessageReaction implements TelegramRequestWithResultPrep
 
     public function prepareResult(mixed $result): true
     {
-        return true;
+        ValueHelper::assertTrueResult($result);
+        return $result;
     }
 }

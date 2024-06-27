@@ -44,6 +44,18 @@ final class ValueHelper
         }
     }
 
+    /**
+     * @psalm-assert true $result
+     */
+    public static function assertTrueResult(mixed $result): void
+    {
+        if ($result !== true) {
+            throw new TelegramParseResultException(
+                'Expected result as true. Got "' . get_debug_type($result) . '".'
+            );
+        }
+    }
+
     public static function getString(array $result, string $key): string
     {
         if (!isset($result[$key])) {

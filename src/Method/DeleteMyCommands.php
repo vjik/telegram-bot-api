@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -42,6 +43,7 @@ final readonly class DeleteMyCommands implements TelegramRequestWithResultPrepar
 
     public function prepareResult(mixed $result): true
     {
-        return true;
+        ValueHelper::assertTrueResult($result);
+        return $result;
     }
 }
