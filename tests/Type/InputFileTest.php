@@ -49,6 +49,6 @@ final class InputFileTest extends TestCase
     {
         $this->expectException(RuntimeException::class);
         $this->expectExceptionMessage('Unable to open file "not-exists".');
-        InputFile::fromLocalFile('not-exists');
+        @InputFile::fromLocalFile('not-exists');
     }
 }
