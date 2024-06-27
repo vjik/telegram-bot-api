@@ -52,9 +52,11 @@ use Vjik\TelegramBot\Api\Method\SendVideo;
 use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
 use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
+use Vjik\TelegramBot\Api\Method\SetChatDescription;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetChatPermissions;
 use Vjik\TelegramBot\Api\Method\SetChatPhoto;
+use Vjik\TelegramBot\Api\Method\SetChatTitle;
 use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
@@ -1263,6 +1265,18 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#setchatdescription
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setChatDescription(int|string $chatId, ?string $description = null): FailResult|true
+    {
+        return $this->send(
+            new SetChatDescription($chatId, $description)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#setchatmenubutton
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -1296,6 +1310,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new SetChatPhoto($chatId, $photo)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setchattitle
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setChatTitle(int|string $chatId, string $title): FailResult|true
+    {
+        return $this->send(
+            new SetChatTitle($chatId, $title)
         );
     }
 
