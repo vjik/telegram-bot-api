@@ -33,6 +33,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
@@ -64,6 +65,8 @@ use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
+use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
+use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -549,6 +552,21 @@ final class TelegramBotApi
     public function logOut(): FailResult|true
     {
         return $this->send(new LogOut());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#pinchatmessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function pinChatMessage(
+        int|string $chatId,
+        int $messageId,
+        ?bool $disableNotification = null,
+    ): FailResult|true {
+        return $this->send(
+            new PinChatMessage($chatId, $messageId, $disableNotification)
+        );
     }
 
     /**
@@ -1432,6 +1450,30 @@ final class TelegramBotApi
     {
         return $this->send(
             new UnbanChatSenderChat($chatId, $senderChatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unpinchatmessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unpinChatMessage(int|string $chatId, ?int $messageId = null): FailResult|true
+    {
+        return $this->send(
+            new UnpinChatMessage($chatId, $messageId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unpinallchatmessages
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unpinAllChatMessages(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new UnpinAllChatMessages($chatId),
         );
     }
 

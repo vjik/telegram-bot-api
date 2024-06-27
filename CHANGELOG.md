@@ -29,6 +29,7 @@
 - New #40: Add `approveChatJoinRequest` and `declineChatJoinRequest` methods.
 - New #42: Add `setChatPhoto` and `deleteChatPhoto` methods.
 - New #43: Add `setChatTitle` and `setChatDescription` methods.
+- New #44: Add `pinChatMessage`, `unpinChatMessage` and `unpinAllChatMessages` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
