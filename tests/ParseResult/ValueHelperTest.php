@@ -22,6 +22,7 @@ use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
 use Vjik\TelegramBot\Api\Type\SharedUser;
+use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
 
 final class ValueHelperTest extends TestCase
@@ -1067,6 +1068,72 @@ final class ValueHelperTest extends TestCase
         $exception = null;
         try {
             ValueHelper::getArrayOfStarTransactions($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfStickers(): void
+    {
+        $result = [
+            'key' => [
+                [
+                    'file_id' => 'fid1',
+                    'file_unique_id' => 'fuid1',
+                    'type' => 'regular',
+                    'width' => 200,
+                    'height' => 300,
+                    'is_animated' => false,
+                    'is_video' => false,
+                ],
+                [
+                    'file_id' => 'fid2',
+                    'file_unique_id' => 'fuid2',
+                    'type' => 'regular',
+                    'width' => 512,
+                    'height' => 256,
+                    'is_animated' => true,
+                    'is_video' => true,
+                ],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [
+                new Sticker('fid1', 'fuid1', 'regular', 200, 300, false, false),
+                new Sticker('fid2', 'fuid2', 'regular', 512, 256, true, true),
+            ],
+            ValueHelper::getArrayOfStickers($result, 'key'),
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStickers($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStickers($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfStickers($result, 'array-of-ints');
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);

@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReactionTypeFactory;
 use Vjik\TelegramBot\Api\Type\SharedUser;
+use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
 
 final class ValueHelper
@@ -437,6 +438,18 @@ final class ValueHelper
         $transactions = ValueHelper::getArray($result, $key);
         return array_map(
             static fn($item) => StarTransaction::fromTelegramResult($item),
+            $transactions
+        );
+    }
+
+    /**
+     * @return Sticker[]
+     */
+    public static function getArrayOfStickers(array $result, string $key): array
+    {
+        $transactions = ValueHelper::getArray($result, $key);
+        return array_map(
+            static fn($item) => Sticker::fromTelegramResult($item),
             $transactions
         );
     }
