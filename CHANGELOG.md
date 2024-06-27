@@ -34,6 +34,7 @@
 - New #47: Add `getChatAdministrators`, `getChatMemberCount` and `getChatMember` methods.
 - New #49: Add `createNewStickerSet` method, `InputSticker` type, `StickerType` and `StickerFormat` classes with
   constants, and `MaskPosition::toRequestArray()` method.
+- New #50: Add `deleteStickerSet` method.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
