@@ -31,6 +31,7 @@
 - New #43: Add `setChatTitle` and `setChatDescription` methods.
 - New #44: Add `pinChatMessage`, `unpinChatMessage` and `unpinAllChatMessages` methods.
 - New #46: Add `leaveChat` method.
+- New #47: Add `getChatAdministrators`, `getChatMemberCount` and `getChatMember` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.

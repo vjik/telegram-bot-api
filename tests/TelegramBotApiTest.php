@@ -18,6 +18,8 @@ use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
+use Vjik\TelegramBot\Api\Type\ChatMember;
+use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -355,6 +357,54 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(ChatFullInfo::class, $result);
         $this->assertSame(23, $result->id);
+    }
+
+    public function testGetChatAdministrators(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'status' => 'member',
+                    'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
+                ],
+            ],
+        ]);
+
+        $result = $api->getChatAdministrators(23);
+
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(ChatMemberMember::class, $result[0]);
+        $this->assertSame(23, $result[0]->user->id);
+    }
+
+    public function testGetChatMemberCount(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => 33,
+        ]);
+
+        $result = $api->getChatMemberCount(1);
+
+        $this->assertSame(33, $result);
+    }
+
+    public function testGetChatMember(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'status' => 'member',
+                'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
+            ],
+        ]);
+
+        $result = $api->getChatMember(1, 2);
+
+        $this->assertInstanceOf(ChatMemberMember::class, $result);
+        $this->assertSame(23, $result->user->id);
     }
 
     public function testGetChatMenuButton(): void

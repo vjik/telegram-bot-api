@@ -44,6 +44,15 @@ final class ValueHelperTest extends TestCase
         ValueHelper::assertStringResult([]);
     }
 
+    public function testAssertIntegerResult(): void
+    {
+        ValueHelper::assertIntegerResult(25);
+
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Expected result as integer. Got "array".');
+        ValueHelper::assertIntegerResult([]);
+    }
+
     public function testAssertTrueResult(): void
     {
         ValueHelper::assertTrueResult(true);
