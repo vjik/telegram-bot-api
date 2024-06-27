@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type;
 
 use Psr\Http\Message\StreamInterface;
+use RuntimeException;
 
 /**
  * @see https://core.telegram.org/bots/api#sending-files
@@ -22,6 +23,10 @@ final readonly class InputFile
 
     public static function fromLocalFile(string $path, ?string $filename = null): self
     {
-        return new self(fopen($path, 'r'), $filename);
+        $resource = fopen($path, 'r');
+        if ($resource === false) {
+            throw new RuntimeException('Unable to open file "' . $path . '".');
+        }
+        return new self($resource, $filename);
     }
 }
