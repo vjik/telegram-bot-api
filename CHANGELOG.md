@@ -41,6 +41,7 @@
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
 - Bug #48: Fix incorrect string values addition to POST request with files in `PsrTelegramClient`.
+- Bug #53: Fix incorrect array values addition to GET request in `PsrTelegramClient`.
 
 ## 0.1.0 June 10, 2024 
 
