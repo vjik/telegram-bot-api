@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests;
 
+use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
@@ -19,6 +20,7 @@ use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
+use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
@@ -218,6 +220,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->declineChatJoinRequest(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testDeleteChatPhoto(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->deleteChatPhoto(1);
 
         $this->assertTrue($result);
     }
@@ -921,6 +935,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setChatMenuButton();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetChatPhoto(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatPhoto(12, new InputFile((new StreamFactory())->createStream()));
 
         $this->assertTrue($result);
     }
