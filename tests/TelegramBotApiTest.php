@@ -547,6 +547,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https://example.com/', $result->url);
     }
 
+    public function testLeaveChat(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->leaveChat(1);
+
+        $this->assertTrue($result);
+    }
+
     public function testLogOut(): void
     {
         $api = $this->createApi([
