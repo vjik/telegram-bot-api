@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Sticker;
 
-use Vjik\TelegramBot\Api\Enum\Sticker\StickerFormat;
 use Vjik\TelegramBot\Api\Request\RequestFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
@@ -19,7 +18,7 @@ final readonly class InputSticker
      */
     public function __construct(
         private InputFile|string $sticker,
-        private StickerFormat|string $format,
+        private string $format,
         private array $emojiList,
         private ?MaskPosition $maskPosition = null,
         private ?array $keywords = null,
@@ -39,7 +38,7 @@ final readonly class InputSticker
         return array_filter(
             [
                 'sticker' => $sticker,
-                'format' => $this->format instanceof StickerFormat ? $this->format->value : $this->format,
+                'format' => $this->format,
                 'emoji_list' => $this->emojiList,
                 'mask_position' => $this->maskPosition?->toRequestArray(),
                 'keywords' => $this->keywords,
