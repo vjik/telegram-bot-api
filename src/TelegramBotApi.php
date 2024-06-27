@@ -67,10 +67,13 @@ use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\Sticker\AddStickerToSet;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerFromSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
@@ -159,6 +162,18 @@ final class TelegramBotApi
         return $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#addstickertoset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function addStickerToSet(int $userId, string $name, InputSticker $sticker): FailResult|true
+    {
+        return $this->send(
+            new AddStickerToSet($userId, $name, $sticker)
+        );
     }
 
     /**
@@ -349,6 +364,18 @@ final class TelegramBotApi
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
         return $this->send(new DeleteMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletestickerfromset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteStickerFromSet(string $sticker): FailResult|true
+    {
+        return $this->send(
+            new DeleteStickerFromSet($sticker)
+        );
     }
 
     /**
@@ -726,6 +753,22 @@ final class TelegramBotApi
                 $canPinMessages,
                 $canManageTopics
             )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#replacestickerinset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function replaceStickerInSet(
+        int $userId,
+        string $name,
+        string $oldSticker,
+        InputSticker $sticker
+    ): FailResult|true {
+        return $this->send(
+            new ReplaceStickerInSet($userId, $name, $oldSticker, $sticker)
         );
     }
 
