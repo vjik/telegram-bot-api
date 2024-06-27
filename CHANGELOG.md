@@ -36,6 +36,7 @@
   constants, and `MaskPosition::toRequestArray()` method.
 - New #50: Add `deleteStickerSet` method.
 - New #51: Add `getStickerSet` method and `StickerSet` type.
+- New #52: Add `sendSticker` method.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.

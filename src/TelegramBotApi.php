@@ -70,6 +70,7 @@ use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
@@ -1178,6 +1179,39 @@ final class TelegramBotApi
                 $openPeriod,
                 $closeDate,
                 $isClosed,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendsticker
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendSticker(
+        int|string $chatId,
+        InputFile|string $sticker,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?string $emoji = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendSticker(
+                $chatId,
+                $sticker,
+                $businessConnectionId,
+                $messageThreadId,
+                $emoji,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
