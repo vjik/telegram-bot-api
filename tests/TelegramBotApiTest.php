@@ -1268,6 +1268,24 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testUploadStickerFile(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'file_id' => 'f1',
+                'file_unique_id' => 'fullX1',
+                'file_size' => 123,
+                'file_path' => 'path/to/file',
+            ],
+        ]);
+
+        $result = $api->uploadStickerFile(1, new InputFile((new StreamFactory())->createStream()), 'static');
+
+        $this->assertInstanceOf(File::class, $result);
+        $this->assertSame('f1', $result->fileId);
+    }
+
     private function createApi(array|string $response, int $statusCode = 200): TelegramBotApi
     {
         return new TelegramBotApi(
