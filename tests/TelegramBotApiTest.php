@@ -559,6 +559,33 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(StarTransactions::class, $result);
     }
 
+    public function testGetStickerSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'name' => 'test_by_bot',
+                'title' => 'test name',
+                'sticker_type' => 'regular',
+                'stickers' => [
+                    [
+                        'file_id' => 'fid1',
+                        'file_unique_id' => 'fuid1',
+                        'type' => 'regular',
+                        'width' => 200,
+                        'height' => 300,
+                        'is_animated' => false,
+                        'is_video' => false,
+                    ],
+                ],
+            ],
+        ]);
+
+        $result = $api->getStickerSet('test_by_bot');
+
+        $this->assertSame('test name', $result->title);
+    }
+
     public function testGetUpdates(): void
     {
         $api = $this->createApi([
