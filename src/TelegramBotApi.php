@@ -72,6 +72,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
+use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
@@ -1619,6 +1620,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new UnpinAllChatMessages($chatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#uploadstickerfile
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): FailResult|File
+    {
+        return $this->send(
+            new UploadStickerFile($userId, $sticker, $stickerFormat)
         );
     }
 
