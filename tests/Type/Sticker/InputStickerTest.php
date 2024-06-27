@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\Enum\Sticker\StickerFormat;
 use Vjik\TelegramBot\Api\Request\RequestFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
@@ -48,7 +49,7 @@ final class InputStickerTest extends TestCase
         $maskPosition = new MaskPosition('forehead', 0.5, 0.6, 0.7);
         $inputSticker = new InputSticker(
             $file,
-            'static',
+            StickerFormat::STATIC,
             ['👍', '👎'],
             $maskPosition,
             ['test'],
