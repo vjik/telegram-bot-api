@@ -19,6 +19,16 @@ final readonly class MaskPosition
     ) {
     }
 
+    public function toRequestArray(): array
+    {
+        return [
+            'point' => $this->point,
+            'x_shift' => $this->xShift,
+            'y_shift' => $this->yShift,
+            'scale' => $this->scale,
+        ];
+    }
+
     public static function fromTelegramResult(mixed $result): self
     {
         ValueHelper::assertArrayResult($result);

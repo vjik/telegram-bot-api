@@ -67,6 +67,7 @@ use Vjik\TelegramBot\Api\Method\SetMyCommands;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
@@ -103,6 +104,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
+use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
@@ -285,6 +287,26 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#createnewstickerset
+     *
+     * @param InputSticker[] $stickers
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createNewStickerSet(
+        int $userId,
+        string $name,
+        string $title,
+        array $stickers,
+        ?string $stickerType = null,
+        ?bool $needsRepainting = null,
+    ): FailResult|true {
+        return $this->send(
+            new CreateNewStickerSet($userId, $name, $title, $stickers, $stickerType, $needsRepainting)
         );
     }
 

@@ -22,6 +22,15 @@ final class MaskPositionTest extends TestCase
         $this->assertSame(0.5, $maskPosition->xShift);
         $this->assertSame(0.6, $maskPosition->yShift);
         $this->assertSame(0.7, $maskPosition->scale);
+        $this->assertSame(
+            [
+                'point' => 'forehead',
+                'x_shift' => 0.5,
+                'y_shift' => 0.6,
+                'scale' => 0.7,
+            ],
+            $maskPosition->toRequestArray(),
+        );
     }
 
     public function testFromTelegramResult(): void
