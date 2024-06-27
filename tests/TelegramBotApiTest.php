@@ -18,7 +18,6 @@ use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
-use Vjik\TelegramBot\Api\Type\ChatMember;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
@@ -27,6 +26,7 @@ use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
@@ -103,6 +103,22 @@ final class TelegramBotApiTest extends TestCase
         $this->expectException(InvalidResponseFormatException::class);
         $this->expectExceptionMessage('Incorrect "ok" field in response. Status code: 200.');
         $api->send(new GetMe());
+    }
+
+    public function testAddStickerToSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->addStickerToSet(
+            1,
+            'test',
+            new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
+        );
+
+        $this->assertTrue($result);
     }
 
     public function testApproveChatJoinRequest(): void
@@ -259,6 +275,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->deleteMyCommands();
+
+        $this->assertTrue($result);
+    }
+
+    public function testDeleteStickerFromSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->deleteStickerFromSet('sid');
 
         $this->assertTrue($result);
     }
@@ -718,6 +746,23 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->promoteChatMember(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testReplaceStickerInSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->replaceStickerInSet(
+            1,
+            'test',
+            'oldid',
+            new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
+        );
 
         $this->assertTrue($result);
     }

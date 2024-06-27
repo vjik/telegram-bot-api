@@ -39,6 +39,7 @@
 - New #52: Add `sendSticker` method.
 - New #54: Add `getCustomEmojiStickers` method.
 - New #55: Add `uploadStickerFile` method.
+- New #57: Add `addStickerToSet`, `deleteStickerFromSet` and `replaceStickerInSet` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.

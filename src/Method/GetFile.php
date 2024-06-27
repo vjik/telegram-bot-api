@@ -14,7 +14,7 @@ use Vjik\TelegramBot\Api\Type\File;
 final readonly class GetFile implements TelegramRequestWithResultPreparingInterface
 {
     public function __construct(
-        public string $fileId,
+        private string $fileId,
     ) {
     }
 
