@@ -927,6 +927,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testSetChatDescription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatDescription(12);
+
+        $this->assertTrue($result);
+    }
+
     public function testSetChatMenuButton(): void
     {
         $api = $this->createApi([
@@ -947,6 +959,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setChatPhoto(12, new InputFile((new StreamFactory())->createStream()));
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetChatTitle(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatTitle(12, 'test');
 
         $this->assertTrue($result);
     }
