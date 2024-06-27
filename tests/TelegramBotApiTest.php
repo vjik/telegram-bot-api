@@ -262,6 +262,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testDeleteStickerSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->deleteStickerSet('test_by_bot');
+
+        $this->assertTrue($result);
+    }
+
     public function testEditChatInviteLink(): void
     {
         $api = $this->createApi([
