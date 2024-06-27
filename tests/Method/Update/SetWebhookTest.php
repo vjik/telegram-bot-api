@@ -54,7 +54,7 @@ final class SetWebhookTest extends TestCase
     {
         $method = new SetWebhook('https://example.com/hook');
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

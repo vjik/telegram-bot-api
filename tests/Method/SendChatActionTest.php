@@ -44,7 +44,7 @@ final class SendChatActionTest extends TestCase
     {
         $method = new SendChatAction(12, 'testing');
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

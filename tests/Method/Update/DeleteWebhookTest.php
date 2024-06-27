@@ -37,7 +37,7 @@ final class DeleteWebhookTest extends TestCase
     {
         $method = new DeleteWebhook();
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

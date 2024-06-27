@@ -36,7 +36,7 @@ final class SetMyNameTest extends TestCase
     {
         $method = new SetMyName();
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

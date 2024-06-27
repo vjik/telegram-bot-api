@@ -36,7 +36,7 @@ final class SetMyShortDescriptionTest extends TestCase
     {
         $method = new SetMyShortDescription();
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

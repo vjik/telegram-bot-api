@@ -38,7 +38,7 @@ final class SetChatMenuButtonTest extends TestCase
     {
         $method = new SetChatMenuButton();
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }
