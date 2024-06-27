@@ -33,7 +33,7 @@ final class PsrTelegramClientTest extends TestCase
         $httpRequestFactory
             ->expects($this->once())
             ->method('createRequest')
-            ->with('GET', 'https://api.telegram.org/bot04062024/getMe?key=value')
+            ->with('GET', 'https://api.telegram.org/bot04062024/getMe?key=value&array=%5B1%2C%22test%22%5D')
             ->willReturn($httpRequest);
 
         $client = new PsrTelegramClient(
@@ -43,7 +43,10 @@ final class PsrTelegramClientTest extends TestCase
             new StreamFactory(),
         );
 
-        $response = $client->send(new TelegramRequest(HttpMethod::GET, 'getMe', ['key' => 'value']));
+        $response = $client->send(new TelegramRequest(HttpMethod::GET, 'getMe', [
+            'key' => 'value',
+            'array' => [1, 'test'],
+        ]));
 
         $this->assertSame(201, $response->statusCode);
     }
