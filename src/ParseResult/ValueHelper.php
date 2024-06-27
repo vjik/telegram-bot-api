@@ -45,6 +45,18 @@ final class ValueHelper
     }
 
     /**
+     * @psalm-assert int $result
+     */
+    public static function assertIntegerResult(mixed $result): void
+    {
+        if (!is_int($result)) {
+            throw new TelegramParseResultException(
+                'Expected result as integer. Got "' . get_debug_type($result) . '".'
+            );
+        }
+    }
+
+    /**
      * @psalm-assert true $result
      */
     public static function assertTrueResult(mixed $result): void
