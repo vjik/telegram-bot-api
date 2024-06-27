@@ -93,9 +93,14 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
 
     private function createGetRequest(TelegramRequestInterface $request): HttpRequestInterface
     {
+        $queryParameters = [];
+        foreach ($request->getData() as $key => $value) {
+            $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
+        }
+
         return $this->httpRequestFactory->createRequest(
             'GET',
-            $this->apiUrlGenerator->generate($request->getApiMethod(), $request->getData()),
+            $this->apiUrlGenerator->generate($request->getApiMethod(), $queryParameters),
         );
     }
 }
