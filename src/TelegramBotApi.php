@@ -31,6 +31,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payments\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
@@ -542,6 +543,18 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->send(new GetWebhookInfo());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#leavechat
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function leaveChat(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new LeaveChat($chatId)
+        );
     }
 
     /**
