@@ -1111,6 +1111,13 @@ final class ValueHelperTest extends TestCase
             ],
             ValueHelper::getArrayOfStickers($result, 'key'),
         );
+        $this->assertEquals(
+            [
+                new Sticker('fid1', 'fuid1', 'regular', 200, 300, false, false),
+                new Sticker('fid2', 'fuid2', 'regular', 512, 256, true, true),
+            ],
+            ValueHelper::getArrayOfStickers($result['key']),
+        );
 
         $exception = null;
         try {
