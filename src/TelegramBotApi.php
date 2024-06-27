@@ -23,6 +23,9 @@ use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\GetChat;
+use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
+use Vjik\TelegramBot\Api\Method\GetChatMember;
+use Vjik\TelegramBot\Api\Method\GetChatMemberCount;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\GetFile;
 use Vjik\TelegramBot\Api\Method\GetMe;
@@ -78,6 +81,7 @@ use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
+use Vjik\TelegramBot\Api\Type\ChatMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
@@ -419,6 +423,38 @@ final class TelegramBotApi
     public function getChat(int|string $chatId): FailResult|ChatFullInfo
     {
         return $this->send(new GetChat($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getchatadministrators
+     *
+     * @return FailResult|ChatMember[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getChatAdministrators(int|string $chatId): FailResult|array
+    {
+        return $this->send(new GetChatAdministrators($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getchatmembercount
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getChatMemberCount(int|string $chatId): FailResult|int
+    {
+        return $this->send(new GetChatMemberCount($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getchatmember
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getChatMember(int|string $chatId, int $userId): FailResult|ChatMember
+    {
+        return $this->send(new GetChatMember($chatId, $userId));
     }
 
     /**
