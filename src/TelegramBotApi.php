@@ -69,6 +69,7 @@ use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
@@ -108,6 +109,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
+use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
@@ -501,6 +503,19 @@ final class TelegramBotApi
     public function getChatMenuButton(?int $chatId = null): FailResult|MenuButton
     {
         return $this->send(new GetChatMenuButton($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getcustomemojistickers
+     *
+     * @param string[] $customEmojiIds
+     * @return FailResult|Sticker[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getCustomEmojiStickers(array $customEmojiIds): FailResult|array
+    {
+        return $this->send(new GetCustomEmojiStickers($customEmojiIds));
     }
 
     /**

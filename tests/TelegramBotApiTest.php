@@ -27,6 +27,7 @@ use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payments\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Type\Update\Update;
@@ -461,6 +462,31 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(File::class, $result);
         $this->assertSame('f1', $result->fileId);
+    }
+
+    public function testGetCustomEmojiStickers(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'file_id' => 'x1',
+                    'file_unique_id' => 'fullX1',
+                    'type' => 'regular',
+                    'width' => 100,
+                    'height' => 120,
+                    'is_animated' => false,
+                    'is_video' => true,
+                ],
+            ],
+        ]);
+
+        $result = $api->getCustomEmojiStickers(['id1']);
+
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(Sticker::class, $result[0]);
+        $this->assertSame('x1', $result[0]->fileId);
     }
 
     public function testGetMe(): void
