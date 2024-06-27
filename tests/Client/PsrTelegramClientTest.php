@@ -138,7 +138,7 @@ final class PsrTelegramClientTest extends TestCase
                     /** @var Request $request */
                     $requestHeaders = $request->getHeaders();
                     $this->assertSame(['Content-Length', 'Content-Type'], array_keys($requestHeaders));
-                    $this->assertSame($requestHeaders['Content-Length'], ['287']);
+                    $this->assertSame($requestHeaders['Content-Length'], ['390']);
                     $this->assertSame([0], array_keys($requestHeaders['Content-Type']));
                     $this->assertSame(
                         1,
@@ -155,6 +155,11 @@ final class PsrTelegramClientTest extends TestCase
                             Content-Length: 3
 
                             123
+                            --$matches[1]
+                            Content-Disposition: form-data; name="caption"
+                            Content-Length: 5
+
+                            hello
                             --$matches[1]
                             Content-Disposition: form-data; name="photo"; filename="face.png"
                             Content-Length: 14
@@ -190,6 +195,7 @@ final class PsrTelegramClientTest extends TestCase
                 'sendPhoto',
                 [
                     'chat_id' => 123,
+                    'caption' => 'hello',
                     'photo' => new InputFile(
                         (new StreamFactory())->createStream('test-file-body'),
                         'face.png',

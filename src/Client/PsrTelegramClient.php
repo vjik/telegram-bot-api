@@ -69,7 +69,10 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
         } else {
             $streamBuilder = new MultipartStreamBuilder($this->streamFactory);
             foreach ($data as $key => $value) {
-                $streamBuilder->addResource($key, json_encode($value, JSON_THROW_ON_ERROR));
+                $streamBuilder->addResource(
+                    $key,
+                    is_string($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR)
+                );
             }
             foreach ($files as $key => $file) {
                 $streamBuilder->addResource(
