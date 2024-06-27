@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Passport;
+namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedCredentials;

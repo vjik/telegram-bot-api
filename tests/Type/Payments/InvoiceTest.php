@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Payments;
+namespace Vjik\TelegramBot\Api\Tests\Type\Payments;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Payments\Invoice;
