@@ -445,12 +445,12 @@ final class ValueHelper
     /**
      * @return Sticker[]
      */
-    public static function getArrayOfStickers(array $result, string $key): array
+    public static function getArrayOfStickers(array $result, ?string $key = null): array
     {
-        $transactions = ValueHelper::getArray($result, $key);
+        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key);
         return array_map(
             static fn($item) => Sticker::fromTelegramResult($item),
-            $transactions
+            $stickers
         );
     }
 
