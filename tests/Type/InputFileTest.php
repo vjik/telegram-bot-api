@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class InputFileTest extends TestCase
@@ -42,5 +43,12 @@ final class InputFileTest extends TestCase
 
         $this->assertIsResource($file->resource);
         $this->assertSame('test.php', $file->filename);
+    }
+
+    public function testFromLocalNotExistsFile(): void
+    {
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('Unable to open file "not-exists".');
+        InputFile::fromLocalFile('not-exists');
     }
 }
