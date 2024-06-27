@@ -44,6 +44,15 @@ final class ValueHelperTest extends TestCase
         ValueHelper::assertStringResult([]);
     }
 
+    public function testAssertTrueResult(): void
+    {
+        ValueHelper::assertTrueResult(true);
+
+        $this->expectException(TelegramParseResultException::class);
+        $this->expectExceptionMessage('Expected result as true. Got "array".');
+        ValueHelper::assertTrueResult([]);
+    }
+
     public function testGetString(): void
     {
         $result = [

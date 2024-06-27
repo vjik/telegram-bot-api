@@ -53,7 +53,7 @@ final class SetMyCommandsTest extends TestCase
     {
         $method = new SetMyCommands([]);
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

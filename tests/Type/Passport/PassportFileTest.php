@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Passport;
+namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;

@@ -40,7 +40,7 @@ final class DeleteMyCommandsTest extends TestCase
     {
         $method = new DeleteMyCommands();
 
-        $preparedResult = $method->prepareResult([]);
+        $preparedResult = $method->prepareResult(true);
 
         $this->assertTrue($preparedResult);
     }

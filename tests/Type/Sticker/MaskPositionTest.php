@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Sticker;
+namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
