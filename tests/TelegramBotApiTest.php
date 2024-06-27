@@ -214,6 +214,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https//t.me/+example', $result->inviteLink);
     }
 
+    public function testCreateNewStickerSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->createNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
+
+        $this->assertTrue($result);
+    }
+
     public function testDeclineChatJoinRequest(): void
     {
         $api = $this->createApi([
