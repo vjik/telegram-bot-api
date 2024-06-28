@@ -107,6 +107,8 @@ use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
@@ -470,6 +472,28 @@ final class TelegramBotApi
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
         return $this->send(new DeleteForumTopic($chatId, $messageThreadId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletemessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteMessage(int|string $chatId, int $messageId): FailResult|true
+    {
+        return $this->send(new DeleteMessage($chatId, $messageId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletemessages
+     *
+     * @param int[] $messageIds
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteMessages(int|string $chatId, array $messageIds): FailResult|true
+    {
+        return $this->send(new DeleteMessages($chatId, $messageIds));
     }
 
     /**
