@@ -110,6 +110,7 @@ use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
@@ -631,6 +632,29 @@ final class TelegramBotApi
         return $this->send(
             new EditMessageMedia(
                 $media,
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $inlineMessageId,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editmessagereplymarkup
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editMessageReplyMarkup(
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message|true {
+        return $this->send(
+            new EditMessageReplyMarkup(
                 $businessConnectionId,
                 $chatId,
                 $messageId,
