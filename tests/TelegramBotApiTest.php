@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\InvalidResponseFormatException;
 use Vjik\TelegramBot\Api\Method\GetMe;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
 use Vjik\TelegramBot\Api\Type\BotCommand;
@@ -1249,6 +1250,54 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setMyShortDescription();
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetStickerEmojiList(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setStickerEmojiList('sid', ['😎']);
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetStickerKeywords(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setStickerKeywords('sid');
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetStickerMaskPosition(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setStickerMaskPosition('sid');
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetStickerPositionInSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setStickerPositionInSet('sid', 2);
 
         $this->assertTrue($result);
     }
