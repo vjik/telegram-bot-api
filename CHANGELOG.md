@@ -62,6 +62,7 @@
 - New #75: Add `editMessageLiveLocation` and `stopMessageLiveLocation` methods.
 - New #76: Add `editMessageReplyMarkup` method.
 - New #77: Add `stopPoll` method.
+- New #78: Add `deleteMessage` and `deleteMessages` methods.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
