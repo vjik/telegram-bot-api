@@ -30,6 +30,7 @@ use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
+use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
 use Vjik\TelegramBot\Api\Method\GetChatMember;
@@ -112,6 +113,7 @@ use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
+use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatMember;
@@ -609,6 +611,16 @@ final class TelegramBotApi
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
     {
         return $this->send(new DeleteWebhook($dropPendingUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getbusinessconnection
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getBusinessConnection(string $businessConnectionId): FailResult|BusinessConnection
+    {
+        return $this->send(new GetBusinessConnection($businessConnectionId));
     }
 
     /**

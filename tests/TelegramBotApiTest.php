@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
+use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
@@ -496,6 +497,30 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->deleteWebhook();
 
         $this->assertTrue($result);
+    }
+
+    public function testGetBusinessConnection(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => 'id1',
+                'user' => [
+                    'id' => 123,
+                    'is_bot' => false,
+                    'first_name' => 'Sergei',
+                ],
+                'user_chat_id' => 23,
+                'date' => 1717517779,
+                'can_reply' => true,
+                'is_enabled' => false,
+            ],
+        ]);
+
+        $result = $api->getBusinessConnection('b1');
+
+        $this->assertInstanceOf(BusinessConnection::class, $result);
+        $this->assertSame('id1', $result->id);
     }
 
     public function testGetChat(): void
