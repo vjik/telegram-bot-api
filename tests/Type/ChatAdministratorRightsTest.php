@@ -46,4 +46,41 @@ final class ChatAdministratorRightsTest extends TestCase
             $rights->toRequestArray()
         );
     }
+
+    public function testFromTelegramResult(): void
+    {
+        $type = ChatAdministratorRights::fromTelegramResult([
+            'is_anonymous' => true,
+            'can_manage_chat' => false,
+            'can_delete_messages' => true,
+            'can_manage_video_chats' => true,
+            'can_restrict_members' => false,
+            'can_promote_members' => true,
+            'can_change_info' => true,
+            'can_invite_users' => true,
+            'can_post_stories' => true,
+            'can_edit_stories' => true,
+            'can_delete_stories' => false,
+            'can_post_messages' => true,
+            'can_edit_messages' => true,
+            'can_pin_messages' => false,
+            'can_manage_topics' => true,
+        ]);
+
+        $this->assertTrue($type->isAnonymous);
+        $this->assertFalse($type->canManageChat);
+        $this->assertTrue($type->canDeleteMessages);
+        $this->assertTrue($type->canManageVideoChats);
+        $this->assertFalse($type->canRestrictMembers);
+        $this->assertTrue($type->canPromoteMembers);
+        $this->assertTrue($type->canChangeInfo);
+        $this->assertTrue($type->canInviteUsers);
+        $this->assertTrue($type->canPostStories);
+        $this->assertTrue($type->canEditStories);
+        $this->assertFalse($type->canDeleteStories);
+        $this->assertTrue($type->canPostMessages);
+        $this->assertTrue($type->canEditMessages);
+        $this->assertFalse($type->canPinMessages);
+        $this->assertTrue($type->canManageTopics);
+    }
 }
