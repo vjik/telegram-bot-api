@@ -17,6 +17,7 @@ use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
+use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
@@ -61,6 +62,7 @@ use Vjik\TelegramBot\Api\Method\SetChatDescription;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\SetChatPermissions;
 use Vjik\TelegramBot\Api\Method\SetChatPhoto;
+use Vjik\TelegramBot\Api\Method\SetChatStickerSet;
 use Vjik\TelegramBot\Api\Method\SetChatTitle;
 use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
@@ -361,6 +363,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new DeleteChatPhoto($chatId)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletechatstickerset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteChatStickerSet(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new DeleteChatStickerSet($chatId)
         );
     }
 
@@ -1525,6 +1539,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new SetChatPhoto($chatId, $photo)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setchatstickerset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setChatStickerSet(int|string $chatId, string $stickerSetName): FailResult|true
+    {
+        return $this->send(
+            new SetChatStickerSet($chatId, $stickerSetName)
         );
     }
 
