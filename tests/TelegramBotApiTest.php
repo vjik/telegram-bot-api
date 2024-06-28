@@ -708,6 +708,48 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('start', $result[0]->command);
     }
 
+    public function testGetMyDefaultAdministratorRights(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'is_anonymous' => true,
+                'can_manage_chat' => false,
+                'can_delete_messages' => true,
+                'can_manage_video_chats' => true,
+                'can_restrict_members' => false,
+                'can_promote_members' => true,
+                'can_change_info' => true,
+                'can_invite_users' => true,
+                'can_post_stories' => true,
+                'can_edit_stories' => true,
+                'can_delete_stories' => false,
+                'can_post_messages' => true,
+                'can_edit_messages' => true,
+                'can_pin_messages' => false,
+                'can_manage_topics' => true,
+            ],
+        ]);
+
+        $result = $api->getMyDefaultAdministratorRights();
+
+        $this->assertTrue($result->isAnonymous);
+        $this->assertFalse($result->canManageChat);
+        $this->assertTrue($result->canDeleteMessages);
+        $this->assertTrue($result->canManageVideoChats);
+        $this->assertFalse($result->canRestrictMembers);
+        $this->assertTrue($result->canPromoteMembers);
+        $this->assertTrue($result->canChangeInfo);
+        $this->assertTrue($result->canInviteUsers);
+        $this->assertTrue($result->canPostStories);
+        $this->assertTrue($result->canEditStories);
+        $this->assertFalse($result->canDeleteStories);
+        $this->assertTrue($result->canPostMessages);
+        $this->assertTrue($result->canEditMessages);
+        $this->assertFalse($result->canPinMessages);
+        $this->assertTrue($result->canManageTopics);
+    }
+
     public function testGetMyDescription(): void
     {
         $api = $this->createApi([
@@ -1429,6 +1471,18 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->setMyCommands([
             new BotCommand('test', 'Test description'),
         ]);
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetMyDefaultAdministratorRights(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setMyDefaultAdministratorRights();
 
         $this->assertTrue($result);
     }
