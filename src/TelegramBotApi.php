@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
@@ -197,6 +198,23 @@ final class TelegramBotApi
     {
         return $this->send(
             new AddStickerToSet($userId, $name, $sticker)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#answercallbackquery
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function answerCallbackQuery(
+        string $callbackQueryId,
+        ?string $text = null,
+        ?bool $showAlert = null,
+        ?string $url = null,
+        ?int $cacheTime = null,
+    ): FailResult|true {
+        return $this->send(
+            new AnswerCallbackQuery($callbackQueryId, $text, $showAlert, $url, $cacheTime)
         );
     }
 

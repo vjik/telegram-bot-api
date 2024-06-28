@@ -10,7 +10,6 @@ use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\InvalidResponseFormatException;
 use Vjik\TelegramBot\Api\Method\GetMe;
-use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
 use Vjik\TelegramBot\Api\Type\BotCommand;
@@ -119,6 +118,18 @@ final class TelegramBotApiTest extends TestCase
             'test',
             new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
         );
+
+        $this->assertTrue($result);
+    }
+
+    public function testAnswerCallbackQuery(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->answerCallbackQuery('id');
 
         $this->assertTrue($result);
     }
