@@ -268,6 +268,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testDeleteChatStickerSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->deleteChatStickerSet(1);
+
+        $this->assertTrue($result);
+    }
+
     public function testDeleteMyCommands(): void
     {
         $api = $this->createApi([
@@ -1176,6 +1188,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setChatPhoto(12, new InputFile((new StreamFactory())->createStream()));
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetChatStickerSet(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setChatStickerSet(1, 'animals_by_bot');
 
         $this->assertTrue($result);
     }
