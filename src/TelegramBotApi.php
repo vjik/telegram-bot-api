@@ -13,6 +13,7 @@ use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CloseForumTopic;
+use Vjik\TelegramBot\Api\Method\CloseGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
@@ -24,6 +25,7 @@ use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
+use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
@@ -40,12 +42,14 @@ use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\ReopenForumTopic;
+use Vjik\TelegramBot\Api\Method\ReopenGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
@@ -93,6 +97,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetTitle;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
+use Vjik\TelegramBot\Api\Method\UnhideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
@@ -253,6 +258,16 @@ final class TelegramBotApi
     public function closeForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
         return $this->send(new CloseForumTopic($chatId, $messageThreadId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#closegeneralforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function closeGeneralForumTopic(int|string $chatId): FailResult|true
+    {
+        return $this->send(new CloseGeneralForumTopic($chatId));
     }
 
     /**
@@ -486,6 +501,18 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new EditForumTopic($chatId, $messageThreadId, $name, $iconCustomEmojiId)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editgeneralforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editGeneralForumTopic(int|string $chatId, string $name): FailResult|true
+    {
+        return $this->send(
+            new EditGeneralForumTopic($chatId, $name)
         );
     }
 
@@ -768,6 +795,18 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function hideGeneralForumTopic(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new HideGeneralForumTopic($chatId)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#leavechat
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -860,6 +899,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new ReopenForumTopic($chatId, $messageThreadId)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function reopenGeneralForumTopic(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new ReopenGeneralForumTopic($chatId)
         );
     }
 
@@ -1843,6 +1894,18 @@ final class TelegramBotApi
     {
         return $this->send(
             new UnbanChatSenderChat($chatId, $senderChatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unhideGeneralForumTopic(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new UnhideGeneralForumTopic($chatId),
         );
     }
 

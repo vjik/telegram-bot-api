@@ -183,6 +183,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testCloseGeneralForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->closeGeneralForumTopic(1);
+
+        $this->assertTrue($result);
+    }
+
     public function testCopyMessage(): void
     {
         $api = $this->createApi([
@@ -390,6 +402,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->editForumTopic(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testEditGeneralForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->editGeneralForumTopic(1, 'test');
 
         $this->assertTrue($result);
     }
@@ -795,6 +819,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https://example.com/', $result->url);
     }
 
+    public function testHideGeneralForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->hideGeneralForumTopic(1);
+
+        $this->assertTrue($result);
+    }
+
     public function testLeaveChat(): void
     {
         $api = $this->createApi([
@@ -851,6 +887,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->reopenForumTopic(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testReopenGeneralForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->reopenGeneralForumTopic(1);
 
         $this->assertTrue($result);
     }
@@ -1486,6 +1534,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->unbanChatSenderChat(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testUnhideGeneralForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->unhideGeneralForumTopic(1);
 
         $this->assertTrue($result);
     }
