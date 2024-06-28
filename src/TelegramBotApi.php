@@ -75,6 +75,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
+use Vjik\TelegramBot\Api\Method\Sticker\SetCustomEmojiStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerKeywords;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerMaskPosition;
@@ -1602,6 +1603,16 @@ final class TelegramBotApi
         ?string $languageCode = null
     ): FailResult|true {
         return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
+    {
+        return $this->send(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
     }
 
     /**
