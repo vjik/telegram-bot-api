@@ -108,8 +108,10 @@ use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -573,6 +575,41 @@ final class TelegramBotApi
                 $parseMode,
                 $captionEntities,
                 $showCaptionAboveMedia,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editmessagelivelocation
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editMessageLiveLocation(
+        float $latitude,
+        float $longitude,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?int $livePeriod = null,
+        ?float $horizontalAccuracy = null,
+        ?int $heading = null,
+        ?int $proximityAlertRadius = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message|true {
+        return $this->send(
+            new EditMessageLiveLocation(
+                $latitude,
+                $longitude,
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $inlineMessageId,
+                $livePeriod,
+                $horizontalAccuracy,
+                $heading,
+                $proximityAlertRadius,
                 $replyMarkup,
             )
         );
@@ -2031,6 +2068,29 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#stopmessagelivelocation
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function stopMessageLiveLocation(
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message|true {
+        return $this->send(
+            new StopMessageLiveLocation(
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $inlineMessageId,
+                $replyMarkup,
+            )
         );
     }
 

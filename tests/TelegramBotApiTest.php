@@ -444,6 +444,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testEditMessageLiveLocation(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->editMessageLiveLocation(51.660781, 39.200296);
+
+        $this->assertTrue($result);
+    }
+
     public function testEditMessageMedia(): void
     {
         $api = $this->createApi([
@@ -1654,6 +1666,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setWebhook('https://example.com/webhook');
+
+        $this->assertTrue($result);
+    }
+
+    public function testStopMessageLiveLocation(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->stopMessageLiveLocation();
 
         $this->assertTrue($result);
     }

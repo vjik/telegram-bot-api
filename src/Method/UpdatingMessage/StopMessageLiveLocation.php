@@ -1,0 +1,56 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
+
+use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
+use Vjik\TelegramBot\Api\Type\Message;
+
+/**
+ * @see https://core.telegram.org/bots/api#stopmessagelivelocation
+ */
+final readonly class StopMessageLiveLocation implements TelegramRequestWithResultPreparingInterface
+{
+    public function __construct(
+        private ?string $businessConnectionId = null,
+        private int|string|null $chatId = null,
+        private ?int $messageId = null,
+        private ?string $inlineMessageId = null,
+        private ?InlineKeyboardMarkup $replyMarkup = null,
+    ) {
+    }
+
+    public function getHttpMethod(): HttpMethod
+    {
+        return HttpMethod::POST;
+    }
+
+    public function getApiMethod(): string
+    {
+        return 'stopMessageLiveLocation';
+    }
+
+    public function getData(): array
+    {
+        return array_filter(
+            [
+                'business_connection_id' => $this->businessConnectionId,
+                'chat_id' => $this->chatId,
+                'message_id' => $this->messageId,
+                'inline_message_id' => $this->inlineMessageId,
+                'reply_markup' => $this->replyMarkup?->toRequestArray(),
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
+    }
+
+    public function prepareResult(mixed $result): Message|true
+    {
+        return $result === true
+            ? $result
+            : Message::fromTelegramResult($result);
+    }
+}
