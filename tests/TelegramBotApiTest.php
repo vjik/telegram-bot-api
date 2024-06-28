@@ -1254,6 +1254,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testSetCustomEmojiStickerSetThumbnail(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setCustomEmojiStickerSetThumbnail('animals_by_my_bor');
+
+        $this->assertTrue($result);
+    }
+
     public function testSetStickerEmojiList(): void
     {
         $api = $this->createApi([
