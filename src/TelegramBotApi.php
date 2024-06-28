@@ -94,6 +94,8 @@ use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
+use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
+use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
@@ -1865,6 +1867,30 @@ final class TelegramBotApi
     {
         return $this->send(
             new UnpinAllChatMessages($chatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): FailResult|true
+    {
+        return $this->send(
+            new UnpinAllForumTopicMessages($chatId, $messageThreadId)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function unpinAllGeneralForumTopicMessages(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new UnpinAllGeneralForumTopicMessages($chatId)
         );
     }
 

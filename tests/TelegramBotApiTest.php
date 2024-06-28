@@ -1514,6 +1514,30 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testUnpinAllForumTopicMessages(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->unpinAllForumTopicMessages(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testUnpinAllGeneralForumTopicMessages(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->unpinAllGeneralForumTopicMessages(2);
+
+        $this->assertTrue($result);
+    }
+
     public function testUploadStickerFile(): void
     {
         $api = $this->createApi([
