@@ -56,6 +56,7 @@
 - New #69: Add `getUserChatBoosts` method and `UserChatBoosts` type.
 - New #70: Add `getBusinessConnection` method.
 - New #71: Add `getMyDefaultAdministratorRights` and `setMyDefaultAdministratorRights` methods.
+- New #72: Add `ParseMode` class with constants.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
