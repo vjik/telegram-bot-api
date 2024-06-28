@@ -79,6 +79,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerKeywords;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerMaskPosition;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerPositionInSet;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetTitle;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
@@ -1645,6 +1646,27 @@ final class TelegramBotApi
     public function setStickerPositionInSet(string $sticker, int $position): FailResult|true
     {
         return $this->send(new SetStickerPositionInSet($sticker, $position));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setStickerSetThumbnail(
+        string $name,
+        int $userId,
+        string $format,
+        InputFile|string|null $thumbnail = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetStickerSetThumbnail(
+                $name,
+                $userId,
+                $format,
+                $thumbnail
+            )
+        );
     }
 
     /**
