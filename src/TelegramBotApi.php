@@ -75,6 +75,10 @@ use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerKeywords;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerMaskPosition;
+use Vjik\TelegramBot\Api\Method\Sticker\SetStickerPositionInSet;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
@@ -113,6 +117,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
+use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 use Vjik\TelegramBot\Api\Type\User;
@@ -1595,6 +1600,50 @@ final class TelegramBotApi
         ?string $languageCode = null
     ): FailResult|true {
         return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setstickeremojilist
+     *
+     * @param string[] $emojiList
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setStickerEmojiList(string $sticker, array $emojiList): FailResult|true
+    {
+        return $this->send(new SetStickerEmojiList($sticker, $emojiList));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setstickerkeywords
+     *
+     * @param string[]|null $keywords
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setStickerKeywords(string $sticker, ?array $keywords = null): FailResult|true
+    {
+        return $this->send(new SetStickerKeywords($sticker, $keywords));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setstickermaskposition
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): FailResult|true
+    {
+        return $this->send(new SetStickerMaskPosition($sticker, $maskPosition));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setstickerpositioninset
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setStickerPositionInSet(string $sticker, int $position): FailResult|true
+    {
+        return $this->send(new SetStickerPositionInSet($sticker, $position));
     }
 
     /**
