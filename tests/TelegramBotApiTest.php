@@ -1302,6 +1302,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testSetStickerSetTitle(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setStickerSetTitle('name_by_bot', 'New Title');
+
+        $this->assertTrue($result);
+    }
+
     public function testSetWebhook(): void
     {
         $api = $this->createApi([
