@@ -24,8 +24,8 @@ final readonly class InputPollOption
         return array_filter(
             [
                 'text' => $this->text,
-                'parse_mode' => $this->textParseMode,
-                'entities' => $this->textEntities === null
+                'text_parse_mode' => $this->textParseMode,
+                'text_entities' => $this->textEntities === null
                     ? null
                     : array_map(
                         static fn(MessageEntity $entity) => $entity->toRequestArray(),

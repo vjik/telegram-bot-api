@@ -33,8 +33,8 @@ final class InputPollOptionTest extends TestCase
         $this->assertSame(
             [
                 'text' => 'test',
-                'parse_mode' => 'MarkdownV2',
-                'entities' => [$messageEntity->toRequestArray()],
+                'text_parse_mode' => 'MarkdownV2',
+                'text_entities' => [$messageEntity->toRequestArray()],
             ],
             $option->toRequestArray(),
         );
