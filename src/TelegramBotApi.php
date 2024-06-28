@@ -107,6 +107,7 @@ use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -538,6 +539,39 @@ final class TelegramBotApi
     {
         return $this->send(
             new EditGeneralForumTopic($chatId, $name)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editmessagetext
+     *
+     * @param MessageEntity[]|null $entities
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editMessageText(
+        string $text,
+        ?string $businessConnectionId = null,
+        int|string|null $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+        ?string $parseMode = null,
+        ?array $entities = null,
+        ?LinkPreviewOptions $linkPreviewOptions = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message|true {
+        return $this->send(
+            new EditMessageText(
+                $text,
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $inlineMessageId,
+                $parseMode,
+                $entities,
+                $linkPreviewOptions,
+                $replyMarkup,
+            )
         );
     }
 
