@@ -10,7 +10,7 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
-use Vjik\TelegramBot\Api\Type\Payments\StarTransaction;
+use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionType;

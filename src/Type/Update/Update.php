@@ -20,8 +20,8 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQuery;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageReactionCountUpdated;
 use Vjik\TelegramBot\Api\Type\MessageReactionUpdated;
-use Vjik\TelegramBot\Api\Type\Payments\PreCheckoutQuery;
-use Vjik\TelegramBot\Api\Type\Payments\ShippingQuery;
+use Vjik\TelegramBot\Api\Type\Payment\PreCheckoutQuery;
+use Vjik\TelegramBot\Api\Type\Payment\ShippingQuery;
 use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\PollAnswer;
 
