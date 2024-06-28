@@ -9,8 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\Game\Game;
 use Vjik\TelegramBot\Api\Type\Passport\PassportData;
-use Vjik\TelegramBot\Api\Type\Payments\Invoice;
-use Vjik\TelegramBot\Api\Type\Payments\SuccessfulPayment;
+use Vjik\TelegramBot\Api\Type\Payment\Invoice;
+use Vjik\TelegramBot\Api\Type\Payment\SuccessfulPayment;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**

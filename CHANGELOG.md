@@ -45,6 +45,8 @@
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
+- Chg #59: Change namespaces `Vjik\TelegramBot\Api\Type\Payments` to `Vjik\TelegramBot\Api\Type\Payment`
+  and `Vjik\TelegramBot\Api\Method\Payments` to `Vjik\TelegramBot\Api\Method\Payment`.
 - Enh #56: Add specific exception on unsuccessfully opening a file in `InputFile::fromLocalFile()`.
 - Bug #48: Fix incorrect string values addition to POST request with files in `PsrTelegramClient`.
 - Bug #53: Fix incorrect array values addition to GET request in `PsrTelegramClient`.
