@@ -113,6 +113,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -144,6 +145,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
@@ -2113,6 +2115,27 @@ final class TelegramBotApi
                 $chatId,
                 $messageId,
                 $inlineMessageId,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#stoppoll
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function stopPoll(
+        int|string $chatId,
+        int $messageId,
+        ?string $businessConnectionId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Poll {
+        return $this->send(
+            new StopPoll(
+                $chatId,
+                $messageId,
+                $businessConnectionId,
                 $replyMarkup,
             )
         );

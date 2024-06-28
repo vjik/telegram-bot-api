@@ -1694,6 +1694,29 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testStopPoll(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => '12',
+                'question' => 'Why?',
+                'options' => [
+                    ['text' => 'One', 'voter_count' => 12],
+                ],
+                'total_voter_count' => 42,
+                'is_closed' => true,
+                'is_anonymous' => false,
+                'type' => 'regular',
+                'allows_multiple_answers' => true,
+            ],
+        ]);
+
+        $result = $api->stopPoll(1, 2);
+
+        $this->assertSame('12', $result->id);
+    }
+
     public function testUnbanChatMember(): void
     {
         $api = $this->createApi([
