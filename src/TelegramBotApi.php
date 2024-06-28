@@ -40,6 +40,7 @@ use Vjik\TelegramBot\Api\Method\GetFile;
 use Vjik\TelegramBot\Api\Method\GetForumTopicIconStickers;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Method\GetMyCommands;
+use Vjik\TelegramBot\Api\Method\GetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
@@ -79,6 +80,7 @@ use Vjik\TelegramBot\Api\Method\SetChatStickerSet;
 use Vjik\TelegramBot\Api\Method\SetChatTitle;
 use Vjik\TelegramBot\Api\Method\SetMessageReaction;
 use Vjik\TelegramBot\Api\Method\SetMyCommands;
+use Vjik\TelegramBot\Api\Method\SetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
@@ -114,6 +116,7 @@ use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
+use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatMember;
@@ -728,6 +731,16 @@ final class TelegramBotApi
     public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|array
     {
         return $this->send(new GetMyCommands($scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getMyDefaultAdministratorRights(?bool $forChannels = null): FailResult|ChatAdministratorRights
+    {
+        return $this->send(new GetMyDefaultAdministratorRights($forChannels));
     }
 
     /**
@@ -1777,6 +1790,18 @@ final class TelegramBotApi
         ?string $languageCode = null,
     ): FailResult|true {
         return $this->send(new SetMyCommands($commands, $scope, $languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setmydefaultadministratorrights
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setMyDefaultAdministratorRights(
+        ?ChatAdministratorRights $rights = null,
+        ?bool $forChannels = null,
+    ): FailResult|true {
+        return $this->send(new SetMyDefaultAdministratorRights($rights, $forChannels));
     }
 
     /**
