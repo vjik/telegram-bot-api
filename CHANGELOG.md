@@ -52,6 +52,7 @@
 - New #66: Add `unpinAllForumTopicMessages` and `unpinAllGeneralForumTopicMessages` methods.
 - New #67: Add `editGeneralForumTopic`, `closeGeneralForumTopic`, `reopenGeneralForumTopic`, `hideGeneralForumTopic`
   and `unhideGeneralForumTopic` methods.
+- New #68: Add `answerCallbackQuery` method.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.

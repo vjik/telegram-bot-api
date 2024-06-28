@@ -1,0 +1,54 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Method;
+
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+
+/**
+ * @see https://core.telegram.org/bots/api#answercallbackquery
+ */
+final readonly class AnswerCallbackQuery implements TelegramRequestWithResultPreparingInterface
+{
+    public function __construct(
+        private string $callbackQueryId,
+        private ?string $text = null,
+        private ?bool $showAlert = null,
+        private ?string $url = null,
+        private ?int $cacheTime = null,
+    ) {
+    }
+
+    public function getHttpMethod(): HttpMethod
+    {
+        return HttpMethod::POST;
+    }
+
+    public function getApiMethod(): string
+    {
+        return 'answerCallbackQuery';
+    }
+
+    public function getData(): array
+    {
+        return array_filter(
+            [
+                'callback_query_id' => $this->callbackQueryId,
+                'text' => $this->text,
+                'show_alert' => $this->showAlert,
+                'url' => $this->url,
+                'cache_time' => $this->cacheTime,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
+    }
+
+    public function prepareResult(mixed $result): true
+    {
+        ValueHelper::assertTrueResult($result);
+        return $result;
+    }
+}
