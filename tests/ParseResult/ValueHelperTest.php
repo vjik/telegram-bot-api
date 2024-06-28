@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
+use Vjik\TelegramBot\Api\Type\ChatBoost;
+use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
@@ -1141,6 +1143,82 @@ final class ValueHelperTest extends TestCase
         $exception = null;
         try {
             ValueHelper::getArrayOfStickers($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfChatBoosts(): void
+    {
+        $result = [
+            'key' => [
+                [
+                    'boost_id' => 'b1',
+                    'add_date' => 1619040000,
+                    'expiration_date' => 1619040001,
+                    'source' => [
+                        'source' => 'premium',
+                        'user' => [
+                            'id' => 1,
+                            'is_bot' => false,
+                            'first_name' => 'Sergei',
+                        ],
+                    ],
+                ],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [
+                new ChatBoost(
+                    'b1',
+                    new DateTimeImmutable('@1619040000'),
+                    new DateTimeImmutable('@1619040001'),
+                    new ChatBoostSourcePremium(new User(1, false, 'Sergei')),
+                )
+            ],
+            ValueHelper::getArrayOfChatBoosts($result, 'key'),
+        );
+        $this->assertEquals(
+            [
+                new ChatBoost(
+                    'b1',
+                    new DateTimeImmutable('@1619040000'),
+                    new DateTimeImmutable('@1619040001'),
+                    new ChatBoostSourcePremium(new User(1, false, 'Sergei')),
+                )
+            ],
+            ValueHelper::getArrayOfChatBoosts($result['key']),
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfChatBoosts($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfChatBoosts($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfChatBoosts($result, 'array-of-ints');
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
