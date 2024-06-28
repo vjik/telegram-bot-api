@@ -12,14 +12,18 @@ use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
+use Vjik\TelegramBot\Api\Method\CloseForumTopic;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
+use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
 use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
+use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
+use Vjik\TelegramBot\Api\Method\EditForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
@@ -41,6 +45,7 @@ use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
+use Vjik\TelegramBot\Api\Method\ReopenForumTopic;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
@@ -104,6 +109,7 @@ use Vjik\TelegramBot\Api\Type\ChatMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
+use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
@@ -238,6 +244,16 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#closeforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function closeForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
+    {
+        return $this->send(new CloseForumTopic($chatId, $messageThreadId));
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#copymessage
      *
      * @param MessageEntity[]|null $captionEntities
@@ -324,6 +340,22 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#createforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createForumTopic(
+        int|string $chatId,
+        string $name,
+        ?int $iconColor = null,
+        ?string $iconCustomEmojiId = null,
+    ): FailResult|ForumTopic {
+        return $this->send(
+            new CreateForumTopic($chatId, $name, $iconColor, $iconCustomEmojiId)
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#createnewstickerset
      *
      * @param InputSticker[] $stickers
@@ -380,6 +412,16 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#deleteforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
+    {
+        return $this->send(new DeleteForumTopic($chatId, $messageThreadId));
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#deletemycommands
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -426,6 +468,22 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editForumTopic(
+        int|string $chatId,
+        int $messageThreadId,
+        ?string $name = null,
+        ?string $iconCustomEmojiId = null,
+    ): FailResult|true {
+        return $this->send(
+            new EditForumTopic($chatId, $messageThreadId, $name, $iconCustomEmojiId)
         );
     }
 
@@ -788,6 +846,18 @@ final class TelegramBotApi
                 $canPinMessages,
                 $canManageTopics
             )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#reopenforumtopic
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function reopenForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
+    {
+        return $this->send(
+            new ReopenForumTopic($chatId, $messageThreadId)
         );
     }
 

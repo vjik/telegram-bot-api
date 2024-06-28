@@ -22,6 +22,7 @@ use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
+use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -170,6 +171,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testCloseForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->closeForumTopic(1, 2);
+
+        $this->assertTrue($result);
+    }
+
     public function testCopyMessage(): void
     {
         $api = $this->createApi([
@@ -232,6 +245,24 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https//t.me/+example', $result->inviteLink);
     }
 
+    public function testCreateForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'message_thread_id' => 19,
+                'name' => 'test',
+                'icon_color' => 0x00FF00,
+                'icon_custom_emoji_id' => '2351346235143',
+            ],
+        ]);
+
+        $result = $api->createForumTopic(1, 'test');
+
+        $this->assertInstanceOf(ForumTopic::class, $result);
+        $this->assertSame(19, $result->messageThreadId);
+    }
+
     public function testCreateNewStickerSet(): void
     {
         $api = $this->createApi([
@@ -276,6 +307,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->deleteChatStickerSet(1);
+
+        $this->assertTrue($result);
+    }
+
+    public function testDeleteForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->deleteForumTopic(1, 2);
 
         $this->assertTrue($result);
     }
@@ -337,6 +380,18 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(ChatInviteLink::class, $result);
         $this->assertSame(23, $result->creator->id);
+    }
+
+    public function testEditForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->editForumTopic(1, 2);
+
+        $this->assertTrue($result);
     }
 
     public function testExportChatInviteLink(): void
@@ -784,6 +839,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->promoteChatMember(1, 2);
+
+        $this->assertTrue($result);
+    }
+
+    public function testReopenForumTopic(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->reopenForumTopic(1, 2);
 
         $this->assertTrue($result);
     }
