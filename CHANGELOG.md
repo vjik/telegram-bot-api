@@ -47,6 +47,8 @@
 - New #62: Add `setCustomEmojiStickerSetThumbnail` method.
 - New #63: Add `setChatStickerSet` and `deleteChatStickerSet` methods.
 - New #64: Add `getForumTopicIconStickers` method.
+- New #65: Add `createForumTopic`, `editForumTopic`, `closeForumTopic`, `reopenForumTopic`, `deleteForumTopic` methods,
+  `ForumTopic` type and `ForumTopicIconColor` class with constants.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
