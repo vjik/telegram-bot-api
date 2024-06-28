@@ -10,7 +10,6 @@ use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Client\PsrTelegramClient;
-use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**
@@ -24,7 +23,7 @@ final class RealTelegramApiTest extends TestCase
     {
         $api = $this->createApi();
 
-        $result = $api->send(new GetChat('@sergei_predvoditelev'));
+        $result = $api->getChat('@sergei_predvoditelev');
 
         var_dump($result);
     }
