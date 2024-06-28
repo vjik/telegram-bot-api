@@ -42,6 +42,7 @@ use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
@@ -141,6 +142,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
 use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
@@ -785,6 +787,18 @@ final class TelegramBotApi
         ?array $allowedUpdates = null,
     ): FailResult|array {
         return $this->send(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getuserchatboosts
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getUserChatBoosts(int|string $chatId, int $userId): FailResult|UserChatBoosts
+    {
+        return $this->send(
+            new GetUserChatBoosts($chatId, $userId)
+        );
     }
 
     /**

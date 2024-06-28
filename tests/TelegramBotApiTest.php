@@ -30,6 +30,7 @@ use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
+use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
@@ -786,6 +787,20 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(Update::class, $result[1]);
         $this->assertSame(1, $result[0]->updateId);
         $this->assertSame(2, $result[1]->updateId);
+    }
+
+    public function testGetUserChatBoosts(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'boosts' => [],
+            ],
+        ]);
+
+        $result = $api->getUserChatBoosts(1, 2);
+
+        $this->assertInstanceOf(UserChatBoosts::class, $result);
     }
 
     public function testGetUserProfilePhotos(): void

@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\ParseResult;
 
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
+use Vjik\TelegramBot\Api\Type\ChatBoost;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
@@ -450,6 +451,18 @@ final class ValueHelper
         $stickers = $key === null ? $result : ValueHelper::getArray($result, $key);
         return array_map(
             static fn($item) => Sticker::fromTelegramResult($item),
+            $stickers
+        );
+    }
+
+    /**
+     * @return ChatBoost[]
+     */
+    public static function getArrayOfChatBoosts(array $result, ?string $key = null): array
+    {
+        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key);
+        return array_map(
+            static fn($item) => ChatBoost::fromTelegramResult($item),
             $stickers
         );
     }
