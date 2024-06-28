@@ -54,6 +54,7 @@
   and `unhideGeneralForumTopic` methods.
 - New #68: Add `answerCallbackQuery` method.
 - New #69: Add `getUserChatBoosts` method and `UserChatBoosts` type.
+- New #70: Add `getBusinessConnection` method.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
