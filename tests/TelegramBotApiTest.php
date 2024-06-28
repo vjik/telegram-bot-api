@@ -24,6 +24,7 @@ use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\InputFile;
+use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
@@ -439,6 +440,20 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->editMessageCaption();
+
+        $this->assertTrue($result);
+    }
+
+    public function testEditMessageMedia(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->editMessageMedia(
+            new InputMediaPhoto('https://example.com/photo.jpg')
+        );
 
         $this->assertTrue($result);
     }

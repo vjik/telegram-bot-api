@@ -58,7 +58,7 @@
 - New #71: Add `getMyDefaultAdministratorRights` and `setMyDefaultAdministratorRights` methods.
 - New #72: Add `editMessageText` method and `ParseMode` class with constants.
 - New #73: Add `editMessageCaption` method.
-- New #74: Add `MessageEntityType` class with constants.
+- New #74: Add `editMessageMedia` method and `MessageEntityType` class with constants.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
