@@ -29,6 +29,7 @@ use Vjik\TelegramBot\Api\Method\GetChatMember;
 use Vjik\TelegramBot\Api\Method\GetChatMemberCount;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
 use Vjik\TelegramBot\Api\Method\GetFile;
+use Vjik\TelegramBot\Api\Method\GetForumTopicIconStickers;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
@@ -576,6 +577,18 @@ final class TelegramBotApi
     public function getFile(string $fileId): FailResult|File
     {
         return $this->send(new GetFile($fileId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getforumtopiciconstickers
+     *
+     * @return FailResult|Sticker[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getForumTopicIconStickers(): FailResult|array
+    {
+        return $this->send(new GetForumTopicIconStickers());
     }
 
     /**
