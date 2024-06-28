@@ -107,12 +107,15 @@ use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -144,6 +147,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
@@ -468,6 +472,28 @@ final class TelegramBotApi
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
         return $this->send(new DeleteForumTopic($chatId, $messageThreadId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletemessage
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteMessage(int|string $chatId, int $messageId): FailResult|true
+    {
+        return $this->send(new DeleteMessage($chatId, $messageId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletemessages
+     *
+     * @param int[] $messageIds
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function deleteMessages(int|string $chatId, array $messageIds): FailResult|true
+    {
+        return $this->send(new DeleteMessages($chatId, $messageIds));
     }
 
     /**
@@ -2113,6 +2139,27 @@ final class TelegramBotApi
                 $chatId,
                 $messageId,
                 $inlineMessageId,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#stoppoll
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function stopPoll(
+        int|string $chatId,
+        int $messageId,
+        ?string $businessConnectionId = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Poll {
+        return $this->send(
+            new StopPoll(
+                $chatId,
+                $messageId,
+                $businessConnectionId,
                 $replyMarkup,
             )
         );
