@@ -23,6 +23,8 @@ use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
+use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
+use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
@@ -147,6 +149,21 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->answerInlineQuery('id', []);
 
         $this->assertTrue($result);
+    }
+
+    public function testAnswerWebAppQuery(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'inline_message_id' => 'idMessage',
+            ],
+        ]);
+
+        $result = $api->answerWebAppQuery('id', new InlineQueryResultContact('1', '+79001234567', 'Vjik'));
+
+        $this->assertInstanceOf(SentWebAppMessage::class, $result);
+        $this->assertSame('idMessage', $result->inlineMessageId);
     }
 
     public function testApproveChatJoinRequest(): void
