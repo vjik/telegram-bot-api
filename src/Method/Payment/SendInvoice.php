@@ -18,7 +18,7 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
 {
     /**
      * @param LabeledPrice[] $prices
-     * @param int[] $suggestedTipAmounts
+     * @param int[]|null $suggestedTipAmounts
      */
     public function __construct(
         private int|string $chatId,

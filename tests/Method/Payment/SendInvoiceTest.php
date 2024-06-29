@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;

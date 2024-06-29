@@ -1471,7 +1471,7 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#sendinvoice
      *
      * @param LabeledPrice[] $prices
-     * @param int[] $suggestedTipAmounts
+     * @param int[]|null $suggestedTipAmounts
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
