@@ -33,7 +33,7 @@ final class EditMessageMediaTest extends TestCase
         );
     }
 
-    public function testFull1(): void
+    public function testFull(): void
     {
         $file = new InputFile((new StreamFactory())->createStream());
         $media = new InputMediaPhoto($file);
