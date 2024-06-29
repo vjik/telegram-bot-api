@@ -151,6 +151,30 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testAnswerPreCheckoutQuery(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->answerPreCheckoutQuery('id', true);
+
+        $this->assertTrue($result);
+    }
+
+    public function testAnswerShippingQuery(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->answerShippingQuery('id', true);
+
+        $this->assertTrue($result);
+    }
+
     public function testAnswerWebAppQuery(): void
     {
         $api = $this->createApi([
