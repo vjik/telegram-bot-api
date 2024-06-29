@@ -30,6 +30,7 @@ use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
+use Vjik\TelegramBot\Api\Method\Game\GetGameHighScores;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
 use Vjik\TelegramBot\Api\Method\Game\SetGameScore;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
@@ -143,6 +144,7 @@ use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
+use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
@@ -1030,6 +1032,24 @@ final class TelegramBotApi
     public function getForumTopicIconStickers(): FailResult|array
     {
         return $this->send(new GetForumTopicIconStickers());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getgamehighscores
+     *
+     * @return FailResult|GameHighScore[]
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function getGameHighScores(
+        int $userId,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+    ): FailResult|array {
+        return $this->send(
+            new GetGameHighScores($userId, $chatId, $messageId, $inlineMessageId)
+        );
     }
 
     /**

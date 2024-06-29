@@ -23,6 +23,7 @@ use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
+use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -802,6 +803,31 @@ final class TelegramBotApiTest extends TestCase
         $this->assertCount(1, $result);
         $this->assertInstanceOf(Sticker::class, $result[0]);
         $this->assertSame('x1', $result[0]->fileId);
+    }
+
+    public function testGetGameHighScores(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                [
+                    'position' => 2,
+                    'user' => [
+                        'id' => 1,
+                        'is_bot' => false,
+                        'first_name' => 'test',
+                    ],
+                    'score' => 300,
+                ],
+            ],
+        ]);
+
+        $result = $api->getGameHighScores(1);
+
+        $this->assertIsArray($result);
+        $this->assertCount(1, $result);
+        $this->assertInstanceOf(GameHighScore::class, $result[0]);
+        $this->assertSame(2, $result[0]->position);
     }
 
     public function testGetCustomEmojiStickers(): void
