@@ -51,6 +51,8 @@ use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
+use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
+use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
@@ -154,6 +156,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
+use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\ReactionType;
@@ -261,6 +264,39 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new AnswerInlineQuery($inlineQueryId, $results, $cacheTime, $isPersonal, $nextOffset, $button)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#answerprecheckoutquery
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function answerPreCheckoutQuery(
+        string $preCheckoutQueryId,
+        bool $ok,
+        ?string $errorMessage = null,
+    ): FailResult|true {
+        return $this->send(
+            new AnswerPreCheckoutQuery($preCheckoutQueryId, $ok, $errorMessage)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#answershippingquery
+     *
+     * @param ShippingOption[]|null $shippingOptions
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function answerShippingQuery(
+        string $shippingQueryId,
+        bool $ok,
+        ?array $shippingOptions = null,
+        ?string $errorMessage = null,
+    ): FailResult|true {
+        return $this->send(
+            new AnswerShippingQuery($shippingQueryId, $ok, $shippingOptions, $errorMessage)
         );
     }
 
