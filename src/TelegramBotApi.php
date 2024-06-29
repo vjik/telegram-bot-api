@@ -157,6 +157,7 @@ use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
@@ -2248,6 +2249,8 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setpassportdataerrors
+     *
+     * @param PassportElementError[] $errors
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
