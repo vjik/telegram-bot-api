@@ -63,6 +63,8 @@
 - New #76: Add `editMessageReplyMarkup` method.
 - New #77: Add `stopPoll` method.
 - New #78: Add `deleteMessage` and `deleteMessages` methods.
+- New #79: Add `answerInlineQuery` method, `InlineQueryResultsButton`, `InlineQueryResult*`, `InputMessageContent*` and
+  `LabeledPrice` types.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
