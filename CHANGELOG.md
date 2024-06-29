@@ -69,6 +69,7 @@
 - New #81: Add `sendInvoice` method.
 - New #82: Add `createInvoiceLink` method.
 - New #83: Add `answerShippingQuery` and `answerPreCheckoutQuery` methods, and `ShippingOption` type.
+- New #84: Add `refundStarPayment` method.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
