@@ -318,6 +318,24 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(19, $result->messageThreadId);
     }
 
+    public function testCreateInvoiceLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => 'https://example.com/invoice',
+        ]);
+
+        $result = $api->createInvoiceLink(
+            'The title',
+            'The description',
+            'The payload',
+            'XTR',
+            []
+        );
+
+        $this->assertSame('https://example.com/invoice', $result);
+    }
+
     public function testCreateNewStickerSet(): void
     {
         $api = $this->createApi([
