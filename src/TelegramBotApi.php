@@ -30,6 +30,7 @@ use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
+use Vjik\TelegramBot\Api\Method\Game\SendGame;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
@@ -1566,6 +1567,37 @@ final class TelegramBotApi
                 $parseMode,
                 $captionEntities,
                 $disableContentTypeDetection,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendgame
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendGame(
+        int $chatId,
+        string $gameShortName,
+        ?string $businessConnectionId = null,
+        ?int $messageThreadId = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendGame(
+                $chatId,
+                $gameShortName,
+                $businessConnectionId,
+                $messageThreadId,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
