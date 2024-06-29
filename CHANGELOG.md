@@ -73,6 +73,7 @@
 - New #85: Add `setPassportDataErrors` method and `PassportElementError*` types.
 - New #86: Add `sendGame` method.
 - New #87: Add `setGameScore` method.
+- New #88: Add `GameHighScore` type.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
