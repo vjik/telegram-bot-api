@@ -9,6 +9,8 @@
 
 The package provides a simple and convenient way to interact with the Telegram Bot API.
 
+Telegram Bot API 7.5 (June 18, 2024) is full supported.
+
 ## Requirements
 
 - PHP 8.2 or higher.
@@ -93,7 +95,7 @@ $updates = $api->getUpdates();
 
 ### Custom requests
 
-Currently package contains not all methods of the Telegram Bot API. But you can make custom requests using the `send()` method and `TelegramRequest` object:
+You can make custom requests using the `send()` method and `TelegramRequest` object:
 
 ```php
 use Vjik\TelegramBot\Api\Request\TelegramRequest;
@@ -108,8 +110,6 @@ $request = new TelegramRequest(
 // Result is an object of `Vjik\TelegramBot\Api\Type\ChatFullInfo`
 $result = $api->send($request);
 ```
-
-I'm gradually adding new methods, but you can also help with this by creating a pull request.
 
 ### Create `Update` object on webhook
 
