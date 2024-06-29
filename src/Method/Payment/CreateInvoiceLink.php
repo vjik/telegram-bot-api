@@ -4,34 +4,29 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
-use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
-use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
-use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
- * @see https://core.telegram.org/bots/api#sendinvoice
+ * @see https://core.telegram.org/bots/api#createinvoicelink
  */
-final readonly class SendInvoice implements TelegramRequestWithResultPreparingInterface
+final readonly class CreateInvoiceLink implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param LabeledPrice[] $prices
      * @param int[]|null $suggestedTipAmounts
      */
     public function __construct(
-        private int|string $chatId,
         private string $title,
         private string $description,
         private string $payload,
         private string $currency,
         private array $prices,
-        private ?int $messageThreadId = null,
         private ?string $providerToken = null,
         private ?int $maxTipAmount = null,
         private ?array $suggestedTipAmounts = null,
-        private ?string $startParameter = null,
         private ?string $providerData = null,
         private ?string $photoUrl = null,
         private ?int $photoSize = null,
@@ -44,11 +39,6 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
         private ?bool $sendPhoneNumberToProvider = null,
         private ?bool $sendEmailToProvider = null,
         private ?bool $isFlexible = null,
-        private ?bool $disableNotification = null,
-        private ?bool $protectContent = null,
-        private ?string $messageEffectId = null,
-        private ?ReplyParameters $replyParameters = null,
-        private ?InlineKeyboardMarkup $replyMarkup = null,
     ) {
     }
 
@@ -59,15 +49,13 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
 
     public function getApiMethod(): string
     {
-        return 'sendInvoice';
+        return 'createInvoiceLink';
     }
 
     public function getData(): array
     {
         return array_filter(
             [
-                'chat_id' => $this->chatId,
-                'message_thread_id' => $this->messageThreadId,
                 'title' => $this->title,
                 'description' => $this->description,
                 'payload' => $this->payload,
@@ -79,7 +67,6 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
                 ),
                 'max_tip_amount' => $this->maxTipAmount,
                 'suggested_tip_amounts' => $this->suggestedTipAmounts,
-                'start_parameter' => $this->startParameter,
                 'provider_data' => $this->providerData,
                 'photo_url' => $this->photoUrl,
                 'photo_size' => $this->photoSize,
@@ -92,18 +79,14 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
                 'send_phone_number_to_provider' => $this->sendPhoneNumberToProvider,
                 'send_email_to_provider' => $this->sendEmailToProvider,
                 'is_flexible' => $this->isFlexible,
-                'disable_notification' => $this->disableNotification,
-                'protect_content' => $this->protectContent,
-                'message_effect_id' => $this->messageEffectId,
-                'reply_parameters' => $this->replyParameters?->toRequestArray(),
-                'reply_markup' => $this->replyMarkup?->toRequestArray(),
             ],
             static fn(mixed $value): bool => $value !== null,
         );
     }
 
-    public function prepareResult(mixed $result): Message
+    public function prepareResult(mixed $result): string
     {
-        return Message::fromTelegramResult($result);
+        ValueHelper::assertStringResult($result);
+        return $result;
     }
 }

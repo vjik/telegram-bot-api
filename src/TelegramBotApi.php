@@ -51,6 +51,7 @@ use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
+use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
@@ -444,6 +445,62 @@ final class TelegramBotApi
     ): FailResult|ForumTopic {
         return $this->send(
             new CreateForumTopic($chatId, $name, $iconColor, $iconCustomEmojiId)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#createinvoicelink
+     *
+     * @param LabeledPrice[] $prices
+     * @param int[]|null $suggestedTipAmounts
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createInvoiceLink(
+        string $title,
+        string $description,
+        string $payload,
+        string $currency,
+        array $prices,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
+    ): FailResult|string {
+        return $this->send(
+            new CreateInvoiceLink(
+                $title,
+                $description,
+                $payload,
+                $currency,
+                $prices,
+                $providerToken,
+                $maxTipAmount,
+                $suggestedTipAmounts,
+                $providerData,
+                $photoUrl,
+                $photoSize,
+                $photoWidth,
+                $photoHeight,
+                $needName,
+                $needPhoneNumber,
+                $needEmail,
+                $needShippingAddress,
+                $sendPhoneNumberToProvider,
+                $sendEmailToProvider,
+                $isFlexible,
+            )
         );
     }
 
@@ -1471,7 +1528,7 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#sendinvoice
      *
      * @param LabeledPrice[] $prices
-     * @param int[] $suggestedTipAmounts
+     * @param int[]|null $suggestedTipAmounts
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */

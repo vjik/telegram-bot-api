@@ -5,20 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
+use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
-use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
-use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
-final class SendInvoiceTest extends TestCase
+final class CreateInvoiceLinkTest extends TestCase
 {
     public function testBase(): void
     {
         $price = new LabeledPrice('The label', 100);
-        $method = new SendInvoice(
-            1,
+        $method = new CreateInvoiceLink(
             'The title',
             'The description',
             'The payload',
@@ -27,10 +23,9 @@ final class SendInvoiceTest extends TestCase
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendInvoice', $method->getApiMethod());
+        $this->assertSame('createInvoiceLink', $method->getApiMethod());
         $this->assertSame(
             [
-                'chat_id' => 1,
                 'title' => 'The title',
                 'description' => 'The description',
                 'payload' => 'The payload',
@@ -44,20 +39,15 @@ final class SendInvoiceTest extends TestCase
     public function testFull(): void
     {
         $price = new LabeledPrice('The label', 100);
-        $replyParameters = new ReplyParameters(23);
-        $replyMarkup = new InlineKeyboardMarkup([[new InlineKeyboardButton('test')]]);
-        $method = new SendInvoice(
-            1,
+        $method = new CreateInvoiceLink(
             'The title',
             'The description',
             'The payload',
             'XTR',
             [$price],
-            99,
             'The provider token',
             2,
             [3, 4],
-            'The start',
             'The provider data',
             'https://example.com/photo.jpg',
             126687,
@@ -70,19 +60,12 @@ final class SendInvoiceTest extends TestCase
             true,
             true,
             false,
-            false,
-            true,
-            'meid99',
-            $replyParameters,
-            $replyMarkup,
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendInvoice', $method->getApiMethod());
+        $this->assertSame('createInvoiceLink', $method->getApiMethod());
         $this->assertSame(
             [
-                'chat_id' => 1,
-                'message_thread_id' => 99,
                 'title' => 'The title',
                 'description' => 'The description',
                 'payload' => 'The payload',
@@ -91,7 +74,6 @@ final class SendInvoiceTest extends TestCase
                 'prices' => [$price->toRequestArray()],
                 'max_tip_amount' => 2,
                 'suggested_tip_amounts' => [3, 4],
-                'start_parameter' => 'The start',
                 'provider_data' => 'The provider data',
                 'photo_url' => 'https://example.com/photo.jpg',
                 'photo_size' => 126687,
@@ -104,11 +86,6 @@ final class SendInvoiceTest extends TestCase
                 'send_phone_number_to_provider' => true,
                 'send_email_to_provider' => true,
                 'is_flexible' => false,
-                'disable_notification' => false,
-                'protect_content' => true,
-                'message_effect_id' => 'meid99',
-                'reply_parameters' => $replyParameters->toRequestArray(),
-                'reply_markup' => $replyMarkup->toRequestArray(),
             ],
             $method->getData(),
         );
@@ -116,8 +93,7 @@ final class SendInvoiceTest extends TestCase
 
     public function testPrepareResult(): void
     {
-        $method = new SendInvoice(
-            1,
+        $method = new CreateInvoiceLink(
             'The title',
             'The description',
             'The payload',
@@ -125,15 +101,8 @@ final class SendInvoiceTest extends TestCase
             []
         );
 
-        $preparedResult = $method->prepareResult([
-            'message_id' => 7,
-            'date' => 1620000000,
-            'chat' => [
-                'id' => 1,
-                'type' => 'private',
-            ],
-        ]);
+        $preparedResult = $method->prepareResult('https://example.com/invoice');
 
-        $this->assertSame(7, $preparedResult->messageId);
+        $this->assertSame('https://example.com/invoice', $preparedResult);
     }
 }
