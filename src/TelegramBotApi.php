@@ -31,6 +31,7 @@ use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
+use Vjik\TelegramBot\Api\Method\Game\SetGameScore;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
@@ -2200,6 +2201,33 @@ final class TelegramBotApi
     public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
     {
         return $this->send(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setgamescore
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setGameScore(
+        int $userId,
+        int $score,
+        ?bool $force = null,
+        ?bool $disableEditMessage = null,
+        ?int $chatId = null,
+        ?int $messageId = null,
+        ?string $inlineMessageId = null,
+    ): FailResult|Message|true {
+        return $this->send(
+            new SetGameScore(
+                $userId,
+                $score,
+                $force,
+                $disableEditMessage,
+                $chatId,
+                $messageId,
+                $inlineMessageId
+            )
+        );
     }
 
     /**
