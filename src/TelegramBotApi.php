@@ -51,6 +51,7 @@ use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
+use Vjik\TelegramBot\Api\Method\Passport\SetPassportDataErrors;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
@@ -2159,6 +2160,16 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
+    {
+        return $this->send(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#setmessagereaction
      *
      * @param ReactionType[]|null $reaction
@@ -2236,13 +2247,13 @@ final class TelegramBotApi
     }
 
     /**
-     * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+     * @see https://core.telegram.org/bots/api#setpassportdataerrors
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
-    public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
+    public function setPassportDataErrors(int $userId, array $errors): FailResult|true
     {
-        return $this->send(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
+        return $this->send(new SetPassportDataErrors($userId, $errors));
     }
 
     /**

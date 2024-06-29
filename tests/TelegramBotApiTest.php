@@ -1646,6 +1646,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testSetCustomEmojiStickerSetThumbnail(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setCustomEmojiStickerSetThumbnail('animals_by_my_bor');
+
+        $this->assertTrue($result);
+    }
+
     public function testSetMessageReaction(): void
     {
         $api = $this->createApi([
@@ -1720,14 +1732,14 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
-    public function testSetCustomEmojiStickerSetThumbnail(): void
+    public function testSetPassportDataErrors(): void
     {
         $api = $this->createApi([
             'ok' => true,
             'result' => true,
         ]);
 
-        $result = $api->setCustomEmojiStickerSetThumbnail('animals_by_my_bor');
+        $result = $api->setPassportDataErrors(1, []);
 
         $this->assertTrue($result);
     }
