@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.1.1 under development
+## 0.2.0 June 29, 2024
 
 - New #16: Add `sendContact` method.
 - New #17: Add `getUserProfilePhotos` method and `UserProfilePhotos` type.
