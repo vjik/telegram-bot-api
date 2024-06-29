@@ -55,6 +55,7 @@ use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
@@ -1258,6 +1259,18 @@ final class TelegramBotApi
                 $canPinMessages,
                 $canManageTopics
             )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#refundstarpayment
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function refundStarPayment(int $userId, string $telegramPaymentChargeId): FailResult|true
+    {
+        return $this->send(
+            new RefundStarPayment($userId, $telegramPaymentChargeId)
         );
     }
 

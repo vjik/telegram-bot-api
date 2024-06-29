@@ -1130,6 +1130,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testRefundStarPayment(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->refundStarPayment(1, 'test');
+
+        $this->assertTrue($result);
+    }
+
     public function testReopenForumTopic(): void
     {
         $api = $this->createApi([
