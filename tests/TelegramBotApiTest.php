@@ -137,6 +137,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testAnswerInlineQuery(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->answerInlineQuery('id', []);
+
+        $this->assertTrue($result);
+    }
+
     public function testApproveChatJoinRequest(): void
     {
         $api = $this->createApi([

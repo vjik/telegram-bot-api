@@ -47,6 +47,7 @@ use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
+use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
@@ -133,6 +134,8 @@ use Vjik\TelegramBot\Api\Type\ChatPermissions;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
+use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
+use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMedia;
@@ -233,6 +236,26 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->send(
             new AnswerCallbackQuery($callbackQueryId, $text, $showAlert, $url, $cacheTime)
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#answerinlinequery
+     *
+     * @param InlineQueryResult[] $results
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function answerInlineQuery(
+        string $inlineQueryId,
+        array $results,
+        ?int $cacheTime = null,
+        ?bool $isPersonal = null,
+        ?string $nextOffset = null,
+        ?InlineQueryResultsButton $button = null,
+    ): FailResult|true {
+        return $this->send(
+            new AnswerInlineQuery($inlineQueryId, $results, $cacheTime, $isPersonal, $nextOffset, $button)
         );
     }
 
