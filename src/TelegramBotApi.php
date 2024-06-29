@@ -52,6 +52,7 @@ use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
+use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\ReopenForumTopic;
@@ -151,6 +152,7 @@ use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\ReactionType;
@@ -1456,6 +1458,78 @@ final class TelegramBotApi
                 $parseMode,
                 $captionEntities,
                 $disableContentTypeDetection,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendinvoice
+     *
+     * @param LabeledPrice[] $prices
+     * @param int[] $suggestedTipAmounts
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendInvoice(
+        int|string $chatId,
+        string $title,
+        string $description,
+        string $payload,
+        string $currency,
+        array $prices,
+        ?int $messageThreadId = null,
+        ?string $providerToken = null,
+        ?int $maxTipAmount = null,
+        ?array $suggestedTipAmounts = null,
+        ?string $startParameter = null,
+        ?string $providerData = null,
+        ?string $photoUrl = null,
+        ?int $photoSize = null,
+        ?int $photoWidth = null,
+        ?int $photoHeight = null,
+        ?bool $needName = null,
+        ?bool $needPhoneNumber = null,
+        ?bool $needEmail = null,
+        ?bool $needShippingAddress = null,
+        ?bool $sendPhoneNumberToProvider = null,
+        ?bool $sendEmailToProvider = null,
+        ?bool $isFlexible = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendInvoice(
+                $chatId,
+                $title,
+                $description,
+                $payload,
+                $currency,
+                $prices,
+                $messageThreadId,
+                $providerToken,
+                $maxTipAmount,
+                $suggestedTipAmounts,
+                $startParameter,
+                $providerData,
+                $photoUrl,
+                $photoSize,
+                $photoWidth,
+                $photoHeight,
+                $needName,
+                $needPhoneNumber,
+                $needEmail,
+                $needShippingAddress,
+                $sendPhoneNumberToProvider,
+                $sendEmailToProvider,
+                $isFlexible,
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
