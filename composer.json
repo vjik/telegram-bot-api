@@ -13,6 +13,12 @@
         "source": "https://github.com/vjik/telegram-bot-api",
         "chat": "https://t.me/predvoditelev_chat"
     },
+    "authors": [
+        {
+            "name": "Sergei Predvoditelev",
+            "homepage": "https://predvoditelev.ru"
+        }
+    ],
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
