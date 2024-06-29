@@ -68,6 +68,7 @@
 - New #80: Add `answerWebAppQuery` method and `SentWebAppMessage` type.
 - New #81: Add `sendInvoice` method.
 - New #82: Add `createInvoiceLink` method.
+- New #83: Add `ShippingOption` type.
 - Chg #24: Move update methods to `Vjik\TelegramBot\Api\Method\Update` namespace, and update types to
   `Vjik\TelegramBot\Api\Type\Update` namespace.
 - Chg #30: Remove `TelegramRequestWithFilesInterface`.
