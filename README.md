@@ -9,7 +9,7 @@
 
 The package provides a simple and convenient way to interact with the Telegram Bot API.
 
-Telegram Bot API 7.5 (June 18, 2024) is full supported.
+Telegram Bot API 7.6 (July 1, 2024) is full supported.
 
 ## Requirements
 
