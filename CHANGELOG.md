@@ -4,7 +4,8 @@
 
 - New #91: Add `TransactionPartnerTelegramAds` type.
 - New #92: Add `canSendPaidMedia` parameter to `ChatFullInfo` type.
-- New #93: Add `PaidMediaInfo`, `PaidMediaPreview`, `PaidMediaPhoto`, `PaidMediaVideo` types.
+- New #93: Add `paidMedia` parameter to `Message` and `ExternalReplyInfo` types, add `PaidMediaInfo`,
+  `PaidMediaPreview`, `PaidMediaPhoto`, `PaidMediaVideo` types.
 
 ## 0.2.0 June 29, 2024
 

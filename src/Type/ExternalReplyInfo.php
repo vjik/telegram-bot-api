@@ -42,6 +42,7 @@ final readonly class ExternalReplyInfo
         public ?Location $location = null,
         public ?Poll $poll = null,
         public ?Venue $venue = null,
+        public ?PaidMediaInfo $paidMedia = null,
     ) {
     }
 
@@ -111,6 +112,9 @@ final readonly class ExternalReplyInfo
                 : null,
             array_key_exists('venue', $result)
                 ? Venue::fromTelegramResult($result['venue'])
+                : null,
+            array_key_exists('paid_media', $result)
+                ? PaidMediaInfo::fromTelegramResult($result['paid_media'])
                 : null,
         );
     }

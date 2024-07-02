@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Type\GeneralForumTopicUnhidden;
 use Vjik\TelegramBot\Api\Type\GiveawayCreated;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageOriginHiddenUser;
+use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\VideoChatStarted;
 
 final class MessageTest extends TestCase
@@ -447,7 +448,16 @@ final class MessageTest extends TestCase
                         ],
                     ],
                 ],
-            ]
+            ],
+            'paid_media' => [
+                'star_count' => 1,
+                'paid_media' => [
+                    [
+                        'type' => 'photo',
+                        'photo' => [],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertSame(7, $message->messageId);
@@ -554,5 +564,7 @@ final class MessageTest extends TestCase
         $this->assertSame(17313, $message->videoChatParticipantsInvited->users[0]->id);
         $this->assertSame('important', $message->webAppData?->data);
         $this->assertSame('Button1241', $message->replyMarkup->inlineKeyboard[0][0]->text);
+        $this->assertSame(1, $message->paidMedia?->starCount);
+        $this->assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
     }
 }
