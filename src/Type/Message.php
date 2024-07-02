@@ -109,6 +109,7 @@ final readonly class Message
         public ?VideoChatParticipantsInvited $videoChatParticipantsInvited = null,
         public ?WebAppData $webAppData = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
+        public ?PaidMediaInfo $paidMedia = null,
     ) {
     }
 
@@ -300,6 +301,9 @@ final readonly class Message
                 : null,
             array_key_exists('reply_markup', $result)
                 ? InlineKeyboardMarkup::fromTelegramResult($result['reply_markup'])
+                : null,
+            array_key_exists('paid_media', $result)
+                ? PaidMediaInfo::fromTelegramResult($result['paid_media'])
                 : null,
         );
     }

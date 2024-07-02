@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\MessageOriginUser;
+use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\User;
 
 final class ExternalReplyInfoTest extends TestCase
@@ -40,6 +41,7 @@ final class ExternalReplyInfoTest extends TestCase
         $this->assertNull($externalReplyInfo->location);
         $this->assertNull($externalReplyInfo->poll);
         $this->assertNull($externalReplyInfo->venue);
+        $this->assertNull($externalReplyInfo->paidMedia);
     }
 
     public function testFromTelegramResult(): void
@@ -177,7 +179,16 @@ final class ExternalReplyInfoTest extends TestCase
                 ],
                 'title' => 'Venue1',
                 'address' => 'Address',
-            ]
+            ],
+            'paid_media' => [
+                'star_count' => 1,
+                'paid_media' => [
+                    [
+                        'type' => 'photo',
+                        'photo' => [],
+                    ],
+                ],
+            ],
         ]);
 
         $this->assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);
@@ -208,5 +219,7 @@ final class ExternalReplyInfoTest extends TestCase
         $this->assertSame(55.7558, $externalReplyInfo->location?->latitude);
         $this->assertSame('pid2354', $externalReplyInfo->poll?->id);
         $this->assertSame('Venue1', $externalReplyInfo->venue?->title);
+        $this->assertSame(1, $externalReplyInfo->paidMedia?->starCount);
+        $this->assertEquals([new PaidMediaPhoto([])], $externalReplyInfo->paidMedia?->paidMedia);
     }
 }

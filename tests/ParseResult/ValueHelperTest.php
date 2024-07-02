@@ -16,6 +16,8 @@ use Vjik\TelegramBot\Api\Type\ChatBoost;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
+use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
@@ -615,6 +617,53 @@ final class ValueHelperTest extends TestCase
         $exception = null;
         try {
             ValueHelper::getArrayOfPhotoSizes($result, 'array-of-ints');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Expected result as array. Got "int".',
+            $exception->getMessage()
+        );
+    }
+
+    public function testGetArrayOfPaidMedia(): void
+    {
+        $result = [
+            'key' => [
+                ['type' => 'photo', 'photo' => []],
+                ['type' => 'preview', 'width' => 100, 'height' => 100, 'duration' => 23],
+            ],
+            'array-of-ints' => [1, 2],
+            'number' => 7,
+        ];
+
+        $this->assertEquals(
+            [new PaidMediaPhoto([]), new PaidMediaPreview(100, 100, 23)],
+            ValueHelper::getArrayOfPaidMedia($result, 'key')
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPaidMedia($result, 'unknown');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(NotFoundKeyInResultException::class, $exception);
+        $this->assertSame('Not found key "unknown" in result object.', $exception->getMessage());
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPaidMedia($result, 'number');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "number". Expected type is "array", but got "int".',
+            $exception->getMessage()
+        );
+
+        $exception = null;
+        try {
+            ValueHelper::getArrayOfPaidMedia($result, 'array-of-ints');
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
