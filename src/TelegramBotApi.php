@@ -76,6 +76,7 @@ use Vjik\TelegramBot\Api\Method\SendDocument;
 use Vjik\TelegramBot\Api\Method\SendLocation;
 use Vjik\TelegramBot\Api\Method\SendMediaGroup;
 use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\Method\SendPaidMedia;
 use Vjik\TelegramBot\Api\Method\SendPhoto;
 use Vjik\TelegramBot\Api\Method\SendPoll;
 use Vjik\TelegramBot\Api\Method\SendVenue;
@@ -155,6 +156,7 @@ use Vjik\TelegramBot\Api\Type\InputMediaAudio;
 use Vjik\TelegramBot\Api\Type\InputMediaDocument;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\InputMediaVideo;
+use Vjik\TelegramBot\Api\Type\InputPaidMedia;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
@@ -1806,6 +1808,44 @@ final class TelegramBotApi
                 $disableNotification,
                 $protectContent,
                 $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
+            )
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendpaidmedia
+     *
+     * @param InputPaidMedia[] $media
+     * @param MessageEntity[]|null $captionEntities
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function sendPaidMedia(
+        int|string $chatId,
+        int $starCount,
+        array $media,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?bool $showCaptionAboveMedia = null,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?ReplyParameters $replyParameters = null,
+        InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->send(
+            new SendPaidMedia(
+                $chatId,
+                $starCount,
+                $media,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $showCaptionAboveMedia,
+                $disableNotification,
+                $protectContent,
                 $replyParameters,
                 $replyMarkup,
             )
