@@ -14,6 +14,7 @@ final readonly class TransactionPartnerFactory
         ValueHelper::assertArrayResult($result);
         return match (ValueHelper::getString($result, 'type')) {
             'fragment' => TransactionPartnerFragment::fromTelegramResult($result),
+            'telegram_ads' => TransactionPartnerTelegramAds::fromTelegramResult($result),
             'user' => TransactionPartnerUser::fromTelegramResult($result),
             'other' => TransactionPartnerOther::fromTelegramResult($result),
             default => throw new TelegramParseResultException('Unknown transaction partner type.'),

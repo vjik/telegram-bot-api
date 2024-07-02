@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.2.1 under development
+
+- New #91: Add `TransactionPartnerTelegramAds` type.
+
 ## 0.2.0 June 29, 2024
 
 - New #16: Add `sendContact` method.
