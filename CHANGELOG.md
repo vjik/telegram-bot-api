@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.2.1 under development
+## 0.2.1 July 2, 2024
 
 - New #91: Add `TransactionPartnerTelegramAds` type.
 - New #92: Add `canSendPaidMedia` parameter to `ChatFullInfo` type.
