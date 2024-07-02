@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
 use Vjik\TelegramBot\Api\Type\ChatBoost;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
+use Vjik\TelegramBot\Api\Type\PaidMedia;
+use Vjik\TelegramBot\Api\Type\PaidMediaFactory;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
@@ -314,6 +316,18 @@ final class ValueHelper
         return array_map(
             static fn($item) => PhotoSize::fromTelegramResult($item),
             $photo
+        );
+    }
+
+    /**
+     * @return PaidMedia[]
+     */
+    public static function getArrayOfPaidMedia(array $result, string $key): array
+    {
+        $items = ValueHelper::getArray($result, $key);
+        return array_map(
+            static fn($item) => PaidMediaFactory::fromTelegramResult($item),
+            $items
         );
     }
 
