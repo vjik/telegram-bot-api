@@ -18,7 +18,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#senddocument
  */
-final readonly class SendDocument implements    TelegramRequestWithResultPreparingInterface
+final readonly class SendDocument implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities

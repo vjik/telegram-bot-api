@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFactory;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 
 final class TransactionPartnerFactoryTest extends TestCase
@@ -21,6 +22,12 @@ final class TransactionPartnerFactoryTest extends TestCase
                 TransactionPartnerFragment::class,
                 [
                     'type' => 'fragment',
+                ],
+            ],
+            [
+                TransactionPartnerTelegramAds::class,
+                [
+                    'type' => 'telegram_ads',
                 ],
             ],
             [
