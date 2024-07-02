@@ -66,6 +66,7 @@ final class ChatFullInfoTest extends TestCase
         $this->assertNull($info->customEmojiStickerSetName);
         $this->assertNull($info->linkedChatId);
         $this->assertNull($info->location);
+        $this->assertNull($info->canSendPaidMedia);
     }
 
     public function testFromTelegramResult(): void
@@ -157,6 +158,7 @@ final class ChatFullInfoTest extends TestCase
                 ],
                 'address' => 'Moscow',
             ],
+            'can_send_paid_media' => true,
         ]);
 
         $this->assertSame(23, $info->id);
@@ -227,5 +229,7 @@ final class ChatFullInfoTest extends TestCase
 
         $this->assertInstanceOf(ChatLocation::class, $info->location);
         $this->assertSame(55.7558, $info->location->location->latitude);
+
+        $this->assertTrue($info->canSendPaidMedia);
     }
 }

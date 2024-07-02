@@ -3,6 +3,7 @@
 ## 0.2.1 under development
 
 - New #91: Add `TransactionPartnerTelegramAds` type.
+- New #92: Add `canSendPaidMedia` parameter to `ChatFullInfo` type.
 
 ## 0.2.0 June 29, 2024
 
