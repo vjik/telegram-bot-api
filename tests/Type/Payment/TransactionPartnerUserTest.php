@@ -18,6 +18,17 @@ final class TransactionPartnerUserTest extends TestCase
 
         $this->assertSame('user', $object->getType());
         $this->assertSame($user, $object->user);
+        $this->assertNull($object->invoicePayload);
+    }
+
+    public function testFull(): void
+    {
+        $user = new User(123, false, 'Mike');
+        $object = new TransactionPartnerUser($user, 'test');
+
+        $this->assertSame('user', $object->getType());
+        $this->assertSame($user, $object->user);
+        $this->assertSame('test', $object->invoicePayload);
     }
 
     public function testFromTelegramResult(): void
@@ -29,10 +40,12 @@ final class TransactionPartnerUserTest extends TestCase
                 'is_bot' => false,
                 'first_name' => 'Mike',
             ],
+            'invoice_payload' => 'test',
         ]);
 
         $this->assertSame('user', $object->getType());
         $this->assertSame(123, $object->user->id);
+        $this->assertSame('test', $object->invoicePayload);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

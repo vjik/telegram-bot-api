@@ -15,6 +15,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
 {
     public function __construct(
         public User $user,
+        public ?string $invoicePayload = null,
     ) {
     }
 
@@ -30,6 +31,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
             array_key_exists('user', $result)
                 ? User::fromTelegramResult($result['user'])
                 : throw new NotFoundKeyInResultException('user'),
+            ValueHelper::getStringOrNull($result, 'invoice_payload'),
         );
     }
 }
