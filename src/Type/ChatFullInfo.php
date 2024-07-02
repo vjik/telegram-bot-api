@@ -60,6 +60,7 @@ final readonly class ChatFullInfo
         public ?string $customEmojiStickerSetName = null,
         public ?int $linkedChatId = null,
         public ?ChatLocation $location = null,
+        public ?true $canSendPaidMedia = null,
     ) {
     }
 
@@ -128,6 +129,7 @@ final readonly class ChatFullInfo
             array_key_exists('location', $result)
                 ? ChatLocation::fromTelegramResult($result['location'])
                 : null,
+            ValueHelper::getTrueOrNull($result, 'can_send_paid_media'),
         );
     }
 }
