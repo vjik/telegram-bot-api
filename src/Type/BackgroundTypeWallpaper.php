@@ -23,16 +23,17 @@ final readonly class BackgroundTypeWallpaper implements BackgroundType
         return 'wallpaper';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('document', $result)
-                ? Document::fromTelegramResult($result['document'])
-                : throw new NotFoundKeyInResultException('document'),
-            ValueHelper::getInteger($result, 'dark_theme_dimming'),
-            ValueHelper::getTrueOrNull($result, 'is_blurred'),
-            ValueHelper::getTrueOrNull($result, 'is_moving'),
+                ? Document::fromTelegramResult($result['document'], $raw)
+                : throw new NotFoundKeyInResultException('document', $raw),
+            ValueHelper::getInteger($result, 'dark_theme_dimming', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_blurred', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_moving', $raw),
         );
     }
 }

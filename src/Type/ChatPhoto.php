@@ -19,14 +19,15 @@ final readonly class ChatPhoto
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'small_file_id'),
-            ValueHelper::getString($result, 'small_file_unique_id'),
-            ValueHelper::getString($result, 'big_file_id'),
-            ValueHelper::getString($result, 'big_file_unique_id'),
+            ValueHelper::getString($result, 'small_file_id', $raw),
+            ValueHelper::getString($result, 'small_file_unique_id', $raw),
+            ValueHelper::getString($result, 'big_file_id', $raw),
+            ValueHelper::getString($result, 'big_file_unique_id', $raw),
         );
     }
 }

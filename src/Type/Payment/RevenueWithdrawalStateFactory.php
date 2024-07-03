@@ -9,14 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final readonly class RevenueWithdrawalStateFactory
 {
-    public static function fromTelegramResult(mixed $result): RevenueWithdrawalState
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): RevenueWithdrawalState
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'type')) {
-            'pending' => RevenueWithdrawalStatePending::fromTelegramResult($result),
-            'succeeded' => RevenueWithdrawalStateSucceeded::fromTelegramResult($result),
-            'failed' => RevenueWithdrawalStateFailed::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown revenue withdrawal state type.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'type', $raw)) {
+            'pending' => RevenueWithdrawalStatePending::fromTelegramResult($result, $raw),
+            'succeeded' => RevenueWithdrawalStateSucceeded::fromTelegramResult($result, $raw),
+            'failed' => RevenueWithdrawalStateFailed::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown revenue withdrawal state type.', $raw),
         };
     }
 }

@@ -21,16 +21,17 @@ final readonly class ShippingAddress
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'country_code'),
-            ValueHelper::getString($result, 'state'),
-            ValueHelper::getString($result, 'city'),
-            ValueHelper::getString($result, 'street_line1'),
-            ValueHelper::getString($result, 'street_line2'),
-            ValueHelper::getString($result, 'post_code'),
+            ValueHelper::getString($result, 'country_code', $raw),
+            ValueHelper::getString($result, 'state', $raw),
+            ValueHelper::getString($result, 'city', $raw),
+            ValueHelper::getString($result, 'street_line1', $raw),
+            ValueHelper::getString($result, 'street_line2', $raw),
+            ValueHelper::getString($result, 'post_code', $raw),
         );
     }
 }

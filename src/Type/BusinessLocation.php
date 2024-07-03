@@ -17,13 +17,14 @@ final class BusinessLocation
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'address'),
+            ValueHelper::getString($result, 'address', $raw),
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
+                ? Location::fromTelegramResult($result['location'], $raw)
                 : null,
         );
     }

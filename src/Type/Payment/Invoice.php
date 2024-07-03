@@ -20,15 +20,16 @@ final readonly class Invoice
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'title'),
-            ValueHelper::getString($result, 'description'),
-            ValueHelper::getString($result, 'start_parameter'),
-            ValueHelper::getString($result, 'currency'),
-            ValueHelper::getInteger($result, 'total_amount'),
+            ValueHelper::getString($result, 'title', $raw),
+            ValueHelper::getString($result, 'description', $raw),
+            ValueHelper::getString($result, 'start_parameter', $raw),
+            ValueHelper::getString($result, 'currency', $raw),
+            ValueHelper::getInteger($result, 'total_amount', $raw),
         );
     }
 }

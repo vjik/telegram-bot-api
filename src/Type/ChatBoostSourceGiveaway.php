@@ -28,15 +28,16 @@ final readonly class ChatBoostSourceGiveaway implements ChatBoostSource
         return $this->user;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'giveaway_message_id'),
+            ValueHelper::getInteger($result, 'giveaway_message_id', $raw),
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
+                ? User::fromTelegramResult($result['user'], $raw)
                 : null,
-            ValueHelper::getTrueOrNull($result, 'is_unclaimed'),
+            ValueHelper::getTrueOrNull($result, 'is_unclaimed', $raw),
         );
     }
 }

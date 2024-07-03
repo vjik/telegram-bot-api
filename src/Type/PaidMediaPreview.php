@@ -23,13 +23,13 @@ final readonly class PaidMediaPreview implements PaidMedia
         return 'preview';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getIntegerOrNull($result, 'width'),
-            ValueHelper::getIntegerOrNull($result, 'height'),
-            ValueHelper::getIntegerOrNull($result, 'duration'),
+            ValueHelper::getIntegerOrNull($result, 'width', $raw),
+            ValueHelper::getIntegerOrNull($result, 'height', $raw),
+            ValueHelper::getIntegerOrNull($result, 'duration', $raw),
         );
     }
 }

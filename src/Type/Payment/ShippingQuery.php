@@ -21,18 +21,19 @@ final readonly class ShippingQuery
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
+            ValueHelper::getString($result, 'id', $raw),
             array_key_exists('from', $result)
-                ? User::fromTelegramResult($result['from'])
-                : throw new NotFoundKeyInResultException('from'),
-            ValueHelper::getString($result, 'invoice_payload'),
+                ? User::fromTelegramResult($result['from'], $raw)
+                : throw new NotFoundKeyInResultException('from', $raw),
+            ValueHelper::getString($result, 'invoice_payload', $raw),
             array_key_exists('shipping_address', $result)
-                ? ShippingAddress::fromTelegramResult($result['shipping_address'])
-                : throw new NotFoundKeyInResultException('shipping_address'),
+                ? ShippingAddress::fromTelegramResult($result['shipping_address'], $raw)
+                : throw new NotFoundKeyInResultException('shipping_address', $raw),
         );
     }
 }

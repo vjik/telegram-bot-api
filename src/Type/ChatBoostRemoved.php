@@ -21,18 +21,19 @@ final readonly class ChatBoostRemoved
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
-            ValueHelper::getString($result, 'boost_id'),
-            ValueHelper::getDateTimeImmutable($result, 'remove_date'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
+            ValueHelper::getString($result, 'boost_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'remove_date', $raw),
             array_key_exists('source', $result)
-                ? ChatBoostSourceFactory::fromTelegramResult($result['source'])
-                : throw new NotFoundKeyInResultException('source'),
+                ? ChatBoostSourceFactory::fromTelegramResult($result['source'], $raw)
+                : throw new NotFoundKeyInResultException('source', $raw),
         );
     }
 }

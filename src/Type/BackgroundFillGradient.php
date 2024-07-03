@@ -23,13 +23,14 @@ final readonly class BackgroundFillGradient implements BackgroundFill
         return 'gradient';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'top_color'),
-            ValueHelper::getInteger($result, 'bottom_color'),
-            ValueHelper::getInteger($result, 'rotation_angle'),
+            ValueHelper::getInteger($result, 'top_color', $raw),
+            ValueHelper::getInteger($result, 'bottom_color', $raw),
+            ValueHelper::getInteger($result, 'rotation_angle', $raw),
         );
     }
 }

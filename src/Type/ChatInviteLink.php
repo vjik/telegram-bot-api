@@ -26,21 +26,22 @@ final readonly class ChatInviteLink
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'invite_link'),
+            ValueHelper::getString($result, 'invite_link', $raw),
             array_key_exists('creator', $result)
-                ? User::fromTelegramResult($result['creator'])
-                : throw new NotFoundKeyInResultException('creator'),
-            ValueHelper::getBoolean($result, 'creates_join_request'),
-            ValueHelper::getBoolean($result, 'is_primary'),
-            ValueHelper::getBoolean($result, 'is_revoked'),
-            ValueHelper::getStringOrNull($result, 'name'),
-            ValueHelper::getDateTimeImmutableOrNull($result, 'expire_date'),
-            ValueHelper::getIntegerOrNull($result, 'member_limit'),
-            ValueHelper::getIntegerOrNull($result, 'pending_join_request_count'),
+                ? User::fromTelegramResult($result['creator'], $raw)
+                : throw new NotFoundKeyInResultException('creator', $raw),
+            ValueHelper::getBoolean($result, 'creates_join_request', $raw),
+            ValueHelper::getBoolean($result, 'is_primary', $raw),
+            ValueHelper::getBoolean($result, 'is_revoked', $raw),
+            ValueHelper::getStringOrNull($result, 'name', $raw),
+            ValueHelper::getDateTimeImmutableOrNull($result, 'expire_date', $raw),
+            ValueHelper::getIntegerOrNull($result, 'member_limit', $raw),
+            ValueHelper::getIntegerOrNull($result, 'pending_join_request_count', $raw),
         );
     }
 }

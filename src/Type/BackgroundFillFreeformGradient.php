@@ -24,11 +24,12 @@ final readonly class BackgroundFillFreeformGradient implements BackgroundFill
         return 'freeform_gradient';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfIntegers($result, 'colors'),
+            ValueHelper::getArrayOfIntegers($result, 'colors', $raw),
         );
     }
 }

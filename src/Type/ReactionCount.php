@@ -18,14 +18,15 @@ final readonly class ReactionCount
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('type', $result)
-                ? ReactionTypeFactory::fromTelegramResult($result['type'])
-                : throw new NotFoundKeyInResultException('type'),
-            ValueHelper::getInteger($result, 'total_count'),
+                ? ReactionTypeFactory::fromTelegramResult($result['type'], $raw)
+                : throw new NotFoundKeyInResultException('type', $raw),
+            ValueHelper::getInteger($result, 'total_count', $raw),
         );
     }
 }

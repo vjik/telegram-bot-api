@@ -46,75 +46,76 @@ final readonly class ExternalReplyInfo
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('origin', $result)
-                ? MessageOriginFactory::fromTelegramResult($result['origin'])
-                : throw new NotFoundKeyInResultException('origin'),
+                ? MessageOriginFactory::fromTelegramResult($result['origin'], $raw)
+                : throw new NotFoundKeyInResultException('origin', $raw),
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
+                ? Chat::fromTelegramResult($result['chat'], $raw)
                 : null,
-            ValueHelper::getIntegerOrNull($result, 'message_id'),
+            ValueHelper::getIntegerOrNull($result, 'message_id', $raw),
             array_key_exists('link_preview_options', $result)
-                ? LinkPreviewOptions::fromTelegramResult($result['link_preview_options'])
+                ? LinkPreviewOptions::fromTelegramResult($result['link_preview_options'], $raw)
                 : null,
             array_key_exists('animation', $result)
-                ? Animation::fromTelegramResult($result['animation'])
+                ? Animation::fromTelegramResult($result['animation'], $raw)
                 : null,
             array_key_exists('audio', $result)
-                ? Audio::fromTelegramResult($result['audio'])
+                ? Audio::fromTelegramResult($result['audio'], $raw)
                 : null,
             array_key_exists('document', $result)
-                ? Document::fromTelegramResult($result['document'])
+                ? Document::fromTelegramResult($result['document'], $raw)
                 : null,
-            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo'),
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo', $raw),
             array_key_exists('sticker', $result)
-                ? Sticker::fromTelegramResult($result['sticker'])
+                ? Sticker::fromTelegramResult($result['sticker'], $raw)
                 : null,
             array_key_exists('story', $result)
-                ? Story::fromTelegramResult($result['story'])
+                ? Story::fromTelegramResult($result['story'], $raw)
                 : null,
             array_key_exists('video', $result)
-                ? Video::fromTelegramResult($result['video'])
+                ? Video::fromTelegramResult($result['video'], $raw)
                 : null,
             array_key_exists('video_note', $result)
-                ? VideoNote::fromTelegramResult($result['video_note'])
+                ? VideoNote::fromTelegramResult($result['video_note'], $raw)
                 : null,
             array_key_exists('voice', $result)
-                ? Voice::fromTelegramResult($result['voice'])
+                ? Voice::fromTelegramResult($result['voice'], $raw)
                 : null,
-            ValueHelper::getTrueOrNull($result, 'has_media_spoiler'),
+            ValueHelper::getTrueOrNull($result, 'has_media_spoiler', $raw),
             array_key_exists('contact', $result)
-                ? Contact::fromTelegramResult($result['contact'])
+                ? Contact::fromTelegramResult($result['contact'], $raw)
                 : null,
             array_key_exists('dice', $result)
-                ? Dice::fromTelegramResult($result['dice'])
+                ? Dice::fromTelegramResult($result['dice'], $raw)
                 : null,
             array_key_exists('game', $result)
-                ? Game::fromTelegramResult($result['game'])
+                ? Game::fromTelegramResult($result['game'], $raw)
                 : null,
             array_key_exists('giveaway', $result)
-                ? Giveaway::fromTelegramResult($result['giveaway'])
+                ? Giveaway::fromTelegramResult($result['giveaway'], $raw)
                 : null,
             array_key_exists('giveaway_winners', $result)
-                ? GiveawayWinners::fromTelegramResult($result['giveaway_winners'])
+                ? GiveawayWinners::fromTelegramResult($result['giveaway_winners'], $raw)
                 : null,
             array_key_exists('invoice', $result)
-                ? Invoice::fromTelegramResult($result['invoice'])
+                ? Invoice::fromTelegramResult($result['invoice'], $raw)
                 : null,
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
+                ? Location::fromTelegramResult($result['location'], $raw)
                 : null,
             array_key_exists('poll', $result)
-                ? Poll::fromTelegramResult($result['poll'])
+                ? Poll::fromTelegramResult($result['poll'], $raw)
                 : null,
             array_key_exists('venue', $result)
-                ? Venue::fromTelegramResult($result['venue'])
+                ? Venue::fromTelegramResult($result['venue'], $raw)
                 : null,
             array_key_exists('paid_media', $result)
-                ? PaidMediaInfo::fromTelegramResult($result['paid_media'])
+                ? PaidMediaInfo::fromTelegramResult($result['paid_media'], $raw)
                 : null,
         );
     }

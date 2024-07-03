@@ -31,16 +31,17 @@ final readonly class MessageOriginChannel implements MessageOrigin
         return $this->date;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getDateTimeImmutable($result, 'date'),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
-            ValueHelper::getInteger($result, 'message_id'),
-            ValueHelper::getStringOrNull($result, 'author_signature'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
+            ValueHelper::getInteger($result, 'message_id', $raw),
+            ValueHelper::getStringOrNull($result, 'author_signature', $raw),
         );
     }
 }

@@ -19,15 +19,16 @@ final readonly class OrderInfo
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getStringOrNull($result, 'name'),
-            ValueHelper::getStringOrNull($result, 'phone_number'),
-            ValueHelper::getStringOrNull($result, 'email'),
+            ValueHelper::getStringOrNull($result, 'name', $raw),
+            ValueHelper::getStringOrNull($result, 'phone_number', $raw),
+            ValueHelper::getStringOrNull($result, 'email', $raw),
             array_key_exists('shipping_address', $result)
-                ? ShippingAddress::fromTelegramResult($result['shipping_address'])
+                ? ShippingAddress::fromTelegramResult($result['shipping_address'], $raw)
                 : null,
         );
     }

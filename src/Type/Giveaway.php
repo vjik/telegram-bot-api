@@ -28,21 +28,22 @@ final readonly class Giveaway
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_map(
-                static fn($p) => Chat::fromTelegramResult($p),
-                ValueHelper::getArray($result, 'chats')
+                static fn($p) => Chat::fromTelegramResult($p, $raw),
+                ValueHelper::getArray($result, 'chats', $raw)
             ),
-            ValueHelper::getDateTimeImmutable($result, 'winners_selection_date'),
-            ValueHelper::getInteger($result, 'winner_count'),
-            ValueHelper::getTrueOrNull($result, 'only_new_members'),
-            ValueHelper::getTrueOrNull($result, 'has_public_winners'),
-            ValueHelper::getStringOrNull($result, 'prize_description'),
-            ValueHelper::getArrayOfStringsOrNull($result, 'country_codes'),
-            ValueHelper::getIntegerOrNull($result, 'premium_subscription_month_count'),
+            ValueHelper::getDateTimeImmutable($result, 'winners_selection_date', $raw),
+            ValueHelper::getInteger($result, 'winner_count', $raw),
+            ValueHelper::getTrueOrNull($result, 'only_new_members', $raw),
+            ValueHelper::getTrueOrNull($result, 'has_public_winners', $raw),
+            ValueHelper::getStringOrNull($result, 'prize_description', $raw),
+            ValueHelper::getArrayOfStringsOrNull($result, 'country_codes', $raw),
+            ValueHelper::getIntegerOrNull($result, 'premium_subscription_month_count', $raw),
         );
     }
 }

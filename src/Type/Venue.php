@@ -23,19 +23,20 @@ final readonly class Venue
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
-                : throw new NotFoundKeyInResultException('location'),
-            ValueHelper::getString($result, 'title'),
-            ValueHelper::getString($result, 'address'),
-            ValueHelper::getStringOrNull($result, 'foursquare_id'),
-            ValueHelper::getStringOrNull($result, 'foursquare_type'),
-            ValueHelper::getStringOrNull($result, 'google_place_id'),
-            ValueHelper::getStringOrNull($result, 'google_place_type'),
+                ? Location::fromTelegramResult($result['location'], $raw)
+                : throw new NotFoundKeyInResultException('location', $raw),
+            ValueHelper::getString($result, 'title', $raw),
+            ValueHelper::getString($result, 'address', $raw),
+            ValueHelper::getStringOrNull($result, 'foursquare_id', $raw),
+            ValueHelper::getStringOrNull($result, 'foursquare_type', $raw),
+            ValueHelper::getStringOrNull($result, 'google_place_id', $raw),
+            ValueHelper::getStringOrNull($result, 'google_place_type', $raw),
         );
     }
 }

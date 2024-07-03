@@ -21,12 +21,13 @@ final readonly class TransactionPartnerFragment implements TransactionPartner
         return 'fragment';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('withdrawal_state', $result)
-                ? RevenueWithdrawalStateFactory::fromTelegramResult($result['withdrawal_state'])
+                ? RevenueWithdrawalStateFactory::fromTelegramResult($result['withdrawal_state'], $raw)
                 : null,
         );
     }

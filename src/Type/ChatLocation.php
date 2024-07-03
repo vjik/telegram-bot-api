@@ -18,14 +18,15 @@ final readonly class ChatLocation
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
-                : throw new NotFoundKeyInResultException('location'),
-            ValueHelper::getString($result, 'address'),
+                ? Location::fromTelegramResult($result['location'], $raw)
+                : throw new NotFoundKeyInResultException('location', $raw),
+            ValueHelper::getString($result, 'address', $raw),
         );
     }
 }

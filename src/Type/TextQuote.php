@@ -22,14 +22,15 @@ final readonly class TextQuote
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'text'),
-            ValueHelper::getInteger($result, 'position'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'entities'),
-            ValueHelper::getTrueOrNull($result, 'is_manual'),
+            ValueHelper::getString($result, 'text', $raw),
+            ValueHelper::getInteger($result, 'position', $raw),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'entities', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_manual', $raw),
         );
     }
 }

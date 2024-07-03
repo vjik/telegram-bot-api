@@ -19,14 +19,15 @@ final readonly class BusinessIntro
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getStringOrNull($result, 'title'),
-            ValueHelper::getStringOrNull($result, 'message'),
+            ValueHelper::getStringOrNull($result, 'title', $raw),
+            ValueHelper::getStringOrNull($result, 'message', $raw),
             array_key_exists('sticker', $result)
-                ? Sticker::fromTelegramResult($result['sticker'])
+                ? Sticker::fromTelegramResult($result['sticker'], $raw)
                 : null,
         );
     }

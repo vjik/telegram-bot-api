@@ -33,11 +33,12 @@ final readonly class InlineKeyboardMarkup
         ];
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'inline_keyboard'),
+            ValueHelper::getArrayOfArrayOfInlineKeyboardButtons($result, 'inline_keyboard', $raw),
         );
     }
 }

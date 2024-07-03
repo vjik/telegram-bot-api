@@ -18,16 +18,17 @@ final readonly class ChatBoostUpdated
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
             array_key_exists('boost', $result)
-                ? ChatBoost::fromTelegramResult($result['boost'])
-                : throw new NotFoundKeyInResultException('boost'),
+                ? ChatBoost::fromTelegramResult($result['boost'], $raw)
+                : throw new NotFoundKeyInResultException('boost', $raw),
         );
     }
 }

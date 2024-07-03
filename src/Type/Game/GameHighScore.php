@@ -20,15 +20,16 @@ final readonly class GameHighScore
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'position'),
+            ValueHelper::getInteger($result, 'position', $raw),
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
-                : throw new NotFoundKeyInResultException('user'),
-            ValueHelper::getInteger($result, 'score'),
+                ? User::fromTelegramResult($result['user'], $raw)
+                : throw new NotFoundKeyInResultException('user', $raw),
+            ValueHelper::getInteger($result, 'score', $raw),
         );
     }
 }

@@ -19,14 +19,15 @@ final readonly class ForumTopic
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'message_thread_id'),
-            ValueHelper::getString($result, 'name'),
-            ValueHelper::getInteger($result, 'icon_color'),
-            ValueHelper::getStringOrNull($result, 'icon_custom_emoji_id'),
+            ValueHelper::getInteger($result, 'message_thread_id', $raw),
+            ValueHelper::getString($result, 'name', $raw),
+            ValueHelper::getInteger($result, 'icon_color', $raw),
+            ValueHelper::getStringOrNull($result, 'icon_custom_emoji_id', $raw),
         );
     }
 }

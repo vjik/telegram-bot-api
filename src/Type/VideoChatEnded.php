@@ -16,11 +16,12 @@ final readonly class VideoChatEnded
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'duration'),
+            ValueHelper::getInteger($result, 'duration', $raw),
         );
     }
 }

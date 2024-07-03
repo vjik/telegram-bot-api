@@ -21,12 +21,13 @@ final readonly class UserProfilePhotos
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'total_count'),
-            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'photos'),
+            ValueHelper::getInteger($result, 'total_count', $raw),
+            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'photos', $raw),
         );
     }
 }

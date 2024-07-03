@@ -19,11 +19,12 @@ final readonly class VideoChatParticipantsInvited
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfUsers($result, 'users'),
+            ValueHelper::getArrayOfUsers($result, 'users', $raw),
         );
     }
 }

@@ -17,12 +17,13 @@ final readonly class BusinessOpeningHoursInterval
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'opening_minute'),
-            ValueHelper::getInteger($result, 'closing_minute')
+            ValueHelper::getInteger($result, 'opening_minute', $raw),
+            ValueHelper::getInteger($result, 'closing_minute', $raw)
         );
     }
 }

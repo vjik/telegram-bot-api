@@ -26,19 +26,20 @@ final readonly class BackgroundTypePattern implements BackgroundType
         return 'pattern';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('document', $result)
-                ? Document::fromTelegramResult($result['document'])
-                : throw new NotFoundKeyInResultException('document'),
+                ? Document::fromTelegramResult($result['document'], $raw)
+                : throw new NotFoundKeyInResultException('document', $raw),
             array_key_exists('fill', $result)
-                ? BackgroundFillFactory::fromTelegramResult($result['fill'])
-                : throw new NotFoundKeyInResultException('fill'),
-            ValueHelper::getInteger($result, 'intensity'),
-            ValueHelper::getTrueOrNull($result, 'is_inverted'),
-            ValueHelper::getTrueOrNull($result, 'is_moving'),
+                ? BackgroundFillFactory::fromTelegramResult($result['fill'], $raw)
+                : throw new NotFoundKeyInResultException('fill', $raw),
+            ValueHelper::getInteger($result, 'intensity', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_inverted', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_moving', $raw),
         );
     }
 }

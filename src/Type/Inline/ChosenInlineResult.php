@@ -23,19 +23,20 @@ final readonly class ChosenInlineResult
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'result_id'),
+            ValueHelper::getString($result, 'result_id', $raw),
             array_key_exists('from', $result)
-                ? User::fromTelegramResult($result['from'])
-                : throw new NotFoundKeyInResultException('from'),
-            ValueHelper::getString($result, 'query'),
+                ? User::fromTelegramResult($result['from'], $raw)
+                : throw new NotFoundKeyInResultException('from', $raw),
+            ValueHelper::getString($result, 'query', $raw),
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
+                ? Location::fromTelegramResult($result['location'], $raw)
                 : null,
-            ValueHelper::getStringOrNull($result, 'inline_message_id'),
+            ValueHelper::getStringOrNull($result, 'inline_message_id', $raw),
         );
     }
 }

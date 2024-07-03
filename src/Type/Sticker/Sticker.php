@@ -32,29 +32,32 @@ final readonly class Sticker
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'file_id'),
-            ValueHelper::getString($result, 'file_unique_id'),
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getInteger($result, 'width'),
-            ValueHelper::getInteger($result, 'height'),
-            ValueHelper::getBoolean($result, 'is_animated'),
-            ValueHelper::getBoolean($result, 'is_video'),
-            array_key_exists('thumbnail', $result) ? PhotoSize::fromTelegramResult($result['thumbnail']) : null,
-            ValueHelper::getStringOrNull($result, 'emoji'),
-            ValueHelper::getStringOrNull($result, 'set_name'),
+            ValueHelper::getString($result, 'file_id', $raw),
+            ValueHelper::getString($result, 'file_unique_id', $raw),
+            ValueHelper::getString($result, 'type', $raw),
+            ValueHelper::getInteger($result, 'width', $raw),
+            ValueHelper::getInteger($result, 'height', $raw),
+            ValueHelper::getBoolean($result, 'is_animated', $raw),
+            ValueHelper::getBoolean($result, 'is_video', $raw),
+            array_key_exists('thumbnail', $result)
+                ? PhotoSize::fromTelegramResult($result['thumbnail'], $raw)
+                : null,
+            ValueHelper::getStringOrNull($result, 'emoji', $raw),
+            ValueHelper::getStringOrNull($result, 'set_name', $raw),
             array_key_exists('premium_animation', $result)
-                ? File::fromTelegramResult($result['premium_animation'])
+                ? File::fromTelegramResult($result['premium_animation'], $raw)
                 : null,
             array_key_exists('mask_position', $result)
-                ? MaskPosition::fromTelegramResult($result['mask_position'])
+                ? MaskPosition::fromTelegramResult($result['mask_position'], $raw)
                 : null,
-            ValueHelper::getStringOrNull($result, 'custom_emoji_id'),
-            ValueHelper::getTrueOrNull($result, 'needs_repainting'),
-            ValueHelper::getIntegerOrNull($result, 'file_size'),
+            ValueHelper::getStringOrNull($result, 'custom_emoji_id', $raw),
+            ValueHelper::getTrueOrNull($result, 'needs_repainting', $raw),
+            ValueHelper::getIntegerOrNull($result, 'file_size', $raw),
         );
     }
 }

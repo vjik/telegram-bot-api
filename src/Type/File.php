@@ -19,14 +19,15 @@ final class File
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'file_id'),
-            ValueHelper::getString($result, 'file_unique_id'),
-            ValueHelper::getIntegerOrNull($result, 'file_size'),
-            ValueHelper::getStringOrNull($result, 'file_path'),
+            ValueHelper::getString($result, 'file_id', $raw),
+            ValueHelper::getString($result, 'file_unique_id', $raw),
+            ValueHelper::getIntegerOrNull($result, 'file_size', $raw),
+            ValueHelper::getStringOrNull($result, 'file_path', $raw),
         );
     }
 }

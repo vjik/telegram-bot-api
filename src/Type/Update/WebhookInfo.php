@@ -28,19 +28,20 @@ final readonly class WebhookInfo
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'url'),
-            ValueHelper::getBoolean($result, 'has_custom_certificate'),
-            ValueHelper::getInteger($result, 'pending_update_count'),
-            ValueHelper::getStringOrNull($result, 'ip_address'),
-            ValueHelper::getDateTimeImmutableOrNull($result, 'last_error_date'),
-            ValueHelper::getStringOrNull($result, 'last_error_message'),
-            ValueHelper::getDateTimeImmutableOrNull($result, 'last_synchronization_error_date'),
-            ValueHelper::getIntegerOrNull($result, 'max_connections'),
-            ValueHelper::getArrayOfStringsOrNull($result, 'allowed_updates'),
+            ValueHelper::getString($result, 'url', $raw),
+            ValueHelper::getBoolean($result, 'has_custom_certificate', $raw),
+            ValueHelper::getInteger($result, 'pending_update_count', $raw),
+            ValueHelper::getStringOrNull($result, 'ip_address', $raw),
+            ValueHelper::getDateTimeImmutableOrNull($result, 'last_error_date', $raw),
+            ValueHelper::getStringOrNull($result, 'last_error_message', $raw),
+            ValueHelper::getDateTimeImmutableOrNull($result, 'last_synchronization_error_date', $raw),
+            ValueHelper::getIntegerOrNull($result, 'max_connections', $raw),
+            ValueHelper::getArrayOfStringsOrNull($result, 'allowed_updates', $raw),
         );
     }
 }

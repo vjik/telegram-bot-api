@@ -54,25 +54,26 @@ final readonly class ChatAdministratorRights
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getBoolean($result, 'is_anonymous'),
-            ValueHelper::getBoolean($result, 'can_manage_chat'),
-            ValueHelper::getBoolean($result, 'can_delete_messages'),
-            ValueHelper::getBoolean($result, 'can_manage_video_chats'),
-            ValueHelper::getBoolean($result, 'can_restrict_members'),
-            ValueHelper::getBoolean($result, 'can_promote_members'),
-            ValueHelper::getBoolean($result, 'can_change_info'),
-            ValueHelper::getBoolean($result, 'can_invite_users'),
-            ValueHelper::getBoolean($result, 'can_post_stories'),
-            ValueHelper::getBoolean($result, 'can_edit_stories'),
-            ValueHelper::getBoolean($result, 'can_delete_stories'),
-            ValueHelper::getBooleanOrNull($result, 'can_post_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_edit_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_pin_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_manage_topics'),
+            ValueHelper::getBoolean($result, 'is_anonymous', $raw),
+            ValueHelper::getBoolean($result, 'can_manage_chat', $raw),
+            ValueHelper::getBoolean($result, 'can_delete_messages', $raw),
+            ValueHelper::getBoolean($result, 'can_manage_video_chats', $raw),
+            ValueHelper::getBoolean($result, 'can_restrict_members', $raw),
+            ValueHelper::getBoolean($result, 'can_promote_members', $raw),
+            ValueHelper::getBoolean($result, 'can_change_info', $raw),
+            ValueHelper::getBoolean($result, 'can_invite_users', $raw),
+            ValueHelper::getBoolean($result, 'can_post_stories', $raw),
+            ValueHelper::getBoolean($result, 'can_edit_stories', $raw),
+            ValueHelper::getBoolean($result, 'can_delete_stories', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_post_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_edit_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_pin_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_manage_topics', $raw),
         );
     }
 }

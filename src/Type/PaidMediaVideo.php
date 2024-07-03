@@ -22,13 +22,14 @@ final readonly class PaidMediaVideo implements PaidMedia
         return 'video';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('video', $result)
-                ? Video::fromTelegramResult($result['video'])
-                : throw new NotFoundKeyInResultException('video'),
+                ? Video::fromTelegramResult($result['video'], $raw)
+                : throw new NotFoundKeyInResultException('video', $raw),
         );
     }
 }

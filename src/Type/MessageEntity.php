@@ -38,19 +38,19 @@ final readonly class MessageEntity
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getInteger($result, 'offset'),
-            ValueHelper::getInteger($result, 'length'),
-            ValueHelper::getStringOrNull($result, 'url'),
+            ValueHelper::getString($result, 'type', $raw),
+            ValueHelper::getInteger($result, 'offset', $raw),
+            ValueHelper::getInteger($result, 'length', $raw),
+            ValueHelper::getStringOrNull($result, 'url', $raw),
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
+                ? User::fromTelegramResult($result['user'], $raw)
                 : null,
-            ValueHelper::getStringOrNull($result, 'language'),
-            ValueHelper::getStringOrNull($result, 'custom_emoji_id'),
+            ValueHelper::getStringOrNull($result, 'language', $raw),
+            ValueHelper::getStringOrNull($result, 'custom_emoji_id', $raw),
         );
     }
 }

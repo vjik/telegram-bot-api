@@ -21,12 +21,13 @@ final readonly class UsersShared
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'request_id'),
-            ValueHelper::getArrayOfSharedUsers($result, 'users'),
+            ValueHelper::getInteger($result, 'request_id', $raw),
+            ValueHelper::getArrayOfSharedUsers($result, 'users', $raw),
         );
     }
 }

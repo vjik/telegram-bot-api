@@ -16,9 +16,9 @@ final readonly class RevenueWithdrawalStatePending implements RevenueWithdrawalS
         return 'pending';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw ?? $result);
         return new self();
     }
 }

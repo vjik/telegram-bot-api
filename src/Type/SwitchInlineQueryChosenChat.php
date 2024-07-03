@@ -34,15 +34,16 @@ final readonly class SwitchInlineQueryChosenChat
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getStringOrNull($result, 'query'),
-            ValueHelper::getBooleanOrNull($result, 'allow_user_chats'),
-            ValueHelper::getBooleanOrNull($result, 'allow_bot_chats'),
-            ValueHelper::getBooleanOrNull($result, 'allow_group_chats'),
-            ValueHelper::getBooleanOrNull($result, 'allow_channel_chats'),
+            ValueHelper::getStringOrNull($result, 'query', $raw),
+            ValueHelper::getBooleanOrNull($result, 'allow_user_chats', $raw),
+            ValueHelper::getBooleanOrNull($result, 'allow_bot_chats', $raw),
+            ValueHelper::getBooleanOrNull($result, 'allow_group_chats', $raw),
+            ValueHelper::getBooleanOrNull($result, 'allow_channel_chats', $raw),
         );
     }
 }

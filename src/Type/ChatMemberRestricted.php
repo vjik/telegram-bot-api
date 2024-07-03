@@ -44,34 +44,35 @@ final readonly class ChatMemberRestricted implements ChatMember
         return $this->user;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
 
-        $untilDate = ValueHelper::getInteger($result, 'until_date');
+        $untilDate = ValueHelper::getInteger($result, 'until_date', $raw);
         $untilDate = $untilDate === 0
             ? false
             : (new DateTimeImmutable())->setTimestamp($untilDate);
 
         return new self(
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
-                : throw new NotFoundKeyInResultException('user'),
-            ValueHelper::getBoolean($result, 'is_member'),
-            ValueHelper::getBoolean($result, 'can_send_messages'),
-            ValueHelper::getBoolean($result, 'can_send_audios'),
-            ValueHelper::getBoolean($result, 'can_send_documents'),
-            ValueHelper::getBoolean($result, 'can_send_photos'),
-            ValueHelper::getBoolean($result, 'can_send_videos'),
-            ValueHelper::getBoolean($result, 'can_send_video_notes'),
-            ValueHelper::getBoolean($result, 'can_send_voice_notes'),
-            ValueHelper::getBoolean($result, 'can_send_polls'),
-            ValueHelper::getBoolean($result, 'can_send_other_messages'),
-            ValueHelper::getBoolean($result, 'can_add_web_page_previews'),
-            ValueHelper::getBoolean($result, 'can_change_info'),
-            ValueHelper::getBoolean($result, 'can_invite_users'),
-            ValueHelper::getBoolean($result, 'can_pin_messages'),
-            ValueHelper::getBoolean($result, 'can_manage_topics'),
+                ? User::fromTelegramResult($result['user'], $raw)
+                : throw new NotFoundKeyInResultException('user', $raw),
+            ValueHelper::getBoolean($result, 'is_member', $raw),
+            ValueHelper::getBoolean($result, 'can_send_messages', $raw),
+            ValueHelper::getBoolean($result, 'can_send_audios', $raw),
+            ValueHelper::getBoolean($result, 'can_send_documents', $raw),
+            ValueHelper::getBoolean($result, 'can_send_photos', $raw),
+            ValueHelper::getBoolean($result, 'can_send_videos', $raw),
+            ValueHelper::getBoolean($result, 'can_send_video_notes', $raw),
+            ValueHelper::getBoolean($result, 'can_send_voice_notes', $raw),
+            ValueHelper::getBoolean($result, 'can_send_polls', $raw),
+            ValueHelper::getBoolean($result, 'can_send_other_messages', $raw),
+            ValueHelper::getBoolean($result, 'can_add_web_page_previews', $raw),
+            ValueHelper::getBoolean($result, 'can_change_info', $raw),
+            ValueHelper::getBoolean($result, 'can_invite_users', $raw),
+            ValueHelper::getBoolean($result, 'can_pin_messages', $raw),
+            ValueHelper::getBoolean($result, 'can_manage_topics', $raw),
             $untilDate,
         );
     }

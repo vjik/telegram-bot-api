@@ -17,13 +17,14 @@ final readonly class ChatBackground
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('type', $result)
-                ? BackgroundTypeFactory::fromTelegramResult($result['type'])
-                : throw new NotFoundKeyInResultException('type'),
+                ? BackgroundTypeFactory::fromTelegramResult($result['type'], $raw)
+                : throw new NotFoundKeyInResultException('type', $raw),
         );
     }
 }

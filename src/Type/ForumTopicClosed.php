@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
  */
 final readonly class ForumTopicClosed
 {
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
         return new self();
     }

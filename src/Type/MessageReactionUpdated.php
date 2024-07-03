@@ -28,22 +28,23 @@ final readonly class MessageReactionUpdated
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
-            ValueHelper::getInteger($result, 'message_id'),
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getArrayOfReactionTypes($result, 'old_reaction'),
-            ValueHelper::getArrayOfReactionTypes($result, 'new_reaction'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
+            ValueHelper::getInteger($result, 'message_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getArrayOfReactionTypes($result, 'old_reaction', $raw),
+            ValueHelper::getArrayOfReactionTypes($result, 'new_reaction', $raw),
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
+                ? User::fromTelegramResult($result['user'], $raw)
                 : null,
             array_key_exists('actor_chat', $result)
-                ? Chat::fromTelegramResult($result['actor_chat'])
+                ? Chat::fromTelegramResult($result['actor_chat'], $raw)
                 : null,
         );
     }

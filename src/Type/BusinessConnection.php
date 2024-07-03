@@ -23,18 +23,19 @@ final readonly class BusinessConnection
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
+            ValueHelper::getString($result, 'id', $raw),
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
-                : throw new NotFoundKeyInResultException('user'),
-            ValueHelper::getInteger($result, 'user_chat_id'),
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getBoolean($result, 'can_reply'),
-            ValueHelper::getBoolean($result, 'is_enabled'),
+                ? User::fromTelegramResult($result['user'], $raw)
+                : throw new NotFoundKeyInResultException('user', $raw),
+            ValueHelper::getInteger($result, 'user_chat_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getBoolean($result, 'can_reply', $raw),
+            ValueHelper::getBoolean($result, 'is_enabled', $raw),
         );
     }
 }

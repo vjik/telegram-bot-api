@@ -23,14 +23,15 @@ final readonly class BackgroundTypeFill implements BackgroundType
         return 'fill';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('fill', $result)
-                ? BackgroundFillFactory::fromTelegramResult($result['fill'])
-                : throw new NotFoundKeyInResultException('fill'),
-            ValueHelper::getInteger($result, 'dark_theme_dimming'),
+                ? BackgroundFillFactory::fromTelegramResult($result['fill'], $raw)
+                : throw new NotFoundKeyInResultException('fill', $raw),
+            ValueHelper::getInteger($result, 'dark_theme_dimming', $raw),
         );
     }
 }

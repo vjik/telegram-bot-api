@@ -24,11 +24,11 @@ final readonly class PaidMediaPhoto implements PaidMedia
         return 'photo';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfPhotoSizes($result, 'photo'),
+            ValueHelper::getArrayOfPhotoSizes($result, 'photo', $raw),
         );
     }
 }

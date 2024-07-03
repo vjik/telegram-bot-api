@@ -20,12 +20,13 @@ final readonly class BusinessOpeningHours
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'time_zone_name'),
-            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'opening_hours')
+            ValueHelper::getString($result, 'time_zone_name', $raw),
+            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'opening_hours', $raw)
         );
     }
 }

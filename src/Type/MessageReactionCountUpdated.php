@@ -24,16 +24,17 @@ final readonly class MessageReactionCountUpdated
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
-            ValueHelper::getInteger($result, 'message_id'),
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getArrayOfReactionCounts($result, 'reactions'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
+            ValueHelper::getInteger($result, 'message_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getArrayOfReactionCounts($result, 'reactions', $raw),
         );
     }
 }

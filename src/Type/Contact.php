@@ -20,15 +20,16 @@ final readonly class Contact
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'phone_number'),
-            ValueHelper::getString($result, 'first_name'),
-            ValueHelper::getStringOrNull($result, 'last_name'),
-            ValueHelper::getIntegerOrNull($result, 'user_id'),
-            ValueHelper::getStringOrNull($result, 'vcard'),
+            ValueHelper::getString($result, 'phone_number', $raw),
+            ValueHelper::getString($result, 'first_name', $raw),
+            ValueHelper::getStringOrNull($result, 'last_name', $raw),
+            ValueHelper::getIntegerOrNull($result, 'user_id', $raw),
+            ValueHelper::getStringOrNull($result, 'vcard', $raw),
         );
     }
 }

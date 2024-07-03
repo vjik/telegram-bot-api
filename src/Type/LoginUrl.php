@@ -32,14 +32,15 @@ final readonly class LoginUrl
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'url'),
-            ValueHelper::getStringOrNull($result, 'forward_text'),
-            ValueHelper::getStringOrNull($result, 'bot_username'),
-            ValueHelper::getBooleanOrNull($result, 'request_write_access'),
+            ValueHelper::getString($result, 'url', $raw),
+            ValueHelper::getStringOrNull($result, 'forward_text', $raw),
+            ValueHelper::getStringOrNull($result, 'bot_username', $raw),
+            ValueHelper::getBooleanOrNull($result, 'request_write_access', $raw),
         );
     }
 }

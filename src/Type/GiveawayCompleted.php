@@ -18,14 +18,15 @@ final readonly class GiveawayCompleted
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'winner_count'),
-            ValueHelper::getIntegerOrNull($result, 'unclaimed_prize_count'),
+            ValueHelper::getInteger($result, 'winner_count', $raw),
+            ValueHelper::getIntegerOrNull($result, 'unclaimed_prize_count', $raw),
             array_key_exists('giveaway_message', $result)
-                ? Message::fromTelegramResult($result['giveaway_message'])
+                ? Message::fromTelegramResult($result['giveaway_message'], $raw)
                 : null,
         );
     }

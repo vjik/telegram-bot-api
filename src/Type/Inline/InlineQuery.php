@@ -24,19 +24,20 @@ final readonly class InlineQuery
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
+            ValueHelper::getString($result, 'id', $raw),
             array_key_exists('from', $result)
-                ? User::fromTelegramResult($result['from'])
-                : throw new NotFoundKeyInResultException('from'),
-            ValueHelper::getString($result, 'query'),
-            ValueHelper::getString($result, 'offset'),
-            ValueHelper::getStringOrNull($result, 'chat_type'),
+                ? User::fromTelegramResult($result['from'], $raw)
+                : throw new NotFoundKeyInResultException('from', $raw),
+            ValueHelper::getString($result, 'query', $raw),
+            ValueHelper::getString($result, 'offset', $raw),
+            ValueHelper::getStringOrNull($result, 'chat_type', $raw),
             array_key_exists('location', $result)
-                ? Location::fromTelegramResult($result['location'])
+                ? Location::fromTelegramResult($result['location'], $raw)
                 : null,
         );
     }

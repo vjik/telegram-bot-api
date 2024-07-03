@@ -25,12 +25,13 @@ final readonly class BotCommand
         ];
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'command'),
-            ValueHelper::getString($result, 'description'),
+            ValueHelper::getString($result, 'command', $raw),
+            ValueHelper::getString($result, 'description', $raw),
         );
     }
 }

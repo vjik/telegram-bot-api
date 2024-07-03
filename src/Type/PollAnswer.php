@@ -22,17 +22,18 @@ final readonly class PollAnswer
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'poll_id'),
-            ValueHelper::getArrayOfIntegers($result, 'option_ids'),
+            ValueHelper::getString($result, 'poll_id', $raw),
+            ValueHelper::getArrayOfIntegers($result, 'option_ids', $raw),
             array_key_exists('voter_chat', $result)
-                ? Chat::fromTelegramResult($result['voter_chat'])
+                ? Chat::fromTelegramResult($result['voter_chat'], $raw)
                 : null,
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
+                ? User::fromTelegramResult($result['user'], $raw)
                 : null,
         );
     }

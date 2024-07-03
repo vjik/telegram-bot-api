@@ -29,14 +29,15 @@ final readonly class MaskPosition
         ];
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'point'),
-            ValueHelper::getFloat($result, 'x_shift'),
-            ValueHelper::getFloat($result, 'y_shift'),
-            ValueHelper::getFloat($result, 'scale'),
+            ValueHelper::getString($result, 'point', $raw),
+            ValueHelper::getFloat($result, 'x_shift', $raw),
+            ValueHelper::getFloat($result, 'y_shift', $raw),
+            ValueHelper::getFloat($result, 'scale', $raw),
         );
     }
 }

@@ -52,24 +52,25 @@ final readonly class ChatPermissions
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getBooleanOrNull($result, 'can_send_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_audios'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_documents'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_photos'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_videos'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_video_notes'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_voice_notes'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_polls'),
-            ValueHelper::getBooleanOrNull($result, 'can_send_other_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_add_web_page_previews'),
-            ValueHelper::getBooleanOrNull($result, 'can_change_info'),
-            ValueHelper::getBooleanOrNull($result, 'can_invite_users'),
-            ValueHelper::getBooleanOrNull($result, 'can_pin_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_manage_topics')
+            ValueHelper::getBooleanOrNull($result, 'can_send_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_audios', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_documents', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_photos', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_videos', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_video_notes', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_voice_notes', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_polls', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_send_other_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_add_web_page_previews', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_change_info', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_invite_users', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_pin_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_manage_topics', $raw)
         );
     }
 }

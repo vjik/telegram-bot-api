@@ -9,15 +9,16 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final readonly class BackgroundTypeFactory
 {
-    public static function fromTelegramResult(mixed $result): BackgroundType
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): BackgroundType
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'type')) {
-            'fill' => BackgroundTypeFill::fromTelegramResult($result),
-            'wallpaper' => BackgroundTypeWallpaper::fromTelegramResult($result),
-            'pattern' => BackgroundTypePattern::fromTelegramResult($result),
-            'chat_theme' => BackgroundTypeChatTheme::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown background type.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'type', $raw)) {
+            'fill' => BackgroundTypeFill::fromTelegramResult($result, $raw),
+            'wallpaper' => BackgroundTypeWallpaper::fromTelegramResult($result, $raw),
+            'pattern' => BackgroundTypePattern::fromTelegramResult($result, $raw),
+            'chat_theme' => BackgroundTypeChatTheme::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown background type.', $raw),
         };
     }
 }

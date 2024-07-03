@@ -22,17 +22,18 @@ final readonly class Chat
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'id'),
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getStringOrNull($result, 'title'),
-            ValueHelper::getStringOrNull($result, 'username'),
-            ValueHelper::getStringOrNull($result, 'first_name'),
-            ValueHelper::getStringOrNull($result, 'last_name'),
-            ValueHelper::getTrueOrNull($result, 'is_forum'),
+            ValueHelper::getInteger($result, 'id', $raw),
+            ValueHelper::getString($result, 'type', $raw),
+            ValueHelper::getStringOrNull($result, 'title', $raw),
+            ValueHelper::getStringOrNull($result, 'username', $raw),
+            ValueHelper::getStringOrNull($result, 'first_name', $raw),
+            ValueHelper::getStringOrNull($result, 'last_name', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_forum', $raw),
         );
     }
 }

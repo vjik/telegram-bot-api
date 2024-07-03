@@ -27,13 +27,14 @@ final readonly class ChatBoostSourceGiftCode implements ChatBoostSource
         return $this->user;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
-                : throw new NotFoundKeyInResultException('user'),
+                ? User::fromTelegramResult($result['user'], $raw)
+                : throw new NotFoundKeyInResultException('user', $raw),
         );
     }
 }

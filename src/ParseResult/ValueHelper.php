@@ -27,11 +27,12 @@ final class ValueHelper
     /**
      * @psalm-assert array $result
      */
-    public static function assertArrayResult(mixed $result): void
+    public static function assertArrayResult(mixed $result, mixed $raw = null): void
     {
         if (!is_array($result)) {
             throw new TelegramParseResultException(
-                'Expected result as array. Got "' . get_debug_type($result) . '".'
+                'Expected result as array. Got "' . get_debug_type($result) . '".',
+                raw: $raw ?? $result,
             );
         }
     }
@@ -39,11 +40,12 @@ final class ValueHelper
     /**
      * @psalm-assert string $result
      */
-    public static function assertStringResult(mixed $result): void
+    public static function assertStringResult(mixed $result, mixed $raw = null): void
     {
         if (!is_string($result)) {
             throw new TelegramParseResultException(
-                'Expected result as string. Got "' . get_debug_type($result) . '".'
+                'Expected result as string. Got "' . get_debug_type($result) . '".',
+                raw: $raw ?? $result,
             );
         }
     }
@@ -51,11 +53,12 @@ final class ValueHelper
     /**
      * @psalm-assert int $result
      */
-    public static function assertIntegerResult(mixed $result): void
+    public static function assertIntegerResult(mixed $result, mixed $raw = null): void
     {
         if (!is_int($result)) {
             throw new TelegramParseResultException(
-                'Expected result as integer. Got "' . get_debug_type($result) . '".'
+                'Expected result as integer. Got "' . get_debug_type($result) . '".',
+                raw: $raw ?? $result,
             );
         }
     }
@@ -63,167 +66,168 @@ final class ValueHelper
     /**
      * @psalm-assert true $result
      */
-    public static function assertTrueResult(mixed $result): void
+    public static function assertTrueResult(mixed $result, mixed $raw = null): void
     {
         if ($result !== true) {
             throw new TelegramParseResultException(
-                'Expected result as true. Got "' . get_debug_type($result) . '".'
+                'Expected result as true. Got "' . get_debug_type($result) . '".',
+                raw: $raw ?? $result,
             );
         }
     }
 
-    public static function getString(array $result, string $key): string
+    public static function getString(array $result, string $key, mixed $raw = null): string
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_string($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'string');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getStringOrNull(array $result, string $key): ?string
+    public static function getStringOrNull(array $result, string $key, mixed $raw = null): ?string
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_string($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'string');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getBoolean(array $result, string $key): bool
+    public static function getBoolean(array $result, string $key, mixed $raw = null): bool
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_bool($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'boolean');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'boolean', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getBooleanOrNull(array $result, string $key): ?bool
+    public static function getBooleanOrNull(array $result, string $key, mixed $raw = null): ?bool
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_bool($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'boolean');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'boolean', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getTrueOrNull(array $result, string $key): ?true
+    public static function getTrueOrNull(array $result, string $key, mixed $raw = null): ?true
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if ($value !== true) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'true');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'true', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getInteger(array $result, string $key): int
+    public static function getInteger(array $result, string $key, mixed $raw = null): int
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getIntegerOrNull(array $result, string $key): ?int
+    public static function getIntegerOrNull(array $result, string $key, mixed $raw = null): ?int
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getFloat(array $result, string $key): float
+    public static function getFloat(array $result, string $key, mixed $raw = null): float
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getFloatOrNull(array $result, string $key): ?float
+    public static function getFloatOrNull(array $result, string $key, mixed $raw = null): ?float
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_int($value) && !is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getDateTimeImmutable(array $result, string $key): DateTimeImmutable
+    public static function getDateTimeImmutable(array $result, string $key, mixed $raw = null): DateTimeImmutable
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $raw ?? $result);
         }
         return (new DateTimeImmutable())->setTimestamp($value);
     }
 
-    public static function getDateTimeImmutableOrNull(array $result, string $key): ?DateTimeImmutable
+    public static function getDateTimeImmutableOrNull(array $result, string $key, mixed $raw = null): ?DateTimeImmutable
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $raw ?? $result);
         }
         return (new DateTimeImmutable())->setTimestamp($value);
     }
 
-    public static function getArray(array $result, string $key): array
+    public static function getArray(array $result, string $key, mixed $raw = null): array
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $raw ?? $result);
         }
         return $value;
     }
 
-    public static function getArrayOrNull(array $result, string $key): ?array
+    public static function getArrayOrNull(array $result, string $key, mixed $raw = null): ?array
     {
         if (!isset($result[$key])) {
             return null;
         }
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $raw ?? $result);
         }
         return $value;
     }
@@ -231,13 +235,14 @@ final class ValueHelper
     /**
      * @return array[]
      */
-    public static function getArrayOfArrays(array $result, string $key): array
+    public static function getArrayOfArrays(array $result, string $key, mixed $raw = null): array
     {
-        $value = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $value = ValueHelper::getArray($result, $key, $raw);
 
         foreach ($value as $v) {
             if (!is_array($v)) {
-                throw new InvalidTypeOfValueInResultException($key, $value, 'array[]');
+                throw new InvalidTypeOfValueInResultException($key, $value, 'array[]', $raw);
             }
         }
         /** @var array[] $value */
@@ -248,7 +253,7 @@ final class ValueHelper
     /**
      * @return string[]|null
      */
-    public static function getArrayOfStringsOrNull(array $result, string $key): ?array
+    public static function getArrayOfStringsOrNull(array $result, string $key, mixed $raw = null): ?array
     {
         if (!isset($result[$key])) {
             return null;
@@ -256,12 +261,12 @@ final class ValueHelper
 
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'string[]');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string[]', $raw ?? $result);
         }
 
         foreach ($value as $v) {
             if (!is_string($v)) {
-                throw new InvalidTypeOfValueInResultException($key, $value, 'string[]');
+                throw new InvalidTypeOfValueInResultException($key, $value, 'string[]', $raw ?? $result);
             }
         }
         /** @var string[] $value */
@@ -272,20 +277,20 @@ final class ValueHelper
     /**
      * @return int[]
      */
-    public static function getArrayOfIntegers(array $result, string $key): array
+    public static function getArrayOfIntegers(array $result, string $key, mixed $raw = null): array
     {
         if (!isset($result[$key])) {
-            throw new NotFoundKeyInResultException($key);
+            throw new NotFoundKeyInResultException($key, $raw ?? $result);
         }
 
         $value = $result[$key];
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $raw ?? $result);
         }
 
         foreach ($value as $v) {
             if (!is_int($v)) {
-                throw new InvalidTypeOfValueInResultException($key, $value, 'int[]');
+                throw new InvalidTypeOfValueInResultException($key, $value, 'int[]', $raw ?? $result);
             }
         }
         /** @var int[] $value */
@@ -296,13 +301,14 @@ final class ValueHelper
     /**
      * @return MessageEntity[]|null
      */
-    public static function getArrayOfMessageEntitiesOrNull(array $result, string $key): ?array
+    public static function getArrayOfMessageEntitiesOrNull(array $result, string $key, mixed $raw = null): ?array
     {
-        $entities = ValueHelper::getArrayOrNull($result, $key);
+        $raw ??= $result;
+        $entities = ValueHelper::getArrayOrNull($result, $key, $raw);
         return $entities === null
             ? null
             : array_map(
-                static fn($item) => MessageEntity::fromTelegramResult($item),
+                static fn($item) => MessageEntity::fromTelegramResult($item, $raw),
                 $entities
             );
     }
@@ -310,11 +316,12 @@ final class ValueHelper
     /**
      * @return PhotoSize[]
      */
-    public static function getArrayOfPhotoSizes(array $result, string $key): array
+    public static function getArrayOfPhotoSizes(array $result, string $key, mixed $raw = null): array
     {
-        $photo = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $photo = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => PhotoSize::fromTelegramResult($item),
+            static fn($item) => PhotoSize::fromTelegramResult($item, $raw),
             $photo
         );
     }
@@ -322,11 +329,12 @@ final class ValueHelper
     /**
      * @return PaidMedia[]
      */
-    public static function getArrayOfPaidMedia(array $result, string $key): array
+    public static function getArrayOfPaidMedia(array $result, string $key, mixed $raw = null): array
     {
-        $items = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $items = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => PaidMediaFactory::fromTelegramResult($item),
+            static fn($item) => PaidMediaFactory::fromTelegramResult($item, $raw),
             $items
         );
     }
@@ -334,13 +342,14 @@ final class ValueHelper
     /**
      * @return PhotoSize[]|null
      */
-    public static function getArrayOfPhotoSizesOrNull(array $result, string $key): ?array
+    public static function getArrayOfPhotoSizesOrNull(array $result, string $key, mixed $raw = null): ?array
     {
-        $photo = ValueHelper::getArrayOrNull($result, $key);
+        $raw ??= $result;
+        $photo = ValueHelper::getArrayOrNull($result, $key, $raw);
         return $photo === null
             ? null
             : array_map(
-                static fn($item) => PhotoSize::fromTelegramResult($item),
+                static fn($item) => PhotoSize::fromTelegramResult($item, $raw),
                 $photo
             );
     }
@@ -348,11 +357,12 @@ final class ValueHelper
     /**
      * @return User[]
      */
-    public static function getArrayOfUsers(array $result, string $key): array
+    public static function getArrayOfUsers(array $result, string $key, mixed $raw = null): array
     {
-        $users = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $users = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => User::fromTelegramResult($item),
+            static fn($item) => User::fromTelegramResult($item, $raw),
             $users
         );
     }
@@ -360,13 +370,14 @@ final class ValueHelper
     /**
      * @return User[]|null
      */
-    public static function getArrayOfUsersOrNull(array $result, string $key): ?array
+    public static function getArrayOfUsersOrNull(array $result, string $key, mixed $raw = null): ?array
     {
-        $users = ValueHelper::getArrayOrNull($result, $key);
+        $raw ??= $result;
+        $users = ValueHelper::getArrayOrNull($result, $key, $raw);
         return $users === null
             ? null
             : array_map(
-                static fn($item) => User::fromTelegramResult($item),
+                static fn($item) => User::fromTelegramResult($item, $raw),
                 $users
             );
     }
@@ -374,11 +385,12 @@ final class ValueHelper
     /**
      * @return SharedUser[]
      */
-    public static function getArrayOfSharedUsers(array $result, string $key): array
+    public static function getArrayOfSharedUsers(array $result, string $key, mixed $raw = null): array
     {
-        $users = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $users = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => SharedUser::fromTelegramResult($item),
+            static fn($item) => SharedUser::fromTelegramResult($item, $raw),
             $users
         );
     }
@@ -386,11 +398,12 @@ final class ValueHelper
     /**
      * @return EncryptedPassportElement[]
      */
-    public static function getArrayOfEncryptedPassportElements(array $result, string $key): array
+    public static function getArrayOfEncryptedPassportElements(array $result, string $key, mixed $raw = null): array
     {
-        $encryptedPassportElements = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $encryptedPassportElements = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => EncryptedPassportElement::fromTelegramResult($item),
+            static fn($item) => EncryptedPassportElement::fromTelegramResult($item, $raw),
             $encryptedPassportElements
         );
     }
@@ -398,11 +411,12 @@ final class ValueHelper
     /**
      * @return ReactionType[]
      */
-    public static function getArrayOfReactionTypes(array $result, string $key): array
+    public static function getArrayOfReactionTypes(array $result, string $key, mixed $raw = null): array
     {
-        $reactionTypes = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $reactionTypes = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => ReactionTypeFactory::fromTelegramResult($item),
+            static fn($item) => ReactionTypeFactory::fromTelegramResult($item, $raw),
             $reactionTypes
         );
     }
@@ -410,13 +424,14 @@ final class ValueHelper
     /**
      * @return ReactionType[]|null
      */
-    public static function getArrayOfReactionTypesOrNull(array $result, string $key): ?array
+    public static function getArrayOfReactionTypesOrNull(array $result, string $key, mixed $raw = null): ?array
     {
-        $reactionTypes = ValueHelper::getArrayOrNull($result, $key);
+        $raw ??= $result;
+        $reactionTypes = ValueHelper::getArrayOrNull($result, $key, $raw);
         return $reactionTypes === null
             ? null
             : array_map(
-                static fn($item) => ReactionTypeFactory::fromTelegramResult($item),
+                static fn($item) => ReactionTypeFactory::fromTelegramResult($item, $raw),
                 $reactionTypes
             );
     }
@@ -424,11 +439,12 @@ final class ValueHelper
     /**
      * @return ReactionCount[]
      */
-    public static function getArrayOfReactionCounts(array $result, string $key): array
+    public static function getArrayOfReactionCounts(array $result, string $key, mixed $raw = null): array
     {
-        $reactionCounts = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $reactionCounts = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => ReactionCount::fromTelegramResult($item),
+            static fn($item) => ReactionCount::fromTelegramResult($item, $raw),
             $reactionCounts
         );
     }
@@ -436,11 +452,12 @@ final class ValueHelper
     /**
      * @return BusinessOpeningHoursInterval[]
      */
-    public static function getArrayOfBusinessOpeningHoursIntervals(array $result, string $key): array
+    public static function getArrayOfBusinessOpeningHoursIntervals(array $result, string $key, mixed $raw = null): array
     {
-        $intervals = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $intervals = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => BusinessOpeningHoursInterval::fromTelegramResult($item),
+            static fn($item) => BusinessOpeningHoursInterval::fromTelegramResult($item, $raw),
             $intervals
         );
     }
@@ -448,11 +465,12 @@ final class ValueHelper
     /**
      * @return StarTransaction[]
      */
-    public static function getArrayOfStarTransactions(array $result, string $key): array
+    public static function getArrayOfStarTransactions(array $result, string $key, mixed $raw = null): array
     {
-        $transactions = ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $transactions = ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => StarTransaction::fromTelegramResult($item),
+            static fn($item) => StarTransaction::fromTelegramResult($item, $raw),
             $transactions
         );
     }
@@ -460,11 +478,12 @@ final class ValueHelper
     /**
      * @return Sticker[]
      */
-    public static function getArrayOfStickers(array $result, ?string $key = null): array
+    public static function getArrayOfStickers(array $result, ?string $key = null, mixed $raw = null): array
     {
-        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => Sticker::fromTelegramResult($item),
+            static fn($item) => Sticker::fromTelegramResult($item, $raw),
             $stickers
         );
     }
@@ -472,11 +491,12 @@ final class ValueHelper
     /**
      * @return ChatBoost[]
      */
-    public static function getArrayOfChatBoosts(array $result, ?string $key = null): array
+    public static function getArrayOfChatBoosts(array $result, ?string $key = null, mixed $raw = null): array
     {
-        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key);
+        $raw ??= $result;
+        $stickers = $key === null ? $result : ValueHelper::getArray($result, $key, $raw);
         return array_map(
-            static fn($item) => ChatBoost::fromTelegramResult($item),
+            static fn($item) => ChatBoost::fromTelegramResult($item, $raw),
             $stickers
         );
     }
@@ -484,13 +504,14 @@ final class ValueHelper
     /**
      * @return PassportFile[]|null
      */
-    public static function getArrayOfPassportFilesOrNull(array $result, string $key): ?array
+    public static function getArrayOfPassportFilesOrNull(array $result, string $key, mixed $raw = null): ?array
     {
-        $passportFiles = ValueHelper::getArrayOrNull($result, $key);
+        $raw ??= $result;
+        $passportFiles = ValueHelper::getArrayOrNull($result, $key, $raw);
         return $passportFiles === null
             ? null
             : array_map(
-                static fn($item) => PassportFile::fromTelegramResult($item),
+                static fn($item) => PassportFile::fromTelegramResult($item, $raw),
                 $passportFiles
             );
     }
@@ -499,12 +520,13 @@ final class ValueHelper
      * @return array[]
      * @psalm-return array<array-key, array<array-key, InlineKeyboardButton>>
      */
-    public static function getArrayOfArrayOfInlineKeyboardButtons(array $result, string $key): array
+    public static function getArrayOfArrayOfInlineKeyboardButtons(array $result, string $key, mixed $raw = null): array
     {
-        $arrayOfArrays = ValueHelper::getArrayOfArrays($result, $key);
+        $raw ??= $result;
+        $arrayOfArrays = ValueHelper::getArrayOfArrays($result, $key, $raw);
         return array_map(
             static fn(array $array) => array_map(
-                static fn($item) => InlineKeyboardButton::fromTelegramResult($item),
+                static fn($item) => InlineKeyboardButton::fromTelegramResult($item, $raw),
                 $array
             ),
             $arrayOfArrays
@@ -515,12 +537,13 @@ final class ValueHelper
      * @return array[]
      * @psalm-return array<array-key, array<array-key, PhotoSize>>
      */
-    public static function getArrayOfArrayOfPhotoSize(array $result, string $key): array
+    public static function getArrayOfArrayOfPhotoSize(array $result, string $key, mixed $raw = null): array
     {
-        $arrayOfArrays = ValueHelper::getArrayOfArrays($result, $key);
+        $raw ??= $result;
+        $arrayOfArrays = ValueHelper::getArrayOfArrays($result, $key, $raw);
         return array_map(
             static fn(array $array) => array_map(
-                static fn($item) => PhotoSize::fromTelegramResult($item),
+                static fn($item) => PhotoSize::fromTelegramResult($item, $raw),
                 $array
             ),
             $arrayOfArrays

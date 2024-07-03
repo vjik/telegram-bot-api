@@ -29,11 +29,12 @@ final readonly class ReactionTypeEmoji implements ReactionType
         ];
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'emoji'),
+            ValueHelper::getString($result, 'emoji', $raw),
         );
     }
 }

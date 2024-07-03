@@ -48,22 +48,22 @@ final readonly class User
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'id'),
-            ValueHelper::getBoolean($result, 'is_bot'),
-            ValueHelper::getString($result, 'first_name'),
-            ValueHelper::getStringOrNull($result, 'last_name'),
-            ValueHelper::getStringOrNull($result, 'username'),
-            ValueHelper::getStringOrNull($result, 'language_code'),
-            ValueHelper::getTrueOrNull($result, 'is_premium'),
-            ValueHelper::getTrueOrNull($result, 'added_to_attachment_menu'),
-            ValueHelper::getBooleanOrNull($result, 'can_join_groups'),
-            ValueHelper::getBooleanOrNull($result, 'can_read_all_group_messages'),
-            ValueHelper::getBooleanOrNull($result, 'supports_inline_queries'),
-            ValueHelper::getBooleanOrNull($result, 'can_connect_to_business'),
+            ValueHelper::getInteger($result, 'id', $raw),
+            ValueHelper::getBoolean($result, 'is_bot', $raw),
+            ValueHelper::getString($result, 'first_name', $raw),
+            ValueHelper::getStringOrNull($result, 'last_name', $raw),
+            ValueHelper::getStringOrNull($result, 'username', $raw),
+            ValueHelper::getStringOrNull($result, 'language_code', $raw),
+            ValueHelper::getTrueOrNull($result, 'is_premium', $raw),
+            ValueHelper::getTrueOrNull($result, 'added_to_attachment_menu', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_join_groups', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_read_all_group_messages', $raw),
+            ValueHelper::getBooleanOrNull($result, 'supports_inline_queries', $raw),
+            ValueHelper::getBooleanOrNull($result, 'can_connect_to_business', $raw),
         );
     }
 }

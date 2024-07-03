@@ -31,26 +31,27 @@ final readonly class GiveawayWinners
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
-            ValueHelper::getInteger($result, 'giveaway_message_id'),
-            ValueHelper::getDateTimeImmutable($result, 'winners_selection_date'),
-            ValueHelper::getInteger($result, 'winner_count'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
+            ValueHelper::getInteger($result, 'giveaway_message_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'winners_selection_date', $raw),
+            ValueHelper::getInteger($result, 'winner_count', $raw),
             array_map(
-                static fn($p) => User::fromTelegramResult($p),
-                ValueHelper::getArray($result, 'winners')
+                static fn($p) => User::fromTelegramResult($p, $raw),
+                ValueHelper::getArray($result, 'winners', $raw)
             ),
-            ValueHelper::getIntegerOrNull($result, 'additional_chat_count'),
-            ValueHelper::getIntegerOrNull($result, 'premium_subscription_month_count'),
-            ValueHelper::getIntegerOrNull($result, 'unclaimed_prize_count'),
-            ValueHelper::getTrueOrNull($result, 'only_new_members'),
-            ValueHelper::getTrueOrNull($result, 'was_refunded'),
-            ValueHelper::getStringOrNull($result, 'prize_description'),
+            ValueHelper::getIntegerOrNull($result, 'additional_chat_count', $raw),
+            ValueHelper::getIntegerOrNull($result, 'premium_subscription_month_count', $raw),
+            ValueHelper::getIntegerOrNull($result, 'unclaimed_prize_count', $raw),
+            ValueHelper::getTrueOrNull($result, 'only_new_members', $raw),
+            ValueHelper::getTrueOrNull($result, 'was_refunded', $raw),
+            ValueHelper::getStringOrNull($result, 'prize_description', $raw),
         );
     }
 }

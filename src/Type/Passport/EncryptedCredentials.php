@@ -18,13 +18,14 @@ final readonly class EncryptedCredentials
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'data'),
-            ValueHelper::getString($result, 'hash'),
-            ValueHelper::getString($result, 'secret'),
+            ValueHelper::getString($result, 'data', $raw),
+            ValueHelper::getString($result, 'hash', $raw),
+            ValueHelper::getString($result, 'secret', $raw),
         );
     }
 }

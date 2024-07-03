@@ -19,17 +19,18 @@ final readonly class ProximityAlertTriggered
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('traveler', $result)
-                ? User::fromTelegramResult($result['traveler'])
-                : throw new NotFoundKeyInResultException('traveler'),
+                ? User::fromTelegramResult($result['traveler'], $raw)
+                : throw new NotFoundKeyInResultException('traveler', $raw),
             array_key_exists('watcher', $result)
-                ? User::fromTelegramResult($result['watcher'])
-                : throw new NotFoundKeyInResultException('watcher'),
-            ValueHelper::getInteger($result, 'distance'),
+                ? User::fromTelegramResult($result['watcher'], $raw)
+                : throw new NotFoundKeyInResultException('watcher', $raw),
+            ValueHelper::getInteger($result, 'distance', $raw),
         );
     }
 }

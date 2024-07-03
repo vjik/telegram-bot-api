@@ -29,26 +29,27 @@ final readonly class EncryptedPassportElement
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getString($result, 'hash'),
-            ValueHelper::getStringOrNull($result, 'data'),
-            ValueHelper::getStringOrNull($result, 'phone_number'),
-            ValueHelper::getStringOrNull($result, 'email'),
-            ValueHelper::getArrayOfPassportFilesOrNull($result, 'files'),
+            ValueHelper::getString($result, 'type', $raw),
+            ValueHelper::getString($result, 'hash', $raw),
+            ValueHelper::getStringOrNull($result, 'data', $raw),
+            ValueHelper::getStringOrNull($result, 'phone_number', $raw),
+            ValueHelper::getStringOrNull($result, 'email', $raw),
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'files', $raw),
             array_key_exists('front_side', $result)
-                ? PassportFile::fromTelegramResult($result['front_side'])
+                ? PassportFile::fromTelegramResult($result['front_side'], $raw)
                 : null,
             array_key_exists('reverse_side', $result)
-                ? PassportFile::fromTelegramResult($result['reverse_side'])
+                ? PassportFile::fromTelegramResult($result['reverse_side'], $raw)
                 : null,
             array_key_exists('selfie', $result)
-                ? PassportFile::fromTelegramResult($result['selfie'])
+                ? PassportFile::fromTelegramResult($result['selfie'], $raw)
                 : null,
-            ValueHelper::getArrayOfPassportFilesOrNull($result, 'translation'),
+            ValueHelper::getArrayOfPassportFilesOrNull($result, 'translation', $raw),
         );
     }
 }

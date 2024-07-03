@@ -23,21 +23,22 @@ final readonly class CallbackQuery
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
+            ValueHelper::getString($result, 'id', $raw),
             array_key_exists('from', $result)
-                ? User::fromTelegramResult($result['from'])
-                : throw new NotFoundKeyInResultException('from'),
-            ValueHelper::getString($result, 'chat_instance'),
+                ? User::fromTelegramResult($result['from'], $raw)
+                : throw new NotFoundKeyInResultException('from', $raw),
+            ValueHelper::getString($result, 'chat_instance', $raw),
             array_key_exists('message', $result)
-                ? MaybeInaccessibleMessageFactory::fromTelegramResult($result['message'])
+                ? MaybeInaccessibleMessageFactory::fromTelegramResult($result['message'], $raw)
                 : null,
-            ValueHelper::getStringOrNull($result, 'inline_message_id'),
-            ValueHelper::getStringOrNull($result, 'data'),
-            ValueHelper::getStringOrNull($result, 'game_short_name'),
+            ValueHelper::getStringOrNull($result, 'inline_message_id', $raw),
+            ValueHelper::getStringOrNull($result, 'data', $raw),
+            ValueHelper::getStringOrNull($result, 'game_short_name', $raw),
         );
     }
 }

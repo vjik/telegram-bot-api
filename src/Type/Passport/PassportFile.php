@@ -20,14 +20,15 @@ final readonly class PassportFile
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'file_id'),
-            ValueHelper::getString($result, 'file_unique_id'),
-            ValueHelper::getInteger($result, 'file_size'),
-            ValueHelper::getDateTimeImmutable($result, 'file_date'),
+            ValueHelper::getString($result, 'file_id', $raw),
+            ValueHelper::getString($result, 'file_unique_id', $raw),
+            ValueHelper::getInteger($result, 'file_size', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'file_date', $raw),
         );
     }
 }

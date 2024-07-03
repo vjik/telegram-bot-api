@@ -28,12 +28,13 @@ final readonly class MessageOriginHiddenUser implements MessageOrigin
         return $this->date;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getString($result, 'sender_user_name'),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getString($result, 'sender_user_name', $raw),
         );
     }
 }

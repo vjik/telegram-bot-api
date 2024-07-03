@@ -24,19 +24,22 @@ final readonly class Video
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'file_id'),
-            ValueHelper::getString($result, 'file_unique_id'),
-            ValueHelper::getInteger($result, 'width'),
-            ValueHelper::getInteger($result, 'height'),
-            ValueHelper::getInteger($result, 'duration'),
-            array_key_exists('thumbnail', $result) ? PhotoSize::fromTelegramResult($result['thumbnail']) : null,
-            ValueHelper::getStringOrNull($result, 'file_name'),
-            ValueHelper::getStringOrNull($result, 'mime_type'),
-            ValueHelper::getIntegerOrNull($result, 'file_size'),
+            ValueHelper::getString($result, 'file_id', $raw),
+            ValueHelper::getString($result, 'file_unique_id', $raw),
+            ValueHelper::getInteger($result, 'width', $raw),
+            ValueHelper::getInteger($result, 'height', $raw),
+            ValueHelper::getInteger($result, 'duration', $raw),
+            array_key_exists('thumbnail', $result)
+                ? PhotoSize::fromTelegramResult($result['thumbnail'], $raw)
+                : null,
+            ValueHelper::getStringOrNull($result, 'file_name', $raw),
+            ValueHelper::getStringOrNull($result, 'mime_type', $raw),
+            ValueHelper::getIntegerOrNull($result, 'file_size', $raw),
         );
     }
 }

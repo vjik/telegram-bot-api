@@ -28,17 +28,18 @@ final readonly class Game
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'title'),
-            ValueHelper::getString($result, 'description'),
-            ValueHelper::getArrayOfPhotoSizes($result, 'photo'),
-            ValueHelper::getStringOrNull($result, 'text'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities'),
+            ValueHelper::getString($result, 'title', $raw),
+            ValueHelper::getString($result, 'description', $raw),
+            ValueHelper::getArrayOfPhotoSizes($result, 'photo', $raw),
+            ValueHelper::getStringOrNull($result, 'text', $raw),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities', $raw),
             array_key_exists('animation', $result)
-                ? Animation::fromTelegramResult($result['animation'])
+                ? Animation::fromTelegramResult($result['animation'], $raw)
                 : null,
         );
     }

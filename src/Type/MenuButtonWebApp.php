@@ -32,14 +32,15 @@ final readonly class MenuButtonWebApp implements MenuButton
         ];
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'text'),
+            ValueHelper::getString($result, 'text', $raw),
             array_key_exists('web_app', $result)
-                ? WebAppInfo::fromTelegramResult($result['web_app'])
-                : throw new NotFoundKeyInResultException('web_app'),
+                ? WebAppInfo::fromTelegramResult($result['web_app'], $raw)
+                : throw new NotFoundKeyInResultException('web_app', $raw),
         );
     }
 }

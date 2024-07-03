@@ -45,28 +45,29 @@ final readonly class InlineKeyboardButton
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'text'),
-            ValueHelper::getStringOrNull($result, 'url'),
-            ValueHelper::getStringOrNull($result, 'callback_data'),
+            ValueHelper::getString($result, 'text', $raw),
+            ValueHelper::getStringOrNull($result, 'url', $raw),
+            ValueHelper::getStringOrNull($result, 'callback_data', $raw),
             array_key_exists('web_app', $result)
-                ? WebAppInfo::fromTelegramResult($result['web_app'])
+                ? WebAppInfo::fromTelegramResult($result['web_app'], $raw)
                 : null,
             array_key_exists('login_url', $result)
-                ? LoginUrl::fromTelegramResult($result['login_url'])
+                ? LoginUrl::fromTelegramResult($result['login_url'], $raw)
                 : null,
-            ValueHelper::getStringOrNull($result, 'switch_inline_query'),
-            ValueHelper::getStringOrNull($result, 'switch_inline_query_current_chat'),
+            ValueHelper::getStringOrNull($result, 'switch_inline_query', $raw),
+            ValueHelper::getStringOrNull($result, 'switch_inline_query_current_chat', $raw),
             array_key_exists('switch_inline_query_chosen_chat', $result)
-                ? SwitchInlineQueryChosenChat::fromTelegramResult($result['switch_inline_query_chosen_chat'])
+                ? SwitchInlineQueryChosenChat::fromTelegramResult($result['switch_inline_query_chosen_chat'], $raw)
                 : null,
             array_key_exists('callback_game', $result)
-                ? CallbackGame::fromTelegramResult($result['callback_game'])
+                ? CallbackGame::fromTelegramResult($result['callback_game'], $raw)
                 : null,
-            ValueHelper::getBooleanOrNull($result, 'pay'),
+            ValueHelper::getBooleanOrNull($result, 'pay', $raw),
         );
     }
 }

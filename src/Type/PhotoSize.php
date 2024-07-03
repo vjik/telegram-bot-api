@@ -20,15 +20,15 @@ final readonly class PhotoSize
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'file_id'),
-            ValueHelper::getString($result, 'file_unique_id'),
-            ValueHelper::getInteger($result, 'width'),
-            ValueHelper::getInteger($result, 'height'),
-            ValueHelper::getIntegerOrNull($result, 'file_size'),
+            ValueHelper::getString($result, 'file_id', $raw),
+            ValueHelper::getString($result, 'file_unique_id', $raw),
+            ValueHelper::getInteger($result, 'width', $raw),
+            ValueHelper::getInteger($result, 'height', $raw),
+            ValueHelper::getIntegerOrNull($result, 'file_size', $raw),
         );
     }
 }

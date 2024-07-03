@@ -23,21 +23,22 @@ final readonly class ChatJoinRequest
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('chat', $result)
-                ? Chat::fromTelegramResult($result['chat'])
-                : throw new NotFoundKeyInResultException('chat'),
+                ? Chat::fromTelegramResult($result['chat'], $raw)
+                : throw new NotFoundKeyInResultException('chat', $raw),
             array_key_exists('from', $result)
-                ? User::fromTelegramResult($result['from'])
-                : throw new NotFoundKeyInResultException('from'),
-            ValueHelper::getInteger($result, 'user_chat_id'),
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getStringOrNull($result, 'bio'),
+                ? User::fromTelegramResult($result['from'], $raw)
+                : throw new NotFoundKeyInResultException('from', $raw),
+            ValueHelper::getInteger($result, 'user_chat_id', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getStringOrNull($result, 'bio', $raw),
             array_key_exists('invite_link', $result)
-                ? ChatInviteLink::fromTelegramResult($result['invite_link'])
+                ? ChatInviteLink::fromTelegramResult($result['invite_link'], $raw)
                 : null,
         );
     }

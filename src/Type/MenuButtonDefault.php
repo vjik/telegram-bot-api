@@ -16,9 +16,9 @@ final readonly class MenuButtonDefault implements MenuButton
         return 'default';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        ValueHelper::assertArrayResult($result, $raw ?? $result);
         return new self();
     }
 

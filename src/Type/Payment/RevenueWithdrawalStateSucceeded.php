@@ -23,12 +23,13 @@ final readonly class RevenueWithdrawalStateSucceeded implements RevenueWithdrawa
         return 'succeeded';
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            ValueHelper::getString($result, 'url'),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            ValueHelper::getString($result, 'url', $raw),
         );
     }
 }

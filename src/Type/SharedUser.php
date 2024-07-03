@@ -23,15 +23,16 @@ final readonly class SharedUser
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'user_id'),
-            ValueHelper::getStringOrNull($result, 'first_name'),
-            ValueHelper::getStringOrNull($result, 'last_name'),
-            ValueHelper::getStringOrNull($result, 'username'),
-            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo'),
+            ValueHelper::getInteger($result, 'user_id', $raw),
+            ValueHelper::getStringOrNull($result, 'first_name', $raw),
+            ValueHelper::getStringOrNull($result, 'last_name', $raw),
+            ValueHelper::getStringOrNull($result, 'username', $raw),
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo', $raw),
         );
     }
 }

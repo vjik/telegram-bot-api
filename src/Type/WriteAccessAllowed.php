@@ -18,13 +18,14 @@ final readonly class WriteAccessAllowed
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getBooleanOrNull($result, 'from_request'),
-            ValueHelper::getStringOrNull($result, 'web_app_name'),
-            ValueHelper::getBooleanOrNull($result, 'from_attachment_menu'),
+            ValueHelper::getBooleanOrNull($result, 'from_request', $raw),
+            ValueHelper::getStringOrNull($result, 'web_app_name', $raw),
+            ValueHelper::getBooleanOrNull($result, 'from_attachment_menu', $raw),
         );
     }
 }

@@ -16,11 +16,12 @@ final readonly class BotShortDescription
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'short_description'),
+            ValueHelper::getString($result, 'short_description', $raw),
         );
     }
 }

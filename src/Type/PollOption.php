@@ -23,13 +23,14 @@ final readonly class PollOption
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'text'),
-            ValueHelper::getInteger($result, 'voter_count'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities'),
+            ValueHelper::getString($result, 'text', $raw),
+            ValueHelper::getInteger($result, 'voter_count', $raw),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'text_entities', $raw),
         );
     }
 }

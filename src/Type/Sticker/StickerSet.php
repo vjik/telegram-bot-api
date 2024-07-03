@@ -24,15 +24,18 @@ final readonly class StickerSet
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'name'),
-            ValueHelper::getString($result, 'title'),
-            ValueHelper::getString($result, 'sticker_type'),
-            ValueHelper::getArrayOfStickers($result, 'stickers'),
-            array_key_exists('thumbnail', $result) ? PhotoSize::fromTelegramResult($result['thumbnail']) : null,
+            ValueHelper::getString($result, 'name', $raw),
+            ValueHelper::getString($result, 'title', $raw),
+            ValueHelper::getString($result, 'sticker_type', $raw),
+            ValueHelper::getArrayOfStickers($result, 'stickers', $raw),
+            array_key_exists('thumbnail', $result)
+                ? PhotoSize::fromTelegramResult($result['thumbnail'], $raw)
+                : null,
         );
     }
 }

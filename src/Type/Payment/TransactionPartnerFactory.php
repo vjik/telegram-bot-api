@@ -9,15 +9,16 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final readonly class TransactionPartnerFactory
 {
-    public static function fromTelegramResult(mixed $result): TransactionPartner
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): TransactionPartner
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'type')) {
-            'fragment' => TransactionPartnerFragment::fromTelegramResult($result),
-            'telegram_ads' => TransactionPartnerTelegramAds::fromTelegramResult($result),
-            'user' => TransactionPartnerUser::fromTelegramResult($result),
-            'other' => TransactionPartnerOther::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown transaction partner type.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'type', $raw)) {
+            'fragment' => TransactionPartnerFragment::fromTelegramResult($result, $raw),
+            'telegram_ads' => TransactionPartnerTelegramAds::fromTelegramResult($result, $raw),
+            'user' => TransactionPartnerUser::fromTelegramResult($result, $raw),
+            'other' => TransactionPartnerOther::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown transaction partner type.', $raw),
         };
     }
 }

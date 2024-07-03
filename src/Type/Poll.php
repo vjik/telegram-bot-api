@@ -34,27 +34,28 @@ final readonly class Poll
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
-            ValueHelper::getString($result, 'question'),
+            ValueHelper::getString($result, 'id', $raw),
+            ValueHelper::getString($result, 'question', $raw),
             array_map(
-                static fn ($option) => PollOption::fromTelegramResult($option),
-                ValueHelper::getArray($result, 'options')
+                static fn ($option) => PollOption::fromTelegramResult($option, $raw),
+                ValueHelper::getArray($result, 'options', $raw)
             ),
-            ValueHelper::getInteger($result, 'total_voter_count'),
-            ValueHelper::getBoolean($result, 'is_closed'),
-            ValueHelper::getBoolean($result, 'is_anonymous'),
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getBoolean($result, 'allows_multiple_answers'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'question_entities'),
-            ValueHelper::getIntegerOrNull($result, 'correct_option_id'),
-            ValueHelper::getStringOrNull($result, 'explanation'),
-            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'explanation_entities'),
-            ValueHelper::getIntegerOrNull($result, 'open_period'),
-            ValueHelper::getIntegerOrNull($result, 'close_date'),
+            ValueHelper::getInteger($result, 'total_voter_count', $raw),
+            ValueHelper::getBoolean($result, 'is_closed', $raw),
+            ValueHelper::getBoolean($result, 'is_anonymous', $raw),
+            ValueHelper::getString($result, 'type', $raw),
+            ValueHelper::getBoolean($result, 'allows_multiple_answers', $raw),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'question_entities', $raw),
+            ValueHelper::getIntegerOrNull($result, 'correct_option_id', $raw),
+            ValueHelper::getStringOrNull($result, 'explanation', $raw),
+            ValueHelper::getArrayOfMessageEntitiesOrNull($result, 'explanation_entities', $raw),
+            ValueHelper::getIntegerOrNull($result, 'open_period', $raw),
+            ValueHelper::getIntegerOrNull($result, 'close_date', $raw),
         );
     }
 }

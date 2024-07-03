@@ -29,14 +29,15 @@ final readonly class MessageOriginUser implements MessageOrigin
         return $this->date;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getDateTimeImmutable($result, 'date'),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
             array_key_exists('sender_user', $result)
-                ? User::fromTelegramResult($result['sender_user'])
-                : throw new NotFoundKeyInResultException('sender_user'),
+                ? User::fromTelegramResult($result['sender_user'], $raw)
+                : throw new NotFoundKeyInResultException('sender_user', $raw),
         );
     }
 }

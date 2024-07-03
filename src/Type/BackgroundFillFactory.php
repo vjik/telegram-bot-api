@@ -9,14 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final readonly class BackgroundFillFactory
 {
-    public static function fromTelegramResult(mixed $result): BackgroundFill
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): BackgroundFill
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'type')) {
-            'solid' => BackgroundFillSolid::fromTelegramResult($result),
-            'gradient' => BackgroundFillGradient::fromTelegramResult($result),
-            'freeform_gradient' => BackgroundFillFreeformGradient::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown background fill type.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'type', $raw)) {
+            'solid' => BackgroundFillSolid::fromTelegramResult($result, $raw),
+            'gradient' => BackgroundFillGradient::fromTelegramResult($result, $raw),
+            'freeform_gradient' => BackgroundFillFreeformGradient::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown background fill type.', $raw),
         };
     }
 }

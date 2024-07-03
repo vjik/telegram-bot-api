@@ -29,15 +29,16 @@ final readonly class ChatMemberOwner implements ChatMember
         return $this->user;
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
             array_key_exists('user', $result)
-                ? User::fromTelegramResult($result['user'])
-                : throw new NotFoundKeyInResultException('user'),
-            ValueHelper::getBoolean($result, 'is_anonymous'),
-            ValueHelper::getStringOrNull($result, 'custom_title'),
+                ? User::fromTelegramResult($result['user'], $raw)
+                : throw new NotFoundKeyInResultException('user', $raw),
+            ValueHelper::getBoolean($result, 'is_anonymous', $raw),
+            ValueHelper::getStringOrNull($result, 'custom_title', $raw),
         );
     }
 }

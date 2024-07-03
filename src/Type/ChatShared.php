@@ -23,15 +23,16 @@ final readonly class ChatShared
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getInteger($result, 'request_id'),
-            ValueHelper::getInteger($result, 'chat_id'),
-            ValueHelper::getStringOrNull($result, 'title'),
-            ValueHelper::getStringOrNull($result, 'username'),
-            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo'),
+            ValueHelper::getInteger($result, 'request_id', $raw),
+            ValueHelper::getInteger($result, 'chat_id', $raw),
+            ValueHelper::getStringOrNull($result, 'title', $raw),
+            ValueHelper::getStringOrNull($result, 'username', $raw),
+            ValueHelper::getArrayOfPhotoSizesOrNull($result, 'photo', $raw),
         );
     }
 }

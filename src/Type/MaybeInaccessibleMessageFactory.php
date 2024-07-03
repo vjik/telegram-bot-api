@@ -11,12 +11,13 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
  */
 final readonly class MaybeInaccessibleMessageFactory
 {
-    public static function fromTelegramResult(mixed $result): Message|InaccessibleMessage
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): Message|InaccessibleMessage
     {
-        ValueHelper::assertArrayResult($result);
-        $date = ValueHelper::getInteger($result, 'date');
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        $date = ValueHelper::getInteger($result, 'date', $raw);
         return $date === 0
-            ? InaccessibleMessage::fromTelegramResult($result)
-            : Message::fromTelegramResult($result);
+            ? InaccessibleMessage::fromTelegramResult($result, $raw)
+            : Message::fromTelegramResult($result, $raw);
     }
 }

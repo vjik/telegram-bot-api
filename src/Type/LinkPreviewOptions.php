@@ -34,15 +34,16 @@ final readonly class LinkPreviewOptions
         );
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getBooleanOrNull($result, 'is_disabled'),
-            ValueHelper::getStringOrNull($result, 'url'),
-            ValueHelper::getBooleanOrNull($result, 'prefer_small_media'),
-            ValueHelper::getBooleanOrNull($result, 'prefer_large_media'),
-            ValueHelper::getBooleanOrNull($result, 'show_above_text'),
+            ValueHelper::getBooleanOrNull($result, 'is_disabled', $raw),
+            ValueHelper::getStringOrNull($result, 'url', $raw),
+            ValueHelper::getBooleanOrNull($result, 'prefer_small_media', $raw),
+            ValueHelper::getBooleanOrNull($result, 'prefer_large_media', $raw),
+            ValueHelper::getBooleanOrNull($result, 'show_above_text', $raw),
         );
     }
 }

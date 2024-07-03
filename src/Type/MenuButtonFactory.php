@@ -9,14 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final class MenuButtonFactory
 {
-    public static function fromTelegramResult(mixed $result): MenuButton
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): MenuButton
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'type')) {
-            'commands' => MenuButtonCommands::fromTelegramResult($result),
-            'web_app' => MenuButtonWebApp::fromTelegramResult($result),
-            'default' => MenuButtonDefault::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown menu button type.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'type', $raw)) {
+            'commands' => MenuButtonCommands::fromTelegramResult($result, $raw),
+            'web_app' => MenuButtonWebApp::fromTelegramResult($result, $raw),
+            'default' => MenuButtonDefault::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown menu button type.', $raw),
         };
     }
 }

@@ -9,14 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final class ChatBoostSourceFactory
 {
-    public static function fromTelegramResult(mixed $result): ChatBoostSource
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): ChatBoostSource
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'source')) {
-            'premium' => ChatBoostSourcePremium::fromTelegramResult($result),
-            'gift_code' => ChatBoostSourceGiftCode::fromTelegramResult($result),
-            'giveaway' => ChatBoostSourceGiveaway::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown chat boost source.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'source', $raw)) {
+            'premium' => ChatBoostSourcePremium::fromTelegramResult($result, $raw),
+            'gift_code' => ChatBoostSourceGiftCode::fromTelegramResult($result, $raw),
+            'giveaway' => ChatBoostSourceGiveaway::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown chat boost source.', $raw),
         };
     }
 }

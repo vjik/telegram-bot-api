@@ -19,11 +19,12 @@ final readonly class StarTransactions
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfStarTransactions($result, 'transactions'),
+            ValueHelper::getArrayOfStarTransactions($result, 'transactions', $raw),
         );
     }
 }

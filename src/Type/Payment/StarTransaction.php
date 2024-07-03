@@ -21,15 +21,20 @@ final readonly class StarTransaction
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getString($result, 'id'),
-            ValueHelper::getInteger($result, 'amount'),
-            ValueHelper::getDateTimeImmutable($result, 'date'),
-            array_key_exists('source', $result) ? TransactionPartnerFactory::fromTelegramResult($result['source']) : null,
-            array_key_exists('receiver', $result) ? TransactionPartnerFactory::fromTelegramResult($result['receiver']) : null,
+            ValueHelper::getString($result, 'id', $raw),
+            ValueHelper::getInteger($result, 'amount', $raw),
+            ValueHelper::getDateTimeImmutable($result, 'date', $raw),
+            array_key_exists('source', $result)
+                ? TransactionPartnerFactory::fromTelegramResult($result['source'], $raw)
+                : null,
+            array_key_exists('receiver', $result)
+                ? TransactionPartnerFactory::fromTelegramResult($result['receiver'], $raw)
+                : null,
         );
     }
 }

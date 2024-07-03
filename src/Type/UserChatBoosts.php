@@ -19,11 +19,12 @@ final readonly class UserChatBoosts
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfChatBoosts($result, 'boosts'),
+            ValueHelper::getArrayOfChatBoosts($result, 'boosts', $raw),
         );
     }
 }

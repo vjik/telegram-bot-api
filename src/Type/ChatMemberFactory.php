@@ -9,17 +9,18 @@ use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 
 final readonly class ChatMemberFactory
 {
-    public static function fromTelegramResult(mixed $result): ChatMember
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): ChatMember
     {
-        ValueHelper::assertArrayResult($result);
-        return match (ValueHelper::getString($result, 'status')) {
-            'creator' => ChatMemberOwner::fromTelegramResult($result),
-            'administrator' => ChatMemberAdministrator::fromTelegramResult($result),
-            'member' => ChatMemberMember::fromTelegramResult($result),
-            'restricted' => ChatMemberRestricted::fromTelegramResult($result),
-            'left' => ChatMemberLeft::fromTelegramResult($result),
-            'kicked' => ChatMemberBanned::fromTelegramResult($result),
-            default => throw new TelegramParseResultException('Unknown chat member status.'),
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
+        return match (ValueHelper::getString($result, 'status', $raw)) {
+            'creator' => ChatMemberOwner::fromTelegramResult($result, $raw),
+            'administrator' => ChatMemberAdministrator::fromTelegramResult($result, $raw),
+            'member' => ChatMemberMember::fromTelegramResult($result, $raw),
+            'restricted' => ChatMemberRestricted::fromTelegramResult($result, $raw),
+            'left' => ChatMemberLeft::fromTelegramResult($result, $raw),
+            'kicked' => ChatMemberBanned::fromTelegramResult($result, $raw),
+            default => throw new TelegramParseResultException('Unknown chat member status.', $raw),
         };
     }
 }

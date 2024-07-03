@@ -20,12 +20,13 @@ final readonly class PassportData
     ) {
     }
 
-    public static function fromTelegramResult(mixed $result): self
+    public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
-        ValueHelper::assertArrayResult($result);
+        $raw ??= $result;
+        ValueHelper::assertArrayResult($result, $raw);
         return new self(
-            ValueHelper::getArrayOfEncryptedPassportElements($result, 'data'),
-            EncryptedCredentials::fromTelegramResult($result['credentials']),
+            ValueHelper::getArrayOfEncryptedPassportElements($result, 'data', $raw),
+            EncryptedCredentials::fromTelegramResult($result['credentials'], $raw),
         );
     }
 }
