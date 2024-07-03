@@ -11,6 +11,7 @@ final readonly class PaidMediaFactory
 {
     public static function fromTelegramResult(mixed $result, mixed $raw = null): PaidMedia
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         return match (ValueHelper::getString($result, 'type', $raw)) {
             'preview' => PaidMediaPreview::fromTelegramResult($result, $raw),
