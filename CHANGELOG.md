@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.2.2 under development
+
+- New #97: Add `getRaw()` and `hasRaw()` methods to `Update` type class.
+
 ## 0.2.1 July 2, 2024
 
 - New #91: Add `TransactionPartnerTelegramAds` type.
