@@ -22,6 +22,7 @@ final readonly class PhotoSize
 
     public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         return new self(
             ValueHelper::getString($result, 'file_id', $raw),
