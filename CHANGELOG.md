@@ -3,6 +3,7 @@
 ## 0.2.2 under development
 
 - New #97: Add `getRaw()` and `hasRaw()` methods to `Update` type class.
+- New #98: Keep raw telegram result in `TelegramParseResultException::$raw` property.
 
 ## 0.2.1 July 2, 2024
 

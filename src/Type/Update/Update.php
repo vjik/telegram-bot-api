@@ -78,6 +78,7 @@ final class Update
      */
     public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         $update = new Update(
             ValueHelper::getInteger($result, 'update_id', $raw),
