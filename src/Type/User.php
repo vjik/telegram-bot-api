@@ -50,6 +50,7 @@ final readonly class User
 
     public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         return new self(
             ValueHelper::getInteger($result, 'id', $raw),
