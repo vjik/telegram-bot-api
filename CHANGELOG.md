@@ -12,6 +12,7 @@
   `PaidMediaPreview`, `PaidMediaPhoto`, `PaidMediaVideo` types.
 - New #94: Add `invoicePayload` parameter to `TransactionPartnerUser` type.
 - New #95: Add `sendPaidMedia` method and `InputPaidMediaPhoto`, `InputPaidMediaVideo` types.
+- New #96: Add `raw` property to `TelegramParseResultException` that contain raw data. 
 
 ## 0.2.0 June 29, 2024
 

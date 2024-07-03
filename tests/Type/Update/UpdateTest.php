@@ -9,6 +9,7 @@ use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Throwable;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 
@@ -392,8 +393,33 @@ final class UpdateTest extends TestCase
             $update->getRaw(),
         );
 
-        $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Failed to decode JSON.');
-        Update::fromJson('asdf{');
+        $exception = null;
+        try {
+            Update::fromJson('asdf{');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Failed to decode JSON.', $exception->getMessage());
+        $this->assertSame('asdf{', $exception->raw);
+
+        $request = $this->createMock(ServerRequestInterface::class);
+        $request->method('getBody')->willReturn(
+            new class () implements StreamInterface {
+                use StreamTrait;
+
+                public function __toString(): string
+                {
+                    return '{"update_id":33990940}';
+                }
+            }
+        );
+        $exception = null;
+        try {
+            Update::fromJson('{"test":33990940}');
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Not found key "update_id" in result object.', $exception->getMessage());
+        $this->assertSame(['test' => 33990940], $exception->raw);
     }
 }
