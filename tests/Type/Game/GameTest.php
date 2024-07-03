@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Game;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Animation;
 use Vjik\TelegramBot\Api\Type\Game\Game;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
@@ -84,5 +86,14 @@ final class GameTest extends TestCase
         $this->assertSame(300, $game->animation->width);
         $this->assertSame(400, $game->animation->height);
         $this->assertSame(12, $game->animation->duration);
+
+        $exception = null;
+        try {
+            Game::fromTelegramResult(['title' => 'My Game'], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Not found key "description" in result object.', $exception->getMessage());
+        $this->assertSame(['test'], $exception->raw);
     }
 }
