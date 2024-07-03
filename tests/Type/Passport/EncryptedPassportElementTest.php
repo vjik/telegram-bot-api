@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 
@@ -94,5 +96,17 @@ final class EncryptedPassportElementTest extends TestCase
         $this->assertCount(1, $encryptedPassportElement->translation);
         $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->translation[0]);
         $this->assertSame('17', $encryptedPassportElement->translation[0]->fileId);
+
+        $exception = null;
+        try {
+            EncryptedPassportElement::fromTelegramResult([], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Not found key "type" in result object.',
+            $exception->getMessage()
+        );
+        $this->assertSame(['test'], $exception->raw);
     }
 }

@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 
 final class PassportFileTest extends TestCase
@@ -34,5 +36,17 @@ final class PassportFileTest extends TestCase
         $this->assertSame('2', $passportFile->fileUniqueId);
         $this->assertSame(3, $passportFile->fileSize);
         $this->assertEquals(new DateTimeImmutable('@1717512173'), $passportFile->fileDate);
+
+        $exception = null;
+        try {
+            PassportFile::fromTelegramResult([], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Not found key "file_id" in result object.',
+            $exception->getMessage()
+        );
+        $this->assertSame(['test'], $exception->raw);
     }
 }
