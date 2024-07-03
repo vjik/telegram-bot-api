@@ -26,6 +26,7 @@ final readonly class PaidMediaPhoto implements PaidMedia
 
     public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         return new self(
             ValueHelper::getArrayOfPhotoSizes($result, 'photo', $raw),

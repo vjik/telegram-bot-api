@@ -25,6 +25,7 @@ final readonly class PaidMediaPreview implements PaidMedia
 
     public static function fromTelegramResult(mixed $result, mixed $raw = null): self
     {
+        $raw ??= $result;
         ValueHelper::assertArrayResult($result, $raw);
         return new self(
             ValueHelper::getIntegerOrNull($result, 'width', $raw),
