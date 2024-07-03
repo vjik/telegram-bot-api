@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Game\CallbackGame;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\LoginUrl;
@@ -108,5 +110,17 @@ final class InlineKeyboardButtonTest extends TestCase
         $this->assertSame('dg', $button->switchInlineQueryChosenChat->query);
         $this->assertInstanceOf(CallbackGame::class, $button->callbackGame);
         $this->assertTrue($button->pay);
+
+        $exception = null;
+        try {
+            InlineKeyboardButton::fromTelegramResult([], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Not found key "text" in result object.',
+            $exception->getMessage()
+        );
+        $this->assertSame(['test'], $exception->raw);
     }
 }

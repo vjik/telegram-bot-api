@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQuery;
 use Vjik\TelegramBot\Api\Type\Location;
 use Vjik\TelegramBot\Api\Type\User;
@@ -60,5 +62,17 @@ final class InlineQueryTest extends TestCase
         $this->assertInstanceOf(Location::class, $inlineQuery->location);
         $this->assertSame(1.2, $inlineQuery->location->latitude);
         $this->assertSame(3.4, $inlineQuery->location->longitude);
+
+        $exception = null;
+        try {
+            InlineQuery::fromTelegramResult([], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Not found key "id" in result object.',
+            $exception->getMessage()
+        );
+        $this->assertSame(['test'], $exception->raw);
     }
 }

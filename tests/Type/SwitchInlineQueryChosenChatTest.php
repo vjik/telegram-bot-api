@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\SwitchInlineQueryChosenChat;
 
 final class SwitchInlineQueryChosenChatTest extends TestCase
@@ -65,5 +67,17 @@ final class SwitchInlineQueryChosenChatTest extends TestCase
         $this->assertTrue($switchInlineQueryChosenChat->allowBotChats);
         $this->assertFalse($switchInlineQueryChosenChat->allowGroupChats);
         $this->assertFalse($switchInlineQueryChosenChat->allowChannelChats);
+
+        $exception = null;
+        try {
+            SwitchInlineQueryChosenChat::fromTelegramResult(['query' => 13], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "query". Expected type is "string", but got "int".',
+            $exception->getMessage()
+        );
+        $this->assertSame(['test'], $exception->raw);
     }
 }

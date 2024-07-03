@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 
 use PHPUnit\Framework\TestCase;
+use Throwable;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Inline\ChosenInlineResult;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -54,5 +56,14 @@ final class ChosenInlineResultTest extends TestCase
 
         $this->assertSame('m1', $chosenInlineResult->inlineMessageId);
         $this->assertSame('query1', $chosenInlineResult->query);
+
+        $exception = null;
+        try {
+            ChosenInlineResult::fromTelegramResult(['from' => []], ['test']);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Not found key "result_id" in result object.', $exception->getMessage());
+        $this->assertSame(['test'], $exception->raw);
     }
 }
