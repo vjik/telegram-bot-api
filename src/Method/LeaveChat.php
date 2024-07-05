@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
@@ -33,9 +34,8 @@ final readonly class LeaveChat implements TelegramRequestWithResultPreparingInte
         return ['chat_id' => $this->chatId];
     }
 
-    public function prepareResult(mixed $result): true
+    public function getResultType(): TrueValue
     {
-        ValueHelper::assertTrueResult($result);
-        return $result;
+        return new TrueValue();
     }
 }

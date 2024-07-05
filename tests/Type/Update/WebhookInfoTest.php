@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Update;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class WebhookInfoTest extends TestCase
@@ -27,7 +28,7 @@ final class WebhookInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $info = WebhookInfo::fromTelegramResult([
+        $info = (new ObjectFactory())->create([
             'url' => 'https://example.com/',
             'has_custom_certificate' => true,
             'pending_update_count' => 12,
@@ -37,7 +38,7 @@ final class WebhookInfoTest extends TestCase
             'last_synchronization_error_date' => 1717501904,
             'max_connections' => 15,
             'allowed_updates' => ['update1', 'update2'],
-        ]);
+        ], null, WebhookInfo::class);
 
         $this->assertSame('https://example.com/', $info->url);
         $this->assertTrue($info->hasCustomCertificate);

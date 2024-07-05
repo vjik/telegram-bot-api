@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillGradient;
 
 final class BackgroundFillGradientTest extends TestCase
@@ -21,12 +22,12 @@ final class BackgroundFillGradientTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $fill = BackgroundFillGradient::fromTelegramResult([
+        $fill = (new ObjectFactory())->create([
             'type' => 'gradient',
             'top_color' => 0x000000,
             'bottom_color' => 0xFFFFFF,
             'rotation_angle' => 17,
-        ]);
+        ], null, BackgroundFillGradient::class);
 
         $this->assertSame('gradient', $fill->getType());
         $this->assertSame(0x000000, $fill->topColor);

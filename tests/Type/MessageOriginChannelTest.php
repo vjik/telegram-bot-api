@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\MessageOriginChannel;
 
@@ -27,7 +28,7 @@ final class MessageOriginChannelTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $origin = MessageOriginChannel::fromTelegramResult([
+        $origin = (new ObjectFactory())->create([
             'type' => 'channel',
             'date' => 12412512,
             'chat' => [
@@ -36,7 +37,7 @@ final class MessageOriginChannelTest extends TestCase
             ],
             'message_id' => 12,
             'author_signature' => 'John Doe',
-        ]);
+        ], null, MessageOriginChannel::class);
 
         $this->assertSame('channel', $origin->getType());
         $this->assertSame(12412512, $origin->getDate()->getTimestamp());

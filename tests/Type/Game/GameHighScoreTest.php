@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Game;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -22,7 +23,7 @@ final class GameHighScoreTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = GameHighScore::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'position' => 2,
             'user' => [
                 'id' => 1,
@@ -30,7 +31,7 @@ final class GameHighScoreTest extends TestCase
                 'first_name' => 'test',
             ],
             'score' => 300,
-        ]);
+        ], null, GameHighScore::class);
 
         $this->assertSame(2, $type->position);
         $this->assertSame(1, $type->user->id);

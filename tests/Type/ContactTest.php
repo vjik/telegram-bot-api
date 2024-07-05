@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Contact;
 
 final class ContactTest extends TestCase
@@ -22,13 +23,13 @@ final class ContactTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $contact = Contact::fromTelegramResult([
+        $contact = (new ObjectFactory())->create([
             'phone_number' => '+3123456',
             'first_name' => 'Mike',
             'last_name' => 'Smith',
             'user_id' => 123,
             'vcard' => 'vcard',
-        ]);
+        ], null, Contact::class);
 
         $this->assertSame('+3123456', $contact->phoneNumber);
         $this->assertSame('Mike', $contact->firstName);

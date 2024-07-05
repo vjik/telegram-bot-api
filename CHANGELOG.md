@@ -1,8 +1,8 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.2.2 under development
+## 0.3.0 under development
 
-- New #97: Add `getRaw()` and `hasRaw()` methods to `Update` type class.
+- Chg #99: Add `ResultFactory` and value processors, simplify type and method classes.
 
 ## 0.2.1 July 2, 2024
 

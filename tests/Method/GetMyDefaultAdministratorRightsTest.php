@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetMyDefaultAdministratorRightsTest extends TestCase
 {
@@ -35,7 +36,7 @@ final class GetMyDefaultAdministratorRightsTest extends TestCase
     {
         $method = new GetMyDefaultAdministratorRights();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'is_anonymous' => true,
             'can_manage_chat' => false,
             'can_delete_messages' => true,
@@ -51,7 +52,7 @@ final class GetMyDefaultAdministratorRightsTest extends TestCase
             'can_edit_messages' => true,
             'can_pin_messages' => false,
             'can_manage_topics' => true,
-        ]);
+        ])->send($method);
 
         $this->assertTrue($preparedResult->isAnonymous);
         $this->assertFalse($preparedResult->canManageChat);

@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberBanned;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -24,14 +25,14 @@ final class ChatMemberBannedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $member = ChatMemberBanned::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
                 'first_name' => 'John',
             ],
             'until_date' => 123456779,
-        ]);
+        ], null, ChatMemberBanned::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertEquals(new DateTimeImmutable('@123456779'), $member->untilDate);
@@ -39,14 +40,14 @@ final class ChatMemberBannedTest extends TestCase
 
     public function testFromTelegramResultWithZeroUntilDate(): void
     {
-        $member = ChatMemberBanned::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
                 'first_name' => 'John',
             ],
             'until_date' => 0,
-        ]);
+        ], null, ChatMemberBanned::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertFalse($member->untilDate);

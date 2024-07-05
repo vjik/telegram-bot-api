@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
@@ -35,7 +36,7 @@ final class ChatMemberUpdatedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $chatMemberUpdated = ChatMemberUpdated::fromTelegramResult([
+        $chatMemberUpdated = (new ObjectFactory())->create([
             'chat' => [
                 'id' => 123,
                 'type' => 'group',
@@ -75,7 +76,7 @@ final class ChatMemberUpdatedTest extends TestCase
             ],
             'via_join_request' => true,
             'via_chat_folder_invite_link' => false,
-        ]);
+        ], null, ChatMemberUpdated::class);
 
         $this->assertSame(123, $chatMemberUpdated->chat->id);
         $this->assertSame(5, $chatMemberUpdated->from->id);

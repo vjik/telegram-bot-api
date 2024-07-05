@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UnhideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class UnhideGeneralForumTopicTest extends TestCase
 {
@@ -28,7 +29,7 @@ final class UnhideGeneralForumTopicTest extends TestCase
     {
         $method = new UnhideGeneralForumTopic(2);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

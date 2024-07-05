@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHours;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
 
@@ -24,7 +25,7 @@ final class BusinessOpeningHoursTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $businessOpeningHours = BusinessOpeningHours::fromTelegramResult([
+        $businessOpeningHours = (new ObjectFactory())->create([
             'time_zone_name' => 'Europe/Moscow',
             'opening_hours' => [
                 [
@@ -32,7 +33,7 @@ final class BusinessOpeningHoursTest extends TestCase
                     'closing_minute' => 100,
                 ],
             ],
-        ]);
+        ], null, BusinessOpeningHours::class);
 
         $this->assertSame('Europe/Moscow', $businessOpeningHours->timeZoneName);
 

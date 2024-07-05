@@ -9,8 +9,4 @@ namespace Vjik\TelegramBot\Api\Type;
  */
 final readonly class GeneralForumTopicUnhidden
 {
-    public static function fromTelegramResult(mixed $result): self
-    {
-        return new self();
-    }
 }

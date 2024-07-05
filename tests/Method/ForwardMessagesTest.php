@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MessageId;
 
 final class ForwardMessagesTest extends TestCase
@@ -50,14 +51,14 @@ final class ForwardMessagesTest extends TestCase
     {
         $method = new ForwardMessages(1, 2, [3, 4]);
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             [
                 'message_id' => 7,
             ],
             [
                 'message_id' => 8,
             ],
-        ]);
+        ])->send($method);
 
         $this->assertCount(2, $preparedResult);
         $this->assertInstanceOf(MessageId::class, $preparedResult[0]);

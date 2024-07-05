@@ -28,8 +28,8 @@ final readonly class GetMe implements TelegramRequestWithResultPreparingInterfac
         return [];
     }
 
-    public function prepareResult(mixed $result): User
+    public function getResultType(): string
     {
-        return User::fromTelegramResult($result);
+        return User::class;
     }
 }

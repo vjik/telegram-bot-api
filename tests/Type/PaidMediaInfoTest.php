@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaInfo;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 
@@ -21,7 +22,7 @@ final class PaidMediaInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = PaidMediaInfo::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'star_count' => 1,
             'paid_media' => [
                 [
@@ -29,7 +30,7 @@ final class PaidMediaInfoTest extends TestCase
                     'photo' => [],
                 ],
             ]
-        ]);
+        ], null, PaidMediaInfo::class);
 
         $this->assertSame(1, $type->starCount);
         $this->assertEquals([new PaidMediaPhoto([])], $type->paidMedia);

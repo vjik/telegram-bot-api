@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
@@ -33,7 +34,7 @@ final class InlineKeyboardMarkupTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $markup = InlineKeyboardMarkup::fromTelegramResult([
+        $markup = (new ObjectFactory())->create([
             'inline_keyboard' => [
                 [
                     [
@@ -41,7 +42,7 @@ final class InlineKeyboardMarkupTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        ], null, InlineKeyboardMarkup::class);
 
         $this->assertCount(1, $markup->inlineKeyboard);
         $this->assertCount(1, $markup->inlineKeyboard[0]);

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 final class GetCustomEmojiStickersTest extends TestCase
@@ -29,7 +30,7 @@ final class GetCustomEmojiStickersTest extends TestCase
     {
         $method = new GetCustomEmojiStickers(['id1']);
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             [
                 'file_id' => 'x1',
                 'file_unique_id' => 'fullX1',
@@ -39,7 +40,7 @@ final class GetCustomEmojiStickersTest extends TestCase
                 'is_animated' => false,
                 'is_video' => true,
             ],
-        ]);
+        ])->send($method);
 
         $this->assertIsArray($preparedResult);
         $this->assertCount(1, $preparedResult);

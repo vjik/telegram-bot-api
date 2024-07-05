@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\VideoNote;
 
 final class VideoNoteTest extends TestCase
@@ -23,7 +24,7 @@ final class VideoNoteTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $videoNote = VideoNote::fromTelegramResult([
+        $videoNote = (new ObjectFactory())->create([
             'file_id' => 'f1',
             'file_unique_id' => 'fu1',
             'length' => 200,
@@ -35,7 +36,7 @@ final class VideoNoteTest extends TestCase
                 'height' => 205,
             ],
             'file_size' => 100,
-        ]);
+        ], null, VideoNote::class);
 
         $this->assertSame('f1', $videoNote->fileId);
         $this->assertSame('fu1', $videoNote->fileUniqueId);

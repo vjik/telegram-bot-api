@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessages;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class DeleteMessagesTest extends TestCase
 {
@@ -29,7 +30,7 @@ final class DeleteMessagesTest extends TestCase
     {
         $method = new DeleteMessages(1, [2, 3]);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

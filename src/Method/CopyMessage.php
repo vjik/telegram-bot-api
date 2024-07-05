@@ -73,8 +73,8 @@ final readonly class CopyMessage implements TelegramRequestWithResultPreparingIn
         );
     }
 
-    public function prepareResult(mixed $result): MessageId
+    public function getResultType(): string
     {
-        return MessageId::fromTelegramResult($result);
+        return MessageId::class;
     }
 }

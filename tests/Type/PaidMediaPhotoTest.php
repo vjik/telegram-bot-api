@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
@@ -21,7 +22,7 @@ final class PaidMediaPhotoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = PaidMediaPhoto::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'type' => 'photo',
             'photo' => [
                 [
@@ -32,7 +33,7 @@ final class PaidMediaPhotoTest extends TestCase
                     'file_size' => 512,
                 ],
             ]
-        ]);
+        ], null, PaidMediaPhoto::class);
 
         $this->assertSame('photo', $type->getType());
         $this->assertCount(1, $type->photo);

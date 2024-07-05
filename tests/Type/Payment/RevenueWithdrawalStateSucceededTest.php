@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateSucceeded;
 
 final class RevenueWithdrawalStateSucceededTest extends TestCase
@@ -27,11 +28,11 @@ final class RevenueWithdrawalStateSucceededTest extends TestCase
     public function testFromTelegramResult(): void
     {
         $date = new DateTimeImmutable();
-        $object = RevenueWithdrawalStateSucceeded::fromTelegramResult([
+        $object = (new ObjectFactory())->create([
             'type' => 'succeeded',
             'date' => $date->getTimestamp(),
             'url' => 'https://example.com/test',
-        ]);
+        ], null, RevenueWithdrawalStateSucceeded::class);
 
         $this->assertSame('succeeded', $object->getType());
         $this->assertSame($date->getTimestamp(), $object->date->getTimestamp());
@@ -40,8 +41,10 @@ final class RevenueWithdrawalStateSucceededTest extends TestCase
 
     public function testFromTelegramResultWithInvalidResult(): void
     {
+        $objectFactory = new ObjectFactory();
+
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got "string".');
-        RevenueWithdrawalStateSucceeded::fromTelegramResult('hello');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "array", but got "string".');
+        $objectFactory->create('hello', null, RevenueWithdrawalStateSucceeded::class);
     }
 }

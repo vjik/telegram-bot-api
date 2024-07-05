@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatBoost;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\User;
@@ -28,7 +29,7 @@ final class UserChatBoostsTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = UserChatBoosts::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'boosts' => [
                 [
                     'boost_id' => 'b1',
@@ -44,7 +45,7 @@ final class UserChatBoostsTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        ], null, UserChatBoosts::class);
 
         $this->assertCount(1, $type->boosts);
         $this->assertSame('b1', $type->boosts[0]->boostId);

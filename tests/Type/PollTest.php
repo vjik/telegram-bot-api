@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\PollOption;
 
@@ -41,7 +42,7 @@ final class PollTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $poll = Poll::fromTelegramResult([
+        $poll = (new ObjectFactory())->create([
             'id' => '12',
             'question' => 'Why?',
             'options' => [
@@ -70,7 +71,7 @@ final class PollTest extends TestCase
             ],
             'open_period' => 123,
             'close_date' => 456,
-        ]);
+        ], null, Poll::class);
 
         $this->assertSame('12', $poll->id);
         $this->assertSame('Why?', $poll->question);

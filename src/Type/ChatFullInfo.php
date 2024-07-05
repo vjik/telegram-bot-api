@@ -5,7 +5,9 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ReactionTypeValue;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
  * @see https://core.telegram.org/bots/api#chatfullinfo
@@ -27,12 +29,14 @@ final readonly class ChatFullInfo
         public ?string $lastName = null,
         public ?true $isForum = null,
         public ?ChatPhoto $photo = null,
+        #[ArrayMap(StringValue::class)]
         public ?array $activeUsernames = null,
         public ?Birthdate $birthdate = null,
         public ?BusinessIntro $businessIntro = null,
         public ?BusinessLocation $businessLocation = null,
         public ?BusinessOpeningHours $businessOpeningHours = null,
         public ?Chat $personalChat = null,
+        #[ArrayMap(ReactionTypeValue::class)]
         public ?array $availableReactions = null,
         public ?string $backgroundCustomEmojiId = null,
         public ?int $profileAccentColorId = null,
@@ -62,74 +66,5 @@ final readonly class ChatFullInfo
         public ?ChatLocation $location = null,
         public ?true $canSendPaidMedia = null,
     ) {
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getInteger($result, 'id'),
-            ValueHelper::getString($result, 'type'),
-            ValueHelper::getInteger($result, 'accent_color_id'),
-            ValueHelper::getInteger($result, 'max_reaction_count'),
-            ValueHelper::getStringOrNull($result, 'title'),
-            ValueHelper::getStringOrNull($result, 'username'),
-            ValueHelper::getStringOrNull($result, 'first_name'),
-            ValueHelper::getStringOrNull($result, 'last_name'),
-            ValueHelper::getTrueOrNull($result, 'is_forum'),
-            array_key_exists('photo', $result)
-                ? ChatPhoto::fromTelegramResult($result['photo'])
-                : null,
-            ValueHelper::getArrayOfStringsOrNull($result, 'active_usernames'),
-            array_key_exists('birthdate', $result)
-                ? Birthdate::fromTelegramResult($result['birthdate'])
-                : null,
-            array_key_exists('business_intro', $result)
-                ? BusinessIntro::fromTelegramResult($result['business_intro'])
-                : null,
-            array_key_exists('business_location', $result)
-                ? BusinessLocation::fromTelegramResult($result['business_location'])
-                : null,
-            array_key_exists('business_opening_hours', $result)
-                ? BusinessOpeningHours::fromTelegramResult($result['business_opening_hours'])
-                : null,
-            array_key_exists('personal_chat', $result)
-                ? Chat::fromTelegramResult($result['personal_chat'])
-                : null,
-            ValueHelper::getArrayOfReactionTypesOrNull($result, 'available_reactions'),
-            ValueHelper::getStringOrNull($result, 'background_custom_emoji_id'),
-            ValueHelper::getIntegerOrNull($result, 'profile_accent_color_id'),
-            ValueHelper::getStringOrNull($result, 'profile_background_custom_emoji_id'),
-            ValueHelper::getStringOrNull($result, 'emoji_status_custom_emoji_id'),
-            ValueHelper::getDateTimeImmutableOrNull($result, 'emoji_status_expiration_date'),
-            ValueHelper::getStringOrNull($result, 'bio'),
-            ValueHelper::getTrueOrNull($result, 'has_private_forwards'),
-            ValueHelper::getTrueOrNull($result, 'has_restricted_voice_and_video_messages'),
-            ValueHelper::getTrueOrNull($result, 'join_to_send_messages'),
-            ValueHelper::getTrueOrNull($result, 'join_by_request'),
-            ValueHelper::getStringOrNull($result, 'description'),
-            ValueHelper::getStringOrNull($result, 'invite_link'),
-            array_key_exists('pinned_message', $result)
-                ? Message::fromTelegramResult($result['pinned_message'])
-                : null,
-            array_key_exists('permissions', $result)
-                ? ChatPermissions::fromTelegramResult($result['permissions'])
-                : null,
-            ValueHelper::getIntegerOrNull($result, 'slow_mode_delay'),
-            ValueHelper::getIntegerOrNull($result, 'unrestrict_boost_count'),
-            ValueHelper::getIntegerOrNull($result, 'message_auto_delete_time'),
-            ValueHelper::getTrueOrNull($result, 'has_aggressive_anti_spam_enabled'),
-            ValueHelper::getTrueOrNull($result, 'has_hidden_members'),
-            ValueHelper::getTrueOrNull($result, 'has_protected_content'),
-            ValueHelper::getTrueOrNull($result, 'has_visible_history'),
-            ValueHelper::getStringOrNull($result, 'sticker_set_name'),
-            ValueHelper::getTrueOrNull($result, 'can_set_sticker_set'),
-            ValueHelper::getStringOrNull($result, 'custom_emoji_sticker_set_name'),
-            ValueHelper::getIntegerOrNull($result, 'linked_chat_id'),
-            array_key_exists('location', $result)
-                ? ChatLocation::fromTelegramResult($result['location'])
-                : null,
-            ValueHelper::getTrueOrNull($result, 'can_send_paid_media'),
-        );
     }
 }

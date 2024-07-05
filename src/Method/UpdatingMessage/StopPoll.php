@@ -45,8 +45,8 @@ final readonly class StopPoll implements TelegramRequestWithResultPreparingInter
         );
     }
 
-    public function prepareResult(mixed $result): Poll
+    public function getResultType(): string
     {
-        return Poll::fromTelegramResult($result);
+        return Poll::class;
     }
 }

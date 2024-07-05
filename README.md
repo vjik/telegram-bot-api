@@ -104,7 +104,7 @@ $request = new TelegramRequest(
     httpMethod: HttpMethod::GET,
     apiMethod: 'getChat',
     data: ['chat_id' => '@sergei_predvoditelev'],
-    successCallback: fn (mixed $result) => ChatFullInfo::fromTelegramResult($result),
+    resultType: ChatFullInfo::class,
 );
 
 // Result is an object of `Vjik\TelegramBot\Api\Type\ChatFullInfo`

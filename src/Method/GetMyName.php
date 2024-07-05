@@ -38,8 +38,8 @@ final readonly class GetMyName implements TelegramRequestWithResultPreparingInte
         );
     }
 
-    public function prepareResult(mixed $result): BotName
+    public function getResultType(): string
     {
-        return BotName::fromTelegramResult($result);
+        return BotName::class;
     }
 }

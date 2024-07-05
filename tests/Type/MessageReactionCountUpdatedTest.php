@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\MessageReactionCountUpdated;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
@@ -28,7 +29,7 @@ final class MessageReactionCountUpdatedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $messageReactionCountUpdated = MessageReactionCountUpdated::fromTelegramResult([
+        $messageReactionCountUpdated = (new ObjectFactory())->create([
             'chat' => [
                 'id' => 1,
                 'type' => 'private',
@@ -44,7 +45,7 @@ final class MessageReactionCountUpdatedTest extends TestCase
                     'total_count' => 2,
                 ],
             ],
-        ]);
+        ], null, MessageReactionCountUpdated::class);
 
         $this->assertSame(1, $messageReactionCountUpdated->chat->id);
         $this->assertSame(99, $messageReactionCountUpdated->messageId);

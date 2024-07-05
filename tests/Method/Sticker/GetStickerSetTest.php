@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetStickerSetTest extends TestCase
 {
@@ -28,7 +29,7 @@ final class GetStickerSetTest extends TestCase
     {
         $method = new GetStickerSet('test_by_bot');
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'name' => 'test_by_bot',
             'title' => 'test name',
             'sticker_type' => 'regular',
@@ -43,7 +44,7 @@ final class GetStickerSetTest extends TestCase
                     'is_video' => false,
                 ],
             ],
-        ]);
+        ])->send($method);
 
         $this->assertSame('test name', $preparedResult->title);
     }

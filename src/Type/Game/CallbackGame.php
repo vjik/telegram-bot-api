@@ -13,9 +13,4 @@ final readonly class CallbackGame
     {
         return [];
     }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        return new self();
-    }
 }

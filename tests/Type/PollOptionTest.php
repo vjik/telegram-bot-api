@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PollOption;
 
 final class PollOptionTest extends TestCase
@@ -20,7 +21,7 @@ final class PollOptionTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $option = PollOption::fromTelegramResult([
+        $option = (new ObjectFactory())->create([
             'text' => 'A',
             'voter_count' => 25,
             'text_entities' => [
@@ -30,7 +31,7 @@ final class PollOptionTest extends TestCase
                     'type' => 'bold',
                 ],
             ],
-        ]);
+        ], null, PollOption::class);
 
         $this->assertSame('A', $option->text);
         $this->assertSame(25, $option->voterCount);

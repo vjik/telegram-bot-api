@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
 final class ChatAdministratorRightsTest extends TestCase
@@ -49,7 +50,7 @@ final class ChatAdministratorRightsTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = ChatAdministratorRights::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'is_anonymous' => true,
             'can_manage_chat' => false,
             'can_delete_messages' => true,
@@ -65,7 +66,7 @@ final class ChatAdministratorRightsTest extends TestCase
             'can_edit_messages' => true,
             'can_pin_messages' => false,
             'can_manage_topics' => true,
-        ]);
+        ], null, ChatAdministratorRights::class);
 
         $this->assertTrue($type->isAnonymous);
         $this->assertFalse($type->canManageChat);

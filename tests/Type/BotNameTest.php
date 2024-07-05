@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BotName;
 
 final class BotNameTest extends TestCase
@@ -18,9 +19,9 @@ final class BotNameTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $name = BotName::fromTelegramResult([
+        $name = (new ObjectFactory())->create([
             'name' => 'test',
-        ]);
+        ], null, BotName::class);
 
         $this->assertSame('test', $name->name);
     }

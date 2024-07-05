@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
-
 /**
  * @see https://core.telegram.org/bots/api#location
  */
@@ -19,18 +17,5 @@ final readonly class Location
         public ?int $heading = null,
         public ?int $proximityAlertRadius = null,
     ) {
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getFloat($result, 'latitude'),
-            ValueHelper::getFloat($result, 'longitude'),
-            ValueHelper::getFloatOrNull($result, 'horizontal_accuracy'),
-            ValueHelper::getIntegerOrNull($result, 'live_period'),
-            ValueHelper::getIntegerOrNull($result, 'heading'),
-            ValueHelper::getIntegerOrNull($result, 'proximity_alert_radius'),
-        );
     }
 }

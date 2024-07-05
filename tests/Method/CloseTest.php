@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class CloseTest extends TestCase
 {
@@ -17,6 +18,6 @@ final class CloseTest extends TestCase
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('close', $method->getApiMethod());
         $this->assertSame([], $method->getData());
-        $this->assertTrue($method->prepareResult(true));
+        $this->assertTrue(TestHelper::createSuccessStubApi(true)->send($method));
     }
 }

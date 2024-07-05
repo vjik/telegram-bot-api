@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#businessopeninghours
@@ -16,16 +16,8 @@ final readonly class BusinessOpeningHours
      */
     public function __construct(
         public string $timeZoneName,
+        #[ArrayOfObjectsValue(BusinessOpeningHoursInterval::class)]
         public array $openingHours
     ) {
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getString($result, 'time_zone_name'),
-            ValueHelper::getArrayOfBusinessOpeningHoursIntervals($result, 'opening_hours')
-        );
     }
 }

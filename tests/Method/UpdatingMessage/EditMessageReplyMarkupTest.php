@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -49,17 +50,17 @@ final class EditMessageReplyMarkupTest extends TestCase
     {
         $method = new EditMessageReplyMarkup();
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
         $this->assertTrue($preparedResult);
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
             'date' => 1620000000,
             'chat' => [
                 'id' => 1,
                 'type' => 'private',
             ],
-        ]);
+        ])->send($method);
         $this->assertInstanceOf(Message::class, $preparedResult);
         $this->assertSame(7, $preparedResult->messageId);
     }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetChatAdministratorCustomTitleTest extends TestCase
 {
@@ -30,7 +31,7 @@ final class SetChatAdministratorCustomTitleTest extends TestCase
     {
         $method = new SetChatAdministratorCustomTitle(1,2,'test');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

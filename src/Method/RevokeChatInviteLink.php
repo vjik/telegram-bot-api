@@ -37,8 +37,8 @@ final readonly class RevokeChatInviteLink implements TelegramRequestWithResultPr
         ];
     }
 
-    public function prepareResult(mixed $result): ChatInviteLink
+    public function getResultType(): string
     {
-        return ChatInviteLink::fromTelegramResult($result);
+        return ChatInviteLink::class;
     }
 }

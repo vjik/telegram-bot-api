@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
@@ -33,9 +33,8 @@ final readonly class GetChatMemberCount implements TelegramRequestWithResultPrep
         return ['chat_id' => $this->chatId];
     }
 
-    public function prepareResult(mixed $result): int
+    public function getResultType(): IntegerValue
     {
-        ValueHelper::assertIntegerResult($result);
-        return $result;
+        return new IntegerValue();
     }
 }

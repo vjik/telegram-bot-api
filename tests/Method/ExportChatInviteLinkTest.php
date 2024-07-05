@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class ExportChatInviteLinkTest extends TestCase
 {
@@ -28,7 +29,7 @@ final class ExportChatInviteLinkTest extends TestCase
     {
         $method = new ExportChatInviteLink(1);
 
-        $preparedResult = $method->prepareResult('https://t.me/+example');
+        $preparedResult = TestHelper::createSuccessStubApi('https://t.me/+example')->send($method);
 
         $this->assertSame('https://t.me/+example', $preparedResult);
     }

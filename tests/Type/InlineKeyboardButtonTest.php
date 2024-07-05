@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Game\CallbackGame;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\LoginUrl;
@@ -85,7 +86,7 @@ final class InlineKeyboardButtonTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $button = InlineKeyboardButton::fromTelegramResult([
+        $button = (new ObjectFactory())->create([
             'text' => 'test',
             'url' => 'https://example.com',
             'callback_data' => 'callback-data',
@@ -96,7 +97,7 @@ final class InlineKeyboardButtonTest extends TestCase
             'switch_inline_query_chosen_chat' => ['query' => 'dg'],
             'callback_game' => [],
             'pay' => true,
-        ]);
+        ], null, InlineKeyboardButton::class);
 
         $this->assertSame('test', $button->text);
         $this->assertSame('https://example.com', $button->url);

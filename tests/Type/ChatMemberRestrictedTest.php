@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberRestricted;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -57,7 +58,7 @@ final class ChatMemberRestrictedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $member = ChatMemberRestricted::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
@@ -79,7 +80,7 @@ final class ChatMemberRestrictedTest extends TestCase
             'can_pin_messages' => true,
             'can_manage_topics' => true,
             'until_date' => 123456779,
-        ]);
+        ], null, ChatMemberRestricted::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertTrue($member->isMember);
@@ -102,7 +103,7 @@ final class ChatMemberRestrictedTest extends TestCase
 
     public function testFromTelegramResultWithZeroUntilDate(): void
     {
-        $member = ChatMemberRestricted::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
@@ -124,7 +125,7 @@ final class ChatMemberRestrictedTest extends TestCase
             'can_pin_messages' => true,
             'can_manage_topics' => true,
             'until_date' => 0,
-        ]);
+        ], null, ChatMemberRestricted::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertTrue($member->isMember);

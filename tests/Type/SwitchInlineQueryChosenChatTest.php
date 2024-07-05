@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SwitchInlineQueryChosenChat;
 
 final class SwitchInlineQueryChosenChatTest extends TestCase
@@ -52,13 +53,13 @@ final class SwitchInlineQueryChosenChatTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $switchInlineQueryChosenChat = SwitchInlineQueryChosenChat::fromTelegramResult([
+        $switchInlineQueryChosenChat = (new ObjectFactory())->create([
             'query' => 'q1',
             'allow_user_chats' => true,
             'allow_bot_chats' => true,
             'allow_group_chats' => false,
             'allow_channel_chats' => false,
-        ]);
+        ], null, SwitchInlineQueryChosenChat::class);
 
         $this->assertSame('q1', $switchInlineQueryChosenChat->query);
         $this->assertTrue($switchInlineQueryChosenChat->allowUserChats);

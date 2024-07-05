@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberOwner;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -24,7 +25,7 @@ final class ChatMemberOwnerTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $member = ChatMemberOwner::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
@@ -32,7 +33,7 @@ final class ChatMemberOwnerTest extends TestCase
             ],
             'is_anonymous' => true,
             'custom_title' => 'Custom title',
-        ]);
+        ], null, ChatMemberOwner::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertTrue($member->isAnonymous);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 
 final class LinkPreviewOptionsTest extends TestCase
@@ -46,13 +47,13 @@ final class LinkPreviewOptionsTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $options = LinkPreviewOptions::fromTelegramResult([
+        $options = (new ObjectFactory())->create([
             'is_disabled' => true,
             'url' => 'https://example.com/',
             'prefer_small_media' => true,
             'prefer_large_media' => false,
             'show_above_text' => true,
-        ]);
+        ], null, LinkPreviewOptions::class);
 
         $this->assertTrue($options->isDisabled);
         $this->assertSame('https://example.com/', $options->url);

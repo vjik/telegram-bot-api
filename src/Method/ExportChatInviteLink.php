@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
@@ -33,9 +33,8 @@ final readonly class ExportChatInviteLink implements TelegramRequestWithResultPr
         return ['chat_id' => $this->chatId];
     }
 
-    public function prepareResult(mixed $result): string
+    public function getResultType(): StringValue
     {
-        ValueHelper::assertStringResult($result);
-        return $result;
+        return new StringValue();
     }
 }

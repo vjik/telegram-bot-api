@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ProximityAlertTriggered;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -23,7 +24,7 @@ final class ProximityAlertTriggeredTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $proximityAlertTriggered = ProximityAlertTriggered::fromTelegramResult([
+        $proximityAlertTriggered = (new ObjectFactory())->create([
             'traveler' => [
                 'id' => 1,
                 'is_bot' => true,
@@ -35,7 +36,7 @@ final class ProximityAlertTriggeredTest extends TestCase
                 'first_name' => 'Mike',
             ],
             'distance' => 12,
-        ]);
+        ], null, ProximityAlertTriggered::class);
 
         $this->assertSame(1, $proximityAlertTriggered->traveler->id);
         $this->assertSame(2, $proximityAlertTriggered->watcher->id);

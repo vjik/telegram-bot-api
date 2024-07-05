@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Audio;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
@@ -31,7 +32,7 @@ final class AudioTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $audio = Audio::fromTelegramResult([
+        $audio = (new ObjectFactory())->create([
             'file_id' => 'id12',
             'file_unique_id' => 'full12',
             'duration' => 123,
@@ -46,7 +47,7 @@ final class AudioTest extends TestCase
                 'width' => 320,
                 'height' => 240,
             ],
-        ]);
+        ], null, Audio::class);
 
         $this->assertSame('id12', $audio->fileId);
         $this->assertSame('full12', $audio->fileUniqueId);

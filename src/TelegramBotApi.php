@@ -128,6 +128,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
+use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -189,9 +190,12 @@ use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class TelegramBotApi
 {
+    private ResultFactory $resultFactory;
+
     public function __construct(
         private TelegramClientInterface $telegramClient,
     ) {
+        $this->resultFactory = new ResultFactory();
     }
 
     /**
@@ -2626,9 +2630,16 @@ final class TelegramBotApi
             );
         }
 
-        return $request instanceof TelegramRequestWithResultPreparingInterface
-            ? $request->prepareResult($decodedBody['result'])
-            : $decodedBody['result'];
+        if (!$request instanceof TelegramRequestWithResultPreparingInterface) {
+            return $decodedBody['result'];
+        }
+
+        $resultType = $request->getResultType();
+        if ($resultType === null) {
+            return $decodedBody['result'];
+        }
+
+        return $this->resultFactory->create($decodedBody['result'], $resultType);
     }
 
     private function prepareFailResult(

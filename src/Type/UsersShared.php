@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#usersshared
@@ -17,16 +17,8 @@ final readonly class UsersShared
      */
     public function __construct(
         public int $requestId,
+        #[ArrayOfObjectsValue(SharedUser::class)]
         public array $users,
     ) {
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getInteger($result, 'request_id'),
-            ValueHelper::getArrayOfSharedUsers($result, 'users'),
-        );
     }
 }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetBusinessConnectionTest extends TestCase
 {
@@ -23,7 +24,7 @@ final class GetBusinessConnectionTest extends TestCase
     {
         $method = new GetBusinessConnection('b1');
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'id' => 'id1',
             'user' => [
                 'id' => 123,
@@ -34,7 +35,7 @@ final class GetBusinessConnectionTest extends TestCase
             'date' => 1717517779,
             'can_reply' => true,
             'is_enabled' => false,
-        ]);
+        ])->send($method);
 
         $this->assertSame('id1', $preparedResult->id);
     }

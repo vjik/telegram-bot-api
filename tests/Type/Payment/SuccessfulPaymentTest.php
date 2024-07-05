@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\SuccessfulPayment;
 
@@ -31,7 +32,7 @@ final class SuccessfulPaymentTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $successfulPayment = SuccessfulPayment::fromTelegramResult([
+        $successfulPayment = (new ObjectFactory())->create([
             'currency' => 'RUB',
             'total_amount' => 900,
             'invoice_payload' => 'pl12',
@@ -41,7 +42,7 @@ final class SuccessfulPaymentTest extends TestCase
             'order_info' => [
                 'name' => 'OrderName',
             ],
-        ]);
+        ], null, SuccessfulPayment::class);
 
         $this->assertSame('RUB', $successfulPayment->currency);
         $this->assertSame(900, $successfulPayment->totalAmount);

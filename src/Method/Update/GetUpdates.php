@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Update;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 
@@ -48,15 +48,8 @@ final readonly class GetUpdates implements TelegramRequestWithResultPreparingInt
         );
     }
 
-    /**
-     * @return Update[]
-     */
-    public function prepareResult(mixed $result): array
+    public function getResultType(): ArrayOfObjectsValue
     {
-        ValueHelper::assertArrayResult($result);
-        return array_map(
-            static fn(mixed $row) => Update::fromTelegramResult($row),
-            $result,
-        );
+        return new ArrayOfObjectsValue(Update::class);
     }
 }

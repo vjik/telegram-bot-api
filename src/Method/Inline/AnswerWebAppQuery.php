@@ -38,8 +38,8 @@ final readonly class AnswerWebAppQuery implements TelegramRequestWithResultPrepa
         ];
     }
 
-    public function prepareResult(mixed $result): SentWebAppMessage
+    public function getResultType(): string
     {
-        return SentWebAppMessage::fromTelegramResult($result);
+        return SentWebAppMessage::class;
     }
 }

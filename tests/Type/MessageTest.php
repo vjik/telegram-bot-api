@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
@@ -113,7 +114,7 @@ final class MessageTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $message = Message::fromTelegramResult([
+        $message = (new ObjectFactory())->create([
             'message_id' => 7,
             'date' => 1620000000,
             'chat' => [
@@ -458,7 +459,7 @@ final class MessageTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        ], null, Message::class);
 
         $this->assertSame(7, $message->messageId);
         $this->assertSame(1620000000, $message->date->getTimestamp());

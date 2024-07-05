@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\RequestFileCollector;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -55,10 +56,8 @@ final readonly class EditMessageMedia implements TelegramRequestWithResultPrepar
         );
     }
 
-    public function prepareResult(mixed $result): Message|true
+    public function getResultType(): ObjectOrTrueValue
     {
-        return $result === true
-            ? $result
-            : Message::fromTelegramResult($result);
+        return new ObjectOrTrueValue(Message::class);
     }
 }

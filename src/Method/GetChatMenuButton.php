@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MenuButtonValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
-use Vjik\TelegramBot\Api\Type\MenuButton;
-use Vjik\TelegramBot\Api\Type\MenuButtonFactory;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmenubutton
@@ -39,8 +38,8 @@ final readonly class GetChatMenuButton implements TelegramRequestWithResultPrepa
         );
     }
 
-    public function prepareResult(mixed $result): MenuButton
+    public function getResultType(): MenuButtonValue
     {
-        return MenuButtonFactory::fromTelegramResult($result);
+        return new MenuButtonValue();
     }
 }

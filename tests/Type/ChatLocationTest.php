@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatLocation;
 use Vjik\TelegramBot\Api\Type\Location;
 
@@ -29,7 +30,7 @@ final class ChatLocationTest extends TestCase
             'address' => 'Test',
         ];
 
-        $chatLocation = ChatLocation::fromTelegramResult($result);
+        $chatLocation = (new ObjectFactory())->create($result, null, ChatLocation::class);
 
         $this->assertSame(1.1, $chatLocation->location->latitude);
         $this->assertSame('Test', $chatLocation->address);

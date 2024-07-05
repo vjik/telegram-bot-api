@@ -5,7 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
@@ -48,9 +49,8 @@ final readonly class RestrictChatMember implements TelegramRequestWithResultPrep
         );
     }
 
-    public function prepareResult(mixed $result): true
+    public function getResultType(): TrueValue
     {
-        ValueHelper::assertTrueResult($result);
-        return $result;
+        return new TrueValue();
     }
 }

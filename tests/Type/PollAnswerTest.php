@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PollAnswer;
 
 final class PollAnswerTest extends TestCase
@@ -21,7 +22,7 @@ final class PollAnswerTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $answer = PollAnswer::fromTelegramResult([
+        $answer = (new ObjectFactory())->create([
             'poll_id' => 'sadg',
             'option_ids' => [2, 4],
             'voter_chat' => [
@@ -33,7 +34,7 @@ final class PollAnswerTest extends TestCase
                 'is_bot' => false,
                 'first_name' => 'John',
             ],
-        ]);
+        ], null, PollAnswer::class);
 
         $this->assertSame('sadg', $answer->pollId);
         $this->assertSame([2, 4], $answer->optionIds);

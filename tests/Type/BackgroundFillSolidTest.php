@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillSolid;
 
 final class BackgroundFillSolidTest extends TestCase
@@ -19,10 +20,10 @@ final class BackgroundFillSolidTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $fill = BackgroundFillSolid::fromTelegramResult([
+        $fill = (new ObjectFactory())->create([
             'type' => 'solid',
             'color' => 0x000000,
-        ]);
+        ], null, BackgroundFillSolid::class);
 
         $this->assertSame('solid', $fill->getType());
         $this->assertSame(0x000000, $fill->color);

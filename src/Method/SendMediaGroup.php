@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Request\RequestFileCollector;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -73,15 +73,8 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
         );
     }
 
-    /**
-     * @return Message[]
-     */
-    public function prepareResult(mixed $result): array
+    public function getResultType(): ArrayOfObjectsValue
     {
-        ValueHelper::assertArrayResult($result);
-        return array_map(
-            static fn($item) => Message::fromTelegramResult($item),
-            $result
-        );
+        return new ArrayOfObjectsValue(Message::class);
     }
 }

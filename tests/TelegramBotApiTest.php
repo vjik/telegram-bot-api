@@ -12,6 +12,7 @@ use Vjik\TelegramBot\Api\InvalidResponseFormatException;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
+use Vjik\TelegramBot\Api\Tests\Support\StubTelegramRequest;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
@@ -57,6 +58,29 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
+    }
+
+    public function testSendSimpleRequest(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => 1,
+                'is_bot' => false,
+                'first_name' => 'Sergei',
+            ],
+        ]);
+
+        $result = $api->send(new StubTelegramRequest());
+
+        $this->assertSame(
+            [
+                'id' => 1,
+                'is_bot' => false,
+                'first_name' => 'Sergei',
+            ],
+            $result,
+        );
     }
 
     public function testSendFail(): void

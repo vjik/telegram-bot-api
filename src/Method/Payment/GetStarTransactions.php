@@ -40,8 +40,8 @@ final readonly class GetStarTransactions implements TelegramRequestWithResultPre
         );
     }
 
-    public function prepareResult(mixed $result): StarTransactions
+    public function getResultType(): string
     {
-        return StarTransactions::fromTelegramResult($result);
+        return StarTransactions::class;
     }
 }

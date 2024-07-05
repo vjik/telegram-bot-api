@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\WriteAccessAllowed;
 
 final class WriteAccessAllowedTest extends TestCase
@@ -20,11 +21,11 @@ final class WriteAccessAllowedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $writeAccessAllowed = WriteAccessAllowed::fromTelegramResult([
+        $writeAccessAllowed = (new ObjectFactory())->create([
             'from_request' => true,
             'web_app_name' => 'test',
             'from_attachment_menu' => false,
-        ]);
+        ], null, WriteAccessAllowed::class);
 
         $this->assertTrue($writeAccessAllowed->fromRequest);
         $this->assertSame('test', $writeAccessAllowed->webAppName);

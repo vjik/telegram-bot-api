@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateFailed;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 
@@ -30,12 +31,12 @@ final class TransactionPartnerFragmentTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $object = TransactionPartnerFragment::fromTelegramResult([
+        $object = (new ObjectFactory())->create([
             'type' => 'fragment',
             'withdrawal_state' => [
                 'type' => 'failed',
             ],
-        ]);
+        ], null, TransactionPartnerFragment::class);
 
         $this->assertSame('fragment', $object->getType());
         $this->assertInstanceOf(RevenueWithdrawalStateFailed::class, $object->withdrawalState);
@@ -43,8 +44,10 @@ final class TransactionPartnerFragmentTest extends TestCase
 
     public function testFromTelegramResultWithInvalidResult(): void
     {
+        $objectFactory = new ObjectFactory();
+
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got "string".');
-        TransactionPartnerFragment::fromTelegramResult('hello');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "array", but got "string".');
+        $objectFactory->create('hello', null, TransactionPartnerFragment::class);
     }
 }

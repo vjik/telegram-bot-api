@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\User;
 
 final class UserTest extends TestCase
@@ -65,7 +66,7 @@ final class UserTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $user = User::fromTelegramResult([
+        $user = (new ObjectFactory())->create([
             'id' => 1,
             'is_bot' => false,
             'first_name' => 'Sergei',
@@ -78,7 +79,7 @@ final class UserTest extends TestCase
             'can_read_all_group_messages' => true,
             'supports_inline_queries' => true,
             'can_connect_to_business' => true,
-        ]);
+        ], null, User::class);
 
         $this->assertInstanceOf(User::class, $user);
         $this->assertSame(1, $user->id);

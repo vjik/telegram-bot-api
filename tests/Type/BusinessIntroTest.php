@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessIntro;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
@@ -21,7 +22,7 @@ final class BusinessIntroTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $businessIntro = BusinessIntro::fromTelegramResult([
+        $businessIntro = (new ObjectFactory())->create([
             'title' => 'title1',
             'message' => 'message1',
             'sticker' => [
@@ -33,7 +34,7 @@ final class BusinessIntroTest extends TestCase
                 'is_animated' => true,
                 'is_video' => false,
             ],
-        ]);
+        ], null, BusinessIntro::class);
 
         $this->assertSame('title1', $businessIntro->title);
         $this->assertSame('message1', $businessIntro->message);

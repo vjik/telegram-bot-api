@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SharedUser;
 use Vjik\TelegramBot\Api\Type\UsersShared;
 
@@ -21,12 +22,12 @@ final class UsersSharedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $usersShared = UsersShared::fromTelegramResult([
+        $usersShared = (new ObjectFactory())->create([
             'request_id' => 99,
             'users' => [
                 ['user_id' => 12],
             ],
-        ]);
+        ], null, UsersShared::class);
 
         $this->assertSame(99, $usersShared->requestId);
 

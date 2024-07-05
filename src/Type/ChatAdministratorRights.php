@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
-
 /**
  * @see https://core.telegram.org/bots/api#chatadministratorrights
  */
@@ -51,28 +49,6 @@ final readonly class ChatAdministratorRights
                 'can_manage_topics' => $this->canManageTopics,
             ],
             static fn(mixed $value): bool => $value !== null,
-        );
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getBoolean($result, 'is_anonymous'),
-            ValueHelper::getBoolean($result, 'can_manage_chat'),
-            ValueHelper::getBoolean($result, 'can_delete_messages'),
-            ValueHelper::getBoolean($result, 'can_manage_video_chats'),
-            ValueHelper::getBoolean($result, 'can_restrict_members'),
-            ValueHelper::getBoolean($result, 'can_promote_members'),
-            ValueHelper::getBoolean($result, 'can_change_info'),
-            ValueHelper::getBoolean($result, 'can_invite_users'),
-            ValueHelper::getBoolean($result, 'can_post_stories'),
-            ValueHelper::getBoolean($result, 'can_edit_stories'),
-            ValueHelper::getBoolean($result, 'can_delete_stories'),
-            ValueHelper::getBooleanOrNull($result, 'can_post_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_edit_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_pin_messages'),
-            ValueHelper::getBooleanOrNull($result, 'can_manage_topics'),
         );
     }
 }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
 final class CreateInvoiceLinkTest extends TestCase
@@ -101,7 +102,7 @@ final class CreateInvoiceLinkTest extends TestCase
             []
         );
 
-        $preparedResult = $method->prepareResult('https://example.com/invoice');
+        $preparedResult = TestHelper::createSuccessStubApi('https://example.com/invoice')->send($method);
 
         $this->assertSame('https://example.com/invoice', $preparedResult);
     }

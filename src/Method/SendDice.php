@@ -59,8 +59,8 @@ final readonly class SendDice implements TelegramRequestWithResultPreparingInter
         );
     }
 
-    public function prepareResult(mixed $result): mixed
+    public function getResultType(): string
     {
-        return Message::fromTelegramResult($result);
+        return Message::class;
     }
 }

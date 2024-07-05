@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetWebhookTest extends TestCase
 {
@@ -54,7 +55,7 @@ final class SetWebhookTest extends TestCase
     {
         $method = new SetWebhook('https://example.com/hook');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 
@@ -46,7 +47,7 @@ final class StarTransactionTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $object = StarTransaction::fromTelegramResult([
+        $object = (new ObjectFactory())->create([
             'id' => 'id1',
             'amount' => 2,
             'date' => 123456789,
@@ -56,7 +57,7 @@ final class StarTransactionTest extends TestCase
             'receiver' => [
                 'type' => 'other',
             ],
-        ]);
+        ], null, StarTransaction::class);
 
         $this->assertSame('id1', $object->id);
         $this->assertSame(2, $object->amount);
@@ -67,8 +68,10 @@ final class StarTransactionTest extends TestCase
 
     public function testFromTelegramResultWithInvalidResult(): void
     {
+        $objectFactory = new ObjectFactory();
+
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got "string".');
-        StarTransaction::fromTelegramResult('hello');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "array", but got "string".');
+        $objectFactory->create('hello', null, StarTransaction::class);
     }
 }

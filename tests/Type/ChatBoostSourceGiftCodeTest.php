@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourceGiftCode;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -23,14 +24,14 @@ final class ChatBoostSourceGiftCodeTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $source = ChatBoostSourceGiftCode::fromTelegramResult([
+        $source = (new ObjectFactory())->create([
             'source' => 'gift_code',
             'user' => [
                 'id' => 12,
                 'is_bot' => false,
                 'first_name' => 'Sergei',
             ],
-        ]);
+        ], null, ChatBoostSourceGiftCode::class);
 
         $this->assertSame(12, $source->user->id);
     }

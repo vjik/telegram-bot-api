@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 
 final class AnswerShippingQueryTest extends TestCase
@@ -59,7 +60,7 @@ final class AnswerShippingQueryTest extends TestCase
             true,
         );
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

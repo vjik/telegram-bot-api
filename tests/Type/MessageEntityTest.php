@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -64,7 +65,7 @@ final class MessageEntityTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $messageEntity = MessageEntity::fromTelegramResult([
+        $messageEntity = (new ObjectFactory())->create([
             'type' => 'bold',
             'offset' => 0,
             'length' => 4,
@@ -76,7 +77,7 @@ final class MessageEntityTest extends TestCase
             ],
             'language' => 'ru',
             'custom_emoji_id' => 'x6',
-        ]);
+        ], null, MessageEntity::class);
 
         $this->assertSame('bold', $messageEntity->type);
         $this->assertSame(0, $messageEntity->offset);

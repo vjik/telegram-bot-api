@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingAddress;
 
@@ -22,7 +23,7 @@ final class OrderInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $orderInfo = OrderInfo::fromTelegramResult([
+        $orderInfo = (new ObjectFactory())->create([
             'name' => 'name',
             'phone_number' => 'phone_number',
             'email' => 'email',
@@ -34,7 +35,7 @@ final class OrderInfoTest extends TestCase
                 'street_line2' => 'street_line2',
                 'post_code' => 'post_code',
             ],
-        ]);
+        ], null, OrderInfo::class);
 
         $this->assertSame('name', $orderInfo->name);
         $this->assertSame('phone_number', $orderInfo->phoneNumber);

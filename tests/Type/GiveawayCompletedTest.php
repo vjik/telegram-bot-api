@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\GiveawayCompleted;
 use Vjik\TelegramBot\Api\Type\Message;
 
@@ -21,7 +22,7 @@ final class GiveawayCompletedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $giveawayCompleted = GiveawayCompleted::fromTelegramResult([
+        $giveawayCompleted = (new ObjectFactory())->create([
             'winner_count' => 3,
             'unclaimed_prize_count' => 2,
             'giveaway_message' => [
@@ -32,7 +33,7 @@ final class GiveawayCompletedTest extends TestCase
                     'type' => 'private',
                 ],
             ],
-        ]);
+        ], null, GiveawayCompleted::class);
 
         $this->assertSame(3, $giveawayCompleted->winnerCount);
         $this->assertSame(2, $giveawayCompleted->unclaimedPrizeCount);

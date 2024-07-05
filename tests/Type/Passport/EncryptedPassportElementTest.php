@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 
@@ -28,7 +29,7 @@ final class EncryptedPassportElementTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $encryptedPassportElement = EncryptedPassportElement::fromTelegramResult([
+        $encryptedPassportElement = (new ObjectFactory())->create([
             'type' => 'personal_details',
             'hash' => 'test-hash',
             'data' => 'test-data',
@@ -68,7 +69,7 @@ final class EncryptedPassportElementTest extends TestCase
                     'file_date' => 1717512177
                 ]
             ],
-        ]);
+        ], null, EncryptedPassportElement::class);
 
         $this->assertSame('personal_details', $encryptedPassportElement->type);
         $this->assertSame('test-hash', $encryptedPassportElement->hash);

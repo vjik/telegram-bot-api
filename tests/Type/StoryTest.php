@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\Story;
 
@@ -21,13 +22,13 @@ final class StoryTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $story = Story::fromTelegramResult([
+        $story = (new ObjectFactory())->create([
             'chat' => [
                 'id' => 1,
                 'type' => 'private',
             ],
             'id' => 25,
-        ]);
+        ], null, Story::class);
 
         $this->assertSame(1, $story->chat->id);
         $this->assertSame(25, $story->id);

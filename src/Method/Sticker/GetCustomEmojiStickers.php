@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Sticker;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
@@ -39,12 +39,8 @@ final readonly class GetCustomEmojiStickers implements TelegramRequestWithResult
         ];
     }
 
-    /**
-     * @return Sticker[]
-     */
-    public function prepareResult(mixed $result): array
+    public function getResultType(): ArrayOfObjectsValue
     {
-        ValueHelper::assertArrayResult($result);
-        return ValueHelper::getArrayOfStickers($result);
+        return new ArrayOfObjectsValue(Sticker::class);
     }
 }

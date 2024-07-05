@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\CallbackQuery;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\User;
@@ -31,7 +32,7 @@ final class CallbackQueryTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $callbackQuery = CallbackQuery::fromTelegramResult([
+        $callbackQuery = (new ObjectFactory())->create([
             'id' => 'id1',
             'from' => [
                 'id' => 1,
@@ -51,7 +52,7 @@ final class CallbackQueryTest extends TestCase
             'inline_message_id' => 'm12',
             'data' => 'data1',
             'game_short_name' => 'game1',
-        ]);
+        ], null, CallbackQuery::class);
 
         $this->assertSame('id1', $callbackQuery->id);
         $this->assertSame(1, $callbackQuery->from->id);

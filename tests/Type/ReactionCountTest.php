@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
 
@@ -21,13 +22,13 @@ final class ReactionCountTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $count = ReactionCount::fromTelegramResult([
+        $count = (new ObjectFactory())->create([
             'type' => [
                 'type' => 'emoji',
                 'emoji' => '👍',
             ],
             'total_count' => 23,
-        ]);
+        ], null, ReactionCount::class);
 
         $this->assertSame('👍', $count->type->emoji);
         $this->assertSame(23, $count->totalCount);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillFreeformGradient;
 
 final class BackgroundFillFreeformGradientTest extends TestCase
@@ -19,10 +20,10 @@ final class BackgroundFillFreeformGradientTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $fill = BackgroundFillFreeformGradient::fromTelegramResult([
+        $fill = (new ObjectFactory())->create([
             'type' => 'freeform_gradient',
             'colors' => [0x000000, 0xFFFFFF],
-        ]);
+        ], null, BackgroundFillFreeformGradient::class);
 
         $this->assertSame('freeform_gradient', $fill->getType());
         $this->assertSame([0x000000, 0xFFFFFF], $fill->colors);

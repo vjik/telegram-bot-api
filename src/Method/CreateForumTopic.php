@@ -44,8 +44,8 @@ final readonly class CreateForumTopic implements TelegramRequestWithResultPrepar
         );
     }
 
-    public function prepareResult(mixed $result): ForumTopic
+    public function getResultType(): string
     {
-        return ForumTopic::fromTelegramResult($result);
+        return ForumTopic::class;
     }
 }

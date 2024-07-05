@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -34,7 +35,7 @@ final class BusinessConnectionTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $businessConnection = BusinessConnection::fromTelegramResult([
+        $businessConnection = (new ObjectFactory())->create([
             'id' => 'id1',
             'user' => [
                 'id' => 123,
@@ -45,7 +46,7 @@ final class BusinessConnectionTest extends TestCase
             'date' => 1717517779,
             'can_reply' => true,
             'is_enabled' => false,
-        ]);
+        ], null, BusinessConnection::class);
 
         $this->assertSame('id1', $businessConnection->id);
         $this->assertSame(123, $businessConnection->user->id);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
 
 final class ForumTopicClosedTest extends TestCase
@@ -17,7 +18,7 @@ final class ForumTopicClosedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        ForumTopicClosed::fromTelegramResult([]);
+        (new ObjectFactory())->create([], null, ForumTopicClosed::class);
         $this->expectNotToPerformAssertions();
     }
 }
