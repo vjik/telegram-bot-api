@@ -7,17 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests\ParseResult\ValueProcessor;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\BooleanValue;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\DateValue;
 
-final class BooleanValueTest extends TestCase
+final class DateValueTest extends TestCase
 {
     public function testInvalidType(): void
     {
         $objectFactory = new ObjectFactory();
-        $processor = new BooleanValue();
+        $processor = new DateValue();
 
         $this->expectException(InvalidTypeOfValueInResultException::class);
-        $this->expectExceptionMessage('Invalid type of value. Expected type is "boolean", but got "string".');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "integer", but got "string".');
         $processor->process('test', null, $objectFactory);
     }
 }
