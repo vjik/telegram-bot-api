@@ -28,6 +28,6 @@ final readonly class MessageOriginValue extends InterfaceValue
 
     public function getUnknownTypeMessage(): string
     {
-        return 'Unknown message origin source.';
+        return 'Unknown message origin type.';
     }
 }
