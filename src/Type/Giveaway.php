@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Type;
 
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
@@ -26,7 +26,7 @@ final readonly class Giveaway
         public ?true $onlyNewMembers = null,
         public ?true $hasPublicWinners = null,
         public ?string $prizeDescription = null,
-        #[ArrayOfValueProcessors(StringValue::class)]
+        #[ArrayMap(StringValue::class)]
         public ?array $countryCodes = null,
         public ?int $premiumSubscriptionMonthCount = null,
     ) {

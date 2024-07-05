@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ReactionTypeValue;
 
 /**
@@ -21,9 +21,9 @@ final readonly class MessageReactionUpdated
         public Chat $chat,
         public int $messageId,
         public DateTimeImmutable $date,
-        #[ArrayOfValueProcessors(ReactionTypeValue::class)]
+        #[ArrayMap(ReactionTypeValue::class)]
         public array $oldReaction,
-        #[ArrayOfValueProcessors(ReactionTypeValue::class)]
+        #[ArrayMap(ReactionTypeValue::class)]
         public array $newReaction,
         public ?User $user = null,
         public ?Chat $actorChat = null,

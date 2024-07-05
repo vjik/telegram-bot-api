@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ReactionTypeValue;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
@@ -29,14 +29,14 @@ final readonly class ChatFullInfo
         public ?string $lastName = null,
         public ?true $isForum = null,
         public ?ChatPhoto $photo = null,
-        #[ArrayOfValueProcessors(StringValue::class)]
+        #[ArrayMap(StringValue::class)]
         public ?array $activeUsernames = null,
         public ?Birthdate $birthdate = null,
         public ?BusinessIntro $businessIntro = null,
         public ?BusinessLocation $businessLocation = null,
         public ?BusinessOpeningHours $businessOpeningHours = null,
         public ?Chat $personalChat = null,
-        #[ArrayOfValueProcessors(ReactionTypeValue::class)]
+        #[ArrayMap(ReactionTypeValue::class)]
         public ?array $availableReactions = null,
         public ?string $backgroundCustomEmojiId = null,
         public ?int $profileAccentColorId = null,

@@ -9,7 +9,7 @@ use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 
 #[Attribute(Attribute::TARGET_PARAMETER)]
-final readonly class ArrayOfValueProcessors implements ValueProcessorInterface
+final readonly class ArrayMap implements ValueProcessorInterface
 {
     /**
      * @psalm-param class-string<ValueProcessorInterface> $className

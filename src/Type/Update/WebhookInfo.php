@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type\Update;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
@@ -25,7 +25,7 @@ final readonly class WebhookInfo
         public ?string $lastErrorMessage = null,
         public ?DateTimeImmutable $lastSynchronizationErrorDate = null,
         public ?int $maxConnections = null,
-        #[ArrayOfValueProcessors(StringValue::class)]
+        #[ArrayMap(StringValue::class)]
         public ?array $allowedUpdates = null,
     ) {
     }

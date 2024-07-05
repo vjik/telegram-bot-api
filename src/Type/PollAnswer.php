@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 
 /**
@@ -17,7 +17,7 @@ final readonly class PollAnswer
      */
     public function __construct(
         public string $pollId,
-        #[ArrayOfValueProcessors(IntegerValue::class)]
+        #[ArrayMap(IntegerValue::class)]
         public array $optionIds,
         public ?Chat $voterChat = null,
         public ?User $user = null,

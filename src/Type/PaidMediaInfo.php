@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\PaidMediaValue;
 
 /**
@@ -17,7 +17,7 @@ final readonly class PaidMediaInfo
      */
     public function __construct(
         public int $starCount,
-        #[ArrayOfValueProcessors(PaidMediaValue::class)]
+        #[ArrayMap(PaidMediaValue::class)]
         public array $paidMedia,
     ) {
     }

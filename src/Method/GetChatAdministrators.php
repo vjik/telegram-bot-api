@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -34,8 +34,8 @@ final readonly class GetChatAdministrators implements TelegramRequestWithResultP
         return ['chat_id' => $this->chatId];
     }
 
-    public function getResultType(): ArrayOfValueProcessors
+    public function getResultType(): ArrayMap
     {
-        return new ArrayOfValueProcessors(ChatMemberValue::class);
+        return new ArrayMap(ChatMemberValue::class);
     }
 }
