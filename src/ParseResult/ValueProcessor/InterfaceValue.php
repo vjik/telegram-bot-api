@@ -23,7 +23,7 @@ abstract readonly class InterfaceValue implements ValueProcessorInterface
         }
 
         if (!is_string($value[$typeKey])) {
-            throw new InvalidTypeOfValueInResultException($key, $value[$typeKey], 'string');
+            throw new InvalidTypeOfValueInResultException($typeKey, $value[$typeKey], 'string');
         }
 
         $className = $this->getClassMap()[$value[$typeKey]]

@@ -25,7 +25,7 @@ final readonly class MaybeInaccessibleMessageValue implements ValueProcessorInte
             throw new NotFoundKeyInResultException('date');
         }
         if (!is_int($date)) {
-            throw new InvalidTypeOfValueInResultException($key, $date, 'integer');
+            throw new InvalidTypeOfValueInResultException('date', $date, 'integer');
         }
 
         return $date === 0
