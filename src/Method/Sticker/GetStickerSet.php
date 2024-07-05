@@ -33,8 +33,8 @@ final readonly class GetStickerSet implements TelegramRequestWithResultPreparing
         return ['name' => $this->name];
     }
 
-    public function prepareResult(mixed $result): StickerSet
+    public function getResultType(): string
     {
-        return StickerSet::fromTelegramResult($result);
+        return StickerSet::class;
     }
 }

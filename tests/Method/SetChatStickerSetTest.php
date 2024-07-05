@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SetChatStickerSet;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetChatStickerSetTest extends TestCase
 {
@@ -29,7 +30,7 @@ final class SetChatStickerSetTest extends TestCase
     {
         $method = new SetChatStickerSet(1, 'animals_by_bot');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetMyDescriptionTest extends TestCase
 {
@@ -36,7 +37,7 @@ final class SetMyDescriptionTest extends TestCase
     {
         $method = new SetMyDescription();
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

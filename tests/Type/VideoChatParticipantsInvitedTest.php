@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\VideoChatParticipantsInvited;
 
@@ -20,11 +21,11 @@ final class VideoChatParticipantsInvitedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $videoChatParticipantsInvited = VideoChatParticipantsInvited::fromTelegramResult([
+        $videoChatParticipantsInvited = (new ObjectFactory())->create([
             'users' => [
                 ['id' => 1, 'is_bot' => false, 'first_name' => 'Sergei'],
             ],
-        ]);
+        ], null, VideoChatParticipantsInvited::class);
 
         $this->assertCount(1, $videoChatParticipantsInvited->users);
         $this->assertSame(1, $videoChatParticipantsInvited->users[0]->id);

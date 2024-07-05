@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class DeleteForumTopicTest extends TestCase
 {
@@ -29,7 +30,7 @@ final class DeleteForumTopicTest extends TestCase
     {
         $method = new DeleteForumTopic(1, 2);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

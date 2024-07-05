@@ -37,8 +37,8 @@ final readonly class GetUserChatBoosts implements TelegramRequestWithResultPrepa
         ];
     }
 
-    public function prepareResult(mixed $result): UserChatBoosts
+    public function getResultType(): string
     {
-        return UserChatBoosts::fromTelegramResult($result);
+        return UserChatBoosts::class;
     }
 }

@@ -38,8 +38,8 @@ final readonly class GetMyShortDescription implements TelegramRequestWithResultP
         );
     }
 
-    public function prepareResult(mixed $result): BotShortDescription
+    public function getResultType(): string
     {
-        return BotShortDescription::fromTelegramResult($result);
+        return BotShortDescription::class;
     }
 }

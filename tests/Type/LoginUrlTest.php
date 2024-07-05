@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\LoginUrl;
 
 final class LoginUrlTest extends TestCase
@@ -48,12 +49,12 @@ final class LoginUrlTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $loginUrl = LoginUrl::fromTelegramResult([
+        $loginUrl = (new ObjectFactory())->create([
             'url' => 'https://example.com/',
             'forward_text' => 'ft',
             'bot_username' => 'bun',
             'request_write_access' => false,
-        ]);
+        ], null, LoginUrl::class);
 
         $this->assertSame('https://example.com/', $loginUrl->url);
         $this->assertSame('ft', $loginUrl->forwardText);

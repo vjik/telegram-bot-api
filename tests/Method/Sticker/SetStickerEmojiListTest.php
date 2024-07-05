@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetStickerEmojiListTest extends TestCase
 {
@@ -29,7 +30,7 @@ final class SetStickerEmojiListTest extends TestCase
     {
         $method = new SetStickerEmojiList('sid', ['👀']);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

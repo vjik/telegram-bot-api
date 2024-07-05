@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Update;
 
 use HttpSoft\Message\StreamTrait;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 
 final class UpdateTest extends TestCase
@@ -41,11 +41,6 @@ final class UpdateTest extends TestCase
         $this->assertNull($update->chatJoinRequest);
         $this->assertNull($update->chatBoost);
         $this->assertNull($update->removedChatBoost);
-        $this->assertFalse($update->hasRaw());
-
-        $this->expectException(LogicException::class);
-        $this->expectExceptionMessage('Raw data is not available.');
-        $update->getRaw();
     }
 
     public function testFromTelegramResult(): void
@@ -324,7 +319,7 @@ final class UpdateTest extends TestCase
                 ],
             ],
         ];
-        $update = Update::fromTelegramResult($data);
+        $update = (new ObjectFactory())->create($data, null, Update::class);
 
         $this->assertSame(99, $update->updateId);
         $this->assertSame(1, $update->message?->messageId);
@@ -349,20 +344,12 @@ final class UpdateTest extends TestCase
         $this->assertSame(71326, $update->chatJoinRequest?->chat->id);
         $this->assertSame(23682, $update->chatBoost?->chat->id);
         $this->assertSame(1735, $update->removedChatBoost?->chat->id);
-        $this->assertTrue($update->hasRaw());
-        $this->assertSame($data, $update->getRaw());
     }
 
     public function testFromJsonString(): void
     {
         $update = Update::fromJson('{"update_id":33990940}');
         $this->assertSame(33990940, $update->updateId);
-        $this->assertSame(
-            [
-                'update_id' => 33990940
-            ],
-            $update->getRaw(),
-        );
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
@@ -385,12 +372,6 @@ final class UpdateTest extends TestCase
 
         $update = Update::fromServerRequest($request);
         $this->assertSame(33990940, $update->updateId);
-        $this->assertSame(
-            [
-                'update_id' => 33990940
-            ],
-            $update->getRaw(),
-        );
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');

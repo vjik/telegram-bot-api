@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Location;
 use Vjik\TelegramBot\Api\Type\Venue;
 
@@ -26,7 +27,7 @@ final class VenueTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $venue = Venue::fromTelegramResult([
+        $venue = (new ObjectFactory())->create([
             'location' => [
                 'latitude' => 1.1,
                 'longitude' => 2.2,
@@ -37,7 +38,7 @@ final class VenueTest extends TestCase
             'foursquare_type' => 'FoursquareType',
             'google_place_id' => 'GooglePlaceId',
             'google_place_type' => 'GooglePlaceType',
-        ]);
+        ], null, Venue::class);
 
         $this->assertSame(1.1, $venue->location->latitude);
         $this->assertSame(2.2, $venue->location->longitude);

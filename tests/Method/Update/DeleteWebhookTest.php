@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class DeleteWebhookTest extends TestCase
 {
@@ -37,7 +38,7 @@ final class DeleteWebhookTest extends TestCase
     {
         $method = new DeleteWebhook();
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

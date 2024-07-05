@@ -49,8 +49,8 @@ final readonly class EditChatInviteLink implements TelegramRequestWithResultPrep
         );
     }
 
-    public function prepareResult(mixed $result): ChatInviteLink
+    public function getResultType(): string
     {
-        return ChatInviteLink::fromTelegramResult($result);
+        return ChatInviteLink::class;
     }
 }

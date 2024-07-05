@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -45,7 +46,7 @@ final class ChatInviteLinkTest extends TestCase
             'pending_join_request_count' => 10,
         ];
 
-        $chatInviteLink = ChatInviteLink::fromTelegramResult($result);
+        $chatInviteLink = (new ObjectFactory())->create($result, null, ChatInviteLink::class);
 
         $this->assertSame('https://t.me/joinchat/x1', $chatInviteLink->inviteLink);
         $this->assertInstanceOf(User::class, $chatInviteLink->creator);

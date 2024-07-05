@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class RevokeChatInviteLinkTest extends TestCase
 {
@@ -29,7 +30,7 @@ final class RevokeChatInviteLinkTest extends TestCase
     {
         $method = new RevokeChatInviteLink(1, 'https://t.me/+example');
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'invite_link' => 'https//t.me/+example',
             'creator' => [
                 'id' => 23,
@@ -39,7 +40,7 @@ final class RevokeChatInviteLinkTest extends TestCase
             'creates_join_request' => true,
             'is_primary' => true,
             'is_revoked' => false,
-        ]);
+        ])->send($method);
 
         $this->assertSame(23, $preparedResult->creator->id);
     }

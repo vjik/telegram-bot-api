@@ -8,6 +8,7 @@ use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
@@ -46,7 +47,7 @@ final class ReplaceStickerInSetTest extends TestCase
             new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
         );
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

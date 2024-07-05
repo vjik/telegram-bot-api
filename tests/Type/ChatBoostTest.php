@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatBoost;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\User;
@@ -27,7 +28,7 @@ final class ChatBoostTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $chatBoost = ChatBoost::fromTelegramResult([
+        $chatBoost = (new ObjectFactory())->create([
             'boost_id' => 'b1',
             'add_date' => 1619040000,
             'expiration_date' => 1619040001,
@@ -39,7 +40,7 @@ final class ChatBoostTest extends TestCase
                     'first_name' => 'Sergei',
                 ],
             ],
-        ]);
+        ], null, ChatBoost::class);
 
         $this->assertSame('b1', $chatBoost->boostId);
         $this->assertEquals(new DateTimeImmutable('@1619040000'), $chatBoost->addDate);

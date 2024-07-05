@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MessageOriginUser;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -25,7 +26,7 @@ final class MessageOriginUserTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $origin = MessageOriginUser::fromTelegramResult([
+        $origin = (new ObjectFactory())->create([
             'type' => 'user',
             'date' => 12412512,
             'sender_user' => [
@@ -33,7 +34,7 @@ final class MessageOriginUserTest extends TestCase
                 'is_bot' => false,
                 'first_name' => 'Mike',
             ],
-        ]);
+        ], null, MessageOriginUser::class);
 
         $this->assertSame('user', $origin->getType());
         $this->assertSame(12412512, $origin->getDate()->getTimestamp());

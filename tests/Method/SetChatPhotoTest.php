@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SetChatPhoto;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class SetChatPhotoTest extends TestCase
@@ -32,7 +33,7 @@ final class SetChatPhotoTest extends TestCase
         $photo = new InputFile('/path/to/photo.jpg');
         $method = new SetChatPhoto(1, $photo);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

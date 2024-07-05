@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingAddress;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingQuery;
 use Vjik\TelegramBot\Api\Type\User;
@@ -37,7 +38,7 @@ final class ShippingQueryTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $shippingQuery = ShippingQuery::fromTelegramResult([
+        $shippingQuery = (new ObjectFactory())->create([
             'id' => 'id',
             'from' => [
                 'id' => 1,
@@ -53,7 +54,7 @@ final class ShippingQueryTest extends TestCase
                 'street_line2' => 'street_line2',
                 'post_code' => 'post_code',
             ],
-        ]);
+        ], null, ShippingQuery::class);
 
         $this->assertSame('id', $shippingQuery->id);
 

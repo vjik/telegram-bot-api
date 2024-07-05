@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
 final class CreateNewStickerSetTest extends TestCase
@@ -50,7 +51,7 @@ final class CreateNewStickerSetTest extends TestCase
     {
         $method = new CreateNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

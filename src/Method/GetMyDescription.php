@@ -38,8 +38,8 @@ final readonly class GetMyDescription implements TelegramRequestWithResultPrepar
         );
     }
 
-    public function prepareResult(mixed $result): BotDescription
+    public function getResultType(): string
     {
-        return BotDescription::fromTelegramResult($result);
+        return BotDescription::class;
     }
 }

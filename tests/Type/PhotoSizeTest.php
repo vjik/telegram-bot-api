@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
 final class PhotoSizeTest extends TestCase
@@ -22,13 +23,13 @@ final class PhotoSizeTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $photoSize = PhotoSize::fromTelegramResult([
+        $photoSize = (new ObjectFactory())->create([
             'file_id' => 'fileId',
             'file_unique_id' => 'fileUniqueId',
             'width' => 100,
             'height' => 200,
             'file_size' => 512,
-        ]);
+        ], null, PhotoSize::class);
 
         $this->assertInstanceOf(PhotoSize::class, $photoSize);
         $this->assertSame('fileId', $photoSize->fileId);

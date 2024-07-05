@@ -6,8 +6,10 @@ namespace Vjik\TelegramBot\Api\Tests\Request;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequest;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class TelegramRequestTest extends TestCase
@@ -19,14 +21,14 @@ final class TelegramRequestTest extends TestCase
             HttpMethod::POST,
             'getMe',
             ['param1' => 'value1', 'photo' => $photo],
-            static fn($v) => $v + 1,
+            new IntegerValue(),
         );
 
         $this->assertSame(HttpMethod::POST, $request->getHttpMethod());
         $this->assertSame('getMe', $request->getApiMethod());
         $this->assertSame(['param1' => 'value1', 'photo' => $photo], $request->getData());
 
-        $this->assertSame(33, $request->prepareResult(32));
+        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->send($request));
     }
 
     public function testWithoutSuccessCallback(): void
@@ -36,6 +38,6 @@ final class TelegramRequestTest extends TestCase
             'getMe',
         );
 
-        $this->assertSame(32, $request->prepareResult(32));
+        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->send($request));
     }
 }

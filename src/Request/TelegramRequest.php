@@ -4,23 +4,20 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Request;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
+
 final readonly class TelegramRequest implements TelegramRequestWithResultPreparingInterface
 {
     /**
-     * @var callable|null
-     */
-    private mixed $successCallback;
-
-    /**
      * @psalm-param array<string,mixed> $data
+     * @psalm-param class-string|ValueProcessorInterface|null $resultType
      */
     public function __construct(
         private HttpMethod $httpMethod,
         private string $apiMethod,
         private array $data = [],
-        ?callable $successCallback = null,
+        private string|ValueProcessorInterface|null $resultType = null,
     ) {
-        $this->successCallback = $successCallback;
     }
 
     public function getHttpMethod(): HttpMethod
@@ -38,10 +35,8 @@ final readonly class TelegramRequest implements TelegramRequestWithResultPrepari
         return $this->data;
     }
 
-    public function prepareResult(mixed $result): mixed
+    public function getResultType(): string|ValueProcessorInterface|null
     {
-        return $this->successCallback === null
-            ? $result
-            : call_user_func($this->successCallback, $result);
+        return $this->resultType;
     }
 }

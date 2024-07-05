@@ -4,7 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfValueProcessors;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 
 /**
  * @see https://core.telegram.org/bots/api#backgroundfillfreeformgradient
@@ -15,6 +16,7 @@ final readonly class BackgroundFillFreeformGradient implements BackgroundFill
      * @param int[] $colors
      */
     public function __construct(
+        #[ArrayOfValueProcessors(IntegerValue::class)]
         public array $colors,
     ) {
     }
@@ -22,13 +24,5 @@ final readonly class BackgroundFillFreeformGradient implements BackgroundFill
     public function getType(): string
     {
         return 'freeform_gradient';
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getArrayOfIntegers($result, 'colors'),
-        );
     }
 }

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\PreCheckoutQuery;
 use Vjik\TelegramBot\Api\Type\User;
@@ -33,7 +34,7 @@ final class PreCheckoutQueryTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $preCheckoutQuery = PreCheckoutQuery::fromTelegramResult([
+        $preCheckoutQuery = (new ObjectFactory())->create([
             'id' => 'id',
             'from' => [
                 'id' => 1,
@@ -47,7 +48,7 @@ final class PreCheckoutQueryTest extends TestCase
             'order_info' => [
                 'name' => 'OrderName',
             ],
-        ]);
+        ], null, PreCheckoutQuery::class);
 
         $this->assertSame('id', $preCheckoutQuery->id);
 

@@ -48,8 +48,8 @@ final readonly class ForwardMessage implements TelegramRequestWithResultPreparin
         );
     }
 
-    public function prepareResult(mixed $result): Message
+    public function getResultType(): string
     {
-        return Message::fromTelegramResult($result);
+        return Message::class;
     }
 }

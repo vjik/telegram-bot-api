@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberAdministrator;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -53,7 +54,7 @@ final class ChatMemberAdministratorTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $member = ChatMemberAdministrator::fromTelegramResult([
+        $member = (new ObjectFactory())->create([
             'user' => [
                 'id' => 123,
                 'is_bot' => false,
@@ -76,7 +77,7 @@ final class ChatMemberAdministratorTest extends TestCase
             'can_pin_messages' => true,
             'can_manage_topics' => false,
             'custom_title' => 'Custom title',
-        ]);
+        ], null, ChatMemberAdministrator::class);
 
         $this->assertSame(123, $member->user->id);
         $this->assertTrue($member->canBeEdited);

@@ -4,10 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
-use Vjik\TelegramBot\Api\Type\ChatMember;
-use Vjik\TelegramBot\Api\Type\ChatMemberFactory;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmember
@@ -38,8 +37,8 @@ final readonly class GetChatMember implements TelegramRequestWithResultPreparing
         ];
     }
 
-    public function prepareResult(mixed $result): ChatMember
+    public function getResultType(): ChatMemberValue
     {
-        return ChatMemberFactory::fromTelegramResult($result);
+        return new ChatMemberValue();
     }
 }

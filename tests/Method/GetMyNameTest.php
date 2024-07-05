@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetMyNameTest extends TestCase
 {
@@ -35,9 +36,9 @@ final class GetMyNameTest extends TestCase
     {
         $method = new GetMyName();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'name' => 'test',
-        ]);
+        ])->send($method);
 
         $this->assertSame('test', $preparedResult->name);
     }

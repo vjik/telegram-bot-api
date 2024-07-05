@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Voice;
 
 final class VoiceTest extends TestCase
@@ -22,13 +23,13 @@ final class VoiceTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $voice = Voice::fromTelegramResult([
+        $voice = (new ObjectFactory())->create([
             'file_id' => 'f1',
             'file_unique_id' => 'fu1',
             'duration' => 23,
             'mime_type' => 'audio/mpeg',
             'file_size' => 100,
-        ]);
+        ], null, Voice::class);
 
         $this->assertSame('f1', $voice->fileId);
         $this->assertSame('fu1', $voice->fileUniqueId);

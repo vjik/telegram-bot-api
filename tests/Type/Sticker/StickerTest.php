@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
@@ -43,7 +44,7 @@ final class StickerTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $sticker = Sticker::fromTelegramResult([
+        $sticker = (new ObjectFactory())->create([
             'file_id' => 'x1',
             'file_unique_id' => 'fullX1',
             'type' => 'regular',
@@ -74,7 +75,7 @@ final class StickerTest extends TestCase
             'custom_emoji_id' => 'customEmojiId',
             'needs_repainting' => true,
             'file_size' => 123,
-        ]);
+        ], null, Sticker::class);
 
         $this->assertSame('x1', $sticker->fileId);
         $this->assertSame('fullX1', $sticker->fileUniqueId);

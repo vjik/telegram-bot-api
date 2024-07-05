@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetUserChatBoostsTest extends TestCase
 {
@@ -29,9 +30,9 @@ final class GetUserChatBoostsTest extends TestCase
     {
         $method = new GetUserChatBoosts(1, 2);
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'boosts' => [],
-        ]);
+        ])->send($method);
 
         $this->assertSame([], $preparedResult->boosts);
     }

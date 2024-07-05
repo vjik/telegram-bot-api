@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\VideoChatScheduled;
 
 final class VideoChatScheduledTest extends TestCase
@@ -20,9 +21,9 @@ final class VideoChatScheduledTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $videoChatScheduled = VideoChatScheduled::fromTelegramResult([
+        $videoChatScheduled = (new ObjectFactory())->create([
             'start_date' => 1234567890,
-        ]);
+        ], null, VideoChatScheduled::class);
 
         $this->assertSame(1234567890, $videoChatScheduled->startDate->getTimestamp());
     }

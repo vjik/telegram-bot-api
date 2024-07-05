@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetForumTopicIconStickers;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 final class GetForumTopicIconStickersTest extends TestCase
@@ -24,7 +25,7 @@ final class GetForumTopicIconStickersTest extends TestCase
     {
         $method = new GetForumTopicIconStickers();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             [
                 'file_id' => 'x1',
                 'file_unique_id' => 'fullX1',
@@ -34,7 +35,7 @@ final class GetForumTopicIconStickersTest extends TestCase
                 'is_animated' => false,
                 'is_video' => true,
             ],
-        ]);
+        ])->send($method);
 
         $this->assertIsArray($preparedResult);
         $this->assertCount(1, $preparedResult);

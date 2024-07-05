@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStatePending;
 
 final class RevenueWithdrawalStatePendingTest extends TestCase
@@ -19,17 +20,19 @@ final class RevenueWithdrawalStatePendingTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $object = RevenueWithdrawalStatePending::fromTelegramResult([
+        $object = (new ObjectFactory())->create([
             'type' => 'pending',
-        ]);
+        ], null, RevenueWithdrawalStatePending::class);
 
         $this->assertSame('pending', $object->getType());
     }
 
     public function testFromTelegramResultWithInvalidResult(): void
     {
+        $objectFactory = new ObjectFactory();
+
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got "string".');
-        RevenueWithdrawalStatePending::fromTelegramResult('hello');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "array", but got "string".');
+        $objectFactory->create('hello', null, RevenueWithdrawalStatePending::class);
     }
 }

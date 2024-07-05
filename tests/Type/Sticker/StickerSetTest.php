@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 
 final class StickerSetTest extends TestCase
@@ -21,7 +22,7 @@ final class StickerSetTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $set = StickerSet::fromTelegramResult([
+        $set = (new ObjectFactory())->create([
             'name' => 'test_by_bot',
             'title' => 'test',
             'sticker_type' => 'regular',
@@ -42,7 +43,7 @@ final class StickerSetTest extends TestCase
                 'width' => 1,
                 'height' => 2,
             ]
-        ]);
+        ], null, StickerSet::class);
 
         $this->assertSame('test_by_bot', $set->name);
         $this->assertSame('test', $set->title);

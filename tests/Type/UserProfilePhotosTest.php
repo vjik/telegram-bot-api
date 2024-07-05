@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 
 final class UserProfilePhotosTest extends TestCase
@@ -19,7 +20,7 @@ final class UserProfilePhotosTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $userProfilePhotos = UserProfilePhotos::fromTelegramResult([
+        $userProfilePhotos = (new ObjectFactory())->create([
             'total_count' => 1,
             'photos' => [
                 [
@@ -39,7 +40,7 @@ final class UserProfilePhotosTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        ], null, UserProfilePhotos::class);
 
         $this->assertSame(1, $userProfilePhotos->totalCount);
 

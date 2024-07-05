@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Inline\ChosenInlineResult;
 use Vjik\TelegramBot\Api\Type\User;
 
@@ -28,7 +29,7 @@ final class ChosenInlineResultTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $chosenInlineResult = ChosenInlineResult::fromTelegramResult([
+        $chosenInlineResult = (new ObjectFactory())->create([
             'result_id' => 'x1',
             'from' => [
                 'id' => 1,
@@ -41,7 +42,7 @@ final class ChosenInlineResultTest extends TestCase
             ],
             'inline_message_id' => 'm1',
             'query' => 'query1',
-        ]);
+        ], null, ChosenInlineResult::class);
 
         $this->assertSame('x1', $chosenInlineResult->resultId);
 

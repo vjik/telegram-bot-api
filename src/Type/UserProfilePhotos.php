@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfArraysOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#userprofilephotos
@@ -17,16 +17,8 @@ final readonly class UserProfilePhotos
      */
     public function __construct(
         public int $totalCount,
+        #[ArrayOfArraysOfObjectsValue(PhotoSize::class)]
         public array $photos,
     ) {
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self(
-            ValueHelper::getInteger($result, 'total_count'),
-            ValueHelper::getArrayOfArrayOfPhotoSize($result, 'photos'),
-        );
     }
 }

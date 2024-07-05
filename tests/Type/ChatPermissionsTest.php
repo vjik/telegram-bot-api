@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
 final class ChatPermissionsTest extends TestCase
@@ -72,7 +73,7 @@ final class ChatPermissionsTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $chatPermissions = ChatPermissions::fromTelegramResult([
+        $chatPermissions = (new ObjectFactory())->create([
             'can_send_messages' => true,
             'can_send_audios' => false,
             'can_send_documents' => true,
@@ -87,7 +88,7 @@ final class ChatPermissionsTest extends TestCase
             'can_invite_users' => true,
             'can_pin_messages' => true,
             'can_manage_topics' => true,
-        ]);
+        ], null, ChatPermissions::class);
 
         $this->assertTrue($chatPermissions->canSendMessages);
         $this->assertFalse($chatPermissions->canSendAudios);

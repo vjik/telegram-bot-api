@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetMyCommands;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeDefault;
 
@@ -39,12 +40,12 @@ final class GetMyCommandsTest extends TestCase
     {
         $method = new GetMyCommands();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             [
                 'command' => 'start',
                 'description' => 'Start command',
             ]
-        ]);
+        ])->send($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(BotCommand::class, $preparedResult[0]);

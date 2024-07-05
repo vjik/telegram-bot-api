@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillSolid;
 use Vjik\TelegramBot\Api\Type\BackgroundTypePattern;
 use Vjik\TelegramBot\Api\Type\Document;
@@ -27,7 +28,7 @@ final class BackgroundTypePatternTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = BackgroundTypePattern::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'type' => 'pattern',
             'document' => [
                 'file_id' => 'f123',
@@ -40,7 +41,7 @@ final class BackgroundTypePatternTest extends TestCase
             'intensity' => 5,
             'is_inverted' => true,
             'is_moving' => true,
-        ]);
+        ], null, BackgroundTypePattern::class);
 
         $this->assertSame('pattern', $type->getType());
 

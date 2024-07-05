@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
 final class WebAppInfoTest extends TestCase
@@ -25,9 +26,9 @@ final class WebAppInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $webAppInfo = WebAppInfo::fromTelegramResult([
+        $webAppInfo = (new ObjectFactory())->create([
             'url' => 'https://example.com',
-        ]);
+        ], null, WebAppInfo::class);
 
         $this->assertSame('https://example.com', $webAppInfo->url);
     }

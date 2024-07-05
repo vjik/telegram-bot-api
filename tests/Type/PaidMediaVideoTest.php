@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaVideo;
 use Vjik\TelegramBot\Api\Type\Video;
 
@@ -21,7 +22,7 @@ final class PaidMediaVideoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = PaidMediaVideo::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'type' => 'video',
             'video' => [
                 'file_id' => 'f12',
@@ -30,7 +31,7 @@ final class PaidMediaVideoTest extends TestCase
                 'height' => 200,
                 'duration' => 23,
             ],
-        ]);
+        ], null, PaidMediaVideo::class);
 
         $this->assertSame('video', $type->getType());
         $this->assertSame('f12', $type->video->fileId);

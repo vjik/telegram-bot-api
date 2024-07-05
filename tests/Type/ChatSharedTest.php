@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatShared;
 
 final class ChatSharedTest extends TestCase
@@ -22,7 +23,7 @@ final class ChatSharedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $chatShared = ChatShared::fromTelegramResult([
+        $chatShared = (new ObjectFactory())->create([
             'request_id' => 12,
             'chat_id' => 89,
             'title' => 'Title',
@@ -31,7 +32,7 @@ final class ChatSharedTest extends TestCase
                 ['file_id' => 'file_id1', 'file_unique_id' => 'file_unique_id1', 'width' => 1, 'height' => 2],
                 ['file_id' => 'file_id2', 'file_unique_id' => 'file_unique_id2', 'width' => 3, 'height' => 4],
             ],
-        ]);
+        ], null, ChatShared::class);
 
         $this->assertSame(12, $chatShared->requestId);
         $this->assertSame(89, $chatShared->chatId);

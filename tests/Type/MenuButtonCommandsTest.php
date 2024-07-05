@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MenuButtonCommands;
 
 final class MenuButtonCommandsTest extends TestCase
@@ -21,9 +22,9 @@ final class MenuButtonCommandsTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $button = MenuButtonCommands::fromTelegramResult([
+        $button = (new ObjectFactory())->create([
             'type' => 'commands',
-        ]);
+        ], null, MenuButtonCommands::class);
 
         $this->assertSame('commands', $button->getType());
     }
@@ -31,7 +32,7 @@ final class MenuButtonCommandsTest extends TestCase
     public function testFromTelegramResultWithInvalidResult(): void
     {
         $this->expectException(TelegramParseResultException::class);
-        $this->expectExceptionMessage('Expected result as array. Got "string".');
-        MenuButtonCommands::fromTelegramResult('hello');
+        $this->expectExceptionMessage('Invalid type of value. Expected type is "array", but got "string".');
+        (new ObjectFactory())->create('hello', null, MenuButtonCommands::class);
     }
 }

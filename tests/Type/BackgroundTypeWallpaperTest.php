@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundTypeWallpaper;
 use Vjik\TelegramBot\Api\Type\Document;
 
@@ -24,7 +25,7 @@ final class BackgroundTypeWallpaperTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = BackgroundTypeWallpaper::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'type' => 'wallpaper',
             'document' => [
                 'file_id' => 'f123',
@@ -33,7 +34,7 @@ final class BackgroundTypeWallpaperTest extends TestCase
             'dark_theme_dimming' => 7,
             'is_blurred' => true,
             'is_moving' => true,
-        ]);
+        ], null, BackgroundTypeWallpaper::class);
 
         $this->assertSame('wallpaper', $type->getType());
 

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetMeTest extends TestCase
 {
@@ -23,11 +24,11 @@ final class GetMeTest extends TestCase
     {
         $method = new getMe();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'id' => 1,
             'is_bot' => false,
             'first_name' => 'Sergei',
-        ]);
+        ])->send($method);
 
         $this->assertSame(1, $preparedResult->id);
     }

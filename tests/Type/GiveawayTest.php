@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\Giveaway;
 
@@ -29,7 +30,7 @@ final class GiveawayTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $giveaway = Giveaway::fromTelegramResult([
+        $giveaway = (new ObjectFactory())->create([
             'chats' => [
                 ['id' => 1, 'type' => 'private'],
             ],
@@ -40,7 +41,7 @@ final class GiveawayTest extends TestCase
             'prize_description' => 'prize',
             'country_codes' => ['RU'],
             'premium_subscription_month_count' => 7,
-        ]);
+        ], null, Giveaway::class);
 
         $this->assertCount(1, $giveaway->chats);
         $this->assertInstanceOf(Chat::class, $giveaway->chats[0]);

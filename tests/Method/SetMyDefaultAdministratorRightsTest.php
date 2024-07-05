@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
 final class SetMyDefaultAdministratorRightsTest extends TestCase
@@ -38,7 +39,7 @@ final class SetMyDefaultAdministratorRightsTest extends TestCase
     {
         $method = new SetMyDefaultAdministratorRights();
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

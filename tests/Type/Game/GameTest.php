@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Game;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Animation;
 use Vjik\TelegramBot\Api\Type\Game\Game;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
@@ -33,7 +34,7 @@ final class GameTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $game = Game::fromTelegramResult([
+        $game = (new ObjectFactory())->create([
             'title' => 'My Game',
             'description' => 'The best game.',
             'photo' => [
@@ -59,7 +60,7 @@ final class GameTest extends TestCase
                 'height' => 400,
                 'duration' => 12,
             ],
-        ]);
+        ], null, Game::class);
 
         $this->assertSame('My Game', $game->title);
         $this->assertSame('The best game.', $game->description);

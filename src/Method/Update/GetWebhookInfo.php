@@ -28,8 +28,8 @@ final readonly class GetWebhookInfo implements TelegramRequestWithResultPreparin
         return [];
     }
 
-    public function prepareResult(mixed $result): WebhookInfo
+    public function getResultType(): string
     {
-        return WebhookInfo::fromTelegramResult($result);
+        return WebhookInfo::class;
     }
 }

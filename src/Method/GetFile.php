@@ -35,8 +35,8 @@ final readonly class GetFile implements TelegramRequestWithResultPreparingInterf
         ];
     }
 
-    public function prepareResult(mixed $result): File
+    public function getResultType(): string
     {
-        return File::fromTelegramResult($result);
+        return File::class;
     }
 }

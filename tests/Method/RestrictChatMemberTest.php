@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
 final class RestrictChatMemberTest extends TestCase
@@ -51,7 +52,7 @@ final class RestrictChatMemberTest extends TestCase
     {
         $method = new RestrictChatMember(1, 2, new ChatPermissions());
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

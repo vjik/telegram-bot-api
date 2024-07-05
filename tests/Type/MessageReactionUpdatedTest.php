@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\MessageReactionUpdated;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
@@ -29,7 +30,7 @@ final class MessageReactionUpdatedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $messageReactionUpdated = MessageReactionUpdated::fromTelegramResult([
+        $messageReactionUpdated = (new ObjectFactory())->create([
             'chat' => [
                 'id' => 1,
                 'type' => 'private',
@@ -57,7 +58,7 @@ final class MessageReactionUpdatedTest extends TestCase
                     'emoji' => ';)',
                 ],
             ],
-        ]);
+        ], null, MessageReactionUpdated::class);
 
         $this->assertSame(1, $messageReactionUpdated->chat->id);
         $this->assertSame(99, $messageReactionUpdated->messageId);

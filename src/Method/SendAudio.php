@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
@@ -81,8 +82,8 @@ final readonly class SendAudio implements TelegramRequestWithResultPreparingInte
         );
     }
 
-    public function prepareResult(mixed $result): Message
+    public function getResultType(): string
     {
-        return Message::fromTelegramResult($result);
+        return Message::class;
     }
 }

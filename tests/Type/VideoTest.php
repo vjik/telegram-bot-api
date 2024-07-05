@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Video;
 
 final class VideoTest extends TestCase
@@ -26,7 +27,7 @@ final class VideoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $video = Video::fromTelegramResult([
+        $video = (new ObjectFactory())->create([
             'file_id' => 'f12',
             'file_unique_id' => 'fu12',
             'width' => 100,
@@ -41,7 +42,7 @@ final class VideoTest extends TestCase
             'file_name' => 'face.png',
             'mime_type' => 'image/png',
             'file_size' => 123,
-        ]);
+        ], null, Video::class);
 
         $this->assertSame('f12', $video->fileId);
         $this->assertSame('fu12', $video->fileUniqueId);

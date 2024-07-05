@@ -35,8 +35,8 @@ final readonly class GetChat implements TelegramRequestWithResultPreparingInterf
         ];
     }
 
-    public function prepareResult(mixed $result): ChatFullInfo
+    public function getResultType(): string
     {
-        return ChatFullInfo::fromTelegramResult($result);
+        return ChatFullInfo::class;
     }
 }

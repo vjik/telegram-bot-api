@@ -35,8 +35,8 @@ final readonly class GetBusinessConnection implements TelegramRequestWithResultP
         ];
     }
 
-    public function prepareResult(mixed $result): BusinessConnection
+    public function getResultType(): string
     {
-        return BusinessConnection::fromTelegramResult($result);
+        return BusinessConnection::class;
     }
 }

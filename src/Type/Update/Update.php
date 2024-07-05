@@ -5,10 +5,9 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type\Update;
 
 use JsonException;
-use LogicException;
 use Psr\Http\Message\ServerRequestInterface;
+use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\BusinessMessagesDeleted;
 use Vjik\TelegramBot\Api\Type\CallbackQuery;
@@ -29,124 +28,33 @@ use Vjik\TelegramBot\Api\Type\PollAnswer;
 /**
  * @see https://core.telegram.org/bots/api#update
  */
-final class Update
+final readonly class Update
 {
-    private ?array $raw = null;
-
     public function __construct(
-        public readonly int $updateId,
-        public readonly ?Message $message = null,
-        public readonly ?Message $editedMessage = null,
-        public readonly ?Message $channelPost = null,
-        public readonly ?Message $editedChannelPost = null,
-        public readonly ?BusinessConnection $businessConnection = null,
-        public readonly ?Message $businessMessage = null,
-        public readonly ?Message $editedBusinessMessage = null,
-        public readonly ?BusinessMessagesDeleted $deletedBusinessMessages = null,
-        public readonly ?MessageReactionUpdated $messageReaction = null,
-        public readonly ?MessageReactionCountUpdated $messageReactionCount = null,
-        public readonly ?InlineQuery $inlineQuery = null,
-        public readonly ?ChosenInlineResult $chosenInlineResult = null,
-        public readonly ?CallbackQuery $callbackQuery = null,
-        public readonly ?ShippingQuery $shippingQuery = null,
-        public readonly ?PreCheckoutQuery $preCheckoutQuery = null,
-        public readonly ?Poll $poll = null,
-        public readonly ?PollAnswer $pollAnswer = null,
-        public readonly ?ChatMemberUpdated $myChatMember = null,
-        public readonly ?ChatMemberUpdated $chatMember = null,
-        public readonly ?ChatJoinRequest $chatJoinRequest = null,
-        public readonly ?ChatBoostUpdated $chatBoost = null,
-        public readonly ?ChatBoostRemoved $removedChatBoost = null,
+        public int $updateId,
+        public ?Message $message = null,
+        public ?Message $editedMessage = null,
+        public ?Message $channelPost = null,
+        public ?Message $editedChannelPost = null,
+        public ?BusinessConnection $businessConnection = null,
+        public ?Message $businessMessage = null,
+        public ?Message $editedBusinessMessage = null,
+        public ?BusinessMessagesDeleted $deletedBusinessMessages = null,
+        public ?MessageReactionUpdated $messageReaction = null,
+        public ?MessageReactionCountUpdated $messageReactionCount = null,
+        public ?InlineQuery $inlineQuery = null,
+        public ?ChosenInlineResult $chosenInlineResult = null,
+        public ?CallbackQuery $callbackQuery = null,
+        public ?ShippingQuery $shippingQuery = null,
+        public ?PreCheckoutQuery $preCheckoutQuery = null,
+        public ?Poll $poll = null,
+        public ?PollAnswer $pollAnswer = null,
+        public ?ChatMemberUpdated $myChatMember = null,
+        public ?ChatMemberUpdated $chatMember = null,
+        public ?ChatJoinRequest $chatJoinRequest = null,
+        public ?ChatBoostUpdated $chatBoost = null,
+        public ?ChatBoostRemoved $removedChatBoost = null,
     ) {
-    }
-
-    public function hasRaw(): bool
-    {
-        return $this->raw !== null;
-    }
-
-    public function getRaw(): array
-    {
-        if ($this->raw === null) {
-            throw new LogicException('Raw data is not available.');
-        }
-        return $this->raw;
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        $update = new Update(
-            ValueHelper::getInteger($result, 'update_id'),
-            array_key_exists('message', $result)
-                ? Message::fromTelegramResult($result['message'])
-                : null,
-            array_key_exists('edited_message', $result)
-                ? Message::fromTelegramResult($result['edited_message'])
-                : null,
-            array_key_exists('channel_post', $result)
-                ? Message::fromTelegramResult($result['channel_post'])
-                : null,
-            array_key_exists('edited_channel_post', $result)
-                ? Message::fromTelegramResult($result['edited_channel_post'])
-                : null,
-            array_key_exists('business_connection', $result)
-                ? BusinessConnection::fromTelegramResult($result['business_connection'])
-                : null,
-            array_key_exists('business_message', $result)
-                ? Message::fromTelegramResult($result['business_message'])
-                : null,
-            array_key_exists('edited_business_message', $result)
-                ? Message::fromTelegramResult($result['edited_business_message'])
-                : null,
-            array_key_exists('deleted_business_messages', $result)
-                ? BusinessMessagesDeleted::fromTelegramResult($result['deleted_business_messages'])
-                : null,
-            array_key_exists('message_reaction', $result)
-                ? MessageReactionUpdated::fromTelegramResult($result['message_reaction'])
-                : null,
-            array_key_exists('message_reaction_count', $result)
-                ? MessageReactionCountUpdated::fromTelegramResult($result['message_reaction_count'])
-                : null,
-            array_key_exists('inline_query', $result)
-                ? InlineQuery::fromTelegramResult($result['inline_query'])
-                : null,
-            array_key_exists('chosen_inline_result', $result)
-                ? ChosenInlineResult::fromTelegramResult($result['chosen_inline_result'])
-                : null,
-            array_key_exists('callback_query', $result)
-                ? CallbackQuery::fromTelegramResult($result['callback_query'])
-                : null,
-            array_key_exists('shipping_query', $result)
-                ? ShippingQuery::fromTelegramResult($result['shipping_query'])
-                : null,
-            array_key_exists('pre_checkout_query', $result)
-                ? PreCheckoutQuery::fromTelegramResult($result['pre_checkout_query'])
-                : null,
-            array_key_exists('poll', $result)
-                ? Poll::fromTelegramResult($result['poll'])
-                : null,
-            array_key_exists('poll_answer', $result)
-                ? PollAnswer::fromTelegramResult($result['poll_answer'])
-                : null,
-            array_key_exists('my_chat_member', $result)
-                ? ChatMemberUpdated::fromTelegramResult($result['my_chat_member'])
-                : null,
-            array_key_exists('chat_member', $result)
-                ? ChatMemberUpdated::fromTelegramResult($result['chat_member'])
-                : null,
-            array_key_exists('chat_join_request', $result)
-                ? ChatJoinRequest::fromTelegramResult($result['chat_join_request'])
-                : null,
-            array_key_exists('chat_boost', $result)
-                ? ChatBoostUpdated::fromTelegramResult($result['chat_boost'])
-                : null,
-            array_key_exists('removed_chat_boost', $result)
-                ? ChatBoostRemoved::fromTelegramResult($result['removed_chat_boost'])
-                : null,
-        );
-        $update->raw = $result;
-        return $update;
     }
 
     /**
@@ -162,7 +70,8 @@ final class Update
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
         }
 
-        return self::fromTelegramResult($decodedJson);
+        /** @var Update */
+        return (new ResultFactory())->create($decodedJson, self::class);
     }
 
     /**

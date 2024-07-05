@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerKeywords;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetStickerKeywordsTest extends TestCase
 {
@@ -43,7 +44,7 @@ final class SetStickerKeywordsTest extends TestCase
     {
         $method = new SetStickerKeywords('sid');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\SetCustomEmojiStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class SetCustomEmojiStickerSetThumbnailTest extends TestCase
 {
@@ -43,7 +44,7 @@ final class SetCustomEmojiStickerSetThumbnailTest extends TestCase
     {
         $method = new SetCustomEmojiStickerSetThumbnail('animals_by_my_bot');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

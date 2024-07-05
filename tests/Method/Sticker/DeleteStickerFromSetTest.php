@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerFromSet;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class DeleteStickerFromSetTest extends TestCase
 {
@@ -28,7 +29,7 @@ final class DeleteStickerFromSetTest extends TestCase
     {
         $method = new DeleteStickerFromSet('id');
 
-        $preparedResult = $method->prepareResult(true);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 
         $this->assertTrue($preparedResult);
     }

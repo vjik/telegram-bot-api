@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
@@ -84,9 +84,8 @@ final readonly class CreateInvoiceLink implements TelegramRequestWithResultPrepa
         );
     }
 
-    public function prepareResult(mixed $result): string
+    public function getResultType(): StringValue
     {
-        ValueHelper::assertStringResult($result);
-        return $result;
+        return new StringValue();
     }
 }

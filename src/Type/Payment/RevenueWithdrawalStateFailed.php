@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Payment;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
-
 /**
  * @see https://core.telegram.org/bots/api#revenuewithdrawalstatefailed
  */
@@ -14,11 +12,5 @@ final readonly class RevenueWithdrawalStateFailed implements RevenueWithdrawalSt
     public function getType(): string
     {
         return 'failed';
-    }
-
-    public static function fromTelegramResult(mixed $result): self
-    {
-        ValueHelper::assertArrayResult($result);
-        return new self();
     }
 }

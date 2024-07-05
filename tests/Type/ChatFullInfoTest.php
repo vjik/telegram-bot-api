@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Birthdate;
 use Vjik\TelegramBot\Api\Type\BusinessIntro;
 use Vjik\TelegramBot\Api\Type\BusinessLocation;
@@ -71,7 +72,7 @@ final class ChatFullInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $info = ChatFullInfo::fromTelegramResult([
+        $info = (new ObjectFactory())->create([
             'id' => 23,
             'type' => 'private',
             'accent_color_id' => 0x123456,
@@ -159,7 +160,7 @@ final class ChatFullInfoTest extends TestCase
                 'address' => 'Moscow',
             ],
             'can_send_paid_media' => true,
-        ]);
+        ], null, ChatFullInfo::class);
 
         $this->assertSame(23, $info->id);
         $this->assertSame('private', $info->type);

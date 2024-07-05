@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\TextQuote;
 
 final class TextQuoteTest extends TestCase
@@ -21,7 +22,7 @@ final class TextQuoteTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $textQuote = TextQuote::fromTelegramResult([
+        $textQuote = (new ObjectFactory())->create([
             'text' => 'test',
             'position' => 23,
             'entities' => [
@@ -32,7 +33,7 @@ final class TextQuoteTest extends TestCase
                 ],
             ],
             'is_manual' => true,
-        ]);
+        ], null, TextQuote::class);
 
         $this->assertSame('test', $textQuote->text);
         $this->assertSame(23, $textQuote->position);

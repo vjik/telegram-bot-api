@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\ParseResult\ValueHelper;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
@@ -42,15 +42,8 @@ final readonly class GetMyCommands implements TelegramRequestWithResultPreparing
         );
     }
 
-    /**
-     * @return BotCommand[]
-     */
-    public function prepareResult(mixed $result): array
+    public function getResultType(): ArrayOfObjectsValue
     {
-        ValueHelper::assertArrayResult($result);
-        return array_map(
-            static fn($item) => BotCommand::fromTelegramResult($item),
-            $result
-        );
+        return new ArrayOfObjectsValue(BotCommand::class);
     }
 }

@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetWebhookInfoTest extends TestCase
 {
@@ -23,11 +24,11 @@ final class GetWebhookInfoTest extends TestCase
     {
         $method = new GetWebhookInfo();
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'url' => 'https://example.com/',
             'has_custom_certificate' => true,
             'pending_update_count' => 12,
-        ]);
+        ])->send($method);
 
         $this->assertSame('https://example.com/', $preparedResult->url);
     }

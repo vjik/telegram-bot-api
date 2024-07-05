@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
@@ -70,14 +71,14 @@ final class SendContactTest extends TestCase
     {
         $method = new SendContact(12, '1234567890', 'John');
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
             'date' => 1620000000,
             'chat' => [
                 'id' => 1,
                 'type' => 'private',
             ],
-        ]);
+        ])->send($method);
 
         $this->assertSame(7, $preparedResult->messageId);
     }

@@ -8,6 +8,7 @@ use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SendMediaGroup;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -72,7 +73,7 @@ final class SendMediaGroupTest extends TestCase
     {
         $method = new SendMediaGroup(12, []);
 
-        $result = $method->prepareResult([
+        $result = TestHelper::createSuccessStubApi([
             [
                 'message_id' => 7,
                 'date' => 1620000000,
@@ -81,7 +82,7 @@ final class SendMediaGroupTest extends TestCase
                     'type' => 'private',
                 ],
             ],
-        ]);
+        ])->send($method);
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result);

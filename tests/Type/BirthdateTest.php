@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Birthdate;
 
 final class BirthdateTest extends TestCase
@@ -20,11 +21,11 @@ final class BirthdateTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $birthdate = Birthdate::fromTelegramResult([
+        $birthdate = (new ObjectFactory())->create([
             'day' => 27,
             'month' => 1,
             'year' => 1986,
-        ]);
+        ], null, Birthdate::class);
 
         $this->assertSame(27, $birthdate->day);
         $this->assertSame(1, $birthdate->month);

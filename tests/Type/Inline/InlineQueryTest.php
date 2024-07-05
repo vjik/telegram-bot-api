@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQuery;
 use Vjik\TelegramBot\Api\Type\Location;
 use Vjik\TelegramBot\Api\Type\User;
@@ -31,7 +32,7 @@ final class InlineQueryTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $inlineQuery = InlineQuery::fromTelegramResult([
+        $inlineQuery = (new ObjectFactory())->create([
             'id' => 'id1',
             'from' => [
                 'id' => 1,
@@ -45,7 +46,7 @@ final class InlineQueryTest extends TestCase
                 'latitude' => 1.2,
                 'longitude' => 3.4,
             ],
-        ]);
+        ], null, InlineQuery::class);
 
         $this->assertSame('id1', $inlineQuery->id);
 

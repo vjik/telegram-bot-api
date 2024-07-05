@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class CreateForumTopicTest extends TestCase
 {
@@ -46,12 +47,12 @@ final class CreateForumTopicTest extends TestCase
     {
         $method = new CreateForumTopic(1, 'test');
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             'message_thread_id' => 19,
             'name' => 'test',
             'icon_color' => 0x00FF00,
             'icon_custom_emoji_id' => '2351346235143',
-        ]);
+        ])->send($method);
 
         $this->assertSame(19, $preparedResult->messageThreadId);
     }

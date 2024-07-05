@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
 
 final class PaidMediaPreviewTest extends TestCase
@@ -31,12 +32,12 @@ final class PaidMediaPreviewTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = PaidMediaPreview::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'type' => 'preview',
             'width' => 100,
             'height' => 200,
             'duration' => 512,
-        ]);
+        ], null, PaidMediaPreview::class);
 
         $this->assertSame('preview', $type->getType());
         $this->assertSame(100, $type->width);

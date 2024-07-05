@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\MessageOriginUser;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
@@ -46,7 +47,7 @@ final class ExternalReplyInfoTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $externalReplyInfo = ExternalReplyInfo::fromTelegramResult([
+        $externalReplyInfo = (new ObjectFactory())->create([
             'origin' => [
                 'type' => 'user',
                 'date' => 1620000000,
@@ -189,7 +190,7 @@ final class ExternalReplyInfoTest extends TestCase
                     ],
                 ],
             ],
-        ]);
+        ], null, ExternalReplyInfo::class);
 
         $this->assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);
         $this->assertSame(123, $externalReplyInfo->origin->senderUser->id);

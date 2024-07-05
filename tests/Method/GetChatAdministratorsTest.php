@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 
 final class GetChatAdministratorsTest extends TestCase
@@ -29,12 +30,12 @@ final class GetChatAdministratorsTest extends TestCase
     {
         $method = new GetChatAdministrators(1);
 
-        $preparedResult = $method->prepareResult([
+        $preparedResult = TestHelper::createSuccessStubApi([
             [
                 'status' => 'member',
                 'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
             ],
-        ]);
+        ])->send($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(ChatMemberMember::class, $preparedResult[0]);

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
+use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 
 final class ForumTopicTest extends TestCase
@@ -21,12 +22,12 @@ final class ForumTopicTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $type = ForumTopic::fromTelegramResult([
+        $type = (new ObjectFactory())->create([
             'message_thread_id' => 1,
             'name' => 'test',
             'icon_color' => 0x00FF00,
             'icon_custom_emoji_id' => '2351346235143',
-        ]);
+        ], null, ForumTopic::class);
 
         $this->assertSame(1, $type->messageThreadId);
         $this->assertSame('test', $type->name);

@@ -38,8 +38,8 @@ final readonly class GetMyDefaultAdministratorRights implements TelegramRequestW
         );
     }
 
-    public function prepareResult(mixed $result): ChatAdministratorRights
+    public function getResultType(): string
     {
-        return ChatAdministratorRights::fromTelegramResult($result);
+        return ChatAdministratorRights::class;
     }
 }
