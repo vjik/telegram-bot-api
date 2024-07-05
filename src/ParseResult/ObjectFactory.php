@@ -35,9 +35,6 @@ use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalState;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartner;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 
-/**
- * @internal
- */
 final class ObjectFactory
 {
     /**
