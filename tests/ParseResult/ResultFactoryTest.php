@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\Tests\Support\Car;
+use Vjik\TelegramBot\Api\Tests\Support\Color;
 use Vjik\TelegramBot\Api\Type\BotName;
 
 final class ResultFactoryTest extends TestCase
@@ -41,5 +42,14 @@ final class ResultFactoryTest extends TestCase
             'Invalid type of value for key "name". Expected type is "string", but got "int".'
         );
         $factory->create(['name' => 23], BotName::class);
+    }
+
+    public function testNotExistsClass(): void
+    {
+        $factory = new ResultFactory();
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Unsupported PHP type: Vjik\TelegramBot\Api\Tests\Support\NotExists');
+        $factory->create([], Color::class);
     }
 }
