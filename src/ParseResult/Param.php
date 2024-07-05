@@ -17,7 +17,7 @@ final readonly class Param
     public function __construct(
         public string $key,
         public string|ValueProcessorInterface $type,
-        public bool $optional = false,
+        public bool $optional,
     ) {
     }
 }
