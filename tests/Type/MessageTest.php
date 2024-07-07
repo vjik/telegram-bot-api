@@ -17,6 +17,7 @@ use Vjik\TelegramBot\Api\Type\GiveawayCreated;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageOriginHiddenUser;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
+use Vjik\TelegramBot\Api\Type\Payment\RefundedPayment;
 use Vjik\TelegramBot\Api\Type\VideoChatStarted;
 
 final class MessageTest extends TestCase
@@ -110,6 +111,7 @@ final class MessageTest extends TestCase
         $this->assertNull($message->videoChatParticipantsInvited);
         $this->assertNull($message->webAppData);
         $this->assertNull($message->replyMarkup);
+        $this->assertNull($message->refundedPayment);
     }
 
     public function testFromTelegramResult(): void
@@ -459,6 +461,12 @@ final class MessageTest extends TestCase
                     ],
                 ],
             ],
+            'refunded_payment' => [
+                'currency' => 'XTR',
+                'total_amount' => 12,
+                'invoice_payload' => 'ip',
+                'telegram_payment_charge_id' => 'tpid',
+            ],
         ], null, Message::class);
 
         $this->assertSame(7, $message->messageId);
@@ -567,5 +575,6 @@ final class MessageTest extends TestCase
         $this->assertSame('Button1241', $message->replyMarkup->inlineKeyboard[0][0]->text);
         $this->assertSame(1, $message->paidMedia?->starCount);
         $this->assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
+        $this->assertEquals(new RefundedPayment('XTR', 12, 'ip', 'tpid'), $message->refundedPayment);
     }
 }
