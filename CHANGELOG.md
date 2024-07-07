@@ -2,6 +2,7 @@
 
 ## 0.3.0 under development
 
+- New #100: Add `RefundedPayment` type.
 - Chg #99: Add `ResultFactory` and value processors, simplify type and method classes.
 
 ## 0.2.1 July 2, 2024
