@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.3.0 under development
+## 0.3.0 July 7, 2024
 
 - New #100: Add `refundedPayment` parameter to `Message` type and add `RefundedPayment` type.
 - Chg #99: Add `ResultFactory` and value processors, simplify type and method classes.
