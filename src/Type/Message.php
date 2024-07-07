@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MaybeInaccessibleMessageValu
 use Vjik\TelegramBot\Api\Type\Game\Game;
 use Vjik\TelegramBot\Api\Type\Passport\PassportData;
 use Vjik\TelegramBot\Api\Type\Payment\Invoice;
+use Vjik\TelegramBot\Api\Type\Payment\RefundedPayment;
 use Vjik\TelegramBot\Api\Type\Payment\SuccessfulPayment;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
@@ -116,6 +117,7 @@ final readonly class Message
         public ?WebAppData $webAppData = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?PaidMediaInfo $paidMedia = null,
+        public ?RefundedPayment $refundedPayment = null,
     ) {
     }
 }
