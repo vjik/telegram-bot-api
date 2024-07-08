@@ -28,33 +28,46 @@ use Vjik\TelegramBot\Api\Type\PollAnswer;
 /**
  * @see https://core.telegram.org/bots/api#update
  */
-final readonly class Update
+final class Update
 {
+    private ?string $raw = null;
+    private ?array $rawDecoded = null;
+
     public function __construct(
-        public int $updateId,
-        public ?Message $message = null,
-        public ?Message $editedMessage = null,
-        public ?Message $channelPost = null,
-        public ?Message $editedChannelPost = null,
-        public ?BusinessConnection $businessConnection = null,
-        public ?Message $businessMessage = null,
-        public ?Message $editedBusinessMessage = null,
-        public ?BusinessMessagesDeleted $deletedBusinessMessages = null,
-        public ?MessageReactionUpdated $messageReaction = null,
-        public ?MessageReactionCountUpdated $messageReactionCount = null,
-        public ?InlineQuery $inlineQuery = null,
-        public ?ChosenInlineResult $chosenInlineResult = null,
-        public ?CallbackQuery $callbackQuery = null,
-        public ?ShippingQuery $shippingQuery = null,
-        public ?PreCheckoutQuery $preCheckoutQuery = null,
-        public ?Poll $poll = null,
-        public ?PollAnswer $pollAnswer = null,
-        public ?ChatMemberUpdated $myChatMember = null,
-        public ?ChatMemberUpdated $chatMember = null,
-        public ?ChatJoinRequest $chatJoinRequest = null,
-        public ?ChatBoostUpdated $chatBoost = null,
-        public ?ChatBoostRemoved $removedChatBoost = null,
+        public readonly int $updateId,
+        public readonly ?Message $message = null,
+        public readonly ?Message $editedMessage = null,
+        public readonly ?Message $channelPost = null,
+        public readonly ?Message $editedChannelPost = null,
+        public readonly ?BusinessConnection $businessConnection = null,
+        public readonly ?Message $businessMessage = null,
+        public readonly ?Message $editedBusinessMessage = null,
+        public readonly ?BusinessMessagesDeleted $deletedBusinessMessages = null,
+        public readonly ?MessageReactionUpdated $messageReaction = null,
+        public readonly ?MessageReactionCountUpdated $messageReactionCount = null,
+        public readonly ?InlineQuery $inlineQuery = null,
+        public readonly ?ChosenInlineResult $chosenInlineResult = null,
+        public readonly ?CallbackQuery $callbackQuery = null,
+        public readonly ?ShippingQuery $shippingQuery = null,
+        public readonly ?PreCheckoutQuery $preCheckoutQuery = null,
+        public readonly ?Poll $poll = null,
+        public readonly ?PollAnswer $pollAnswer = null,
+        public readonly ?ChatMemberUpdated $myChatMember = null,
+        public readonly ?ChatMemberUpdated $chatMember = null,
+        public readonly ?ChatJoinRequest $chatJoinRequest = null,
+        public readonly ?ChatBoostUpdated $chatBoost = null,
+        public readonly ?ChatBoostRemoved $removedChatBoost = null,
     ) {
+    }
+
+    /**
+     * @psalm-template T as bool
+     * @psalm-param T $decoded
+     * @psalm-return (T is true ? array|null : string|null)
+     */
+    public function getRaw(bool $decoded = false): array|string|null
+    {
+        return $decoded ? $this->rawDecoded : $this->raw;
     }
 
     /**
@@ -70,8 +83,11 @@ final readonly class Update
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
         }
 
-        /** @var Update */
-        return (new ResultFactory())->create($decodedJson, self::class);
+        /** @var Update $update */
+        $update = (new ResultFactory())->create($decodedJson, self::class);
+        $update->raw = $json;
+        $update->rawDecoded = $decodedJson;
+        return $update;
     }
 
     /**

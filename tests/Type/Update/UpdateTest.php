@@ -41,6 +41,8 @@ final class UpdateTest extends TestCase
         $this->assertNull($update->chatJoinRequest);
         $this->assertNull($update->chatBoost);
         $this->assertNull($update->removedChatBoost);
+        $this->assertNull($update->getRaw());
+        $this->assertNull($update->getRaw(true));
     }
 
     public function testFromTelegramResult(): void
@@ -344,12 +346,16 @@ final class UpdateTest extends TestCase
         $this->assertSame(71326, $update->chatJoinRequest?->chat->id);
         $this->assertSame(23682, $update->chatBoost?->chat->id);
         $this->assertSame(1735, $update->removedChatBoost?->chat->id);
+        $this->assertNull($update->getRaw());
+        $this->assertNull($update->getRaw(true));
     }
 
     public function testFromJsonString(): void
     {
         $update = Update::fromJson('{"update_id":33990940}');
         $this->assertSame(33990940, $update->updateId);
+        $this->assertSame('{"update_id":33990940}', $update->getRaw());
+        $this->assertSame(['update_id' => 33990940], $update->getRaw(true));
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
@@ -372,6 +378,8 @@ final class UpdateTest extends TestCase
 
         $update = Update::fromServerRequest($request);
         $this->assertSame(33990940, $update->updateId);
+        $this->assertSame('{"update_id":33990940}', $update->getRaw());
+        $this->assertSame(['update_id' => 33990940], $update->getRaw(true));
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
