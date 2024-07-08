@@ -69,9 +69,14 @@ final readonly class LogType
         TelegramResponse $response,
         mixed $decodedResponse
     ): array {
+        try {
+            $payload = json_encode($decodedResponse, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+        } catch (JsonException) {
+            $payload = $response->body;
+        }
         return [
             'type' => self::SUCCESS_RESULT,
-            'payload' => $response->body,
+            'payload' => $payload,
             'request' => $request,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
