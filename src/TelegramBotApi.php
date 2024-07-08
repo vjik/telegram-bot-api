@@ -227,7 +227,7 @@ final class TelegramBotApi
         $this->lastResponsePrepared = null;
 
         $this->logger?->info(
-            'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '"',
+            'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
             LogType::createSendRequestContext($request),
         );
         $response = $this->telegramClient->send($request);
