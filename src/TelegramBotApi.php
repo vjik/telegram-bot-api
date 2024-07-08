@@ -130,6 +130,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -223,28 +224,31 @@ final class TelegramBotApi
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new InvalidResponseFormatException(
+            throw new TelegramParseResultException(
                 'Failed to decode JSON response. Status code: ' . $response->statusCode . '.',
-                previous: $e
+                previous: $e,
+                raw: $response->body,
             );
         }
 
         if (!is_array($decodedBody)) {
-            throw new InvalidResponseFormatException(
-                'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".'
+            throw new TelegramParseResultException(
+                'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
+                raw: $response->body,
             );
         }
 
         $this->lastResponseDecoded = $decodedBody;
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
-            throw new InvalidResponseFormatException(
+            throw new TelegramParseResultException(
                 'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
+                raw: $response->body,
             );
         }
 
         $this->lastResponsePrepared = $decodedBody['ok']
-            ? $this->prepareSuccessResult($request, $response, $decodedBody)
+            ? $this->prepareSuccessResult($request, $response, $decodedBody, $response->body)
             : $this->prepareFailResult($request, $response, $decodedBody);
 
         return $this->lastResponsePrepared;
@@ -2658,11 +2662,13 @@ final class TelegramBotApi
     private function prepareSuccessResult(
         TelegramRequestInterface $request,
         TelegramResponse $response,
-        array $decodedBody
+        array $decodedBody,
+        string $raw,
     ): mixed {
         if (!array_key_exists('result', $decodedBody)) {
-            throw new InvalidResponseFormatException(
+            throw new TelegramParseResultException(
                 'Not found "result" field in response. Status code: ' . $response->statusCode . '.',
+                raw: $raw,
             );
         }
 

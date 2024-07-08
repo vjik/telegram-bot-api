@@ -10,7 +10,7 @@ use Vjik\TelegramBot\Api\TelegramRuntimeException;
 class TelegramParseResultException extends TelegramRuntimeException
 {
     public function __construct(
-        string $message = "",
+        string $message = '',
         int $code = 0,
         ?Throwable $previous = null,
         public mixed $raw = null,

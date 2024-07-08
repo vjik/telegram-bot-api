@@ -7,10 +7,11 @@ namespace Vjik\TelegramBot\Api\Tests;
 use HttpSoft\Message\StreamFactory;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
-use Vjik\TelegramBot\Api\InvalidResponseFormatException;
 use Vjik\TelegramBot\Api\Method\GetMe;
+use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramRequest;
@@ -141,27 +142,42 @@ final class TelegramBotApiTest extends TestCase
             'ok' => true,
         ]);
 
-        $this->expectException(InvalidResponseFormatException::class);
-        $this->expectExceptionMessage('Not found "result" field in response. Status code: 200.');
-        $api->send(new GetMe());
+        $exception = null;
+        try {
+            $api->send(new GetMe());
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Not found "result" field in response. Status code: 200.', $exception->getMessage());
+        $this->assertSame('{"ok":true}', $exception->raw);
     }
 
     public function testResponseWithInvalidJson(): void
     {
         $api = $this->createApi('g {12}');
 
-        $this->expectException(InvalidResponseFormatException::class);
-        $this->expectExceptionMessage('Failed to decode JSON response. Status code: 200.');
-        $api->send(new GetMe());
+        $exception = null;
+        try {
+            $api->send(new GetMe());
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
+        $this->assertSame('g {12}', $exception->raw);
     }
 
     public function testNotArrayResponse(): void
     {
         $api = $this->createApi('"hello"');
 
-        $this->expectException(InvalidResponseFormatException::class);
-        $this->expectExceptionMessage('Expected telegram response as array. Got "string".');
-        $api->send(new GetMe());
+        $exception = null;
+        try {
+            $api->send(new GetMe());
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Expected telegram response as array. Got "string".', $exception->getMessage());
+        $this->assertSame('"hello"', $exception->raw);
     }
 
     public function testResponseWithNotBooleanOk(): void
@@ -170,9 +186,14 @@ final class TelegramBotApiTest extends TestCase
             'ok' => 'true',
         ]);
 
-        $this->expectException(InvalidResponseFormatException::class);
-        $this->expectExceptionMessage('Incorrect "ok" field in response. Status code: 200.');
-        $api->send(new GetMe());
+        $exception = null;
+        try {
+            $api->send(new GetMe());
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Incorrect "ok" field in response. Status code: 200.', $exception->getMessage());
+        $this->assertSame('{"ok":"true"}', $exception->raw);
     }
 
     public function testUnknownResponseType(): void
