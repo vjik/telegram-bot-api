@@ -280,7 +280,7 @@ final class TelegramBotApi
             );
         } else {
             $this->lastResponsePrepared = $this->prepareFailResult($request, $response, $decodedBody);
-            $this->logger?->info(
+            $this->logger?->warning(
                 'On "' . $request->getApiMethod() . '" request Telegram Bot API returned fail result.',
                 LogType::createFailResultContext($request, $response, $decodedBody),
             );

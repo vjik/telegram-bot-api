@@ -4,17 +4,20 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api;
 
+use JsonException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
 /**
  * @psalm-type SendRequestContext = array{
  *     type: LogType::SEND_REQUEST,
+ *     payload: string,
  *     request: TelegramRequestInterface,
  * }
  *
  * @psalm-type SuccessResultContext = array{
  *     type: LogType::SUCCESS_RESULT,
+ *     payload: string,
  *     request: TelegramRequestInterface,
  *     response: TelegramResponse,
  *     decodedResponse: mixed
@@ -22,6 +25,7 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
  *
  * @psalm-type FailResultContext = array{
  *     type: LogType::FAIL_RESULT,
+ *     payload: string,
  *     request: TelegramRequestInterface,
  *     response: TelegramResponse,
  *     decodedResponse: mixed
@@ -29,6 +33,7 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
  *
  * @psalm-type ParseResultErrorContext = array{
  *     type: LogType::PARSE_RESULT_ERROR,
+ *     payload: string,
  *     raw: string
  * }
  */
@@ -44,8 +49,14 @@ final readonly class LogType
      */
     public static function createSendRequestContext(TelegramRequestInterface $request): array
     {
+        try {
+            $payload = json_encode($request->getData(), JSON_THROW_ON_ERROR);
+        } catch (JsonException) {
+            $payload = '%UNABLE_DATA%';
+        }
         return [
             'type' => self::SEND_REQUEST,
+            'payload' => $payload,
             'request' => $request,
         ];
     }
@@ -60,6 +71,7 @@ final readonly class LogType
     ): array {
         return [
             'type' => self::SUCCESS_RESULT,
+            'payload' => $response->body,
             'request' => $request,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
@@ -76,6 +88,7 @@ final readonly class LogType
     ): array {
         return [
             'type' => self::FAIL_RESULT,
+            'payload' => $response->body,
             'request' => $request,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
@@ -89,6 +102,7 @@ final readonly class LogType
     {
         return [
             'type' => self::PARSE_RESULT_ERROR,
+            'payload' => $raw,
             'raw' => $raw,
         ];
     }
