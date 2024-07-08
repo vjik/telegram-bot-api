@@ -205,9 +205,16 @@ final class TelegramBotApi
 
     public function __construct(
         private readonly TelegramClientInterface $telegramClient,
-        private readonly ?LoggerInterface $logger = null,
+        private ?LoggerInterface $logger = null,
     ) {
         $this->resultFactory = new ResultFactory();
+    }
+
+    public function withLogger(?LoggerInterface $logger): self
+    {
+        $new = clone $this;
+        $new->logger = $logger;
+        return $new;
     }
 
     /**
