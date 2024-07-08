@@ -32,8 +32,12 @@
         "maglnet/composer-require-checker": "^4.11",
         "php-http/curl-client": "^2.3",
         "phpunit/phpunit": "^10.5",
+        "psr/log": "^3.0",
         "roave/infection-static-analysis-plugin": "^1.35",
-        "vimeo/psalm": "^5.24"
+        "vimeo/psalm": "^5.25"
+    },
+    "suggest": {
+        "psr/log": "To log requests to Telegam Bot API and response handling errors."
     },
     "autoload": {
         "psr-4": {

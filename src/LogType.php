@@ -1,0 +1,13 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api;
+
+final readonly class LogType
+{
+    public const SEND_REQUEST = 1;
+    public const SUCCESS_RESULT = 2;
+    public const FAIL_RESULT = 3;
+    public const PARSE_RESULT_ERROR = 4;
+}
