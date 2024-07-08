@@ -215,6 +215,7 @@ final class TelegramBotApi
     {
         $this->lastResponseRaw = null;
         $this->lastResponseDecoded = null;
+        $this->lastResponsePrepared = null;
 
         $response = $this->telegramClient->send($request);
 
