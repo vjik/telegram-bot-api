@@ -82,10 +82,10 @@ final class Update
         try {
             $decodedJson = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            $logger?->error('Failed to decode JSON for "Update" type.', [
-                'type' => LogType::PARSE_RESULT_ERROR,
-                'raw' => $json,
-            ]);
+            $logger?->error(
+                'Failed to decode JSON for "Update" type.',
+                LogType::createParseResultContext($json),
+            );
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e, raw: $json);
         }
 
@@ -93,10 +93,10 @@ final class Update
             /** @var Update $update */
             $update = (new ResultFactory())->create($decodedJson, self::class);
         } catch (TelegramParseResultException $exception) {
-            $logger?->error('Failed to parse "Update" data. ' . $exception->getMessage(), [
-                'type' => LogType::PARSE_RESULT_ERROR,
-                'raw' => $json,
-            ]);
+            $logger?->error(
+                'Failed to parse "Update" data. ' . $exception->getMessage(),
+                LogType::createParseResultContext($json),
+            );
             throw $exception;
         }
 
