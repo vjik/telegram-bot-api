@@ -22,12 +22,12 @@ final readonly class ArrayOfArraysOfObjectsValue implements ValueProcessorInterf
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array[]');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array[]', $value);
         }
 
         foreach ($value as $v) {
             if (!is_array($v)) {
-                throw new InvalidTypeOfValueInResultException($key, $v, 'array[]');
+                throw new InvalidTypeOfValueInResultException($key, $v, 'array[]', $value);
             }
         }
 

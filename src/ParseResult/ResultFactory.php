@@ -26,6 +26,11 @@ final readonly class ResultFactory
         }
         /** @var ValueProcessorInterface $type */
 
-        return $type->process($result, null, $this->objectFactory);
+        try {
+            return $type->process($result, null, $this->objectFactory);
+        } catch (TelegramParseResultException $exception) {
+            $exception->raw = $result;
+            throw $exception;
+        }
     }
 }

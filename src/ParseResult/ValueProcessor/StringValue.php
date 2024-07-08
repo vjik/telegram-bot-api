@@ -12,7 +12,7 @@ final readonly class StringValue implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): string
     {
         if (!is_string($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'string');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'string', $value);
         }
         return $value;
     }
