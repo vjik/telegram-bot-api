@@ -66,6 +66,7 @@ final class ResultFactoryTest extends TestCase
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(0, $exception->getCode());
         $this->assertSame(
             'Invalid type of value for key "latitude". Expected type is "float", but got "string".',
             $exception->getMessage(),
