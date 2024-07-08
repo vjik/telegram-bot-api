@@ -2,10 +2,10 @@
 
 ## 0.4.0 under development
 
-- New #102: Add `TelegramBotApi::getLastResponse()` method that return last response from Telegram Bot API.
-- New #103: Add `Update::getRaw()` method that return raw data if type created by `Update::fromJson()` or 
+- New #102: Add `TelegramBotApi::getLastResponse()` method that returns last response from Telegram Bot API.
+- New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or 
   `Update::fromServerRequest()`.
-- New #104: Add `TelegramParseResultException::$raw` property that contains raw result.
+- New #104: Add `TelegramParseResultException::$raw` property containing raw result.
 
 ## 0.3.0 July 7, 2024
 
