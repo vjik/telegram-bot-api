@@ -14,20 +14,20 @@ abstract readonly class InterfaceValue implements ValueProcessorInterface
     final public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $value);
         }
 
         $typeKey = $this->getTypeKey();
         if (!isset($value[$typeKey])) {
-            throw new NotFoundKeyInResultException($typeKey);
+            throw new NotFoundKeyInResultException($typeKey, $value);
         }
 
         if (!is_string($value[$typeKey])) {
-            throw new InvalidTypeOfValueInResultException($typeKey, $value[$typeKey], 'string');
+            throw new InvalidTypeOfValueInResultException($typeKey, $value[$typeKey], 'string', $value);
         }
 
         $className = $this->getClassMap()[$value[$typeKey]]
-            ?? throw new TelegramParseResultException($this->getUnknownTypeMessage());
+            ?? throw new TelegramParseResultException($this->getUnknownTypeMessage(), raw: $value);
 
         return $objectFactory->create($value, $key, $className);
     }

@@ -80,7 +80,7 @@ final class Update
         try {
             $decodedJson = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
-            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
+            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e, raw: $json);
         }
 
         /** @var Update $update */

@@ -12,7 +12,7 @@ final readonly class FloatValue implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): float
     {
         if (!is_float($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'float');
+            throw new InvalidTypeOfValueInResultException($key, $value, 'float', $value);
         }
         return $value;
     }
