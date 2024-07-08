@@ -201,7 +201,6 @@ final class TelegramBotApi
     private ?array $lastResponseDecoded = null;
     private mixed $lastResponsePrepared = null;
 
-
     public function __construct(
         private TelegramClientInterface $telegramClient,
     ) {
