@@ -50,7 +50,7 @@ final readonly class LogType
     public static function createSendRequestContext(TelegramRequestInterface $request): array
     {
         try {
-            $payload = json_encode($request->getData(), JSON_THROW_ON_ERROR);
+            $payload = json_encode($request->getData(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
         } catch (JsonException) {
             $payload = '%UNABLE_DATA%';
         }
