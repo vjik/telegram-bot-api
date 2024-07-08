@@ -6,6 +6,7 @@
 - New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or 
   `Update::fromServerRequest()`.
 - New #104: Add `TelegramParseResultException::$raw` property containing raw result.
+- Chg #105: Remove `InvalidResponseFormatException` in favor `TelegramParseResultException`.
 
 ## 0.3.0 July 7, 2024
 
