@@ -6,12 +6,14 @@ namespace Vjik\TelegramBot\Api\Tests\ParseResult;
 
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Throwable;
 use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\Tests\Support\Car;
 use Vjik\TelegramBot\Api\Tests\Support\Color;
 use Vjik\TelegramBot\Api\Type\BotName;
+use Vjik\TelegramBot\Api\Type\ChatLocation;
 
 final class ResultFactoryTest extends TestCase
 {
@@ -51,5 +53,23 @@ final class ResultFactoryTest extends TestCase
         $this->expectException(LogicException::class);
         $this->expectExceptionMessage('Unsupported PHP type: Vjik\TelegramBot\Api\Tests\Support\NotExists');
         $factory->create([], Color::class);
+    }
+
+    public function testNestedIncorrectArray(): void
+    {
+        $factory = new ResultFactory();
+
+        $exception = null;
+        $data = ['location' => ['latitude' => 'test'], 'address' => 'Earth'];
+        try {
+            $factory->create($data, ChatLocation::class);
+        } catch (Throwable $exception) {
+        }
+        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        $this->assertSame(
+            'Invalid type of value for key "latitude". Expected type is "float", but got "string".',
+            $exception->getMessage(),
+        );
+        $this->assertSame($data, $exception->raw);
     }
 }
