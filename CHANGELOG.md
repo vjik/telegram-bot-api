@@ -2,7 +2,9 @@
 
 ## 0.3.1 under development
 
-- New #101: Add `TelegramBotApi::getLastResponse()` method that return last response from Telegram Bot API.
+- New #102: Add `TelegramBotApi::getLastResponse()` method that return last response from Telegram Bot API.
+- New #103: Add `Update::getRaw()` method that return raw data if type created by `Update::fromJson()` or 
+  `Update::fromServerRequest()`.
 
 ## 0.3.0 July 7, 2024
 
