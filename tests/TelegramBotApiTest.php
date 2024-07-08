@@ -58,6 +58,27 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
+
+        $this->assertSame(
+            '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+            $api->getLastResponse(),
+        );
+        $this->assertSame(
+            '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+            $api->getLastResponse(TelegramBotApi::RESPONSE_RAW),
+        );
+        $this->assertSame(
+            [
+                'ok' => true,
+                'result' => [
+                    'id' => 1,
+                    'is_bot' => false,
+                    'first_name' => 'Sergei',
+                ],
+            ],
+            $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
+        );
+        $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
     }
 
     public function testSendSimpleRequest(): void
@@ -94,6 +115,23 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
+
+        $this->assertSame(
+            '{"ok":false,"description":"test error"}',
+            $api->getLastResponse(),
+        );
+        $this->assertSame(
+            '{"ok":false,"description":"test error"}',
+            $api->getLastResponse(TelegramBotApi::RESPONSE_RAW),
+        );
+        $this->assertSame(
+            [
+                'ok' => false,
+                'description' => 'test error',
+            ],
+            $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
+        );
+        $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
     }
 
     public function testSuccessResponseWithoutResult(): void

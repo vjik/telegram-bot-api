@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.3.1 under development
+
+- New #101: Add `TelegramBotApi::getLastResponse()` method that return last response from Telegram Bot API.
+
 ## 0.3.0 July 7, 2024
 
 - New #100: Add `refundedPayment` parameter to `Message` type and add `RefundedPayment` type.
