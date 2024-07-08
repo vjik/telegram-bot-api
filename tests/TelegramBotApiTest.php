@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
@@ -172,6 +173,20 @@ final class TelegramBotApiTest extends TestCase
         $this->expectException(InvalidResponseFormatException::class);
         $this->expectExceptionMessage('Incorrect "ok" field in response. Status code: 200.');
         $api->send(new GetMe());
+    }
+
+    public function testUnknownResponseType(): void
+    {
+        $api = $this->createApi([
+            'ok' => false,
+            'description' => 'test error',
+        ]);
+
+        $api->send(new GetMe());
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Unknown response type.');
+        $api->getLastResponse(1024);
     }
 
     public function testAddStickerToSet(): void
