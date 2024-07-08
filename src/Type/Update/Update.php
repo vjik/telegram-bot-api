@@ -60,6 +60,11 @@ final class Update
     ) {
     }
 
+    /**
+     * @psalm-template T as bool
+     * @psalm-param T $decoded
+     * @psalm-return (T is true ? array|null : string|null)
+     */
     public function getRaw(bool $decoded = false): array|string|null
     {
         return $decoded ? $this->rawDecoded : $this->raw;
