@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
+use LogicException;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
@@ -58,6 +59,27 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
+
+        $this->assertSame(
+            '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+            $api->getLastResponse(),
+        );
+        $this->assertSame(
+            '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+            $api->getLastResponse(TelegramBotApi::RESPONSE_RAW),
+        );
+        $this->assertSame(
+            [
+                'ok' => true,
+                'result' => [
+                    'id' => 1,
+                    'is_bot' => false,
+                    'first_name' => 'Sergei',
+                ],
+            ],
+            $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
+        );
+        $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
     }
 
     public function testSendSimpleRequest(): void
@@ -94,6 +116,23 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
+
+        $this->assertSame(
+            '{"ok":false,"description":"test error"}',
+            $api->getLastResponse(),
+        );
+        $this->assertSame(
+            '{"ok":false,"description":"test error"}',
+            $api->getLastResponse(TelegramBotApi::RESPONSE_RAW),
+        );
+        $this->assertSame(
+            [
+                'ok' => false,
+                'description' => 'test error',
+            ],
+            $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
+        );
+        $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
     }
 
     public function testSuccessResponseWithoutResult(): void
@@ -134,6 +173,20 @@ final class TelegramBotApiTest extends TestCase
         $this->expectException(InvalidResponseFormatException::class);
         $this->expectExceptionMessage('Incorrect "ok" field in response. Status code: 200.');
         $api->send(new GetMe());
+    }
+
+    public function testUnknownResponseType(): void
+    {
+        $api = $this->createApi([
+            'ok' => false,
+            'description' => 'test error',
+        ]);
+
+        $api->send(new GetMe());
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('Unknown response type.');
+        $api->getLastResponse(1024);
     }
 
     public function testAddStickerToSet(): void

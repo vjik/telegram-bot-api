@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api;
 use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
+use LogicException;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
@@ -190,7 +191,15 @@ use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class TelegramBotApi
 {
+    public const RESPONSE_RAW = 1;
+    public const RESPONSE_DECODED = 2;
+    public const RESPONSE_PREPARED = 3;
+
     private ResultFactory $resultFactory;
+
+    private ?string $lastResponseRaw = null;
+    private ?array $lastResponseDecoded = null;
+    private mixed $lastResponsePrepared = null;
 
     public function __construct(
         private TelegramClientInterface $telegramClient,
@@ -203,7 +212,13 @@ final class TelegramBotApi
      */
     public function send(TelegramRequestInterface $request): mixed
     {
+        $this->lastResponseRaw = null;
+        $this->lastResponseDecoded = null;
+        $this->lastResponsePrepared = null;
+
         $response = $this->telegramClient->send($request);
+
+        $this->lastResponseRaw = $response->body;
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -220,15 +235,36 @@ final class TelegramBotApi
             );
         }
 
+        $this->lastResponseDecoded = $decodedBody;
+
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             throw new InvalidResponseFormatException(
                 'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
             );
         }
 
-        return $decodedBody['ok']
+        $this->lastResponsePrepared = $decodedBody['ok']
             ? $this->prepareSuccessResult($request, $response, $decodedBody)
             : $this->prepareFailResult($request, $response, $decodedBody);
+
+        return $this->lastResponsePrepared;
+    }
+
+    /**
+     * @psalm-template T as self::RESPONSE_*
+     * @psalm-param T $type
+     * @psalm-return (T is self::RESPONSE_RAW ? string|null : (T is self::RESPONSE_DECODED ? array|null : mixed))
+     *
+     * @psalm-suppress MixedReturnStatement
+     */
+    public function getLastResponse(int $type = self::RESPONSE_RAW): mixed
+    {
+        return match ($type) {
+            self::RESPONSE_RAW => $this->lastResponseRaw,
+            self::RESPONSE_DECODED => $this->lastResponseDecoded,
+            self::RESPONSE_PREPARED => $this->lastResponsePrepared,
+            default => throw new LogicException('Unknown response type.'),
+        };
     }
 
     /**
