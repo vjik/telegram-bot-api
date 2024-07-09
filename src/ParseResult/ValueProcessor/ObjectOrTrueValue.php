@@ -13,8 +13,7 @@ final readonly class ObjectOrTrueValue implements ValueProcessorInterface
      */
     public function __construct(
         private string $className,
-    ) {
-    }
+    ) {}
 
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {

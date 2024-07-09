@@ -18,6 +18,5 @@ final readonly class PassportData
         #[ArrayOfObjectsValue(EncryptedPassportElement::class)]
         public array $data,
         public EncryptedCredentials $credentials,
-    ) {
-    }
+    ) {}
 }

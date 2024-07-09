@@ -13,6 +13,5 @@ final readonly class VideoChatScheduled
 {
     public function __construct(
         public DateTimeImmutable $startDate,
-    ) {
-    }
+    ) {}
 }

@@ -66,7 +66,7 @@ final class SendMessageTest extends TestCase
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

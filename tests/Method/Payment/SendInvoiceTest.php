@@ -24,7 +24,7 @@ final class SendInvoiceTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            [$price]
+            [$price],
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -123,7 +123,7 @@ final class SendInvoiceTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            []
+            [],
         );
 
         $preparedResult = TestHelper::createSuccessStubApi([

@@ -7,6 +7,4 @@ namespace Vjik\TelegramBot\Api\Type;
 /**
  * @see https://core.telegram.org/bots/api#generalforumtopichidden
  */
-final readonly class GeneralForumTopicHidden
-{
-}
+final readonly class GeneralForumTopicHidden {}

@@ -25,7 +25,7 @@ final class BackgroundTypeValueTest extends TestCase
                     'type' => 'fill',
                     'fill' => [
                         'type' => 'solid',
-                        'color' => 0x000000
+                        'color' => 0x000000,
                     ],
                     'dark_theme_dimming' => 95,
                 ],
@@ -51,7 +51,7 @@ final class BackgroundTypeValueTest extends TestCase
                     ],
                     'fill' => [
                         'type' => 'solid',
-                        'color' => 0x000000
+                        'color' => 0x000000,
                     ],
                     'intensity' => 5,
                 ],

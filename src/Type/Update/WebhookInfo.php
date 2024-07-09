@@ -27,6 +27,5 @@ final readonly class WebhookInfo
         public ?int $maxConnections = null,
         #[ArrayMap(StringValue::class)]
         public ?array $allowedUpdates = null,
-    ) {
-    }
+    ) {}
 }

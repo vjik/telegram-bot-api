@@ -17,6 +17,5 @@ final readonly class UserChatBoosts
     public function __construct(
         #[ArrayOfObjectsValue(ChatBoost::class)]
         public array $boosts,
-    ) {
-    }
+    ) {}
 }

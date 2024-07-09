@@ -25,8 +25,7 @@ final readonly class InlineQueryResultLocation implements InlineQueryResult
         public ?string $thumbnailUrl = null,
         public ?int $thumbnailWidth = null,
         public ?int $thumbnailHeight = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

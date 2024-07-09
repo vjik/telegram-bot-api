@@ -16,8 +16,7 @@ final readonly class SetMyDescription implements TelegramRequestWithResultPrepar
     public function __construct(
         private ?string $description = null,
         private ?string $languageCode = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

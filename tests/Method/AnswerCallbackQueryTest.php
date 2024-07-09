@@ -21,7 +21,7 @@ final class AnswerCallbackQueryTest extends TestCase
             [
                 'callback_query_id' => 'id',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

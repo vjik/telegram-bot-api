@@ -29,7 +29,7 @@ final class PaidMediaInfoTest extends TestCase
                     'type' => 'photo',
                     'photo' => [],
                 ],
-            ]
+            ],
         ], null, PaidMediaInfo::class);
 
         $this->assertSame(1, $type->starCount);

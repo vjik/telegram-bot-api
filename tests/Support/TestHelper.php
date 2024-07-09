@@ -18,7 +18,7 @@ final class TestHelper
                     json_encode([
                         'ok' => true,
                         'result' => $result,
-                    ])
+                    ]),
                 ),
             ),
         );

@@ -25,8 +25,7 @@ final readonly class InlineQueryResultVoice implements InlineQueryResult
         public ?int $voiceDuration = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

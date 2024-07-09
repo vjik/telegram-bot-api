@@ -16,8 +16,7 @@ final readonly class SetStickerSetTitle implements TelegramRequestWithResultPrep
     public function __construct(
         private string $name,
         private string $title,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

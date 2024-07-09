@@ -24,8 +24,7 @@ final readonly class EditMessageMedia implements TelegramRequestWithResultPrepar
         private ?int $messageId = null,
         private ?string $inlineMessageId = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

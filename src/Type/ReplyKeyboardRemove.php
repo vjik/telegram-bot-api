@@ -11,8 +11,7 @@ final readonly class ReplyKeyboardRemove
 {
     public function __construct(
         public ?bool $selective = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

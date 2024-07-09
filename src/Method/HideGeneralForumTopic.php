@@ -15,8 +15,7 @@ final readonly class HideGeneralForumTopic implements TelegramRequestWithResultP
 {
     public function __construct(
         private int|string $chatId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -12,8 +12,7 @@ final readonly class ResponseParameters
     public function __construct(
         public ?int $migrateToChatId = null,
         public ?int $retryAfter = null,
-    ) {
-    }
+    ) {}
 
     public static function fromDecodedBody(array $body): ?self
     {

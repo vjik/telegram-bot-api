@@ -53,7 +53,7 @@ final class EditMessageCaptionTest extends TestCase
                 'show_caption_above_media' => true,
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

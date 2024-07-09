@@ -12,6 +12,5 @@ final readonly class InaccessibleMessage
     public function __construct(
         public Chat $chat,
         public int $messageId,
-    ) {
-    }
+    ) {}
 }

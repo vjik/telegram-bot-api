@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Constant\Sticker;
 
 final class StickerFormat
 {
-    const STATIC = 'static';
-    const ANIMATED = 'animated';
-    const VIDEO = 'video';
+    public const STATIC = 'static';
+    public const ANIMATED = 'animated';
+    public const VIDEO = 'video';
 }

@@ -17,8 +17,7 @@ final readonly class SetChatPhoto implements TelegramRequestWithResultPreparingI
     public function __construct(
         private int|string $chatId,
         private InputFile $photo,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

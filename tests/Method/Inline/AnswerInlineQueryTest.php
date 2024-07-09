@@ -24,7 +24,7 @@ final class AnswerInlineQueryTest extends TestCase
                 'inline_query_id' => 'id1',
                 'results' => [],
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

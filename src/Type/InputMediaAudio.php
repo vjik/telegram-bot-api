@@ -23,8 +23,7 @@ final readonly class InputMediaAudio implements InputMedia
         public ?int $duration = null,
         public ?string $performer = null,
         public ?string $title = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

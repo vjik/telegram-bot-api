@@ -12,8 +12,7 @@ final readonly class MenuButtonWebApp implements MenuButton
     public function __construct(
         public string $text,
         public WebAppInfo $webApp,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

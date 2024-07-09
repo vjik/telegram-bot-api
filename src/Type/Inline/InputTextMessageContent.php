@@ -20,8 +20,7 @@ final readonly class InputTextMessageContent implements InputMessageContent
         public ?string $parseMode = null,
         public ?array $entities = null,
         public ?LinkPreviewOptions $linkPreviewOptions = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

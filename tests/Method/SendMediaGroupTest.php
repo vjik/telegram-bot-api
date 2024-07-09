@@ -65,7 +65,7 @@ final class SendMediaGroupTest extends TestCase
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'file0' => $file,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

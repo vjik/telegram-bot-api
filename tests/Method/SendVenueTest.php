@@ -51,7 +51,7 @@ final class SendVenueTest extends TestCase
             false,
             'meid1',
             $replyParameters,
-            $replyMarkup
+            $replyMarkup,
         );
 
         $this->assertSame(

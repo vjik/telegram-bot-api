@@ -11,8 +11,7 @@ final readonly class ReactionTypeCustomEmoji implements ReactionType
 {
     public function __construct(
         public string $customEmojiId,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

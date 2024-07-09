@@ -16,8 +16,7 @@ final readonly class UnpinChatMessage implements TelegramRequestWithResultPrepar
     public function __construct(
         private int|string $chatId,
         private ?int $messageId = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

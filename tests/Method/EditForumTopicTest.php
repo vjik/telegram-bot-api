@@ -22,7 +22,7 @@ final class EditForumTopicTest extends TestCase
                 'chat_id' => 1,
                 'message_thread_id' => 2,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

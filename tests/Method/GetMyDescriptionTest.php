@@ -28,7 +28,7 @@ final class GetMyDescriptionTest extends TestCase
             [
                 'language_code' => 'ru',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

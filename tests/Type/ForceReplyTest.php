@@ -20,7 +20,7 @@ final class ForceReplyTest extends TestCase
             [
                 'force_reply' => true,
             ],
-            $forceReply->toRequestArray()
+            $forceReply->toRequestArray(),
         );
     }
 
@@ -37,7 +37,7 @@ final class ForceReplyTest extends TestCase
                 'input_field_placeholder' => 'test',
                 'selective' => false,
             ],
-            $forceReply->toRequestArray()
+            $forceReply->toRequestArray(),
         );
     }
 }

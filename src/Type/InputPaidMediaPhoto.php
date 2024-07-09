@@ -13,8 +13,7 @@ final readonly class InputPaidMediaPhoto implements InputPaidMedia
 {
     public function __construct(
         public string|InputFile $media,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

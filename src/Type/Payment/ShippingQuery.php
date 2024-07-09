@@ -16,6 +16,5 @@ final readonly class ShippingQuery
         public User $from,
         public string $invoicePayload,
         public ShippingAddress $shippingAddress,
-    ) {
-    }
+    ) {}
 }

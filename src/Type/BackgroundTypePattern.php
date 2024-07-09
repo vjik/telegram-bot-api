@@ -15,10 +15,9 @@ final readonly class BackgroundTypePattern implements BackgroundType
         public int $intensity,
         public ?true $isInverted = null,
         public ?true $isMoving = null,
-    ) {
-    }
+    ) {}
 
-    function getType(): string
+    public function getType(): string
     {
         return 'pattern';
     }

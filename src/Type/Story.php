@@ -12,6 +12,5 @@ final readonly class Story
     public function __construct(
         public Chat $chat,
         public int $id,
-    ) {
-    }
+    ) {}
 }

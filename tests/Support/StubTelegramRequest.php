@@ -13,8 +13,7 @@ final readonly class StubTelegramRequest implements TelegramRequestInterface
         private HttpMethod $httpMethod = HttpMethod::GET,
         private string $apiMethod = 'getMe',
         private array $data = [],
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

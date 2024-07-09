@@ -14,6 +14,5 @@ final readonly class File
         public string $fileUniqueId,
         public ?int $fileSize = null,
         public ?string $filePath = null,
-    ) {
-    }
+    ) {}
 }

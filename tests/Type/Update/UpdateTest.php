@@ -375,7 +375,7 @@ final class UpdateTest extends TestCase
                 {
                     return '{"update_id":33990940}';
                 }
-            }
+            },
         );
 
         $update = Update::fromServerRequest($request);

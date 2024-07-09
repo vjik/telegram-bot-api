@@ -27,6 +27,5 @@ final readonly class MessageReactionUpdated
         public array $newReaction,
         public ?User $user = null,
         public ?Chat $actorChat = null,
-    ) {
-    }
+    ) {}
 }

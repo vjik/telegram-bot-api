@@ -15,7 +15,7 @@ final class BackgroundTypeFillTest extends TestCase
     {
         $type = new BackgroundTypeFill(
             new BackgroundFillSolid(0x000000),
-            95
+            95,
         );
 
         $this->assertSame('fill', $type->getType());
@@ -30,7 +30,7 @@ final class BackgroundTypeFillTest extends TestCase
             'type' => 'fill',
             'fill' => [
                 'type' => 'solid',
-                'color' => 0x000000
+                'color' => 0x000000,
             ],
             'dark_theme_dimming' => 95,
         ], null, BackgroundTypeFill::class);

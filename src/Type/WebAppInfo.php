@@ -11,8 +11,7 @@ final readonly class WebAppInfo
 {
     public function __construct(
         public string $url,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

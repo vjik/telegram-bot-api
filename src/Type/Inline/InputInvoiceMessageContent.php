@@ -36,8 +36,7 @@ final readonly class InputInvoiceMessageContent implements InputMessageContent
         public ?bool $sendPhoneNumberToProvider = null,
         public ?bool $sendEmailToProvider = null,
         public ?bool $isFlexible = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

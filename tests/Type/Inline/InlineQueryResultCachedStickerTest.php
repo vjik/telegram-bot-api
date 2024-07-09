@@ -26,7 +26,7 @@ final class InlineQueryResultCachedStickerTest extends TestCase
                 'id' => 'id1',
                 'sticker_file_id' => 'sticker_id1',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -50,7 +50,7 @@ final class InlineQueryResultCachedStickerTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

@@ -11,6 +11,5 @@ final readonly class VideoChatEnded
 {
     public function __construct(
         public int $duration,
-    ) {
-    }
+    ) {}
 }

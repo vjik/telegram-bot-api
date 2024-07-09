@@ -11,6 +11,5 @@ final readonly class MessageAutoDeleteTimerChanged
 {
     public function __construct(
         public int $messageAutoDeleteTime,
-    ) {
-    }
+    ) {}
 }

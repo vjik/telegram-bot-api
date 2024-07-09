@@ -31,8 +31,7 @@ final readonly class PromoteChatMember implements TelegramRequestWithResultPrepa
         private ?bool $canEditMessages = null,
         private ?bool $canPinMessages = null,
         private ?bool $canManageTopics = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

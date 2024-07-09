@@ -22,8 +22,7 @@ final readonly class SetMessageReaction implements TelegramRequestWithResultPrep
         private int $messageId,
         private ?array $reaction = null,
         private ?bool $isBig = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

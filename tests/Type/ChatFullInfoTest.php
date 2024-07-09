@@ -116,7 +116,7 @@ final class ChatFullInfoTest extends TestCase
                 [
                     'type' => 'custom_emoji',
                     'custom_emoji_id' => '=)',
-                ]
+                ],
             ],
             'background_custom_emoji_id' => 'bge1',
             'profile_accent_color_id' => 0x654321,

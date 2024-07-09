@@ -22,8 +22,7 @@ final readonly class GetUpdates implements TelegramRequestWithResultPreparingInt
         private ?int $limit = null,
         private ?int $timeout = null,
         private ?array $allowedUpdates = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

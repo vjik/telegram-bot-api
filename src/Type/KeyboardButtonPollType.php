@@ -11,8 +11,7 @@ final readonly class KeyboardButtonPollType
 {
     public function __construct(
         public ?string $type = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

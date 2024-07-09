@@ -11,8 +11,7 @@ final readonly class ChatBoostSourcePremium implements ChatBoostSource
 {
     public function __construct(
         public User $user,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

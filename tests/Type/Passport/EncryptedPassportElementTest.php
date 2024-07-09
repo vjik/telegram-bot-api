@@ -40,34 +40,34 @@ final class EncryptedPassportElementTest extends TestCase
                     'file_id' => '5',
                     'file_unique_id' => '6',
                     'file_size' => 7,
-                    'file_date' => 1717512173
+                    'file_date' => 1717512173,
                 ],
             ],
             'front_side' => [
                 'file_id' => '8',
                 'file_unique_id' => '9',
                 'file_size' => 10,
-                'file_date' => 1717512174
+                'file_date' => 1717512174,
             ],
             'reverse_side' => [
                 'file_id' => '11',
                 'file_unique_id' => '12',
                 'file_size' => 13,
-                'file_date' => 1717512175
+                'file_date' => 1717512175,
             ],
             'selfie' => [
                 'file_id' => '14',
                 'file_unique_id' => '15',
                 'file_size' => 16,
-                'file_date' => 1717512176
+                'file_date' => 1717512176,
             ],
             'translation' => [
                 [
                     'file_id' => '17',
                     'file_unique_id' => '18',
                     'file_size' => 19,
-                    'file_date' => 1717512177
-                ]
+                    'file_date' => 1717512177,
+                ],
             ],
         ], null, EncryptedPassportElement::class);
 

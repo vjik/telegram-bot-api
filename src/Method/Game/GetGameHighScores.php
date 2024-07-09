@@ -19,8 +19,7 @@ final readonly class GetGameHighScores implements TelegramRequestWithResultPrepa
         private ?int $chatId = null,
         private ?int $messageId = null,
         private ?string $inlineMessageId = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

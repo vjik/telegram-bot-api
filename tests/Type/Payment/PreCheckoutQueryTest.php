@@ -20,7 +20,7 @@ final class PreCheckoutQueryTest extends TestCase
             $user,
             'RUB',
             123,
-            'pl23'
+            'pl23',
         );
 
         $this->assertSame('id', $preCheckoutQuery->id);

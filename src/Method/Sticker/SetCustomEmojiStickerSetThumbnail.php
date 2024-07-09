@@ -16,8 +16,7 @@ final readonly class SetCustomEmojiStickerSetThumbnail implements TelegramReques
     public function __construct(
         private string $name,
         private ?string $customEmojiId = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

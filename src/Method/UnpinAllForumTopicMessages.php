@@ -16,8 +16,7 @@ final readonly class UnpinAllForumTopicMessages implements TelegramRequestWithRe
     public function __construct(
         private int|string $chatId,
         private int $messageThreadId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

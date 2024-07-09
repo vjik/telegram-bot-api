@@ -13,8 +13,7 @@ final readonly class PassportElementErrorReverseSide implements PassportElementE
         public string $type,
         public string $fileHash,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

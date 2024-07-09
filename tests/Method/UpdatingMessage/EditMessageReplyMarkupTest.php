@@ -42,7 +42,7 @@ final class EditMessageReplyMarkupTest extends TestCase
                 'inline_message_id' => 'imid',
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

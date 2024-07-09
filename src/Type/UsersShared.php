@@ -19,6 +19,5 @@ final readonly class UsersShared
         public int $requestId,
         #[ArrayOfObjectsValue(SharedUser::class)]
         public array $users,
-    ) {
-    }
+    ) {}
 }

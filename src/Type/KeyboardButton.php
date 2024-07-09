@@ -17,8 +17,7 @@ final readonly class KeyboardButton
         public ?bool $requestLocation = null,
         public ?KeyboardButtonPollType $requestPoll = null,
         public ?WebAppInfo $webApp = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

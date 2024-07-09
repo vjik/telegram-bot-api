@@ -13,9 +13,8 @@ final readonly class InputContactMessageContent implements InputMessageContent
         public string $phoneNumber,
         public string $firstName,
         public ?string $lastName = null,
-        public ?string $vcard = null
-    ) {
-    }
+        public ?string $vcard = null,
+    ) {}
 
     public function toRequestArray(): array
     {

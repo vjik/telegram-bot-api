@@ -6,6 +6,4 @@ namespace Vjik\TelegramBot\Api\ParseResult;
 
 use Vjik\TelegramBot\Api\TelegramRuntimeException;
 
-class TelegramParseResultException extends TelegramRuntimeException
-{
-}
+class TelegramParseResultException extends TelegramRuntimeException {}

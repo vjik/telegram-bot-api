@@ -17,8 +17,7 @@ final readonly class PaidMediaPhoto implements PaidMedia
     public function __construct(
         #[ArrayOfObjectsValue(PhotoSize::class)]
         public array $photo,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

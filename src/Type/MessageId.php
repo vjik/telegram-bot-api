@@ -11,6 +11,5 @@ final readonly class MessageId
 {
     public function __construct(
         public int $messageId,
-    ) {
-    }
+    ) {}
 }

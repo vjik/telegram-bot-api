@@ -21,6 +21,5 @@ final readonly class MessageReactionCountUpdated
         public DateTimeImmutable $date,
         #[ArrayOfObjectsValue(ReactionCount::class)]
         public array $reactions,
-    ) {
-    }
+    ) {}
 }

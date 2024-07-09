@@ -286,7 +286,7 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->addStickerToSet(
             1,
             'test',
-            new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
+            new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
         $this->assertTrue($result);
@@ -519,7 +519,7 @@ final class TelegramBotApiTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            []
+            [],
         );
 
         $this->assertSame('https://example.com/invoice', $result);
@@ -724,7 +724,7 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->editMessageMedia(
-            new InputMediaPhoto('https://example.com/photo.jpg')
+            new InputMediaPhoto('https://example.com/photo.jpg'),
         );
 
         $this->assertTrue($result);
@@ -1367,7 +1367,7 @@ final class TelegramBotApiTest extends TestCase
             1,
             'test',
             'oldid',
-            new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
+            new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
         $this->assertTrue($result);
@@ -1560,7 +1560,7 @@ final class TelegramBotApiTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            []
+            [],
         );
 
         $this->assertInstanceOf(Message::class, $result);
@@ -2217,9 +2217,9 @@ final class TelegramBotApiTest extends TestCase
                 $response instanceof TelegramResponse
                     ? $response
                     : new TelegramResponse(
-                    $statusCode,
-                    is_array($response) ? json_encode($response) : $response,
-                ),
+                        $statusCode,
+                        is_array($response) ? json_encode($response) : $response,
+                    ),
             ),
             $logger,
         );

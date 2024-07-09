@@ -15,7 +15,7 @@ final class InlineKeyboardMarkupTest extends TestCase
     {
         $button = new InlineKeyboardButton('test');
         $markup = new InlineKeyboardMarkup([
-            [$button]
+            [$button],
         ]);
 
         $this->assertSame([[$button]], $markup->inlineKeyboard);

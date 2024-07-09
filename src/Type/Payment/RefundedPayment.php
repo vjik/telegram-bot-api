@@ -15,6 +15,5 @@ final readonly class RefundedPayment
         public string $invoicePayload,
         public string $telegramPaymentChargeId,
         public ?string $providerPaymentChargeId = null,
-    ) {
-    }
+    ) {}
 }

@@ -15,8 +15,7 @@ final readonly class GetMyName implements TelegramRequestWithResultPreparingInte
 {
     public function __construct(
         private ?string $languageCode = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

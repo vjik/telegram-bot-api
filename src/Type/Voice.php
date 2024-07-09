@@ -15,6 +15,5 @@ final readonly class Voice
         public int $duration,
         public ?string $mimeType = null,
         public ?int $fileSize = null,
-    ) {
-    }
+    ) {}
 }

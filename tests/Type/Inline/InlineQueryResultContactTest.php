@@ -28,7 +28,7 @@ final class InlineQueryResultContactTest extends TestCase
                 'phone_number' => '+79001234567',
                 'first_name' => 'Sergei',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -64,7 +64,7 @@ final class InlineQueryResultContactTest extends TestCase
                 'thumbnail_width' => 120,
                 'thumbnail_height' => 200,
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

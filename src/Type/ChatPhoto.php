@@ -14,6 +14,5 @@ final readonly class ChatPhoto
         public string $smallFileUniqueId,
         public string $bigFileId,
         public string $bigFileUniqueId,
-    ) {
-    }
+    ) {}
 }

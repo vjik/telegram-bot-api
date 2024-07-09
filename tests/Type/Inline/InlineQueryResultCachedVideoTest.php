@@ -29,7 +29,7 @@ final class InlineQueryResultCachedVideoTest extends TestCase
                 'video_file_id' => 'video_id1',
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -66,7 +66,7 @@ final class InlineQueryResultCachedVideoTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

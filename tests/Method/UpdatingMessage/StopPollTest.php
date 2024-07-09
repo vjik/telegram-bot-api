@@ -40,7 +40,7 @@ final class StopPollTest extends TestCase
                 'message_id' => 2,
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

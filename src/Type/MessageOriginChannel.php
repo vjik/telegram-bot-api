@@ -16,8 +16,7 @@ final readonly class MessageOriginChannel implements MessageOrigin
         public Chat $chat,
         public int $messageId,
         public ?string $authorSignature = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

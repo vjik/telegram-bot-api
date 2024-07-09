@@ -44,7 +44,7 @@ final class RestrictChatMemberTest extends TestCase
                 'use_independent_chat_permissions' => true,
                 'until_date' => $date->getTimestamp(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

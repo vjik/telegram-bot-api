@@ -42,7 +42,7 @@ final class UserTest extends TestCase
             true,
             true,
             true,
-            true
+            true,
         );
 
         $this->assertSame(
@@ -60,7 +60,7 @@ final class UserTest extends TestCase
                 'supports_inline_queries' => true,
                 'can_connect_to_business' => true,
             ],
-            $user->toRequestArray()
+            $user->toRequestArray(),
         );
     }
 

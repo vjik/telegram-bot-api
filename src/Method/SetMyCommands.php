@@ -22,8 +22,7 @@ final readonly class SetMyCommands implements TelegramRequestWithResultPreparing
         private array $commands,
         private ?BotCommandScope $scope = null,
         private ?string $languageCode = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

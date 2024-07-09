@@ -29,7 +29,7 @@ final class SetMyNameTest extends TestCase
                 'name' => 'test',
                 'language_code' => 'ru',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

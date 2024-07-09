@@ -33,8 +33,7 @@ final readonly class SendLocation implements TelegramRequestWithResultPreparingI
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

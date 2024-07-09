@@ -25,8 +25,7 @@ final readonly class InlineQueryResultCachedMpeg4Gif implements InlineQueryResul
         public ?bool $showCaptionAboveMedia = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

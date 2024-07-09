@@ -15,8 +15,7 @@ final readonly class GetFile implements TelegramRequestWithResultPreparingInterf
 {
     public function __construct(
         private string $fileId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -11,6 +11,5 @@ final readonly class ChatBackground
 {
     public function __construct(
         public BackgroundType $type,
-    ) {
-    }
+    ) {}
 }

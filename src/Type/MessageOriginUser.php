@@ -14,8 +14,7 @@ final readonly class MessageOriginUser implements MessageOrigin
     public function __construct(
         public DateTimeImmutable $date,
         public User $senderUser,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

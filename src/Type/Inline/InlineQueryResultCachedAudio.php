@@ -23,8 +23,7 @@ final readonly class InlineQueryResultCachedAudio implements InlineQueryResult
         public ?array $captionEntities = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

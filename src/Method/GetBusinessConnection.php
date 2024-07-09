@@ -15,8 +15,7 @@ final readonly class GetBusinessConnection implements TelegramRequestWithResultP
 {
     public function __construct(
         private string $businessConnectionId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

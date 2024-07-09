@@ -26,8 +26,7 @@ final readonly class InlineQueryResultCachedVideo implements InlineQueryResult
         public ?bool $showCaptionAboveMedia = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

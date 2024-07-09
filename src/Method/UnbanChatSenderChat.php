@@ -16,8 +16,7 @@ final readonly class UnbanChatSenderChat implements TelegramRequestWithResultPre
     public function __construct(
         private int|string $chatId,
         private int $senderChatId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

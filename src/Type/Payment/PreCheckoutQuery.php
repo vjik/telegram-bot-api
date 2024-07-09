@@ -19,6 +19,5 @@ final readonly class PreCheckoutQuery
         public string $invoicePayload,
         public ?string $shippingOptionId = null,
         public ?OrderInfo $orderInfo = null,
-    ) {
-    }
+    ) {}
 }

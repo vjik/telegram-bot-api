@@ -12,8 +12,7 @@ final class StubTelegramClient implements TelegramClientInterface
 {
     public function __construct(
         private ?TelegramResponse $response = null,
-    ) {
-    }
+    ) {}
 
     public function send(TelegramRequestInterface $request): TelegramResponse
     {

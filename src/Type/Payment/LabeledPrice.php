@@ -12,8 +12,7 @@ final readonly class LabeledPrice
     public function __construct(
         public string $label,
         public int $amount,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

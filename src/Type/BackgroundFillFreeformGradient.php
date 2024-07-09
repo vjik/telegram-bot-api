@@ -18,8 +18,7 @@ final readonly class BackgroundFillFreeformGradient implements BackgroundFill
     public function __construct(
         #[ArrayMap(IntegerValue::class)]
         public array $colors,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

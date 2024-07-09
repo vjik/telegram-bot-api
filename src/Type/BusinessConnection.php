@@ -18,6 +18,5 @@ final readonly class BusinessConnection
         public DateTimeImmutable $date,
         public bool $canReply,
         public bool $isEnabled,
-    ) {
-    }
+    ) {}
 }

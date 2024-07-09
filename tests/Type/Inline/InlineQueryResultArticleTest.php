@@ -29,7 +29,7 @@ final class InlineQueryResultArticleTest extends TestCase
                 'title' => 'title',
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -65,7 +65,7 @@ final class InlineQueryResultArticleTest extends TestCase
                 'thumbnail_width' => 100,
                 'thumbnail_height' => 200,
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

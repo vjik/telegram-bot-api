@@ -20,8 +20,7 @@ final readonly class SetPassportDataErrors implements TelegramRequestWithResultP
     public function __construct(
         private int $userId,
         private array $errors,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
@@ -39,7 +38,7 @@ final readonly class SetPassportDataErrors implements TelegramRequestWithResultP
             'user_id' => $this->userId,
             'errors' => array_map(
                 static fn(PassportElementError $error) => $error->toRequestArray(),
-                $this->errors
+                $this->errors,
             ),
         ];
     }

@@ -12,6 +12,5 @@ final readonly class WebAppData
     public function __construct(
         public string $data,
         public string $buttonText,
-    ) {
-    }
+    ) {}
 }

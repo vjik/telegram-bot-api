@@ -18,8 +18,7 @@ final readonly class SetChatPermissions implements TelegramRequestWithResultPrep
         private int|string $chatId,
         private ChatPermissions $permissions,
         private ?bool $useIndependentChatPermissions = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

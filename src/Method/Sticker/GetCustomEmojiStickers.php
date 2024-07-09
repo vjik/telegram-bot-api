@@ -19,8 +19,7 @@ final readonly class GetCustomEmojiStickers implements TelegramRequestWithResult
      */
     public function __construct(
         private array $customEmojiIds,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

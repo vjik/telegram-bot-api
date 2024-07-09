@@ -17,7 +17,6 @@ final readonly class BusinessOpeningHours
     public function __construct(
         public string $timeZoneName,
         #[ArrayOfObjectsValue(BusinessOpeningHoursInterval::class)]
-        public array $openingHours
-    ) {
-    }
+        public array $openingHours,
+    ) {}
 }

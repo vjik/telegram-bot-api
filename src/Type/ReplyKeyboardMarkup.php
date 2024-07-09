@@ -20,8 +20,7 @@ final readonly class ReplyKeyboardMarkup
         public ?bool $oneTimeKeyboard = null,
         public ?string $inputFieldPlaceholder = null,
         public ?bool $selective = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {
@@ -30,9 +29,9 @@ final readonly class ReplyKeyboardMarkup
                 'keyboard' => array_map(
                     static fn(array $buttons) => array_map(
                         static fn(KeyboardButton $button) => $button->toRequestArray(),
-                        $buttons
+                        $buttons,
                     ),
-                    $this->keyboard
+                    $this->keyboard,
                 ),
                 'is_persistent' => $this->isPersistent,
                 'resize_keyboard' => $this->resizeKeyboard,

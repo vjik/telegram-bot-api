@@ -29,7 +29,7 @@ final class InlineQueryResultAudioTest extends TestCase
                 'audio_url' => 'https://example.com/test.mp3',
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -66,7 +66,7 @@ final class InlineQueryResultAudioTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

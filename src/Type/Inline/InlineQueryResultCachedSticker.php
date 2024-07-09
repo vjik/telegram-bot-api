@@ -16,8 +16,7 @@ final readonly class InlineQueryResultCachedSticker implements InlineQueryResult
         public string $stickerFileId,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

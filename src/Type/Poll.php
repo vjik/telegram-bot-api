@@ -34,6 +34,5 @@ final readonly class Poll
         public ?array $explanationEntities = null,
         public ?int $openPeriod = null,
         public ?int $closeDate = null,
-    ) {
-    }
+    ) {}
 }

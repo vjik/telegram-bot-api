@@ -11,8 +11,7 @@ final readonly class TransactionPartnerFragment implements TransactionPartner
 {
     public function __construct(
         public ?RevenueWithdrawalState $withdrawalState = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

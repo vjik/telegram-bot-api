@@ -16,8 +16,7 @@ final readonly class ArrayOfArraysOfObjectsValue implements ValueProcessorInterf
      */
     public function __construct(
         private string $className,
-    ) {
-    }
+    ) {}
 
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
@@ -34,9 +33,9 @@ final readonly class ArrayOfArraysOfObjectsValue implements ValueProcessorInterf
         return array_map(
             fn(array $array) => array_map(
                 fn($item) => $objectFactory->create($item, $key, $this->className),
-                $array
+                $array,
             ),
-            $value
+            $value,
         );
     }
 }

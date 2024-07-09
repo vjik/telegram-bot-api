@@ -15,8 +15,7 @@ final readonly class InlineQueryResultsButton
         public string $text,
         public ?WebAppInfo $webApp = null,
         public ?string $startParameter = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

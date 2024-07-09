@@ -16,8 +16,7 @@ final readonly class PassportElementErrorTranslationFiles implements PassportEle
         public string $type,
         public array $fileHashes,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

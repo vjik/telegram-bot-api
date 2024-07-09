@@ -18,8 +18,7 @@ final readonly class InputFile
     public function __construct(
         public mixed $resource,
         public ?string $filename = null,
-    ) {
-    }
+    ) {}
 
     public static function fromLocalFile(string $path, ?string $filename = null): self
     {

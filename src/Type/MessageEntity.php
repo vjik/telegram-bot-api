@@ -17,8 +17,7 @@ final readonly class MessageEntity
         public ?User $user = null,
         public ?string $language = null,
         public ?string $customEmojiId = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

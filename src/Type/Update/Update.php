@@ -59,8 +59,7 @@ final class Update
         public readonly ?ChatJoinRequest $chatJoinRequest = null,
         public readonly ?ChatBoostUpdated $chatBoost = null,
         public readonly ?ChatBoostRemoved $removedChatBoost = null,
-    ) {
-    }
+    ) {}
 
     /**
      * @psalm-template T as bool

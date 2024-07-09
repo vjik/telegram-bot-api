@@ -16,6 +16,5 @@ final readonly class Location
         public ?int $livePeriod = null,
         public ?int $heading = null,
         public ?int $proximityAlertRadius = null,
-    ) {
-    }
+    ) {}
 }

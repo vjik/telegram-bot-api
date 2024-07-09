@@ -21,7 +21,7 @@ final class GetUserProfilePhotosTest extends TestCase
             [
                 'user_id' => 123,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -30,7 +30,7 @@ final class GetUserProfilePhotosTest extends TestCase
         $method = new GetUserProfilePhotos(
             123,
             1,
-            2
+            2,
         );
 
         $this->assertSame(
@@ -39,7 +39,7 @@ final class GetUserProfilePhotosTest extends TestCase
                 'offset' => 1,
                 'limit' => 2,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

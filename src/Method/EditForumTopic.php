@@ -18,8 +18,7 @@ final readonly class EditForumTopic implements TelegramRequestWithResultPreparin
         private int $messageThreadId,
         private ?string $name = null,
         private ?string $iconCustomEmojiId = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

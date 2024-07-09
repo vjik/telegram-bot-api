@@ -25,7 +25,7 @@ final class ShippingOptionTest extends TestCase
                 'title' => 'title',
                 'prices' => [$price->toRequestArray()],
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

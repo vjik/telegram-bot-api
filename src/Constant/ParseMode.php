@@ -9,11 +9,11 @@ namespace Vjik\TelegramBot\Api\Constant;
  */
 final class ParseMode
 {
-    const MARKDOWN_V2 = 'MarkdownV2';
-    const HTML = 'HTML';
+    public const MARKDOWN_V2 = 'MarkdownV2';
+    public const HTML = 'HTML';
 
     /**
      * @deprecated Use self::MARKDOWN_V2 instead.
      */
-    const MARKDOWN = 'Markdown';
+    public const MARKDOWN = 'Markdown';
 }

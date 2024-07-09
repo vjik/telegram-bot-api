@@ -31,8 +31,7 @@ final readonly class InlineQueryResultVideo implements InlineQueryResult
         public ?string $description = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

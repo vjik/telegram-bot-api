@@ -43,7 +43,7 @@ final class CreateNewStickerSetTest extends TestCase
                 'sticker_type' => 'regular',
                 'needs_repainting' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

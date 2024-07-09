@@ -39,7 +39,7 @@ final class BanChatMemberTest extends TestCase
                 'until_date' => $date->getTimestamp(),
                 'revoke_messages' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

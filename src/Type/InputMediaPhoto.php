@@ -21,8 +21,7 @@ final readonly class InputMediaPhoto implements InputMedia
         public ?array $captionEntities = null,
         public ?bool $showCaptionAboveMedia = null,
         public ?bool $hasSpoiler = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

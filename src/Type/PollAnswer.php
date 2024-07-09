@@ -21,6 +21,5 @@ final readonly class PollAnswer
         public array $optionIds,
         public ?Chat $voterChat = null,
         public ?User $user = null,
-    ) {
-    }
+    ) {}
 }

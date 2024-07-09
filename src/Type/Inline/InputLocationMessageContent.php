@@ -16,8 +16,7 @@ final readonly class InputLocationMessageContent implements InputMessageContent
         public ?int $livePeriod = null,
         public ?int $heading = null,
         public ?int $proximityAlertRadius = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

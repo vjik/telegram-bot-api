@@ -19,6 +19,5 @@ final readonly class PollOption
         public int $voterCount,
         #[ArrayOfObjectsValue(MessageEntity::class)]
         public ?array $textEntities = null,
-    ) {
-    }
+    ) {}
 }

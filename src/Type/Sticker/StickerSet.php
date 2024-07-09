@@ -22,6 +22,5 @@ final readonly class StickerSet
         #[ArrayOfObjectsValue(Sticker::class)]
         public array $stickers,
         public ?PhotoSize $thumbnail = null,
-    ) {
-    }
+    ) {}
 }

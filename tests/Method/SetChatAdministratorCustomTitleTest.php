@@ -13,7 +13,7 @@ final class SetChatAdministratorCustomTitleTest extends TestCase
 {
     public function testBase(): void
     {
-        $method = new SetChatAdministratorCustomTitle(1,2,'test');
+        $method = new SetChatAdministratorCustomTitle(1, 2, 'test');
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('setChatAdministratorCustomTitle', $method->getApiMethod());
@@ -29,7 +29,7 @@ final class SetChatAdministratorCustomTitleTest extends TestCase
 
     public function testPrepareResult(): void
     {
-        $method = new SetChatAdministratorCustomTitle(1,2,'test');
+        $method = new SetChatAdministratorCustomTitle(1, 2, 'test');
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
 

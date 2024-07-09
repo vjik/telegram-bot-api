@@ -16,8 +16,7 @@ final readonly class GetChatAdministrators implements TelegramRequestWithResultP
 {
     public function __construct(
         private int|string $chatId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -14,8 +14,7 @@ final readonly class MessageOriginHiddenUser implements MessageOrigin
     public function __construct(
         public DateTimeImmutable $date,
         public string $senderUserName,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

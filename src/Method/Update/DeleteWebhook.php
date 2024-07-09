@@ -15,8 +15,7 @@ final readonly class DeleteWebhook implements TelegramRequestWithResultPreparing
 {
     public function __construct(
         private ?bool $dropPendingUpdates = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

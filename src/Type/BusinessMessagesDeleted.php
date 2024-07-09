@@ -20,6 +20,5 @@ final readonly class BusinessMessagesDeleted
         public Chat $chat,
         #[ArrayMap(IntegerValue::class)]
         public array $messageIds,
-    ) {
-    }
+    ) {}
 }

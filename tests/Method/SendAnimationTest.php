@@ -64,7 +64,7 @@ final class SendAnimationTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
-                'animation'=> $animation,
+                'animation' => $animation,
                 'duration' => 100,
                 'width' => 240,
                 'height' => 320,

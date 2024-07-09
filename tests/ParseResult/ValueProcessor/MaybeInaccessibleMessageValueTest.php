@@ -40,7 +40,7 @@ final class MaybeInaccessibleMessageValueTest extends TestCase
 
         $this->expectException(InvalidTypeOfValueInResultException::class);
         $this->expectExceptionMessage(
-            'Invalid type of value for key "date". Expected type is "integer", but got "string".'
+            'Invalid type of value for key "date". Expected type is "integer", but got "string".',
         );
         $processor->process(['date' => '19.11.2013'], null, $objectFactory);
     }
@@ -60,7 +60,7 @@ final class MaybeInaccessibleMessageValueTest extends TestCase
                 ],
             ],
             null,
-            $objectFactory
+            $objectFactory,
         );
 
         $this->assertInstanceOf(InaccessibleMessage::class, $result);

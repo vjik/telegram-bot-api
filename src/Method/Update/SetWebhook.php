@@ -20,8 +20,7 @@ final readonly class SetWebhook implements TelegramRequestWithResultPreparingInt
         private ?array $allowUpdates = null,
         private ?bool $dropPendingUpdates = null,
         private ?string $secretToken = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

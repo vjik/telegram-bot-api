@@ -32,7 +32,7 @@ final class PaidMediaPhotoTest extends TestCase
                     'height' => 200,
                     'file_size' => 512,
                 ],
-            ]
+            ],
         ], null, PaidMediaPhoto::class);
 
         $this->assertSame('photo', $type->getType());

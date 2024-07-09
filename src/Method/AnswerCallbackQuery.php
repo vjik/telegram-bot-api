@@ -19,8 +19,7 @@ final readonly class AnswerCallbackQuery implements TelegramRequestWithResultPre
         private ?bool $showAlert = null,
         private ?string $url = null,
         private ?int $cacheTime = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

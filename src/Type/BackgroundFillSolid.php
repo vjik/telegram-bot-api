@@ -11,8 +11,7 @@ final readonly class BackgroundFillSolid implements BackgroundFill
 {
     public function __construct(
         public int $color,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

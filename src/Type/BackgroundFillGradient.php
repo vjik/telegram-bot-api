@@ -13,8 +13,7 @@ final readonly class BackgroundFillGradient implements BackgroundFill
         public int $topColor,
         public int $bottomColor,
         public int $rotationAngle,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

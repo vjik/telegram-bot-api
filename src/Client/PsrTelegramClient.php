@@ -33,7 +33,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             match ($request->getHttpMethod()) {
                 HttpMethod::GET => $this->createGetRequest($request),
                 HttpMethod::POST => $this->createPostRequest($request),
-            }
+            },
         );
 
         return new TelegramResponse(
@@ -71,7 +71,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             foreach ($data as $key => $value) {
                 $streamBuilder->addResource(
                     $key,
-                    is_string($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR)
+                    is_string($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR),
                 );
             }
             foreach ($files as $key => $file) {

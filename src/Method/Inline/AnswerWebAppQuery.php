@@ -17,8 +17,7 @@ final readonly class AnswerWebAppQuery implements TelegramRequestWithResultPrepa
     public function __construct(
         private string $webAppQueryId,
         private InlineQueryResult $result,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -98,11 +98,11 @@ final class PsrTelegramClientTest extends TestCase
                             'Content-Length' => ['29'],
                             'Content-Type' => ['application/json; charset=utf-8'],
                         ],
-                        $request->getHeaders()
+                        $request->getHeaders(),
                     );
                     $this->assertSame('{"chat_id":123,"text":"test"}', $request->getBody()->getContents());
                     return true;
-                })
+                }),
             )
             ->willReturn(new Response(201));
 
@@ -121,7 +121,7 @@ final class PsrTelegramClientTest extends TestCase
         );
 
         $response = $client->send(
-            new TelegramRequest(HttpMethod::POST, 'sendMessage', ['chat_id' => 123, 'text' => 'test'])
+            new TelegramRequest(HttpMethod::POST, 'sendMessage', ['chat_id' => 123, 'text' => 'test']),
         );
 
         $this->assertSame(201, $response->statusCode);
@@ -148,8 +148,8 @@ final class PsrTelegramClientTest extends TestCase
                         preg_match(
                             '~multipart/form-data; boundary=([\da-f]+.[\da-f]+); charset=utf-8~',
                             $requestHeaders['Content-Type'][0],
-                            $matches
-                        )
+                            $matches,
+                        ),
                     );
                     $this->assertStringContainsStringIgnoringLineEndings(
                         <<<TEXT
@@ -171,10 +171,10 @@ final class PsrTelegramClientTest extends TestCase
                             test-file-body
                             --$matches[1]--
                             TEXT,
-                        $request->getBody()->getContents()
+                        $request->getBody()->getContents(),
                     );
                     return true;
-                })
+                }),
             )
             ->willReturn(new Response(201));
 
@@ -204,7 +204,7 @@ final class PsrTelegramClientTest extends TestCase
                         'face.png',
                     ),
                 ],
-            )
+            ),
         );
 
         $this->assertSame(201, $response->statusCode);

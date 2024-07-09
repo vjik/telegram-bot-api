@@ -11,8 +11,7 @@ final readonly class ReactionTypeEmoji implements ReactionType
 {
     public function __construct(
         public string $emoji,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

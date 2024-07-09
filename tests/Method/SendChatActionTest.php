@@ -22,7 +22,7 @@ final class SendChatActionTest extends TestCase
                 'chat_id' => 12,
                 'action' => 'typing',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -37,7 +37,7 @@ final class SendChatActionTest extends TestCase
                 'message_thread_id' => 23,
                 'action' => 'testing',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

@@ -16,8 +16,7 @@ final readonly class GetUserChatBoosts implements TelegramRequestWithResultPrepa
     public function __construct(
         private int|string $chatId,
         private int $userId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

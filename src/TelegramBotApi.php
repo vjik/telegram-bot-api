@@ -278,7 +278,7 @@ final class TelegramBotApi
     public function addStickerToSet(int $userId, string $name, InputSticker $sticker): FailResult|true
     {
         return $this->send(
-            new AddStickerToSet($userId, $name, $sticker)
+            new AddStickerToSet($userId, $name, $sticker),
         );
     }
 
@@ -295,7 +295,7 @@ final class TelegramBotApi
         ?int $cacheTime = null,
     ): FailResult|true {
         return $this->send(
-            new AnswerCallbackQuery($callbackQueryId, $text, $showAlert, $url, $cacheTime)
+            new AnswerCallbackQuery($callbackQueryId, $text, $showAlert, $url, $cacheTime),
         );
     }
 
@@ -315,7 +315,7 @@ final class TelegramBotApi
         ?InlineQueryResultsButton $button = null,
     ): FailResult|true {
         return $this->send(
-            new AnswerInlineQuery($inlineQueryId, $results, $cacheTime, $isPersonal, $nextOffset, $button)
+            new AnswerInlineQuery($inlineQueryId, $results, $cacheTime, $isPersonal, $nextOffset, $button),
         );
     }
 
@@ -330,7 +330,7 @@ final class TelegramBotApi
         ?string $errorMessage = null,
     ): FailResult|true {
         return $this->send(
-            new AnswerPreCheckoutQuery($preCheckoutQueryId, $ok, $errorMessage)
+            new AnswerPreCheckoutQuery($preCheckoutQueryId, $ok, $errorMessage),
         );
     }
 
@@ -348,7 +348,7 @@ final class TelegramBotApi
         ?string $errorMessage = null,
     ): FailResult|true {
         return $this->send(
-            new AnswerShippingQuery($shippingQueryId, $ok, $shippingOptions, $errorMessage)
+            new AnswerShippingQuery($shippingQueryId, $ok, $shippingOptions, $errorMessage),
         );
     }
 
@@ -360,7 +360,7 @@ final class TelegramBotApi
     public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): FailResult|SentWebAppMessage
     {
         return $this->send(
-            new AnswerWebAppQuery($webAppQueryId, $result)
+            new AnswerWebAppQuery($webAppQueryId, $result),
         );
     }
 
@@ -372,7 +372,7 @@ final class TelegramBotApi
     public function approveChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
         return $this->send(
-            new ApproveChatJoinRequest($chatId, $userId)
+            new ApproveChatJoinRequest($chatId, $userId),
         );
     }
 
@@ -388,7 +388,7 @@ final class TelegramBotApi
         ?bool $revokeMessages = null,
     ): FailResult|true {
         return $this->send(
-            new BanChatMember($chatId, $userId, $untilDate, $revokeMessages)
+            new BanChatMember($chatId, $userId, $untilDate, $revokeMessages),
         );
     }
 
@@ -469,7 +469,7 @@ final class TelegramBotApi
                 $protectContent,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -499,7 +499,7 @@ final class TelegramBotApi
                 $disableNotification,
                 $protectContent,
                 $removeCaption,
-            )
+            ),
         );
     }
 
@@ -516,7 +516,7 @@ final class TelegramBotApi
         ?bool $createsJoinRequest = null,
     ): FailResult|ChatInviteLink {
         return $this->send(
-            new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest)
+            new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest),
         );
     }
 
@@ -532,7 +532,7 @@ final class TelegramBotApi
         ?string $iconCustomEmojiId = null,
     ): FailResult|ForumTopic {
         return $this->send(
-            new CreateForumTopic($chatId, $name, $iconColor, $iconCustomEmojiId)
+            new CreateForumTopic($chatId, $name, $iconColor, $iconCustomEmojiId),
         );
     }
 
@@ -588,7 +588,7 @@ final class TelegramBotApi
                 $sendPhoneNumberToProvider,
                 $sendEmailToProvider,
                 $isFlexible,
-            )
+            ),
         );
     }
 
@@ -608,7 +608,7 @@ final class TelegramBotApi
         ?bool $needsRepainting = null,
     ): FailResult|true {
         return $this->send(
-            new CreateNewStickerSet($userId, $name, $title, $stickers, $stickerType, $needsRepainting)
+            new CreateNewStickerSet($userId, $name, $title, $stickers, $stickerType, $needsRepainting),
         );
     }
 
@@ -620,7 +620,7 @@ final class TelegramBotApi
     public function declineChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
         return $this->send(
-            new DeclineChatJoinRequest($chatId, $userId)
+            new DeclineChatJoinRequest($chatId, $userId),
         );
     }
 
@@ -632,7 +632,7 @@ final class TelegramBotApi
     public function deleteChatPhoto(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new DeleteChatPhoto($chatId)
+            new DeleteChatPhoto($chatId),
         );
     }
 
@@ -644,7 +644,7 @@ final class TelegramBotApi
     public function deleteChatStickerSet(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new DeleteChatStickerSet($chatId)
+            new DeleteChatStickerSet($chatId),
         );
     }
 
@@ -698,7 +698,7 @@ final class TelegramBotApi
     public function deleteStickerFromSet(string $sticker): FailResult|true
     {
         return $this->send(
-            new DeleteStickerFromSet($sticker)
+            new DeleteStickerFromSet($sticker),
         );
     }
 
@@ -726,7 +726,7 @@ final class TelegramBotApi
         ?bool $createsJoinRequest = null,
     ): FailResult|ChatInviteLink {
         return $this->send(
-            new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest)
+            new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest),
         );
     }
 
@@ -742,7 +742,7 @@ final class TelegramBotApi
         ?string $iconCustomEmojiId = null,
     ): FailResult|true {
         return $this->send(
-            new EditForumTopic($chatId, $messageThreadId, $name, $iconCustomEmojiId)
+            new EditForumTopic($chatId, $messageThreadId, $name, $iconCustomEmojiId),
         );
     }
 
@@ -754,7 +754,7 @@ final class TelegramBotApi
     public function editGeneralForumTopic(int|string $chatId, string $name): FailResult|true
     {
         return $this->send(
-            new EditGeneralForumTopic($chatId, $name)
+            new EditGeneralForumTopic($chatId, $name),
         );
     }
 
@@ -787,7 +787,7 @@ final class TelegramBotApi
                 $captionEntities,
                 $showCaptionAboveMedia,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -822,7 +822,7 @@ final class TelegramBotApi
                 $heading,
                 $proximityAlertRadius,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -847,7 +847,7 @@ final class TelegramBotApi
                 $messageId,
                 $inlineMessageId,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -870,7 +870,7 @@ final class TelegramBotApi
                 $messageId,
                 $inlineMessageId,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -903,7 +903,7 @@ final class TelegramBotApi
                 $entities,
                 $linkPreviewOptions,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -915,7 +915,7 @@ final class TelegramBotApi
     public function exportChatInviteLink(int|string $chatId): FailResult|string
     {
         return $this->send(
-            new ExportChatInviteLink($chatId)
+            new ExportChatInviteLink($chatId),
         );
     }
 
@@ -940,7 +940,7 @@ final class TelegramBotApi
                 $messageThreadId,
                 $disableNotification,
                 $protectContent,
-            )
+            ),
         );
     }
 
@@ -968,7 +968,7 @@ final class TelegramBotApi
                 $messageThreadId,
                 $disableNotification,
                 $protectContent,
-            )
+            ),
         );
     }
 
@@ -1093,7 +1093,7 @@ final class TelegramBotApi
         ?string $inlineMessageId = null,
     ): FailResult|array {
         return $this->send(
-            new GetGameHighScores($userId, $chatId, $messageId, $inlineMessageId)
+            new GetGameHighScores($userId, $chatId, $messageId, $inlineMessageId),
         );
     }
 
@@ -1165,7 +1165,7 @@ final class TelegramBotApi
     public function getStarTransactions(?int $offset = null, ?int $limit = null): FailResult|StarTransactions
     {
         return $this->send(
-            new GetStarTransactions($offset, $limit)
+            new GetStarTransactions($offset, $limit),
         );
     }
 
@@ -1177,7 +1177,7 @@ final class TelegramBotApi
     public function getStickerSet(string $name): FailResult|StickerSet
     {
         return $this->send(
-            new GetStickerSet($name)
+            new GetStickerSet($name),
         );
     }
 
@@ -1206,7 +1206,7 @@ final class TelegramBotApi
     public function getUserChatBoosts(int|string $chatId, int $userId): FailResult|UserChatBoosts
     {
         return $this->send(
-            new GetUserChatBoosts($chatId, $userId)
+            new GetUserChatBoosts($chatId, $userId),
         );
     }
 
@@ -1218,10 +1218,10 @@ final class TelegramBotApi
     public function getUserProfilePhotos(
         int $userId,
         ?int $offset = null,
-        ?int $limit = null
+        ?int $limit = null,
     ): FailResult|UserProfilePhotos {
         return $this->send(
-            new GetUserProfilePhotos($userId, $offset, $limit)
+            new GetUserProfilePhotos($userId, $offset, $limit),
         );
     }
 
@@ -1243,7 +1243,7 @@ final class TelegramBotApi
     public function hideGeneralForumTopic(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new HideGeneralForumTopic($chatId)
+            new HideGeneralForumTopic($chatId),
         );
     }
 
@@ -1255,7 +1255,7 @@ final class TelegramBotApi
     public function leaveChat(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new LeaveChat($chatId)
+            new LeaveChat($chatId),
         );
     }
 
@@ -1280,7 +1280,7 @@ final class TelegramBotApi
         ?bool $disableNotification = null,
     ): FailResult|true {
         return $this->send(
-            new PinChatMessage($chatId, $messageId, $disableNotification)
+            new PinChatMessage($chatId, $messageId, $disableNotification),
         );
     }
 
@@ -1326,8 +1326,8 @@ final class TelegramBotApi
                 $canPostMessages,
                 $canEditMessages,
                 $canPinMessages,
-                $canManageTopics
-            )
+                $canManageTopics,
+            ),
         );
     }
 
@@ -1339,7 +1339,7 @@ final class TelegramBotApi
     public function refundStarPayment(int $userId, string $telegramPaymentChargeId): FailResult|true
     {
         return $this->send(
-            new RefundStarPayment($userId, $telegramPaymentChargeId)
+            new RefundStarPayment($userId, $telegramPaymentChargeId),
         );
     }
 
@@ -1351,7 +1351,7 @@ final class TelegramBotApi
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
         return $this->send(
-            new ReopenForumTopic($chatId, $messageThreadId)
+            new ReopenForumTopic($chatId, $messageThreadId),
         );
     }
 
@@ -1363,7 +1363,7 @@ final class TelegramBotApi
     public function reopenGeneralForumTopic(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new ReopenGeneralForumTopic($chatId)
+            new ReopenGeneralForumTopic($chatId),
         );
     }
 
@@ -1376,10 +1376,10 @@ final class TelegramBotApi
         int $userId,
         string $name,
         string $oldSticker,
-        InputSticker $sticker
+        InputSticker $sticker,
     ): FailResult|true {
         return $this->send(
-            new ReplaceStickerInSet($userId, $name, $oldSticker, $sticker)
+            new ReplaceStickerInSet($userId, $name, $oldSticker, $sticker),
         );
     }
 
@@ -1396,7 +1396,7 @@ final class TelegramBotApi
         ?DateTimeImmutable $untilDate = null,
     ): FailResult|true {
         return $this->send(
-            new RestrictChatMember($chatId, $userId, $permissions, $useIndependentChatPermissions, $untilDate)
+            new RestrictChatMember($chatId, $userId, $permissions, $useIndependentChatPermissions, $untilDate),
         );
     }
 
@@ -1408,7 +1408,7 @@ final class TelegramBotApi
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): FailResult|ChatInviteLink
     {
         return $this->send(
-            new RevokeChatInviteLink($chatId, $inviteLink)
+            new RevokeChatInviteLink($chatId, $inviteLink),
         );
     }
 
@@ -1459,7 +1459,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1506,7 +1506,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1526,8 +1526,8 @@ final class TelegramBotApi
                 $chatId,
                 $action,
                 $businessConnectionId,
-                $messageThreadId
-            )
+                $messageThreadId,
+            ),
         );
     }
 
@@ -1564,7 +1564,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1595,7 +1595,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1638,7 +1638,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1669,7 +1669,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1741,7 +1741,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1782,7 +1782,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1853,7 +1853,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1891,7 +1891,7 @@ final class TelegramBotApi
                 $protectContent,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1934,7 +1934,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -1995,7 +1995,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2028,7 +2028,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2073,7 +2073,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2126,7 +2126,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2163,7 +2163,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2204,7 +2204,7 @@ final class TelegramBotApi
                 $messageEffectId,
                 $replyParameters,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2216,10 +2216,10 @@ final class TelegramBotApi
     public function setChatAdministratorCustomTitle(
         int|string $chatId,
         int $userId,
-        string $customTitle
+        string $customTitle,
     ): FailResult|true {
         return $this->send(
-            new SetChatAdministratorCustomTitle($chatId, $userId, $customTitle)
+            new SetChatAdministratorCustomTitle($chatId, $userId, $customTitle),
         );
     }
 
@@ -2231,7 +2231,7 @@ final class TelegramBotApi
     public function setChatDescription(int|string $chatId, ?string $description = null): FailResult|true
     {
         return $this->send(
-            new SetChatDescription($chatId, $description)
+            new SetChatDescription($chatId, $description),
         );
     }
 
@@ -2256,7 +2256,7 @@ final class TelegramBotApi
         ?bool $useIndependentChatPermissions = null,
     ): FailResult|true {
         return $this->send(
-            new SetChatPermissions($chatId, $permissions, $useIndependentChatPermissions)
+            new SetChatPermissions($chatId, $permissions, $useIndependentChatPermissions),
         );
     }
 
@@ -2268,7 +2268,7 @@ final class TelegramBotApi
     public function setChatPhoto(int|string $chatId, InputFile $photo): FailResult|true
     {
         return $this->send(
-            new SetChatPhoto($chatId, $photo)
+            new SetChatPhoto($chatId, $photo),
         );
     }
 
@@ -2280,7 +2280,7 @@ final class TelegramBotApi
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): FailResult|true
     {
         return $this->send(
-            new SetChatStickerSet($chatId, $stickerSetName)
+            new SetChatStickerSet($chatId, $stickerSetName),
         );
     }
 
@@ -2292,7 +2292,7 @@ final class TelegramBotApi
     public function setChatTitle(int|string $chatId, string $title): FailResult|true
     {
         return $this->send(
-            new SetChatTitle($chatId, $title)
+            new SetChatTitle($chatId, $title),
         );
     }
 
@@ -2328,8 +2328,8 @@ final class TelegramBotApi
                 $disableEditMessage,
                 $chatId,
                 $messageId,
-                $inlineMessageId
-            )
+                $inlineMessageId,
+            ),
         );
     }
 
@@ -2347,7 +2347,7 @@ final class TelegramBotApi
         ?bool $isBig = null,
     ): FailResult|true {
         return $this->send(
-            new SetMessageReaction($chatId, $messageId, $reaction, $isBig)
+            new SetMessageReaction($chatId, $messageId, $reaction, $isBig),
         );
     }
 
@@ -2405,7 +2405,7 @@ final class TelegramBotApi
      */
     public function setMyShortDescription(
         ?string $shortDescription = null,
-        ?string $languageCode = null
+        ?string $languageCode = null,
     ): FailResult|true {
         return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
     }
@@ -2482,8 +2482,8 @@ final class TelegramBotApi
                 $name,
                 $userId,
                 $format,
-                $thumbnail
-            )
+                $thumbnail,
+            ),
         );
     }
 
@@ -2511,7 +2511,7 @@ final class TelegramBotApi
         ?string $secretToken = null,
     ): FailResult|true {
         return $this->send(
-            new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken)
+            new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken),
         );
     }
 
@@ -2534,7 +2534,7 @@ final class TelegramBotApi
                 $messageId,
                 $inlineMessageId,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2555,7 +2555,7 @@ final class TelegramBotApi
                 $messageId,
                 $businessConnectionId,
                 $replyMarkup,
-            )
+            ),
         );
     }
 
@@ -2570,7 +2570,7 @@ final class TelegramBotApi
         ?bool $onlyIfBanned = null,
     ): FailResult|true {
         return $this->send(
-            new UnbanChatMember($chatId, $userId, $onlyIfBanned)
+            new UnbanChatMember($chatId, $userId, $onlyIfBanned),
         );
     }
 
@@ -2630,7 +2630,7 @@ final class TelegramBotApi
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): FailResult|true
     {
         return $this->send(
-            new UnpinAllForumTopicMessages($chatId, $messageThreadId)
+            new UnpinAllForumTopicMessages($chatId, $messageThreadId),
         );
     }
 
@@ -2642,7 +2642,7 @@ final class TelegramBotApi
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): FailResult|true
     {
         return $this->send(
-            new UnpinAllGeneralForumTopicMessages($chatId)
+            new UnpinAllGeneralForumTopicMessages($chatId),
         );
     }
 
@@ -2654,7 +2654,7 @@ final class TelegramBotApi
     public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): FailResult|File
     {
         return $this->send(
-            new UploadStickerFile($userId, $sticker, $stickerFormat)
+            new UploadStickerFile($userId, $sticker, $stickerFormat),
         );
     }
 
@@ -2696,7 +2696,7 @@ final class TelegramBotApi
     private function prepareFailResult(
         TelegramRequestInterface $request,
         TelegramResponse $response,
-        array $decodedBody
+        array $decodedBody,
     ): FailResult {
         return new FailResult(
             $request,

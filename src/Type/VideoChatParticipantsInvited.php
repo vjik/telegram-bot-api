@@ -17,6 +17,5 @@ final readonly class VideoChatParticipantsInvited
     public function __construct(
         #[ArrayOfObjectsValue(User::class)]
         public array $users,
-    ) {
-    }
+    ) {}
 }

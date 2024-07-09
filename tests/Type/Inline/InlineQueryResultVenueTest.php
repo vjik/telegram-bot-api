@@ -32,7 +32,7 @@ final class InlineQueryResultVenueTest extends TestCase
                 'title' => 'The title',
                 'address' => 'The address',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -76,7 +76,7 @@ final class InlineQueryResultVenueTest extends TestCase
                 'thumbnail_width' => 120,
                 'thumbnail_height' => 150,
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

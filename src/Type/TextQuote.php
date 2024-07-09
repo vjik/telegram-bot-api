@@ -20,6 +20,5 @@ final readonly class TextQuote
         #[ArrayOfObjectsValue(MessageEntity::class)]
         public ?array $entities = null,
         public ?true $isManual = null,
-    ) {
-    }
+    ) {}
 }

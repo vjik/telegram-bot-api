@@ -22,8 +22,7 @@ final readonly class InlineKeyboardButton
         public ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
         public ?CallbackGame $callbackGame = null,
         public ?bool $pay = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

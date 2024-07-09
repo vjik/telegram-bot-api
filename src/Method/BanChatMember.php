@@ -19,8 +19,7 @@ final readonly class BanChatMember implements TelegramRequestWithResultPreparing
         private int $userId,
         private ?DateTimeInterface $untilDate = null,
         private ?bool $revokeMessages = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

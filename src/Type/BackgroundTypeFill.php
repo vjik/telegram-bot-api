@@ -12,10 +12,9 @@ final readonly class BackgroundTypeFill implements BackgroundType
     public function __construct(
         public BackgroundFill $fill,
         public int $darkThemeDimming,
-    ) {
-    }
+    ) {}
 
-    function getType(): string
+    public function getType(): string
     {
         return 'fill';
     }

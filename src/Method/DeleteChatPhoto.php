@@ -15,8 +15,7 @@ final readonly class DeleteChatPhoto implements TelegramRequestWithResultPrepari
 {
     public function __construct(
         private int|string $chatId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

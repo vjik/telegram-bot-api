@@ -17,8 +17,7 @@ final readonly class SetStickerMaskPosition implements TelegramRequestWithResult
     public function __construct(
         private string $sticker,
         private ?MaskPosition $maskPosition = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

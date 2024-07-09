@@ -16,8 +16,7 @@ final readonly class EditGeneralForumTopic implements TelegramRequestWithResultP
     public function __construct(
         private int|string $chatId,
         private string $name,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -25,8 +25,7 @@ final readonly class SendGame implements TelegramRequestWithResultPreparingInter
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

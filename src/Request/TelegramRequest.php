@@ -17,8 +17,7 @@ final readonly class TelegramRequest implements TelegramRequestWithResultPrepari
         private string $apiMethod,
         private array $data = [],
         private string|ValueProcessorInterface|null $resultType = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

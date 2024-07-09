@@ -13,8 +13,7 @@ final readonly class ChatMemberOwner implements ChatMember
         public User $user,
         public bool $isAnonymous,
         public ?string $customTitle = null,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): string
     {

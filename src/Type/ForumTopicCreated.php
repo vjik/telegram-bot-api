@@ -13,6 +13,5 @@ final readonly class ForumTopicCreated
         public string $name,
         public int $iconColor,
         public ?string $iconCustomEmojiId = null,
-    ) {
-    }
+    ) {}
 }

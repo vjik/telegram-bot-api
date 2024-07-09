@@ -18,8 +18,7 @@ final readonly class InputPaidMediaVideo implements InputPaidMedia
         public ?int $height = null,
         public ?int $duration = null,
         public ?bool $supportsStreaming = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

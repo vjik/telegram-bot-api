@@ -16,6 +16,5 @@ final readonly class Document
         public ?string $fileName = null,
         public ?string $mimeType = null,
         public ?int $fileSize = null,
-    ) {
-    }
+    ) {}
 }

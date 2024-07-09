@@ -49,8 +49,7 @@ final readonly class SendPoll implements TelegramRequestWithResultPreparingInter
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
@@ -75,11 +74,11 @@ final readonly class SendPoll implements TelegramRequestWithResultPreparingInter
                     ? null
                     : array_map(
                         static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                        $this->questionEntities
+                        $this->questionEntities,
                     ),
                 'options' => array_map(
                     static fn(InputPollOption $option) => $option->toRequestArray(),
-                    $this->options
+                    $this->options,
                 ),
                 'is_anonymous' => $this->isAnonymous,
                 'type' => $this->type,
@@ -91,7 +90,7 @@ final readonly class SendPoll implements TelegramRequestWithResultPreparingInter
                     ? null
                     : array_map(
                         static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                        $this->explanationEntities
+                        $this->explanationEntities,
                     ),
                 'open_period' => $this->openPeriod,
                 'close_date' => $this->closeDate?->getTimestamp(),

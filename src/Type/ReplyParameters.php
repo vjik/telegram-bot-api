@@ -20,8 +20,7 @@ final readonly class ReplyParameters
         public ?string $quoteParseMode = null,
         public ?array $quoteEntities = null,
         public ?int $quotePosition = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {
@@ -34,7 +33,7 @@ final readonly class ReplyParameters
                 'quote_parse_mode' => $this->quoteParseMode,
                 'quote_entities' => $this->quoteEntities === null ? null : array_map(
                     static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                    $this->quoteEntities
+                    $this->quoteEntities,
                 ),
                 'quote_position' => $this->quotePosition,
             ],

@@ -14,8 +14,7 @@ final readonly class PassportElementErrorDataField implements PassportElementErr
         public string $fieldName,
         public string $dataHash,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

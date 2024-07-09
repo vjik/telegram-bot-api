@@ -24,8 +24,7 @@ final readonly class ChatPermissions
         public ?bool $canInviteUsers = null,
         public ?bool $canPinMessages = null,
         public ?bool $canManageTopics = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

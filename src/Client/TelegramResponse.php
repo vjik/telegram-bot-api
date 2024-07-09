@@ -9,6 +9,5 @@ final readonly class TelegramResponse
     public function __construct(
         public int $statusCode,
         public string $body,
-    ) {
-    }
+    ) {}
 }

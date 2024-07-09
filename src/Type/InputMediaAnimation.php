@@ -25,8 +25,7 @@ final readonly class InputMediaAnimation implements InputMedia
         public ?int $height = null,
         public ?int $duration = null,
         public ?bool $hasSpoiler = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

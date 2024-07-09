@@ -16,8 +16,7 @@ final readonly class GetStarTransactions implements TelegramRequestWithResultPre
     public function __construct(
         private ?int $offset = null,
         private ?int $limit = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

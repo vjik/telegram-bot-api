@@ -11,6 +11,5 @@ final readonly class SentWebAppMessage
 {
     public function __construct(
         public string $inlineMessageId,
-    ) {
-    }
+    ) {}
 }

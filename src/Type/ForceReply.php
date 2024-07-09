@@ -12,8 +12,7 @@ final readonly class ForceReply
     public function __construct(
         public ?string $inputFieldPlaceholder = null,
         public ?bool $selective = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

@@ -42,7 +42,7 @@ final class StickerSetTest extends TestCase
                 'file_unique_id' => 'tfu1',
                 'width' => 1,
                 'height' => 2,
-            ]
+            ],
         ], null, StickerSet::class);
 
         $this->assertSame('test_by_bot', $set->name);

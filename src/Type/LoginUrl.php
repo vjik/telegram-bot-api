@@ -14,8 +14,7 @@ final readonly class LoginUrl
         public ?string $forwardText = null,
         public ?string $botUsername = null,
         public ?bool $requestWriteAccess = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

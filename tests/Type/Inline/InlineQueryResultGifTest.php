@@ -29,7 +29,7 @@ final class InlineQueryResultGifTest extends TestCase
                 'gif_url' => 'https://example.com/test.gif',
                 'thumbnail_url' => 'https://example.com/th.jpg',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -74,7 +74,7 @@ final class InlineQueryResultGifTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

@@ -37,8 +37,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
         private ?bool $protectContent = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

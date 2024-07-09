@@ -16,6 +16,5 @@ final readonly class PassportFile
         public string $fileUniqueId,
         public int $fileSize,
         public DateTimeImmutable $fileDate,
-    ) {
-    }
+    ) {}
 }
