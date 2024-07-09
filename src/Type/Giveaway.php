@@ -5,8 +5,8 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Type;
 
 use DateTimeImmutable;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
