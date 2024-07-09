@@ -5,6 +5,8 @@ on: [ pull_request ]
 jobs:
   php-cs-fixer:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
