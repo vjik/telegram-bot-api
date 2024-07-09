@@ -19,7 +19,7 @@ final class ReplyKeyboardRemoveTest extends TestCase
             [
                 'remove_keyboard' => true,
             ],
-            $replyKeyboardRemove->toRequestArray()
+            $replyKeyboardRemove->toRequestArray(),
         );
     }
 
@@ -34,7 +34,7 @@ final class ReplyKeyboardRemoveTest extends TestCase
                 'remove_keyboard' => true,
                 'selective' => true,
             ],
-            $replyKeyboardRemove->toRequestArray()
+            $replyKeyboardRemove->toRequestArray(),
         );
     }
 }

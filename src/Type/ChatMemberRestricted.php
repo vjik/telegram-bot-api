@@ -31,8 +31,7 @@ final readonly class ChatMemberRestricted implements ChatMember
         public bool $canManageTopics,
         #[ChatMemberUntilDateValue]
         public DateTimeImmutable|false $untilDate,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): string
     {

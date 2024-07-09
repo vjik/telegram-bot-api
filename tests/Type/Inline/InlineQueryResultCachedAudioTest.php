@@ -27,11 +27,11 @@ final class InlineQueryResultCachedAudioTest extends TestCase
                 'id' => 'id1',
                 'audio_file_id' => 'audio_id1',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
-    public function testFull():void
+    public function testFull(): void
     {
         $entity = new MessageEntity('bold', 0, 4);
         $inputMessageContent = new InputContactMessageContent('+79001234567', 'Sergei');
@@ -58,7 +58,7 @@ final class InlineQueryResultCachedAudioTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

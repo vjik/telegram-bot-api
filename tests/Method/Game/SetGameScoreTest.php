@@ -49,7 +49,7 @@ final class SetGameScoreTest extends TestCase
                 'message_id' => 20,
                 'inline_message_id' => 'id1',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

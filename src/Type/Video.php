@@ -19,6 +19,5 @@ final readonly class Video
         public ?string $fileName = null,
         public ?string $mimeType = null,
         public ?int $fileSize = null,
-    ) {
-    }
+    ) {}
 }

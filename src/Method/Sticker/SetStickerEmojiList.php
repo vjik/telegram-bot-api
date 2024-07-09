@@ -19,8 +19,7 @@ final readonly class SetStickerEmojiList implements TelegramRequestWithResultPre
     public function __construct(
         private string $sticker,
         private array $emojiList,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -16,8 +16,7 @@ final readonly class CloseForumTopic implements TelegramRequestWithResultPrepari
     public function __construct(
         private int|string $chatId,
         private int $messageThreadId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

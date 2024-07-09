@@ -11,8 +11,7 @@ final readonly class BackgroundTypeChatTheme implements BackgroundType
 {
     public function __construct(
         public string $themeName,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

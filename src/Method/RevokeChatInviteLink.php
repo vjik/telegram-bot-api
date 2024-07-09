@@ -16,8 +16,7 @@ final readonly class RevokeChatInviteLink implements TelegramRequestWithResultPr
     public function __construct(
         private int|string $chatId,
         private string $inviteLink,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

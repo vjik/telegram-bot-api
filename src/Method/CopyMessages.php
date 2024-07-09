@@ -25,8 +25,7 @@ final readonly class CopyMessages implements TelegramRequestWithResultPreparingI
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
         private ?bool $removeCaption = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

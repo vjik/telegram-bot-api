@@ -25,8 +25,7 @@ final readonly class AnswerInlineQuery implements TelegramRequestWithResultPrepa
         private ?bool $isPersonal = null,
         private ?string $nextOffset = null,
         private ?InlineQueryResultsButton $button = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
@@ -58,6 +57,6 @@ final readonly class AnswerInlineQuery implements TelegramRequestWithResultPrepa
 
     public function getResultType(): TrueValue
     {
-       return new TrueValue();
+        return new TrueValue();
     }
 }

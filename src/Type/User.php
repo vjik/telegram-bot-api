@@ -22,8 +22,7 @@ final readonly class User
         public ?bool $canReadAllGroupMessages = null,
         public ?bool $supportsInlineQueries = null,
         public ?bool $canConnectToBusiness = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

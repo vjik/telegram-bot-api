@@ -17,8 +17,7 @@ final readonly class PinChatMessage implements TelegramRequestWithResultPreparin
         private int|string $chatId,
         private int $messageId,
         private ?bool $disableNotification = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

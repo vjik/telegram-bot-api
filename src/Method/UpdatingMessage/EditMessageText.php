@@ -30,8 +30,7 @@ final readonly class EditMessageText implements TelegramRequestWithResultPrepari
         private ?array $entities = null,
         private ?LinkPreviewOptions $linkPreviewOptions = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

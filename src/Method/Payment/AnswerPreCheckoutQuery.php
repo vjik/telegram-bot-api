@@ -17,8 +17,7 @@ final readonly class AnswerPreCheckoutQuery implements TelegramRequestWithResult
         private string $preCheckoutQueryId,
         private bool $ok,
         private ?string $errorMessage = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

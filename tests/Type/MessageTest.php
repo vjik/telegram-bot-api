@@ -303,7 +303,7 @@ final class MessageTest extends TestCase
                     'id' => 798,
                     'is_bot' => false,
                     'first_name' => 'Sergei',
-                ]
+                ],
             ],
             'left_chat_member' => [
                 'id' => 799,

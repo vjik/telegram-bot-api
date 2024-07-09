@@ -15,6 +15,5 @@ final readonly class Invoice
         public string $startParameter,
         public string $currency,
         public int $totalAmount,
-    ) {
-    }
+    ) {}
 }

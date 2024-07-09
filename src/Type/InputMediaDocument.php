@@ -21,8 +21,7 @@ final readonly class InputMediaDocument implements InputMedia
         public ?string $parseMode = null,
         public ?array $captionEntities = null,
         public ?bool $disableContentTypeDetection = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

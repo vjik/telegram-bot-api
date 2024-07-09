@@ -8,6 +8,5 @@ final readonly class Car
 {
     public function __construct(
         public string|int $engine,
-    ) {
-    }
+    ) {}
 }

@@ -16,7 +16,7 @@ final class MaskPositionTest extends TestCase
             'forehead',
             0.5,
             0.6,
-            0.7
+            0.7,
         );
 
         $this->assertSame('forehead', $maskPosition->point);

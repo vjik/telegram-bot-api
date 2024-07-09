@@ -16,6 +16,5 @@ final readonly class FailResult
         public ?string $description = null,
         public ?ResponseParameters $parameters = null,
         public mixed $errorCode = null,
-    ) {
-    }
+    ) {}
 }

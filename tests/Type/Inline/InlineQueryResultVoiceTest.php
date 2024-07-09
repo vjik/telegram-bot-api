@@ -29,7 +29,7 @@ final class InlineQueryResultVoiceTest extends TestCase
                 'voice_url' => 'https://example.com/test.ogg',
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -64,7 +64,7 @@ final class InlineQueryResultVoiceTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

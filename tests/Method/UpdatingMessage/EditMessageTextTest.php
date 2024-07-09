@@ -60,7 +60,7 @@ final class EditMessageTextTest extends TestCase
                 'link_preview_options' => $linkPreviewOptions->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

@@ -25,8 +25,7 @@ final readonly class ChatAdministratorRights
         public ?bool $canEditMessages = null,
         public ?bool $canPinMessages = null,
         public ?bool $canManageTopics = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

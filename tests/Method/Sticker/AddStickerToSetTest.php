@@ -42,7 +42,7 @@ final class AddStickerToSetTest extends TestCase
         $method = new AddStickerToSet(
             1,
             'test',
-            new InputSticker('https://example.com/sticker.webp', 'static', ['😀'])
+            new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);

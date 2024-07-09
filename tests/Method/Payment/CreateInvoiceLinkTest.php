@@ -20,7 +20,7 @@ final class CreateInvoiceLinkTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            [$price]
+            [$price],
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -99,7 +99,7 @@ final class CreateInvoiceLinkTest extends TestCase
             'The description',
             'The payload',
             'XTR',
-            []
+            [],
         );
 
         $preparedResult = TestHelper::createSuccessStubApi('https://example.com/invoice')->send($method);

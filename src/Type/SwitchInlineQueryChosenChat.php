@@ -15,8 +15,7 @@ final readonly class SwitchInlineQueryChosenChat
         public ?bool $allowBotChats = null,
         public ?bool $allowGroupChats = null,
         public ?bool $allowChannelChats = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

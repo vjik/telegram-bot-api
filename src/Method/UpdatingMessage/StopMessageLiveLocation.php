@@ -21,8 +21,7 @@ final readonly class StopMessageLiveLocation implements TelegramRequestWithResul
         private ?int $messageId = null,
         private ?string $inlineMessageId = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

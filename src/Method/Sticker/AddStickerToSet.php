@@ -19,8 +19,7 @@ final readonly class AddStickerToSet implements TelegramRequestWithResultPrepari
         private int $userId,
         private string $name,
         private InputSticker $sticker,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

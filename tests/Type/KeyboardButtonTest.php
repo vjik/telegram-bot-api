@@ -46,7 +46,7 @@ final class KeyboardButtonTest extends TestCase
             true,
             false,
             $requestPoll,
-            $webApp
+            $webApp,
         );
 
         $this->assertSame('test', $button->text);

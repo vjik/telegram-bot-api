@@ -36,7 +36,7 @@ final class UnbanChatMemberTest extends TestCase
                 'user_id' => 2,
                 'only_if_banned' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

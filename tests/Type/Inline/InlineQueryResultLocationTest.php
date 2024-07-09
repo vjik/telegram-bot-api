@@ -30,7 +30,7 @@ final class InlineQueryResultLocationTest extends TestCase
                 'longitude' => 30.3141308,
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -72,7 +72,7 @@ final class InlineQueryResultLocationTest extends TestCase
                 'thumbnail_width' => 532,
                 'thumbnail_height' => 234,
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

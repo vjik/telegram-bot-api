@@ -18,7 +18,7 @@ final readonly class SendChatAction implements TelegramRequestWithResultPreparin
         private string $action,
         private ?string $businessConnectionId = null,
         private ?int $messageThreadId = null,
-    ){}
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

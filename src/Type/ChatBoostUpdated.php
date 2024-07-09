@@ -12,6 +12,5 @@ final readonly class ChatBoostUpdated
     public function __construct(
         public Chat $chat,
         public ChatBoost $boost,
-    ) {
-    }
+    ) {}
 }

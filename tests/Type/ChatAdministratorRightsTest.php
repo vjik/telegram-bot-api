@@ -44,7 +44,7 @@ final class ChatAdministratorRightsTest extends TestCase
                 'can_edit_stories' => true,
                 'can_delete_stories' => false,
             ],
-            $rights->toRequestArray()
+            $rights->toRequestArray(),
         );
     }
 

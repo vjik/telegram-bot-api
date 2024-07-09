@@ -38,8 +38,7 @@ final readonly class SendPhoto implements TelegramRequestWithResultPreparingInte
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

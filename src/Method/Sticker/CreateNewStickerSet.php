@@ -25,8 +25,7 @@ final readonly class CreateNewStickerSet implements TelegramRequestWithResultPre
         private array $stickers,
         private ?string $stickerType = null,
         private ?bool $needsRepainting = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

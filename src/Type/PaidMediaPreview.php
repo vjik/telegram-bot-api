@@ -13,8 +13,7 @@ final readonly class PaidMediaPreview implements PaidMedia
         public ?int $width = null,
         public ?int $height = null,
         public ?int $duration = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

@@ -67,7 +67,7 @@ final readonly class LogType
     public static function createSuccessResultContext(
         TelegramRequestInterface $request,
         TelegramResponse $response,
-        mixed $decodedResponse
+        mixed $decodedResponse,
     ): array {
         try {
             $payload = json_encode($decodedResponse, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
@@ -89,7 +89,7 @@ final readonly class LogType
     public static function createFailResultContext(
         TelegramRequestInterface $request,
         TelegramResponse $response,
-        mixed $decodedResponse
+        mixed $decodedResponse,
     ): array {
         return [
             'type' => self::FAIL_RESULT,

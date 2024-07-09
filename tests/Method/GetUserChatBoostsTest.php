@@ -22,7 +22,7 @@ final class GetUserChatBoostsTest extends TestCase
                 'chat_id' => 1,
                 'user_id' => 2,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

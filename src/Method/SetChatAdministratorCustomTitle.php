@@ -16,9 +16,8 @@ final readonly class SetChatAdministratorCustomTitle implements TelegramRequestW
     public function __construct(
         private int|string $chatId,
         private int $userId,
-        private string $customTitle
-    ) {
-    }
+        private string $customTitle,
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

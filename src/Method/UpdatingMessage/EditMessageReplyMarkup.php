@@ -21,8 +21,7 @@ final readonly class EditMessageReplyMarkup implements TelegramRequestWithResult
         private ?int $messageId = null,
         private ?string $inlineMessageId = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

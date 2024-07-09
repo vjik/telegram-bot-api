@@ -26,8 +26,7 @@ final readonly class InputMediaVideo implements InputMedia
         public ?int $duration = null,
         public ?bool $supportsStreaming = null,
         public ?bool $hasSpoiler = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

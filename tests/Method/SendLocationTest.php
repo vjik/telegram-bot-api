@@ -47,7 +47,7 @@ final class SendLocationTest extends TestCase
             false,
             'id1',
             $replyParameters,
-            $replyMarkup
+            $replyMarkup,
         );
 
         $this->assertSame(
@@ -67,7 +67,7 @@ final class SendLocationTest extends TestCase
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

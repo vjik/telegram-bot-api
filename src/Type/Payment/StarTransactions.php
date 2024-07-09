@@ -17,6 +17,5 @@ final readonly class StarTransactions
     public function __construct(
         #[ArrayOfObjectsValue(StarTransaction::class)]
         public array $transactions,
-    ) {
-    }
+    ) {}
 }

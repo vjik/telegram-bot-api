@@ -21,6 +21,5 @@ final readonly class ChatShared
         public ?string $username = null,
         #[ArrayOfObjectsValue(PhotoSize::class)]
         public ?array $photo = null,
-    ) {
-    }
+    ) {}
 }

@@ -12,6 +12,5 @@ final readonly class BusinessOpeningHoursInterval
     public function __construct(
         public int $openingMinute,
         public int $closingMinute,
-    ) {
-    }
+    ) {}
 }

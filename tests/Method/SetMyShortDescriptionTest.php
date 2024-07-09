@@ -29,7 +29,7 @@ final class SetMyShortDescriptionTest extends TestCase
                 'short_description' => 'test',
                 'language_code' => 'ru',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

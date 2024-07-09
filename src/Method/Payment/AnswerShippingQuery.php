@@ -22,8 +22,7 @@ final readonly class AnswerShippingQuery implements TelegramRequestWithResultPre
         private bool $ok,
         private ?array $shippingOptions = null,
         private ?string $errorMessage = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

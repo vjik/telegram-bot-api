@@ -15,8 +15,7 @@ final readonly class MessageOriginChat implements MessageOrigin
         public DateTimeImmutable $date,
         public Chat $senderChat,
         public ?string $authorSignature = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

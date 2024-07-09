@@ -13,7 +13,7 @@ final class ForwardMessageTest extends TestCase
 {
     public function testBase(): void
     {
-        $method = new ForwardMessage(1,2,3);
+        $method = new ForwardMessage(1, 2, 3);
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('forwardMessage', $method->getApiMethod());
@@ -47,7 +47,7 @@ final class ForwardMessageTest extends TestCase
                 'protect_content' => false,
                 'message_id' => 3,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

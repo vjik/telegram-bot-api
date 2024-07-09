@@ -19,8 +19,7 @@ final readonly class SetStickerSetThumbnail implements TelegramRequestWithResult
         private int $userId,
         private string $format,
         private InputFile|string|null $thumbnail = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

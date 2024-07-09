@@ -21,8 +21,7 @@ final readonly class KeyboardButtonRequestChat
         public ?bool $requestTitle = null,
         public ?bool $requestUsername = null,
         public ?bool $requestPhoto = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

@@ -22,7 +22,7 @@ final class GetGameHighScoresTest extends TestCase
             [
                 'user_id' => 1,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -37,7 +37,7 @@ final class GetGameHighScoresTest extends TestCase
                 'message_id' => 3,
                 'inline_message_id' => 'test',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

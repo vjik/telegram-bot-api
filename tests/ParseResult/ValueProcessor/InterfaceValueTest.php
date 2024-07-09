@@ -39,7 +39,7 @@ final class InterfaceValueTest extends TestCase
 
         $this->expectException(InvalidTypeOfValueInResultException::class);
         $this->expectExceptionMessage(
-            'Invalid type of value for key "type". Expected type is "string", but got "int".'
+            'Invalid type of value for key "type". Expected type is "string", but got "int".',
         );
         $processor->process(['type' => 23], null, $objectFactory);
     }

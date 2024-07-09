@@ -17,6 +17,5 @@ final readonly class StarTransaction
         public DateTimeImmutable $date,
         public ?TransactionPartner $source = null,
         public ?TransactionPartner $receiver = null,
-    ) {
-    }
+    ) {}
 }

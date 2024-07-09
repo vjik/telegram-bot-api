@@ -20,6 +20,5 @@ final readonly class CallbackQuery
         public ?string $inlineMessageId = null,
         public ?string $data = null,
         public ?string $gameShortName = null,
-    ) {
-    }
+    ) {}
 }

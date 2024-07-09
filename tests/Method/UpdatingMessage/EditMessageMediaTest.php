@@ -21,7 +21,7 @@ final class EditMessageMediaTest extends TestCase
     {
         $media = new InputMediaPhoto('https://example.com/photo.jpg');
         $method = new EditMessageMedia(
-            $media
+            $media,
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -61,14 +61,14 @@ final class EditMessageMediaTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'file0' => $file,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
     public function testPrepareResult(): void
     {
         $method = new EditMessageMedia(
-            new InputMediaPhoto('https://example.com/photo.jpg')
+            new InputMediaPhoto('https://example.com/photo.jpg'),
         );
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);

@@ -41,7 +41,7 @@ final class ResultFactoryTest extends TestCase
 
         $this->expectException(InvalidTypeOfValueInResultException::class);
         $this->expectExceptionMessage(
-            'Invalid type of value for key "name". Expected type is "string", but got "int".'
+            'Invalid type of value for key "name". Expected type is "string", but got "int".',
         );
         $factory->create(['name' => 23], BotName::class);
     }

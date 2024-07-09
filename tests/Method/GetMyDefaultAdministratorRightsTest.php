@@ -28,7 +28,7 @@ final class GetMyDefaultAdministratorRightsTest extends TestCase
             [
                 'for_channels' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

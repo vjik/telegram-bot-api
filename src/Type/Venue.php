@@ -17,6 +17,5 @@ final readonly class Venue
         public ?string $foursquareType = null,
         public ?string $googlePlaceId = null,
         public ?string $googlePlaceType = null,
-    ) {
-    }
+    ) {}
 }

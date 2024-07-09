@@ -39,8 +39,7 @@ final readonly class CreateInvoiceLink implements TelegramRequestWithResultPrepa
         private ?bool $sendPhoneNumberToProvider = null,
         private ?bool $sendEmailToProvider = null,
         private ?bool $isFlexible = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

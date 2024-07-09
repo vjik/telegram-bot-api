@@ -26,7 +26,7 @@ final class ReplyParametersTest extends TestCase
             [
                 'message_id' => 99,
             ],
-            $replyParameters->toRequestArray()
+            $replyParameters->toRequestArray(),
         );
     }
 
@@ -61,7 +61,7 @@ final class ReplyParametersTest extends TestCase
                 'quote_entities' => [$quoteEntity->toRequestArray()],
                 'quote_position' => 23,
             ],
-            $replyParameters->toRequestArray()
+            $replyParameters->toRequestArray(),
         );
     }
 }

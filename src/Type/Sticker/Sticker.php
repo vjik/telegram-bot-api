@@ -28,6 +28,5 @@ final readonly class Sticker
         public ?string $customEmojiId = null,
         public ?bool $needsRepainting = null,
         public ?int $fileSize = null,
-    ) {
-    }
+    ) {}
 }

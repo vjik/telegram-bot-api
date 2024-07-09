@@ -23,7 +23,7 @@ final class ResponseParametersTest extends TestCase
             'parameters' => [
                 'migrate_to_chat_id' => 42,
                 'retry_after' => 43,
-            ]
+            ],
         ]);
 
         $this->assertSame(42, $parameters->migrateToChatId);

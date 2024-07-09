@@ -15,9 +15,8 @@ final readonly class SetStickerPositionInSet implements TelegramRequestWithResul
 {
     public function __construct(
         private string $sticker,
-        private int $position
-    ) {
-    }
+        private int $position,
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

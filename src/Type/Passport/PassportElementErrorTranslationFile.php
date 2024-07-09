@@ -13,8 +13,7 @@ final readonly class PassportElementErrorTranslationFile implements PassportElem
         public string $type,
         public string $fileHash,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

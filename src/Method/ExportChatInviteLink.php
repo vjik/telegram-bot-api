@@ -15,8 +15,7 @@ final readonly class ExportChatInviteLink implements TelegramRequestWithResultPr
 {
     public function __construct(
         private int|string $chatId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

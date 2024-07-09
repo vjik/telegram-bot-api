@@ -20,8 +20,7 @@ final readonly class ReplaceStickerInSet implements TelegramRequestWithResultPre
         private string $name,
         private string $oldSticker,
         private InputSticker $sticker,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

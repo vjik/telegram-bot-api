@@ -18,8 +18,7 @@ final readonly class InputVenueMessageContent implements InputMessageContent
         public ?string $foursquareType = null,
         public ?string $googlePlaceId = null,
         public ?string $googlePlaceType = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

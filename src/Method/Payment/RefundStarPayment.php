@@ -16,8 +16,7 @@ final readonly class RefundStarPayment implements TelegramRequestWithResultPrepa
     public function __construct(
         private int $userId,
         private string $telegramPaymentChargeId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

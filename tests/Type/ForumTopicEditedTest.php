@@ -22,7 +22,7 @@ final class ForumTopicEditedTest extends TestCase
     {
         $forumTopicEdited = (new ObjectFactory())->create([
             'name' => 'test',
-            'icon_custom_emoji_id' => 'x1'
+            'icon_custom_emoji_id' => 'x1',
         ], null, ForumTopicEdited::class);
 
         $this->assertSame('test', $forumTopicEdited->name);

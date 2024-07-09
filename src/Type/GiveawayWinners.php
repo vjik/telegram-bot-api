@@ -28,6 +28,5 @@ final readonly class GiveawayWinners
         public ?true $onlyNewMembers = null,
         public ?true $wasRefunded = null,
         public ?string $prizeDescription = null,
-    ) {
-    }
+    ) {}
 }

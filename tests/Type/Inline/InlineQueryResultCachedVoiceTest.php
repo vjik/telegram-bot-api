@@ -29,7 +29,7 @@ final class InlineQueryResultCachedVoiceTest extends TestCase
                 'voice_file_id' => 'voice_id1',
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -62,7 +62,7 @@ final class InlineQueryResultCachedVoiceTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

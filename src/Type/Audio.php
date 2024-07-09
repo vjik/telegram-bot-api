@@ -19,6 +19,5 @@ final readonly class Audio
         public ?string $mimeType = null,
         public ?int $fileSize = null,
         public ?PhotoSize $thumbnail = null,
-    ) {
-    }
+    ) {}
 }

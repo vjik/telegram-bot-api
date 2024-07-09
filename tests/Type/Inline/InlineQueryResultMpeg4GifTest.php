@@ -29,7 +29,7 @@ final class InlineQueryResultMpeg4GifTest extends TestCase
                 'mpeg4_url' => 'https://example.com/test.mp4',
                 'thumbnail_url' => 'https://example.com/th.jpg',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -74,7 +74,7 @@ final class InlineQueryResultMpeg4GifTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

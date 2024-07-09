@@ -17,6 +17,5 @@ final readonly class SuccessfulPayment
         public string $providerPaymentChargeId,
         public ?string $shippingOptionId = null,
         public ?OrderInfo $orderInfo = null,
-    ) {
-    }
+    ) {}
 }

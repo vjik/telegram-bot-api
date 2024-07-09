@@ -19,8 +19,7 @@ final readonly class DeleteMessages implements TelegramRequestWithResultPreparin
     public function __construct(
         private int|string $chatId,
         private array $messageIds,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

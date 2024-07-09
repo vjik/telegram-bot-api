@@ -12,6 +12,5 @@ final readonly class BusinessLocation
     public function __construct(
         public string $address,
         public ?Location $location = null,
-    ) {
-    }
+    ) {}
 }

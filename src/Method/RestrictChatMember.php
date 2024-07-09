@@ -21,8 +21,7 @@ final readonly class RestrictChatMember implements TelegramRequestWithResultPrep
         private ChatPermissions $permissions,
         private ?bool $useIndependentChatPermissions = null,
         private ?DateTimeImmutable $untilDate = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

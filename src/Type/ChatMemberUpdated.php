@@ -20,6 +20,5 @@ final readonly class ChatMemberUpdated
         public ?ChatInviteLink $inviteLink = null,
         public ?bool $viaJoinRequest = null,
         public ?bool $viaChatFolderInviteLink = null,
-    ) {
-    }
+    ) {}
 }

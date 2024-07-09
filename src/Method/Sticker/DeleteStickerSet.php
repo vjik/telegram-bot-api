@@ -15,8 +15,7 @@ final readonly class DeleteStickerSet implements TelegramRequestWithResultPrepar
 {
     public function __construct(
         private string $name,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

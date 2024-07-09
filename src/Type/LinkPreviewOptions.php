@@ -15,8 +15,7 @@ final readonly class LinkPreviewOptions
         public ?bool $preferSmallMedia = null,
         public ?bool $preferLargeMedia = null,
         public ?bool $showAboveText = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

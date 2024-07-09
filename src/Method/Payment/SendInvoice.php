@@ -49,8 +49,7 @@ final readonly class SendInvoice implements TelegramRequestWithResultPreparingIn
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

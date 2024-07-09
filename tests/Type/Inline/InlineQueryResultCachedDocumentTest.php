@@ -29,7 +29,7 @@ final class InlineQueryResultCachedDocumentTest extends TestCase
                 'title' => 'The Title',
                 'document_file_id' => 'document_id1',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -64,7 +64,7 @@ final class InlineQueryResultCachedDocumentTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

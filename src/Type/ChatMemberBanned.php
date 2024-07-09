@@ -16,8 +16,7 @@ final readonly class ChatMemberBanned implements ChatMember
         public User $user,
         #[ChatMemberUntilDateValue]
         public DateTimeImmutable|false $untilDate,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): string
     {

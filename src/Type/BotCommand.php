@@ -12,8 +12,7 @@ final readonly class BotCommand
     public function __construct(
         public string $command,
         public string $description,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

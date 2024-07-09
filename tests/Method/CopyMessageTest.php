@@ -16,7 +16,7 @@ final class CopyMessageTest extends TestCase
 {
     public function testBase(): void
     {
-        $method = new CopyMessage(1,2,3);
+        $method = new CopyMessage(1, 2, 3);
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('copyMessage', $method->getApiMethod());
@@ -65,7 +65,7 @@ final class CopyMessageTest extends TestCase
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

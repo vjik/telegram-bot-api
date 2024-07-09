@@ -25,8 +25,7 @@ final readonly class InlineQueryResultCachedDocument implements InlineQueryResul
         public ?array $captionEntities = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

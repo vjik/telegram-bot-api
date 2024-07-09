@@ -31,7 +31,7 @@ final class SetChatMenuButtonTest extends TestCase
                 'chat_id' => 99,
                 'menu_button' => $menuButton->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

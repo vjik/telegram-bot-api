@@ -20,7 +20,7 @@ final class ApiUrlGeneratorTest extends TestCase
             [
                 'https://api.telegram.org/bot04062024/getChat?chat_id=%40sergei_predvoditelev',
                 'getChat',
-                ['chat_id' => '@sergei_predvoditelev']
+                ['chat_id' => '@sergei_predvoditelev'],
             ],
         ];
     }

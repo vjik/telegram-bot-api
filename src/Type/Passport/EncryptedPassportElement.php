@@ -28,6 +28,5 @@ final readonly class EncryptedPassportElement
         public ?PassportFile $selfie = null,
         #[ArrayOfObjectsValue(PassportFile::class)]
         public ?array $translation = null,
-    ) {
-    }
+    ) {}
 }

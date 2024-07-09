@@ -20,8 +20,7 @@ final readonly class ForwardMessage implements TelegramRequestWithResultPreparin
         private ?int $messageThreadId = null,
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

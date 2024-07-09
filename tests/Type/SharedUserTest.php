@@ -34,7 +34,7 @@ final class SharedUserTest extends TestCase
                     'file_unique_id' => 'file_unique_id',
                     'width' => 23,
                     'height' => 42,
-                ]
+                ],
             ],
         ], null, SharedUser::class);
 

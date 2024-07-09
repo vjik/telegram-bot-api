@@ -29,6 +29,5 @@ final readonly class Giveaway
         #[ArrayMap(StringValue::class)]
         public ?array $countryCodes = null,
         public ?int $premiumSubscriptionMonthCount = null,
-    ) {
-    }
+    ) {}
 }

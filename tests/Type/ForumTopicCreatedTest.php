@@ -24,7 +24,7 @@ final class ForumTopicCreatedTest extends TestCase
         $forumTopicCreated = (new ObjectFactory())->create([
             'name' => 'test',
             'icon_color' => 0x123456,
-            'icon_custom_emoji_id' => 'x1'
+            'icon_custom_emoji_id' => 'x1',
         ], null, ForumTopicCreated::class);
 
         $this->assertSame('test', $forumTopicCreated->name);

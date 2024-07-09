@@ -21,9 +21,8 @@ final readonly class InlineQueryResultArticle implements InlineQueryResult
         public ?string $description = null,
         public ?string $thumbnailUrl = null,
         public ?int $thumbnailWidth = null,
-        public ?int $thumbnailHeight = null
-    ) {
-    }
+        public ?int $thumbnailHeight = null,
+    ) {}
 
     public function getType(): string
     {

@@ -15,6 +15,5 @@ final readonly class Contact
         public ?string $lastName = null,
         public ?int $userId = null,
         public ?string $vcard = null,
-    ) {
-    }
+    ) {}
 }

@@ -16,8 +16,7 @@ final readonly class InputPollOption
         public ?string $text = null,
         public ?string $textParseMode = null,
         public ?array $textEntities = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {
@@ -29,7 +28,7 @@ final readonly class InputPollOption
                     ? null
                     : array_map(
                         static fn(MessageEntity $entity) => $entity->toRequestArray(),
-                        $this->textEntities
+                        $this->textEntities,
                     ),
             ],
             static fn(mixed $value): bool => $value !== null,

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Constant\Sticker;
 
 final class StickerType
 {
-    const REGULAR = 'regular';
-    const MASK = 'mask';
-    const CUSTOM_EMOJI = 'custom_emoji';
+    public const REGULAR = 'regular';
+    public const MASK = 'mask';
+    public const CUSTOM_EMOJI = 'custom_emoji';
 }

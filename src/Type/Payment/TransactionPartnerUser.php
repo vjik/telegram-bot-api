@@ -14,8 +14,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
     public function __construct(
         public User $user,
         public ?string $invoicePayload = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

@@ -11,6 +11,5 @@ final readonly class ChatBoostAdded
 {
     public function __construct(
         public int $boostCount,
-    ) {
-    }
+    ) {}
 }

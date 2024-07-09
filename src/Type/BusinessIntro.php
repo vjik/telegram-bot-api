@@ -15,6 +15,5 @@ final readonly class BusinessIntro
         public ?string $title = null,
         public ?string $message = null,
         public ?Sticker $sticker = null,
-    ) {
-    }
+    ) {}
 }

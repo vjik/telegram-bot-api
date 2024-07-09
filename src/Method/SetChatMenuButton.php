@@ -17,8 +17,7 @@ final readonly class SetChatMenuButton implements TelegramRequestWithResultPrepa
     public function __construct(
         private ?int $chatId = null,
         private ?MenuButton $menuButton = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

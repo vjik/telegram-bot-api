@@ -18,6 +18,5 @@ final readonly class Param
         public string $key,
         public string|ValueProcessorInterface $type,
         public bool $optional,
-    ) {
-    }
+    ) {}
 }

@@ -16,8 +16,7 @@ final readonly class ApproveChatJoinRequest implements TelegramRequestWithResult
     public function __construct(
         private int|string $chatId,
         private int $userId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

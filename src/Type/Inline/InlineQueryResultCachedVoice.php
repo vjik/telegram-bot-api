@@ -24,7 +24,7 @@ final readonly class InlineQueryResultCachedVoice implements InlineQueryResult
         public ?array $captionEntities = null,
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?InputMessageContent $inputMessageContent = null,
-    ){}
+    ) {}
 
     public function getType(): string
     {

@@ -11,8 +11,7 @@ final readonly class BotCommandScopeChatAdministrators implements BotCommandScop
 {
     public function __construct(
         public int|string $chatId,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

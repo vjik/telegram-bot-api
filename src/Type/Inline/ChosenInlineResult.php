@@ -18,6 +18,5 @@ final readonly class ChosenInlineResult
         public string $query,
         public ?Location $location = null,
         public ?string $inlineMessageId = null,
-    ) {
-    }
+    ) {}
 }

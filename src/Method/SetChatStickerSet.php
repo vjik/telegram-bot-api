@@ -16,8 +16,7 @@ final readonly class SetChatStickerSet implements TelegramRequestWithResultPrepa
     public function __construct(
         private int|string $chatId,
         private string $stickerSetName,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

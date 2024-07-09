@@ -32,8 +32,7 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
         private ?bool $protectContent = null,
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
@@ -50,7 +49,7 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
         $fileCollector = new RequestFileCollector();
         $media = array_map(
             static function (
-                InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo $inputMedia
+                InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo $inputMedia,
             ) use ($fileCollector): array {
                 return $inputMedia->toRequestArray($fileCollector);
             },

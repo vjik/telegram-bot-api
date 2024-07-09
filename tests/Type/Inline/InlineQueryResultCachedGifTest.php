@@ -27,7 +27,7 @@ final class InlineQueryResultCachedGifTest extends TestCase
                 'id' => 'id1',
                 'gif_file_id' => 'gif_id1',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -62,7 +62,7 @@ final class InlineQueryResultCachedGifTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

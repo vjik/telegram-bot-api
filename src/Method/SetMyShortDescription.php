@@ -16,8 +16,7 @@ final readonly class SetMyShortDescription implements TelegramRequestWithResultP
     public function __construct(
         private ?string $shortDescription = null,
         private ?string $languageCode = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

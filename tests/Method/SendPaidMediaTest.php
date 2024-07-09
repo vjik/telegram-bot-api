@@ -75,7 +75,7 @@ final class SendPaidMediaTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'file0' => $file,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

@@ -17,8 +17,7 @@ final readonly class UnbanChatMember implements TelegramRequestWithResultPrepari
         private int|string $chatId,
         private int $userId,
         private ?bool $onlyIfBanned = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

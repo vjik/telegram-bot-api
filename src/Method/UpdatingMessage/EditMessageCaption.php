@@ -29,8 +29,7 @@ final readonly class EditMessageCaption implements TelegramRequestWithResultPrep
         private ?array $captionEntities = null,
         private ?bool $showCaptionAboveMedia = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

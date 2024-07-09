@@ -16,6 +16,5 @@ final readonly class ChatBoost
         public DateTimeImmutable $addDate,
         public DateTimeImmutable $expirationDate,
         public ChatBoostSource $source,
-    ) {
-    }
+    ) {}
 }

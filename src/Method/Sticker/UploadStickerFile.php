@@ -18,8 +18,7 @@ final readonly class UploadStickerFile implements TelegramRequestWithResultPrepa
         private int $userId,
         private InputFile $sticker,
         private string $stickerFormat,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

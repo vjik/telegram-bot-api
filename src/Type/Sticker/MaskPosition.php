@@ -14,8 +14,7 @@ final readonly class MaskPosition
         public float $xShift,
         public float $yShift,
         public float $scale,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

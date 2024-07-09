@@ -16,6 +16,5 @@ final readonly class ChatBoostRemoved
         public string $boostId,
         public DateTimeImmutable $removeDate,
         public ChatBoostSource $source,
-    ) {
-    }
+    ) {}
 }

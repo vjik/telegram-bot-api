@@ -17,8 +17,7 @@ final readonly class DeleteMyCommands implements TelegramRequestWithResultPrepar
     public function __construct(
         private ?BotCommandScope $scope = null,
         private ?string $languageCode = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

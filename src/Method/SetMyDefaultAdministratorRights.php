@@ -17,8 +17,7 @@ final readonly class SetMyDefaultAdministratorRights implements TelegramRequestW
     public function __construct(
         private ?ChatAdministratorRights $rights = null,
         private ?bool $forChannels = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -8,6 +8,5 @@ final readonly class Color
 {
     public function __construct(
         public NotExists $type,
-    ) {
-    }
+    ) {}
 }

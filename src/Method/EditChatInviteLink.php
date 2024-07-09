@@ -21,8 +21,7 @@ final readonly class EditChatInviteLink implements TelegramRequestWithResultPrep
         private ?DateTimeImmutable $expireDate = null,
         private ?int $memberLimit = null,
         private ?bool $createsJoinRequest = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

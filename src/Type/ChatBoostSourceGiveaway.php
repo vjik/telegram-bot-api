@@ -13,8 +13,7 @@ final readonly class ChatBoostSourceGiveaway implements ChatBoostSource
         public int $giveawayMessageId,
         public ?User $user = null,
         public ?true $isUnclaimed = null,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

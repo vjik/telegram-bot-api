@@ -19,8 +19,7 @@ final readonly class StopPoll implements TelegramRequestWithResultPreparingInter
         private int $messageId,
         private ?string $businessConnectionId = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

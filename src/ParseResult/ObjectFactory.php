@@ -130,7 +130,8 @@ final class ObjectFactory
         if ($typeReflection instanceof ReflectionNamedType) {
             $name = $typeReflection->getName();
             return $this->getTypeMap()[$name]
-                ?? (class_exists($name)
+                ?? (
+                    class_exists($name)
                     ? $name
                     : throw new LogicException('Unsupported PHP type: ' . $name)
                 );

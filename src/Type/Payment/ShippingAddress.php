@@ -16,6 +16,5 @@ final readonly class ShippingAddress
         public string $streetLine1,
         public string $streetLine2,
         public string $postCode,
-    ) {
-    }
+    ) {}
 }

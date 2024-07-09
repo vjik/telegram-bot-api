@@ -25,7 +25,7 @@ final class InlineQueryResultGameTest extends TestCase
                 'id' => 'id1',
                 'game_short_name' => 'the game',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -35,7 +35,7 @@ final class InlineQueryResultGameTest extends TestCase
         $type = new InlineQueryResultGame(
             'id1',
             'the game',
-            $replyMarkup
+            $replyMarkup,
         );
 
         $this->assertSame('game', $type->getType());
@@ -46,7 +46,7 @@ final class InlineQueryResultGameTest extends TestCase
                 'game_short_name' => 'the game',
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

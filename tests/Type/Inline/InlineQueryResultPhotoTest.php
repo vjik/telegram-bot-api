@@ -29,7 +29,7 @@ final class InlineQueryResultPhotoTest extends TestCase
                 'photo_url' => 'https://example.com/test.jpg',
                 'thumbnail_url' => 'https://example.com/th.jpg',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -72,7 +72,7 @@ final class InlineQueryResultPhotoTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

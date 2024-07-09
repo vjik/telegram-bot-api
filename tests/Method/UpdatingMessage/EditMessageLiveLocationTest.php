@@ -60,7 +60,7 @@ final class EditMessageLiveLocationTest extends TestCase
                 'proximity_alert_radius' => 500,
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

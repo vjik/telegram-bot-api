@@ -31,7 +31,7 @@ final class SetMyDefaultAdministratorRightsTest extends TestCase
                 'rights' => $rights->toRequestArray(),
                 'for_channels' => false,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

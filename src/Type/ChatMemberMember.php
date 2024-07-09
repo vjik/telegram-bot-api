@@ -11,8 +11,7 @@ final readonly class ChatMemberMember implements ChatMember
 {
     public function __construct(
         public User $user,
-    ) {
-    }
+    ) {}
 
     public function getStatus(): string
     {

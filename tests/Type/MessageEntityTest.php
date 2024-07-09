@@ -42,7 +42,7 @@ final class MessageEntityTest extends TestCase
             'https://example.com/',
             new User(1, false, 'Sergei'),
             'ru',
-            'x6'
+            'x6',
         );
 
         $this->assertSame(
@@ -59,7 +59,7 @@ final class MessageEntityTest extends TestCase
                 'language' => 'ru',
                 'custom_emoji_id' => 'x6',
             ],
-            $messageEntity->toRequestArray()
+            $messageEntity->toRequestArray(),
         );
     }
 

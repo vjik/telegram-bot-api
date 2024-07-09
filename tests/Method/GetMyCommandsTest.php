@@ -32,7 +32,7 @@ final class GetMyCommandsTest extends TestCase
                 'scope' => $scope->toRequestArray(),
                 'language_code' => 'ru',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -44,7 +44,7 @@ final class GetMyCommandsTest extends TestCase
             [
                 'command' => 'start',
                 'description' => 'Start command',
-            ]
+            ],
         ])->send($method);
 
         $this->assertCount(1, $preparedResult);

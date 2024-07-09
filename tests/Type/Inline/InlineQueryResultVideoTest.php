@@ -33,7 +33,7 @@ final class InlineQueryResultVideoTest extends TestCase
                 'thumbnail_url' => 'https://example.com/th.jpg',
                 'title' => 'The title',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -80,7 +80,7 @@ final class InlineQueryResultVideoTest extends TestCase
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'input_message_content' => $inputMessageContent->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

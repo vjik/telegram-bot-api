@@ -22,7 +22,7 @@ final class RefundStarPaymentTest extends TestCase
                 'user_id' => 1,
                 'telegram_payment_charge_id' => 'test',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

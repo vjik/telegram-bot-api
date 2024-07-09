@@ -13,8 +13,7 @@ final readonly class PassportElementErrorUnspecified implements PassportElementE
         public string $type,
         public string $elementHash,
         public string $message,
-    ) {
-    }
+    ) {}
 
     public function getSource(): string
     {

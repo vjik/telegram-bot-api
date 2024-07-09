@@ -19,6 +19,5 @@ final readonly class PaidMediaInfo
         public int $starCount,
         #[ArrayMap(PaidMediaValue::class)]
         public array $paidMedia,
-    ) {
-    }
+    ) {}
 }

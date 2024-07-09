@@ -19,8 +19,7 @@ final readonly class SetStickerKeywords implements TelegramRequestWithResultPrep
     public function __construct(
         private string $sticker,
         private ?array $keywords = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

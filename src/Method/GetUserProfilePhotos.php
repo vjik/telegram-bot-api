@@ -16,9 +16,8 @@ final readonly class GetUserProfilePhotos implements TelegramRequestWithResultPr
     public function __construct(
         private int $userId,
         private ?int $offset = null,
-        private ?int $limit = null
-    ) {
-    }
+        private ?int $limit = null,
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

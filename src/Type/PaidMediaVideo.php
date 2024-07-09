@@ -11,8 +11,7 @@ final readonly class PaidMediaVideo implements PaidMedia
 {
     public function __construct(
         public Video $video,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

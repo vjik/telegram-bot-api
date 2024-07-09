@@ -27,8 +27,7 @@ final readonly class EditMessageLiveLocation implements TelegramRequestWithResul
         private ?int $heading = null,
         private ?int $proximityAlertRadius = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

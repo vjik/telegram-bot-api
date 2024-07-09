@@ -68,7 +68,7 @@ final class PromoteChatMemberTest extends TestCase
                 'can_pin_messages' => true,
                 'can_manage_topics' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

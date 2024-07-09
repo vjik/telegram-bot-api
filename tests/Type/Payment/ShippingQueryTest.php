@@ -21,13 +21,13 @@ final class ShippingQueryTest extends TestCase
             'city',
             'street_line1',
             'street_line2',
-            'post_code'
+            'post_code',
         );
         $shippingQuery = new ShippingQuery(
             'id',
             $user,
             'p12',
-            $shippingAddress
+            $shippingAddress,
         );
 
         $this->assertSame('id', $shippingQuery->id);

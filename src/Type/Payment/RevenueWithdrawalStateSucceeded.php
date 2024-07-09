@@ -14,8 +14,7 @@ final readonly class RevenueWithdrawalStateSucceeded implements RevenueWithdrawa
     public function __construct(
         public DateTimeImmutable $date,
         public string $url,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

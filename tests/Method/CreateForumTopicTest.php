@@ -22,7 +22,7 @@ final class CreateForumTopicTest extends TestCase
                 'chat_id' => 1,
                 'name' => 'test',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

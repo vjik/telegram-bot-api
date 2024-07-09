@@ -15,8 +15,7 @@ final readonly class InlineQueryResultGame implements InlineQueryResult
         public string $id,
         public string $gameShortName,
         public ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

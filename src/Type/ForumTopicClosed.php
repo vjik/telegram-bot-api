@@ -7,6 +7,4 @@ namespace Vjik\TelegramBot\Api\Type;
 /**
  * @see https://core.telegram.org/bots/api#forumtopicclosed
  */
-final readonly class ForumTopicClosed
-{
-}
+final readonly class ForumTopicClosed {}

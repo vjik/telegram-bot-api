@@ -31,7 +31,7 @@ final class InlineQueryResultDocumentTest extends TestCase
                 'document_url' => 'https://example.com/test.pdf',
                 'mime_type' => 'application/pdf',
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -74,7 +74,7 @@ final class InlineQueryResultDocumentTest extends TestCase
                 'thumbnail_width' => 120,
                 'thumbnail_height' => 150,
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 }

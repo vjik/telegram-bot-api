@@ -22,8 +22,7 @@ final readonly class InputSticker
         private array $emojiList,
         private ?MaskPosition $maskPosition = null,
         private ?array $keywords = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(?RequestFileCollector $fileCollector = null): array
     {

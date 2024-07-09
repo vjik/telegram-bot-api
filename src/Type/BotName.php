@@ -11,6 +11,5 @@ final readonly class BotName
 {
     public function __construct(
         public string $name,
-    ) {
-    }
+    ) {}
 }

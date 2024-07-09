@@ -27,6 +27,5 @@ final readonly class Game
         #[ArrayOfObjectsValue(MessageEntity::class)]
         public ?array $textEntities = null,
         public ?Animation $animation = null,
-    ) {
-    }
+    ) {}
 }

@@ -19,6 +19,5 @@ final readonly class UserProfilePhotos
         public int $totalCount,
         #[ArrayOfArraysOfObjectsValue(PhotoSize::class)]
         public array $photos,
-    ) {
-    }
+    ) {}
 }

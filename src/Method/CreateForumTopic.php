@@ -18,8 +18,7 @@ final readonly class CreateForumTopic implements TelegramRequestWithResultPrepar
         private string $name,
         private ?int $iconColor = null,
         private ?string $iconCustomEmojiId = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

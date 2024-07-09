@@ -13,6 +13,5 @@ final readonly class GiveawayCompleted
         public int $winnerCount,
         public ?int $unclaimedPrizeCount = null,
         public ?Message $giveawayMessage = null,
-    ) {
-    }
+    ) {}
 }

@@ -19,6 +19,5 @@ final readonly class InlineQuery
         public string $offset,
         public ?string $chatType = null,
         public ?Location $location = null,
-    ) {
-    }
+    ) {}
 }

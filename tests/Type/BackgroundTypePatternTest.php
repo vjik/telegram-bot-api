@@ -36,7 +36,7 @@ final class BackgroundTypePatternTest extends TestCase
             ],
             'fill' => [
                 'type' => 'solid',
-                'color' => 0x000000
+                'color' => 0x000000,
             ],
             'intensity' => 5,
             'is_inverted' => true,

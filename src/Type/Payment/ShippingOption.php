@@ -15,9 +15,8 @@ final readonly class ShippingOption
     public function __construct(
         public string $id,
         public string $title,
-        public array $prices
-    ) {
-    }
+        public array $prices,
+    ) {}
 
     public function toRequestArray(): array
     {
@@ -26,7 +25,7 @@ final readonly class ShippingOption
             'title' => $this->title,
             'prices' => array_map(
                 static fn(LabeledPrice $price) => $price->toRequestArray(),
-                $this->prices
+                $this->prices,
             ),
         ];
     }

@@ -16,8 +16,7 @@ final readonly class SetChatTitle implements TelegramRequestWithResultPreparingI
     public function __construct(
         private int|string $chatId,
         private string $title,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -14,6 +14,5 @@ final readonly class OrderInfo
         public ?string $phoneNumber = null,
         public ?string $email = null,
         public ?ShippingAddress $shippingAddress = null,
-    ) {
-    }
+    ) {}
 }
