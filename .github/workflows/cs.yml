@@ -1,0 +1,33 @@
+name: cs fixer
+
+on: [ pull_request ]
+
+jobs:
+  php-cs-fixer:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ github.head_ref }}
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: 8.2
+          tools: composer:v2
+          coverage: none
+
+      - name: Install Composer dependencies
+        uses: "ramsey/composer-install@v3"
+
+      - name: Run PHP CS Fixer
+        run: composer cs-fix
+
+      - name: Commit changes
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: "Apply PHP CS Fixer changes (CI)"
+          file_pattern: '*.php'
