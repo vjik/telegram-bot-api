@@ -22,7 +22,7 @@ final readonly class ArrayMap implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
         }
 
         $className = $this->className;

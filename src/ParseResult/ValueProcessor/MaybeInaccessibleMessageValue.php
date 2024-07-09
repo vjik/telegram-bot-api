@@ -17,15 +17,15 @@ final readonly class MaybeInaccessibleMessageValue implements ValueProcessorInte
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
         }
 
         $date = $value['date'] ?? null;
         if ($date === null) {
-            throw new NotFoundKeyInResultException('date', $value);
+            throw new NotFoundKeyInResultException('date');
         }
         if (!is_int($date)) {
-            throw new InvalidTypeOfValueInResultException('date', $date, 'integer', $value);
+            throw new InvalidTypeOfValueInResultException('date', $date, 'integer');
         }
 
         return $date === 0

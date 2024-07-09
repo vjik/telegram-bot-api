@@ -13,7 +13,7 @@ final readonly class DateValue implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): DateTimeImmutable
     {
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
         }
         return (new DateTimeImmutable())->setTimestamp($value);
     }

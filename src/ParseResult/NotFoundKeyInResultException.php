@@ -6,8 +6,8 @@ namespace Vjik\TelegramBot\Api\ParseResult;
 
 final class NotFoundKeyInResultException extends TelegramParseResultException
 {
-    public function __construct(string $key, mixed $raw)
+    public function __construct(string $key)
     {
-        parent::__construct('Not found key "' . $key . '" in result object.', raw: $raw);
+        parent::__construct('Not found key "' . $key . '" in result object.');
     }
 }

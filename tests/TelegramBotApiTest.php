@@ -232,7 +232,6 @@ final class TelegramBotApiTest extends TestCase
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Not found "result" field in response. Status code: 200.', $exception->getMessage());
-        $this->assertSame('{"ok":true}', $exception->raw);
     }
 
     public function testResponseWithInvalidJson(): void
@@ -246,7 +245,6 @@ final class TelegramBotApiTest extends TestCase
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
-        $this->assertSame('g {12}', $exception->raw);
     }
 
     public function testResponseWithInvalidResult(): void
@@ -263,7 +261,6 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Not found key "id" in result object.', $exception->getMessage());
-        $this->assertSame('{"ok":true,"result":[]}', $exception->raw);
         $this->assertSame(
             [
                 [
@@ -300,7 +297,6 @@ final class TelegramBotApiTest extends TestCase
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Expected telegram response as array. Got "string".', $exception->getMessage());
-        $this->assertSame('"hello"', $exception->raw);
     }
 
     public function testResponseWithNotBooleanOk(): void
@@ -316,7 +312,6 @@ final class TelegramBotApiTest extends TestCase
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Incorrect "ok" field in response. Status code: 200.', $exception->getMessage());
-        $this->assertSame('{"ok":"true"}', $exception->raw);
     }
 
     public function testUnknownResponseType(): void

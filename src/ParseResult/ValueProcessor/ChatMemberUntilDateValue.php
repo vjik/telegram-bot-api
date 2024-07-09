@@ -15,7 +15,7 @@ final readonly class ChatMemberUntilDateValue implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): DateTimeImmutable|false
     {
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
         }
 
         return $value === 0

@@ -244,7 +244,6 @@ final class TelegramBotApi
             throw new TelegramParseResultException(
                 'Failed to decode JSON response. Status code: ' . $response->statusCode . '.',
                 previous: $e,
-                raw: $response->body,
             );
         }
 
@@ -255,7 +254,6 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
-                raw: $response->body,
             );
         }
 
@@ -268,7 +266,6 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
-                raw: $response->body,
             );
         }
 
@@ -2706,7 +2703,6 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Not found "result" field in response. Status code: ' . $response->statusCode . '.',
-                raw: $response->body,
             );
         }
 
@@ -2726,7 +2722,6 @@ final class TelegramBotApi
                 'Failed to parse telegram result. ' . $exception->getMessage(),
                 LogType::createParseResultContext($response->body),
             );
-            $exception->raw = $response->body;
             throw $exception;
         }
     }

@@ -71,6 +71,5 @@ final class ResultFactoryTest extends TestCase
             'Invalid type of value for key "latitude". Expected type is "float", but got "string".',
             $exception->getMessage(),
         );
-        $this->assertSame($data, $exception->raw);
     }
 }
