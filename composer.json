@@ -34,7 +34,8 @@
         "phpunit/phpunit": "^10.5",
         "psr/log": "^3.0",
         "roave/infection-static-analysis-plugin": "^1.35",
-        "vimeo/psalm": "^5.25"
+        "vimeo/psalm": "^5.25",
+        "yiisoft/test-support": "^3.0"
     },
     "suggest": {
         "psr/log": "To log requests to Telegam Bot API and response handling errors."
