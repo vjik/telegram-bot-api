@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests;
 use HttpSoft\Message\StreamFactory;
 use LogicException;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LoggerInterface;
 use Throwable;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
@@ -42,9 +43,33 @@ use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
+use Yiisoft\Test\Support\Log\SimpleLogger;
 
 final class TelegramBotApiTest extends TestCase
 {
+    public function testWithLogger(): void
+    {
+        $logger1 = new SimpleLogger();
+        $logger2 = new SimpleLogger();
+
+        $api1 = new TelegramBotApi(
+            new StubTelegramClient(
+                new TelegramResponse(200, '[]'),
+            ),
+            $logger1,
+        );
+        $api2 = $api1->withLogger($logger2);
+
+        try {
+            $api2->send(new StubTelegramRequest());
+        } catch (TelegramParseResultException) {
+        }
+
+        $this->assertNotSame($api1, $api2);
+        $this->assertEmpty($logger1->getMessages());
+        $this->assertCount(2, $logger2->getMessages());
+    }
+
     public function testSendSuccess(): void
     {
         $api = $this->createApi([
@@ -164,6 +189,46 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
         $this->assertSame('g {12}', $exception->raw);
+    }
+
+    public function testResponseWithInvalidResult(): void
+    {
+        $logger = new SimpleLogger();
+        $request = new GetMe();
+        $api = $this->createApi('{"ok":true,"result":[]}', logger: $logger);
+
+        $exception = null;
+        try {
+            $api->send($request);
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Not found key "id" in result object.', $exception->getMessage());
+        $this->assertSame('{"ok":true,"result":[]}', $exception->raw);
+        $this->assertSame(
+            [
+                [
+                    'level' => 'info',
+                    'message' => 'Send GET-request "getMe".',
+                    'context' => [
+                        'type' => 1,
+                        'payload' => '[]',
+                        'request' => $request,
+                    ],
+                ],
+                [
+                    'level' => 'error',
+                    'message' => 'Failed to parse telegram result. Not found key "id" in result object.',
+                    'context' => [
+                        'type' => 4,
+                        'payload' => '{"ok":true,"result":[]}',
+                        'raw' => '{"ok":true,"result":[]}',
+                    ],
+                ],
+            ],
+            $logger->getMessages(),
+        );
     }
 
     public function testNotArrayResponse(): void
@@ -2141,15 +2206,20 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('f1', $result->fileId);
     }
 
-    private function createApi(array|string $response, int $statusCode = 200): TelegramBotApi
+    private function createApi(
+        array|string $response,
+        int $statusCode = 200,
+        ?LoggerInterface $logger = null,
+    ): TelegramBotApi
     {
         return new TelegramBotApi(
             new StubTelegramClient(
                 new TelegramResponse(
                     $statusCode,
                     is_array($response) ? json_encode($response) : $response,
-                )
-            )
+                ),
+            ),
+            $logger,
         );
     }
 }

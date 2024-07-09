@@ -2726,6 +2726,7 @@ final class TelegramBotApi
                 'Failed to parse telegram result. ' . $exception->getMessage(),
                 LogType::createParseResultContext($response->body),
             );
+            $exception->raw = $response->body;
             throw $exception;
         }
     }
