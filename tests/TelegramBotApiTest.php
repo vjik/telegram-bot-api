@@ -162,12 +162,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendFail(): void
     {
-        $api = $this->createApi([
-            'ok' => false,
-            'description' => 'test error',
-        ]);
+        $logger = new SimpleLogger();
+        $request = new GetMe();
+        $response = new TelegramResponse(200, '{"ok":false,"description":"test error"}');
+        $api = $this->createApi($response, logger: $logger);
 
-        $result = $api->send(new GetMe());
+        $result = $api->send($request);
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
@@ -188,6 +188,35 @@ final class TelegramBotApiTest extends TestCase
             $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
         );
         $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
+
+        $this->assertSame(
+            [
+                [
+                    'level' => 'info',
+                    'message' => 'Send GET-request "getMe".',
+                    'context' => [
+                        'type' => 1,
+                        'payload' => '[]',
+                        'request' => $request,
+                    ],
+                ],
+                [
+                    'level' => 'warning',
+                    'message' => 'On "getMe" request Telegram Bot API returned fail result.',
+                    'context' => [
+                        'type' => 3,
+                        'payload' => '{"ok":false,"description":"test error"}',
+                        'request' => $request,
+                        'response' => $response,
+                        'decodedResponse' => [
+                            'ok' => false,
+                            'description' => 'test error',
+                        ],
+                    ],
+                ],
+            ],
+            $logger->getMessages(),
+        );
     }
 
     public function testSuccessResponseWithoutResult(): void
