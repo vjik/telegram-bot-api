@@ -72,16 +72,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendSuccess(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 1,
-                'is_bot' => false,
-                'first_name' => 'Sergei',
-            ],
-        ]);
+        $logger = new SimpleLogger();
+        $request = new GetMe();
+        $response = new TelegramResponse(200, '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}');
+        $api = $this->createApi($response, logger: $logger);
 
-        $result = $api->send(new GetMe());
+        $result = $api->send($request);
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
@@ -106,6 +102,39 @@ final class TelegramBotApiTest extends TestCase
             $api->getLastResponse(TelegramBotApi::RESPONSE_DECODED),
         );
         $this->assertSame($result, $api->getLastResponse(TelegramBotApi::RESPONSE_PREPARED));
+
+        $this->assertSame(
+            [
+                [
+                    'level' => 'info',
+                    'message' => 'Send GET-request "getMe".',
+                    'context' => [
+                        'type' => 1,
+                        'payload' => '[]',
+                        'request' => $request,
+                    ],
+                ],
+                [
+                    'level' => 'info',
+                    'message' => 'On "getMe" request Telegram Bot API returned successful result.',
+                    'context' => [
+                        'type' => 2,
+                        'payload' => '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+                        'request' => $request,
+                        'response' => $response,
+                        'decodedResponse' => [
+                            'ok' => true,
+                            'result' => [
+                                'id' => 1,
+                                'is_bot' => false,
+                                'first_name' => 'Sergei',
+                            ],
+                        ],
+                    ],
+                ],
+            ],
+            $logger->getMessages(),
+        );
     }
 
     public function testSendSimpleRequest(): void
@@ -2207,14 +2236,15 @@ final class TelegramBotApiTest extends TestCase
     }
 
     private function createApi(
-        array|string $response,
+        array|string|TelegramResponse $response,
         int $statusCode = 200,
         ?LoggerInterface $logger = null,
-    ): TelegramBotApi
-    {
+    ): TelegramBotApi {
         return new TelegramBotApi(
             new StubTelegramClient(
-                new TelegramResponse(
+                $response instanceof TelegramResponse
+                    ? $response
+                    : new TelegramResponse(
                     $statusCode,
                     is_array($response) ? json_encode($response) : $response,
                 ),
