@@ -23,7 +23,7 @@ final class FailResultTest extends TestCase
         $this->assertSame($response, $result->response);
         $this->assertNull($result->description);
         $this->assertNull($result->parameters);
-        $this->assertNull($result->error_code);
+        $this->assertNull($result->errorCode);
     }
 
     public function testFull(): void
@@ -38,6 +38,6 @@ final class FailResultTest extends TestCase
         $this->assertSame($response, $result->response);
         $this->assertSame('desc', $result->description);
         $this->assertSame($responseParameters, $result->parameters);
-        $this->assertSame(200, $result->error_code);
+        $this->assertSame(200, $result->errorCode);
     }
 }

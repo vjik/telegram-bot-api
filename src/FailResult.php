@@ -15,7 +15,7 @@ final readonly class FailResult
         public TelegramResponse $response,
         public ?string $description = null,
         public ?ResponseParameters $parameters = null,
-        public mixed $error_code = null,
+        public mixed $errorCode = null,
     ) {
     }
 }

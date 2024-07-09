@@ -6,6 +6,7 @@
   `Update::fromServerRequest()`.
 - New #106: Add logging.
 - Chg #105: Remove `InvalidResponseFormatException` in favor `TelegramParseResultException`.
+- Chg #109: Rename `FailResult` property `$error_code` to `$errorCode`.
 
 ## 0.3.0 July 7, 2024
 
