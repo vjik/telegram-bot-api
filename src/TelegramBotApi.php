@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
 use LogicException;
+use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
@@ -203,9 +204,17 @@ final class TelegramBotApi
     private mixed $lastResponsePrepared = null;
 
     public function __construct(
-        private TelegramClientInterface $telegramClient,
+        private readonly TelegramClientInterface $telegramClient,
+        private ?LoggerInterface $logger = null,
     ) {
         $this->resultFactory = new ResultFactory();
+    }
+
+    public function withLogger(?LoggerInterface $logger): self
+    {
+        $new = clone $this;
+        $new->logger = $logger;
+        return $new;
     }
 
     /**
@@ -217,6 +226,10 @@ final class TelegramBotApi
         $this->lastResponseDecoded = null;
         $this->lastResponsePrepared = null;
 
+        $this->logger?->info(
+            'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
+            LogType::createSendRequestContext($request),
+        );
         $response = $this->telegramClient->send($request);
 
         $this->lastResponseRaw = $response->body;
@@ -224,6 +237,10 @@ final class TelegramBotApi
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
+            $this->logger?->error(
+                'Failed to decode JSON from telegram response.',
+                LogType::createParseResultContext($response->body),
+            );
             throw new TelegramParseResultException(
                 'Failed to decode JSON response. Status code: ' . $response->statusCode . '.',
                 previous: $e,
@@ -232,6 +249,10 @@ final class TelegramBotApi
         }
 
         if (!is_array($decodedBody)) {
+            $this->logger?->error(
+                'Incorrect telegram response.',
+                LogType::createParseResultContext($response->body),
+            );
             throw new TelegramParseResultException(
                 'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
                 raw: $response->body,
@@ -241,15 +262,29 @@ final class TelegramBotApi
         $this->lastResponseDecoded = $decodedBody;
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
+            $this->logger?->error(
+                'Incorrect "ok" field in telegram response.',
+                LogType::createParseResultContext($response->body),
+            );
             throw new TelegramParseResultException(
                 'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
                 raw: $response->body,
             );
         }
 
-        $this->lastResponsePrepared = $decodedBody['ok']
-            ? $this->prepareSuccessResult($request, $response, $decodedBody, $response->body)
-            : $this->prepareFailResult($request, $response, $decodedBody);
+        if ($decodedBody['ok']) {
+            $this->lastResponsePrepared = $this->prepareSuccessResult($request, $response, $decodedBody);
+            $this->logger?->info(
+                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned successful result.',
+                LogType::createSuccessResultContext($request, $response, $decodedBody),
+            );
+        } else {
+            $this->lastResponsePrepared = $this->prepareFailResult($request, $response, $decodedBody);
+            $this->logger?->warning(
+                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned fail result.',
+                LogType::createFailResultContext($request, $response, $decodedBody),
+            );
+        }
 
         return $this->lastResponsePrepared;
     }
@@ -2663,12 +2698,15 @@ final class TelegramBotApi
         TelegramRequestInterface $request,
         TelegramResponse $response,
         array $decodedBody,
-        string $raw,
     ): mixed {
         if (!array_key_exists('result', $decodedBody)) {
+            $this->logger?->error(
+                'Not found "result" field in telegram response.',
+                LogType::createParseResultContext($response->body),
+            );
             throw new TelegramParseResultException(
                 'Not found "result" field in response. Status code: ' . $response->statusCode . '.',
-                raw: $raw,
+                raw: $response->body,
             );
         }
 
@@ -2681,7 +2719,16 @@ final class TelegramBotApi
             return $decodedBody['result'];
         }
 
-        return $this->resultFactory->create($decodedBody['result'], $resultType);
+        try {
+            return $this->resultFactory->create($decodedBody['result'], $resultType);
+        } catch (TelegramParseResultException $exception) {
+            $this->logger?->error(
+                'Failed to parse telegram result. ' . $exception->getMessage(),
+                LogType::createParseResultContext($response->body),
+            );
+            $exception->raw = $response->body;
+            throw $exception;
+        }
     }
 
     private function prepareFailResult(

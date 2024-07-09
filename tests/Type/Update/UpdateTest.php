@@ -8,9 +8,11 @@ use HttpSoft\Message\StreamTrait;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
+use Throwable;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Update\Update;
+use Yiisoft\Test\Support\Log\SimpleLogger;
 
 final class UpdateTest extends TestCase
 {
@@ -384,5 +386,61 @@ final class UpdateTest extends TestCase
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
         Update::fromJson('asdf{');
+    }
+
+    public function testFromJsonDecodeError(): void
+    {
+        $logger = new SimpleLogger();
+
+        $exception = null;
+        try {
+            Update::fromJson('{test', $logger);
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Failed to decode JSON.', $exception->getMessage());
+        $this->assertSame(
+            [
+                [
+                    'level' => 'error',
+                    'message' => 'Failed to decode JSON for "Update" type.',
+                    'context' => [
+                        'type' => 4,
+                        'payload' => '{test',
+                        'raw' => '{test',
+                    ],
+                ],
+            ],
+            $logger->getMessages(),
+        );
+    }
+
+    public function testFromJsonCreateUpdateError(): void
+    {
+        $logger = new SimpleLogger();
+
+        $exception = null;
+        try {
+            Update::fromJson('25', $logger);
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
+        $this->assertSame(
+            [
+                [
+                    'level' => 'error',
+                    'message' => 'Failed to parse "Update" data. Invalid type of value. Expected type is "array", but got "int".',
+                    'context' => [
+                        'type' => 4,
+                        'payload' => '25',
+                        'raw' => '25',
+                    ],
+                ],
+            ],
+            $logger->getMessages(),
+        );
     }
 }

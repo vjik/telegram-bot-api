@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Update;
 
 use JsonException;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
+use Vjik\TelegramBot\Api\LogType;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
@@ -75,16 +77,29 @@ final class Update
      *
      * @throws TelegramParseResultException
      */
-    public static function fromJson(string $json): Update
+    public static function fromJson(string $json, ?LoggerInterface $logger = null): Update
     {
         try {
             $decodedJson = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
         } catch (JsonException $e) {
+            $logger?->error(
+                'Failed to decode JSON for "Update" type.',
+                LogType::createParseResultContext($json),
+            );
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e, raw: $json);
         }
 
-        /** @var Update $update */
-        $update = (new ResultFactory())->create($decodedJson, self::class);
+        try {
+            /** @var Update $update */
+            $update = (new ResultFactory())->create($decodedJson, self::class);
+        } catch (TelegramParseResultException $exception) {
+            $logger?->error(
+                'Failed to parse "Update" data. ' . $exception->getMessage(),
+                LogType::createParseResultContext($json),
+            );
+            throw $exception;
+        }
+
         $update->raw = $json;
         $update->rawDecoded = $decodedJson;
         return $update;
@@ -95,8 +110,8 @@ final class Update
      *
      * @throws TelegramParseResultException
      */
-    public static function fromServerRequest(ServerRequestInterface $request): Update
+    public static function fromServerRequest(ServerRequestInterface $request, ?LoggerInterface $logger = null): Update
     {
-        return self::fromJson((string) $request->getBody());
+        return self::fromJson((string) $request->getBody(), $logger);
     }
 }
