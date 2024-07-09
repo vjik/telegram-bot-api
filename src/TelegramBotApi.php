@@ -193,15 +193,7 @@ use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 final class TelegramBotApi
 {
-    public const RESPONSE_RAW = 1;
-    public const RESPONSE_DECODED = 2;
-    public const RESPONSE_PREPARED = 3;
-
     private ResultFactory $resultFactory;
-
-    private ?string $lastResponseRaw = null;
-    private ?array $lastResponseDecoded = null;
-    private mixed $lastResponsePrepared = null;
 
     public function __construct(
         private readonly TelegramClientInterface $telegramClient,
@@ -222,17 +214,11 @@ final class TelegramBotApi
      */
     public function send(TelegramRequestInterface $request): mixed
     {
-        $this->lastResponseRaw = null;
-        $this->lastResponseDecoded = null;
-        $this->lastResponsePrepared = null;
-
         $this->logger?->info(
             'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
             LogType::createSendRequestContext($request),
         );
         $response = $this->telegramClient->send($request);
-
-        $this->lastResponseRaw = $response->body;
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -244,7 +230,6 @@ final class TelegramBotApi
             throw new TelegramParseResultException(
                 'Failed to decode JSON response. Status code: ' . $response->statusCode . '.',
                 previous: $e,
-                raw: $response->body,
             );
         }
 
@@ -255,11 +240,8 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
-                raw: $response->body,
             );
         }
-
-        $this->lastResponseDecoded = $decodedBody;
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             $this->logger?->error(
@@ -268,42 +250,24 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Incorrect "ok" field in response. Status code: ' . $response->statusCode . '.',
-                raw: $response->body,
             );
         }
 
         if ($decodedBody['ok']) {
-            $this->lastResponsePrepared = $this->prepareSuccessResult($request, $response, $decodedBody);
+            $result = $this->prepareSuccessResult($request, $response, $decodedBody);
             $this->logger?->info(
                 'On "' . $request->getApiMethod() . '" request Telegram Bot API returned successful result.',
                 LogType::createSuccessResultContext($request, $response, $decodedBody),
             );
         } else {
-            $this->lastResponsePrepared = $this->prepareFailResult($request, $response, $decodedBody);
+            $result = $this->prepareFailResult($request, $response, $decodedBody);
             $this->logger?->warning(
                 'On "' . $request->getApiMethod() . '" request Telegram Bot API returned fail result.',
                 LogType::createFailResultContext($request, $response, $decodedBody),
             );
         }
 
-        return $this->lastResponsePrepared;
-    }
-
-    /**
-     * @psalm-template T as self::RESPONSE_*
-     * @psalm-param T $type
-     * @psalm-return (T is self::RESPONSE_RAW ? string|null : (T is self::RESPONSE_DECODED ? array|null : mixed))
-     *
-     * @psalm-suppress MixedReturnStatement
-     */
-    public function getLastResponse(int $type = self::RESPONSE_RAW): mixed
-    {
-        return match ($type) {
-            self::RESPONSE_RAW => $this->lastResponseRaw,
-            self::RESPONSE_DECODED => $this->lastResponseDecoded,
-            self::RESPONSE_PREPARED => $this->lastResponsePrepared,
-            default => throw new LogicException('Unknown response type.'),
-        };
+        return $result;
     }
 
     /**
@@ -2706,7 +2670,6 @@ final class TelegramBotApi
             );
             throw new TelegramParseResultException(
                 'Not found "result" field in response. Status code: ' . $response->statusCode . '.',
-                raw: $response->body,
             );
         }
 
@@ -2726,7 +2689,6 @@ final class TelegramBotApi
                 'Failed to parse telegram result. ' . $exception->getMessage(),
                 LogType::createParseResultContext($response->body),
             );
-            $exception->raw = $response->body;
             throw $exception;
         }
     }

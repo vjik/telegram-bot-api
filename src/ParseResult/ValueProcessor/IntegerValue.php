@@ -12,7 +12,7 @@ final readonly class IntegerValue implements ValueProcessorInterface
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): int
     {
         if (!is_int($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'integer', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'integer');
         }
         return $value;
     }

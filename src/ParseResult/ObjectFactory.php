@@ -52,7 +52,7 @@ final class ObjectFactory
     public function create(mixed $value, ?string $key, string $className): object
     {
         if (!is_array($value)) {
-            throw new InvalidTypeOfValueInResultException($key, $value, 'array', $value);
+            throw new InvalidTypeOfValueInResultException($key, $value, 'array');
         }
 
         $parameters = $this->getConstructorParameters($className);
@@ -71,7 +71,7 @@ final class ObjectFactory
         if (!isset($result[$param->key])) {
             return $param->optional
                 ? null
-                : throw new NotFoundKeyInResultException($param->key, raw: $result);
+                : throw new NotFoundKeyInResultException($param->key);
         }
 
         if (is_string($param->type)) {

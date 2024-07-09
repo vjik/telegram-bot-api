@@ -86,7 +86,7 @@ final class Update
                 'Failed to decode JSON for "Update" type.',
                 LogType::createParseResultContext($json),
             );
-            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e, raw: $json);
+            throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
         }
 
         try {
