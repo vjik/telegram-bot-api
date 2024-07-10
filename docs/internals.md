@@ -46,6 +46,15 @@ The code is statically analyzed with [Psalm](https://psalm.dev/). To run static 
 ./vendor/bin/psalm
 ```
 
+## Code style
+
+Package used [PHP CS Fixer](https://cs.symfony.com/) to maintain [PER CS 2.0](https://www.php-fig.org/per/coding-style/)
+code style. To check and fix code style:
+
+```shell
+composer cs-fix
+```
+
 ## Dependencies
 
 Use [ComposerRequireChecker](https://github.com/maglnet/ComposerRequireChecker) to detect transitive
