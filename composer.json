@@ -39,7 +39,7 @@
         "yiisoft/test-support": "^3.0"
     },
     "suggest": {
-        "psr/log": "To log requests to Telegam Bot API and response handling errors."
+        "psr/log": "To log requests to Telegram Bot API and response handling errors."
     },
     "autoload": {
         "psr-4": {

@@ -408,7 +408,6 @@ final class UpdateTest extends TestCase
                     'context' => [
                         'type' => 4,
                         'payload' => '{test',
-                        'raw' => '{test',
                     ],
                 ],
             ],
@@ -436,7 +435,6 @@ final class UpdateTest extends TestCase
                     'context' => [
                         'type' => 4,
                         'payload' => '25',
-                        'raw' => '25',
                     ],
                 ],
             ],

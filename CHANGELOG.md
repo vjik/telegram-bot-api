@@ -4,7 +4,7 @@
 
 - New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or 
   `Update::fromServerRequest()`.
-- New #106: Add logging.
+- New #106, #112: Add logging.
 - Chg #105: Remove `InvalidResponseFormatException` in favor `TelegramParseResultException`.
 - Chg #109: Rename `FailResult` property `$error_code` to `$errorCode`.
 

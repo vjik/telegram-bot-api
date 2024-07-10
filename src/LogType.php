@@ -33,8 +33,7 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
  *
  * @psalm-type ParseResultErrorContext = array{
  *     type: LogType::PARSE_RESULT_ERROR,
- *     payload: string,
- *     raw: string
+ *     payload: string
  * }
  */
 final readonly class LogType
@@ -103,12 +102,11 @@ final readonly class LogType
     /**
      * @psalm-return ParseResultErrorContext
      */
-    public static function createParseResultContext(string $raw): array
+    public static function createParseResultErrorContext(string $raw): array
     {
         return [
             'type' => self::PARSE_RESULT_ERROR,
             'payload' => $raw,
-            'raw' => $raw,
         ];
     }
 }

@@ -240,7 +240,6 @@ final class TelegramBotApiTest extends TestCase
                     'context' => [
                         'type' => 4,
                         'payload' => '{"ok":true,"result":[]}',
-                        'raw' => '{"ok":true,"result":[]}',
                     ],
                 ],
             ],

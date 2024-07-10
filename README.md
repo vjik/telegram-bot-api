@@ -93,52 +93,11 @@ The result will be either `FailResult` instance (on error) or an object of the c
 $updates = $api->getUpdates();
 ```
 
-### Custom requests
-
-You can make custom requests using the `send()` method and `TelegramRequest` object:
-
-```php
-use Vjik\TelegramBot\Api\Request\TelegramRequest;
-
-$request = new TelegramRequest(
-    httpMethod: HttpMethod::GET,
-    apiMethod: 'getChat',
-    data: ['chat_id' => '@sergei_predvoditelev'],
-    resultType: ChatFullInfo::class,
-);
-
-// Result is an object of `Vjik\TelegramBot\Api\Type\ChatFullInfo`
-$result = $api->send($request);
-```
-
-### Create `Update` object on webhook
-
-You can create an `Update` object from the incoming webhook PSR-7 request:
-
-```php
-use Vjik\TelegramBot\Api\Type\Update\Update;
-
-try {
-    $update = Update::fromServerRequest($request);
-} catch (TelegramParseResultException $e) {
-    // ... 
-}
-```
-
-or from JSON string received from POST request body:
-
-```php
-use Vjik\TelegramBot\Api\Type\Update\Update;
-
-try {
-    $update = Update::fromJson($jsonString);
-} catch (TelegramParseResultException $e) {
-    // ... 
-}
-```
-
 ## Documentation
 
+- [Logging](docs/logging.md)
+- [Webhook handling](docs/webhook-handling.md)
+- [Custom requests](docs/custom-requests.md)
 - [Internals](docs/internals.md)
 
 If you have any questions or problems with the package, use [author telegram chat](https://t.me/predvoditelev_chat) for communication.
