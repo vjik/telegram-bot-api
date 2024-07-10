@@ -95,6 +95,7 @@ $updates = $api->getUpdates();
 
 ## Documentation
 
+- [Logging](docs/logging.md)
 - [Webhook handling](docs/webhook-handling.md)
 - [Custom requests](docs/custom-requests.md)
 - [Internals](docs/internals.md)
