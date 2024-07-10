@@ -1,12 +1,59 @@
 # Webhook handling
 
+## `Update` object
+
 You can create an `Update` object by several ways:
 
 - [from PSR-7 request](#from-psr-7-request),
 - [from JSON string](#from-json-string),
 - [via constructor](#via-constructor).
 
-## From PSR-7 request
+If `Update` created by `fromJson()` or `fromServerRequest()` method, you can get raw data via `getRaw()` method:
+
+```php
+/**
+ * @var Vjik\TelegramBot\Api\Type\Update\Update $update 
+ */
+ 
+/**
+ * @var string $raw Raw data, for example:
+ *
+ * {"update_id":33991112,"message":{"message_id":422,"from":{"id":1234567,"is_bot":false,"first_name":"John","last_name":"Doe","username":"john_doe","language_code":"ru","is_premium":true},"chat":{"id":1234567,"first_name":"John","last_name":"Doe","username":"john_doe","type":"private"},"date":1720523588,"text":"Hello!"}}
+ */
+$raw = $update->getRaw();
+
+/**
+ * @var array $raw Decoded raw data, for example:
+ *
+ * [
+ *    'update' => 33991112,
+ *    'message' => [
+ *        'message_id' => 422,
+ *        'from' => [
+ *            'id' => 1234567,
+ *            'is_bot' => false,
+ *            'first_name' => 'John',
+ *            'last_name' => 'Doe',
+ *            'username' => 'john_doe',
+ *            'language_code' => 'ru',
+ *            'is_premium' => true,
+ *        ],
+ *        'chat' => [
+ *            'id' => 1234567,
+ *            'first_name' => 'John',
+ *            'last_name' => 'Doe',
+ *            'username' => 'john_doe',
+ *            'type' => 'private',
+ *        ],
+ *        'date' => 1720523588,
+ *        'text' => 'Hello!'
+ *    ],
+ * ]
+ */
+$raw = $update->getRaw(decoded: true);
+```
+
+### From PSR-7 request
 
 Creating `Update` object from the incoming webhook PSR-7 request:
 
@@ -26,7 +73,7 @@ try {
 }
 ```
 
-## From JSON string
+### From JSON string
 
 Creating `Update` object from JSON string received from POST request body:
 
@@ -45,7 +92,7 @@ try {
 }
 ```
 
-## Via constructor
+### Via constructor
 
 If needed, you can create `Update` object manually via constructor:
 
