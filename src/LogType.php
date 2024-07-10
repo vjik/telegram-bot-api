@@ -103,12 +103,11 @@ final readonly class LogType
     /**
      * @psalm-return ParseResultErrorContext
      */
-    public static function createParseResultContext(string $raw): array
+    public static function createParseResultErrorContext(string $raw): array
     {
         return [
             'type' => self::PARSE_RESULT_ERROR,
             'payload' => $raw,
-            'raw' => $raw,
         ];
     }
 }

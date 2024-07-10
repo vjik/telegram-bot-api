@@ -83,7 +83,7 @@ final class Update
         } catch (JsonException $e) {
             $logger?->error(
                 'Failed to decode JSON for "Update" type.',
-                LogType::createParseResultContext($json),
+                LogType::createParseResultErrorContext($json),
             );
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
         }
@@ -94,7 +94,7 @@ final class Update
         } catch (TelegramParseResultException $exception) {
             $logger?->error(
                 'Failed to parse "Update" data. ' . $exception->getMessage(),
-                LogType::createParseResultContext($json),
+                LogType::createParseResultErrorContext($json),
             );
             throw $exception;
         }

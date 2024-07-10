@@ -121,13 +121,12 @@ final class LogTypeTest extends TestCase
 
     public function testCreateParseResultContext(): void
     {
-        $context = LogType::createParseResultContext('test');
+        $context = LogType::createParseResultErrorContext('test');
 
         $this->assertSame(
             [
                 'type' => LogType::PARSE_RESULT_ERROR,
                 'payload' => 'test',
-                'raw' => 'test',
             ],
             $context,
         );
