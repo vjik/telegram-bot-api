@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.4.0 under development
+## 0.4.0 July 10, 2024
 
 - New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or 
   `Update::fromServerRequest()`.
