@@ -1,8 +1,8 @@
 # Telegram Bot API for PHP
 
-[![Latest Stable Version](https://poser.pugx.org/vjik/telegram-bot-api/v/stable.png)](https://packagist.org/packages/vjik/telegram-bot-api)
-[![Total Downloads](https://poser.pugx.org/vjik/telegram-bot-api/downloads.png)](https://packagist.org/packages/vjik/telegram-bot-api)
-[![Build status](https://github.com/vjik/telegram-bot-api/workflows/build/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3Abuild)
+[![Latest Stable Version](https://poser.pugx.org/vjik/telegram-bot-api/v)](https://packagist.org/packages/vjik/telegram-bot-api)
+[![Total Downloads](https://poser.pugx.org/vjik/telegram-bot-api/downloads)](https://packagist.org/packages/vjik/telegram-bot-api)
+[![Build status](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml/badge.svg)](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml)
 [![Code coverage](https://codecov.io/gh/vjik/telegram-bot-api/graph/badge.svg?token=5SV9NWKMQZ)](https://codecov.io/gh/vjik/telegram-bot-api)
 [![Mutation score](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvjik%2Ftelegram-bot-api%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vjik/telegram-bot-api/master)
 [![static analysis](https://github.com/vjik/telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
