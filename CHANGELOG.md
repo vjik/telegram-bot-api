@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.4.1 under development
+## 0.4.1 August 1, 2024
 
 - New #115: Add `hasMainWebApp` field to `User` type.
 - New #115: Add `businessConnectionId` parameter to `PinChatMessage` and `UnpinChatMessage` methods.
