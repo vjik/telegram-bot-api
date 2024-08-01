@@ -26,6 +26,7 @@ final class UserTest extends TestCase
         $this->assertNull($user->canReadAllGroupMessages);
         $this->assertNull($user->supportsInlineQueries);
         $this->assertNull($user->canConnectToBusiness);
+        $this->assertNull($user->hasMainWebApp);
     }
 
     public function testToRequestArray(): void
@@ -43,6 +44,7 @@ final class UserTest extends TestCase
             true,
             true,
             true,
+            false,
         );
 
         $this->assertSame(
@@ -59,6 +61,7 @@ final class UserTest extends TestCase
                 'can_read_all_group_messages' => true,
                 'supports_inline_queries' => true,
                 'can_connect_to_business' => true,
+                'has_main_web_app' => false,
             ],
             $user->toRequestArray(),
         );
@@ -79,6 +82,7 @@ final class UserTest extends TestCase
             'can_read_all_group_messages' => true,
             'supports_inline_queries' => true,
             'can_connect_to_business' => true,
+            'has_main_web_app' => false,
         ], null, User::class);
 
         $this->assertInstanceOf(User::class, $user);
@@ -94,5 +98,6 @@ final class UserTest extends TestCase
         $this->assertSame(true, $user->canReadAllGroupMessages);
         $this->assertSame(true, $user->supportsInlineQueries);
         $this->assertSame(true, $user->canConnectToBusiness);
+        $this->assertSame(false, $user->hasMainWebApp);
     }
 }
