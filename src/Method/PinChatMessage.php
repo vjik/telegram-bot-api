@@ -17,6 +17,7 @@ final readonly class PinChatMessage implements TelegramRequestWithResultPreparin
         private int|string $chatId,
         private int $messageId,
         private ?bool $disableNotification = null,
+        private ?string $businessConnectionId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -33,6 +34,7 @@ final readonly class PinChatMessage implements TelegramRequestWithResultPreparin
     {
         return array_filter(
             [
+                'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_id' => $this->messageId,
                 'disable_notification' => $this->disableNotification,

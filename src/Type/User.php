@@ -22,6 +22,7 @@ final readonly class User
         public ?bool $canReadAllGroupMessages = null,
         public ?bool $supportsInlineQueries = null,
         public ?bool $canConnectToBusiness = null,
+        public ?bool $hasMainWebApp = null,
     ) {}
 
     public function toRequestArray(): array
@@ -40,6 +41,7 @@ final readonly class User
                 'can_read_all_group_messages' => $this->canReadAllGroupMessages,
                 'supports_inline_queries' => $this->supportsInlineQueries,
                 'can_connect_to_business' => $this->canConnectToBusiness,
+                'has_main_web_app' => $this->hasMainWebApp,
             ],
             static fn(mixed $value): bool => $value !== null,
         );
