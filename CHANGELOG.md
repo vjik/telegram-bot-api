@@ -3,6 +3,7 @@
 ## 0.4.1 under development
 
 - New #115: Add `hasMainWebApp` field to `User` type.
+- New #115: Add `businessConnectionId` parameter to `PinChatMessage` and `UnpinChatMessage` methods.
 
 ## 0.4.0 July 10, 2024
 

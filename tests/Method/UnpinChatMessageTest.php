@@ -27,12 +27,13 @@ final class UnpinChatMessageTest extends TestCase
 
     public function testFull(): void
     {
-        $method = new UnpinChatMessage(1, 2);
+        $method = new UnpinChatMessage(1, 2, 'bid');
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('unpinChatMessage', $method->getApiMethod());
         $this->assertSame(
             [
+                'business_connection_id' => 'bid',
                 'chat_id' => 1,
                 'message_id' => 2,
             ],

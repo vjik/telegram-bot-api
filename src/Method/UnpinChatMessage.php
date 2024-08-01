@@ -16,6 +16,7 @@ final readonly class UnpinChatMessage implements TelegramRequestWithResultPrepar
     public function __construct(
         private int|string $chatId,
         private ?int $messageId = null,
+        private ?string $businessConnectionId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -32,6 +33,7 @@ final readonly class UnpinChatMessage implements TelegramRequestWithResultPrepar
     {
         return array_filter(
             [
+                'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_id' => $this->messageId,
             ],

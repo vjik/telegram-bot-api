@@ -28,12 +28,13 @@ final class PinChatMessageTest extends TestCase
 
     public function testFull(): void
     {
-        $method = new PinChatMessage(1, 2, true);
+        $method = new PinChatMessage(1, 2, true, 'bid');
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('pinChatMessage', $method->getApiMethod());
         $this->assertSame(
             [
+                'business_connection_id' => 'bid',
                 'chat_id' => 1,
                 'message_id' => 2,
                 'disable_notification' => true,
