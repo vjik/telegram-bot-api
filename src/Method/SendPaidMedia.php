@@ -37,6 +37,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
         private ?bool $protectContent = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        private ?string $businessConnectionId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -61,6 +62,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
 
         return array_filter(
             [
+                'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'star_count' => $this->starCount,
                 'media' => $media,

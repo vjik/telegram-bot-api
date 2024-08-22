@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.2 under construction
+
+- New #117: Add `businessConnectionId` parameter to `SendPaidMedia` method.
+
 ## 0.4.1 August 1, 2024
 
 - New #115: Add `hasMainWebApp` field to `User` type.
