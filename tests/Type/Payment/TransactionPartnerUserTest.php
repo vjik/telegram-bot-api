@@ -71,7 +71,7 @@ final class TransactionPartnerUserTest extends TestCase
                 ],
             ],
             null,
-            TransactionPartnerUser::class
+            TransactionPartnerUser::class,
         );
 
         $this->assertSame('user', $object->getType());

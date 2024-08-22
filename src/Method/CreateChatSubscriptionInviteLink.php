@@ -18,8 +18,7 @@ final readonly class CreateChatSubscriptionInviteLink implements TelegramRequest
         private int $subscriptionPeriod,
         private int $subscriptionPrice,
         private ?string $name = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
