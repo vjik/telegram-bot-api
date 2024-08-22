@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
-use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
@@ -26,6 +25,8 @@ final class ChatInviteLinkTest extends TestCase
         $this->assertNull($chatInviteLink->expireDate);
         $this->assertNull($chatInviteLink->memberLimit);
         $this->assertNull($chatInviteLink->pendingJoinRequestCount);
+        $this->assertNull($chatInviteLink->subscriptionPeriod);
+        $this->assertNull($chatInviteLink->subscriptionPrice);
     }
 
     public function testFromTelegramResult(): void
@@ -44,6 +45,8 @@ final class ChatInviteLinkTest extends TestCase
             'expire_date' => 1631840400,
             'member_limit' => 100,
             'pending_join_request_count' => 10,
+            'subscription_period' => 20,
+            'subscription_price' => 30,
         ];
 
         $chatInviteLink = (new ObjectFactory())->create($result, null, ChatInviteLink::class);
@@ -57,5 +60,7 @@ final class ChatInviteLinkTest extends TestCase
         $this->assertSame(1631840400, $chatInviteLink->expireDate?->getTimestamp());
         $this->assertSame(100, $chatInviteLink->memberLimit);
         $this->assertSame(10, $chatInviteLink->pendingJoinRequestCount);
+        $this->assertSame(20, $chatInviteLink->subscriptionPeriod);
+        $this->assertSame(30, $chatInviteLink->subscriptionPrice);
     }
 }

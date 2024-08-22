@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
+use Vjik\TelegramBot\Api\Type\ReactionTypePaid;
 
 final readonly class ReactionTypeValue extends InterfaceValue
 {
@@ -19,6 +20,7 @@ final readonly class ReactionTypeValue extends InterfaceValue
         return [
             'emoji' => ReactionTypeEmoji::class,
             'custom_emoji' => ReactionTypeCustomEmoji::class,
+            'paid' => ReactionTypePaid::class,
         ];
     }
 

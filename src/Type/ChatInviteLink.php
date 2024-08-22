@@ -21,5 +21,7 @@ final readonly class ChatInviteLink
         public ?DateTimeImmutable $expireDate = null,
         public ?int $memberLimit = null,
         public ?int $pendingJoinRequestCount = null,
+        public ?int $subscriptionPeriod = null,
+        public ?int $subscriptionPrice = null,
     ) {}
 }

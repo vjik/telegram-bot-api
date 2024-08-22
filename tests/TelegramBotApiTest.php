@@ -488,6 +488,29 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('https//t.me/+example', $result->inviteLink);
     }
 
+    public function testCreateChatSubscriptionInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 1,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->createChatSubscriptionInviteLink(10, 20, 30);
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame('https//t.me/+example', $result->inviteLink);
+    }
+
     public function testCreateForumTopic(): void
     {
         $api = $this->createApi([
@@ -662,6 +685,29 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->editChatInviteLink(1, 'https//t.me/+example');
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame(23, $result->creator->id);
+    }
+
+    public function testEditChatSubscriptionInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 23,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->editChatSubscriptionInviteLink(1, 'https//t.me/+example');
 
         $this->assertInstanceOf(ChatInviteLink::class, $result);
         $this->assertSame(23, $result->creator->id);

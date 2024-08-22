@@ -33,4 +33,23 @@ final class ChatMemberMemberTest extends TestCase
 
         $this->assertSame(123, $member->user->id);
     }
+
+    public function testFromTelegramResultFull(): void
+    {
+        $member = (new ObjectFactory())->create(
+            [
+                'user' => [
+                    'id' => 123,
+                    'is_bot' => false,
+                    'first_name' => 'John',
+                ],
+                'until_date' => 1724317996,
+            ],
+            null,
+            ChatMemberMember::class,
+        );
+
+        $this->assertSame(123, $member->user->id);
+        $this->assertSame(1724317996, $member->untilDate?->getTimestamp());
+    }
 }
