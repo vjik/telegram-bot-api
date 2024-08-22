@@ -7,7 +7,10 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
+use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
+use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
+use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\User;
 
 final class TransactionPartnerUserTest extends TestCase
@@ -25,28 +28,62 @@ final class TransactionPartnerUserTest extends TestCase
     public function testFull(): void
     {
         $user = new User(123, false, 'Mike');
-        $object = new TransactionPartnerUser($user, 'test');
+        $paidMedia = [new PaidMediaPreview(), new PaidMediaPreview()];
+        $object = new TransactionPartnerUser(
+            $user,
+            'test',
+            $paidMedia,
+        );
 
         $this->assertSame('user', $object->getType());
         $this->assertSame($user, $object->user);
         $this->assertSame('test', $object->invoicePayload);
+        $this->assertSame($paidMedia, $object->paidMedia);
     }
 
     public function testFromTelegramResult(): void
     {
-        $object = (new ObjectFactory())->create([
-            'type' => 'user',
-            'user' => [
-                'id' => 123,
-                'is_bot' => false,
-                'first_name' => 'Mike',
+        $object = (new ObjectFactory())->create(
+            [
+                'type' => 'user',
+                'user' => [
+                    'id' => 123,
+                    'is_bot' => false,
+                    'first_name' => 'Mike',
+                ],
+                'invoice_payload' => 'test',
+                'paid_media' => [
+                    [
+                        'type' => 'photo',
+                        'photo' => [
+                            [
+                                'file_id' => 'fid1',
+                                'file_unique_id' => 'fuid1',
+                                'width' => 100,
+                                'height' => 200,
+                            ],
+                        ],
+                    ],
+                    [
+                        'type' => 'preview',
+
+                    ],
+                ],
             ],
-            'invoice_payload' => 'test',
-        ], null, TransactionPartnerUser::class);
+            null,
+            TransactionPartnerUser::class
+        );
 
         $this->assertSame('user', $object->getType());
         $this->assertSame(123, $object->user->id);
         $this->assertSame('test', $object->invoicePayload);
+        $this->assertEquals(
+            [
+                new PaidMediaPhoto([new PhotoSize('fid1', 'fuid1', 100, 200)]),
+                new PaidMediaPreview(),
+            ],
+            $object->paidMedia,
+        );
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

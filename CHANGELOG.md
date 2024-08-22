@@ -3,6 +3,7 @@
 ## 0.4.2 under construction
 
 - New #117: Add `businessConnectionId` parameter to `SendPaidMedia` method.
+- New #117: Add `paidMedia` field to `TransactionPartnerUser` type.
 
 ## 0.4.1 August 1, 2024
 
