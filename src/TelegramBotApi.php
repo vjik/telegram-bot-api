@@ -20,6 +20,7 @@ use Vjik\TelegramBot\Api\Method\CloseGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
+use Vjik\TelegramBot\Api\Method\CreateChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
@@ -517,6 +518,22 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createChatSubscriptionInviteLink(
+        int|string $chatId,
+        int $subscriptionPeriod,
+        int $subscriptionPrice,
+        ?string $name = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new CreateChatSubscriptionInviteLink($chatId, $subscriptionPeriod, $subscriptionPrice, $name),
         );
     }
 
