@@ -28,6 +28,7 @@ use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
+use Vjik\TelegramBot\Api\Method\EditChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
 use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
@@ -744,6 +745,21 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editChatSubscriptionInviteLink(
+        int|string $chatId,
+        string $inviteLink,
+        ?string $name = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new EditChatSubscriptionInviteLink($chatId, $inviteLink, $name),
         );
     }
 

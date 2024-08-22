@@ -690,6 +690,29 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(23, $result->creator->id);
     }
 
+    public function testEditChatSubscriptionInviteLink(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'invite_link' => 'https//t.me/+example',
+                'creator' => [
+                    'id' => 23,
+                    'is_bot' => true,
+                    'first_name' => 'testBot',
+                ],
+                'creates_join_request' => true,
+                'is_primary' => true,
+                'is_revoked' => false,
+            ],
+        ]);
+
+        $result = $api->editChatSubscriptionInviteLink(1, 'https//t.me/+example');
+
+        $this->assertInstanceOf(ChatInviteLink::class, $result);
+        $this->assertSame(23, $result->creator->id);
+    }
+
     public function testEditForumTopic(): void
     {
         $api = $this->createApi([
