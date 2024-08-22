@@ -20,6 +20,7 @@ use Vjik\TelegramBot\Api\Method\CloseGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
+use Vjik\TelegramBot\Api\Method\CreateChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
@@ -27,6 +28,7 @@ use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
+use Vjik\TelegramBot\Api\Method\EditChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
 use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
@@ -521,6 +523,22 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function createChatSubscriptionInviteLink(
+        int|string $chatId,
+        int $subscriptionPeriod,
+        int $subscriptionPrice,
+        ?string $name = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new CreateChatSubscriptionInviteLink($chatId, $subscriptionPeriod, $subscriptionPrice, $name),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#createforumtopic
      *
      * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
@@ -727,6 +745,21 @@ final class TelegramBotApi
     ): FailResult|ChatInviteLink {
         return $this->send(
             new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
+     *
+     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
+     */
+    public function editChatSubscriptionInviteLink(
+        int|string $chatId,
+        string $inviteLink,
+        ?string $name = null,
+    ): FailResult|ChatInviteLink {
+        return $this->send(
+            new EditChatSubscriptionInviteLink($chatId, $inviteLink, $name),
         );
     }
 
@@ -1877,6 +1910,7 @@ final class TelegramBotApi
         ?bool $protectContent = null,
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        ?string $businessConnectionId = null,
     ): FailResult|Message {
         return $this->send(
             new SendPaidMedia(
@@ -1891,6 +1925,7 @@ final class TelegramBotApi
                 $protectContent,
                 $replyParameters,
                 $replyMarkup,
+                $businessConnectionId,
             ),
         );
     }

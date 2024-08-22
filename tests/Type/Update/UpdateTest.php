@@ -368,7 +368,7 @@ final class UpdateTest extends TestCase
     {
         $request = $this->createMock(ServerRequestInterface::class);
         $request->method('getBody')->willReturn(
-            new class () implements StreamInterface {
+            new class implements StreamInterface {
                 use StreamTrait;
 
                 public function __toString(): string

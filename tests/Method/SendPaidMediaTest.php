@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
@@ -53,10 +53,12 @@ final class SendPaidMediaTest extends TestCase
             true,
             $replyParameters,
             $replyMarkup,
+            'bcid1',
         );
 
         $this->assertSame(
             [
+                'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'star_count' => 25,
                 'media' => [
