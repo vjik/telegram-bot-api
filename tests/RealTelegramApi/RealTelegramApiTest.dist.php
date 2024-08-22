@@ -17,7 +17,7 @@ use Vjik\TelegramBot\Api\TelegramBotApi;
  */
 final class RealTelegramApiTest extends TestCase
 {
-    private const TOKEN = '';
+    private const TOKEN = 'telegram-api-token';
 
     public function testBase(): void
     {
