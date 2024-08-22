@@ -2,10 +2,11 @@
 
 ## 0.4.2 under construction
 
+- New #117: Add `createChatSubscriptionInviteLink` and `editChatSubscriptionInviteLink` methods.
 - New #117: Add `businessConnectionId` parameter to `SendPaidMedia` method.
 - New #117: Add `paidMedia` field to `TransactionPartnerUser` type.
 - New #117: Add `subscriptionPeriod` and `subscriptionPrice` fields to `ChatInviteLink` type.
-- New #117: Add `createChatSubscriptionInviteLink` and `editChatSubscriptionInviteLink` methods.
+- New #117: Add `untilDate` field to `ChatMemberMember` type.
 
 ## 0.4.1 August 1, 2024
 
