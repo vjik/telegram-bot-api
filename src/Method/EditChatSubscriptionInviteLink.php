@@ -17,8 +17,7 @@ final readonly class EditChatSubscriptionInviteLink implements TelegramRequestWi
         private int|string $chatId,
         private string $inviteLink,
         private ?string $name = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

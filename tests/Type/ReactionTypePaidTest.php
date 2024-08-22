@@ -30,7 +30,7 @@ final class ReactionTypePaidTest extends TestCase
                 'type' => 'paid',
             ],
             null,
-            ReactionTypePaid::class
+            ReactionTypePaid::class,
         );
 
         $this->assertSame('paid', $reaction->getType());
