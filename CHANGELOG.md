@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.4.2 under construction
+## 0.4.2 August 22, 2024
 
 - New #117: Add `createChatSubscriptionInviteLink` and `editChatSubscriptionInviteLink` methods.
 - New #117: Add `businessConnectionId` parameter to `SendPaidMedia` method.
