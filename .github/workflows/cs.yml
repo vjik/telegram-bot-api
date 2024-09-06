@@ -11,7 +11,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          ref: ${{ github.event.pull_request.head.repo.full_name }}
+          token: ${{ github.token }}
+          ref: ${{ github.head_ref }}
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
