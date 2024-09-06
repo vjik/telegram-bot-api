@@ -43,6 +43,7 @@ final class UpdateTest extends TestCase
         $this->assertNull($update->chatJoinRequest);
         $this->assertNull($update->chatBoost);
         $this->assertNull($update->removedChatBoost);
+        $this->assertNull($update->purchasedPaidMedia);
         $this->assertNull($update->getRaw());
         $this->assertNull($update->getRaw(true));
     }
@@ -201,6 +202,14 @@ final class UpdateTest extends TestCase
                 'invoice_payload' => 'payload',
                 'shipping_option_id' => 'soi1',
             ],
+            'purchased_paid_media' => [
+                'from' => [
+                    'id' => 1235,
+                    'is_bot' => false,
+                    'first_name' => 'Vjik',
+                ],
+                'paid_media_payload' => 'test',
+            ],
             'poll' => [
                 'id' => 'poll1',
                 'question' => 'Question',
@@ -348,6 +357,7 @@ final class UpdateTest extends TestCase
         $this->assertSame(71326, $update->chatJoinRequest?->chat->id);
         $this->assertSame(23682, $update->chatBoost?->chat->id);
         $this->assertSame(1735, $update->removedChatBoost?->chat->id);
+        $this->assertSame(1235, $update->purchasedPaidMedia->from->id);
         $this->assertNull($update->getRaw());
         $this->assertNull($update->getRaw(true));
     }

@@ -1,5 +1,16 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.3 September 06, 2024
+
+- New #118: Add `PaidMediaPurchased` type.
+- New #118: Add `purchasedPaidMedia` field to `Update` type.
+- New #118: Add `paidMediaPayload` field to `TransactionPartnerUser` type.
+- New #118: Add `payload` parameter to `SendPaidMedia` method.
+- New #118: Add `prizeStarCount ` field to `GiveawayCreated`, `Giveaway`, `GiveawayWinners` and 
+  `ChatBoostSourceGiveaway` types.
+- New #118: Add `isStarGiveaway` field to `GiveawayCompleted` type.
+- New #118: Bump `php-http/multipart-stream-builder` dependency to `^1.4.2` version.
+
 ## 0.4.2 August 22, 2024
 
 - New #117: Add `createChatSubscriptionInviteLink` and `editChatSubscriptionInviteLink` methods.

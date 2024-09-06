@@ -12,13 +12,21 @@ final class GiveawayCreatedTest extends TestCase
 {
     public function testBase(): void
     {
-        new GiveawayCreated();
-        $this->expectNotToPerformAssertions();
+        $object = new GiveawayCreated();
+
+        $this->assertNull($object->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
     {
-        (new ObjectFactory())->create([], null, GiveawayCreated::class);
-        $this->expectNotToPerformAssertions();
+        $object = (new ObjectFactory())->create(
+            [
+                'prize_star_count' => 23,
+            ],
+            null,
+            GiveawayCreated::class,
+        );
+
+        $this->assertSame(23, $object->prizeStarCount);
     }
 }

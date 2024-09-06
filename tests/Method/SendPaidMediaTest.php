@@ -54,6 +54,7 @@ final class SendPaidMediaTest extends TestCase
             $replyParameters,
             $replyMarkup,
             'bcid1',
+            'test-payload',
         );
 
         $this->assertSame(
@@ -67,6 +68,7 @@ final class SendPaidMediaTest extends TestCase
                         'media' => 'attach://file0',
                     ],
                 ],
+                'payload' => 'test-payload',
                 'caption' => 'The caption',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],

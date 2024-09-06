@@ -1911,6 +1911,7 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?string $businessConnectionId = null,
+        ?string $payload = null,
     ): FailResult|Message {
         return $this->send(
             new SendPaidMedia(
@@ -1926,6 +1927,7 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $businessConnectionId,
+                $payload,
             ),
         );
     }

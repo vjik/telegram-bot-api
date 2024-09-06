@@ -31,6 +31,7 @@ final class GiveawayWinnersTest extends TestCase
         $this->assertNull($giveawayWinners->onlyNewMembers);
         $this->assertNull($giveawayWinners->wasRefunded);
         $this->assertNull($giveawayWinners->prizeDescription);
+        $this->assertNull($giveawayWinners->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
@@ -42,6 +43,7 @@ final class GiveawayWinnersTest extends TestCase
             'winner_count' => 5,
             'winners' => [['id' => 33, 'is_bot' => false, 'first_name' => 'Sergei']],
             'additional_chat_count' => 12,
+            'prize_star_count' => 99,
             'premium_subscription_month_count' => 7,
             'unclaimed_prize_count' => 3,
             'only_new_members' => true,
@@ -63,5 +65,6 @@ final class GiveawayWinnersTest extends TestCase
         $this->assertTrue($giveawayWinners->onlyNewMembers);
         $this->assertTrue($giveawayWinners->wasRefunded);
         $this->assertSame('Desc', $giveawayWinners->prizeDescription);
+        $this->assertSame(99, $giveawayWinners->prizeStarCount);
     }
 }
