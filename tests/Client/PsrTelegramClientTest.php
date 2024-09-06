@@ -155,17 +155,14 @@ final class PsrTelegramClientTest extends TestCase
                         <<<TEXT
                             --$matches[1]
                             Content-Disposition: form-data; name="chat_id"
-                            Content-Length: 3
 
                             123
                             --$matches[1]
                             Content-Disposition: form-data; name="caption"
-                            Content-Length: 5
 
                             hello
                             --$matches[1]
                             Content-Disposition: form-data; name="photo"; filename="face.png"
-                            Content-Length: 14
                             Content-Type: image/png
 
                             test-file-body
