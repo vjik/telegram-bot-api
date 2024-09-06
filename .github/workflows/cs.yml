@@ -11,7 +11,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
-          token: ${{ github.token }}
           ref: ${{ github.head_ref }}
 
       - name: Install PHP
