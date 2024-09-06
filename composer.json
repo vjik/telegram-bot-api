@@ -22,7 +22,7 @@
     "minimum-stability": "stable",
     "require": {
         "php": "^8.2",
-        "php-http/multipart-stream-builder": "^1.3",
+        "php-http/multipart-stream-builder": "^1.4.2",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.1",
         "psr/http-message": "^1.1|^2.0"

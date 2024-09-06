@@ -141,7 +141,7 @@ final class PsrTelegramClientTest extends TestCase
                     /** @var Request $request */
                     $requestHeaders = $request->getHeaders();
                     $this->assertSame(['Content-Length', 'Content-Type'], array_keys($requestHeaders));
-                    $this->assertSame($requestHeaders['Content-Length'], ['390']);
+                    $this->assertSame($requestHeaders['Content-Length'], ['332']);
                     $this->assertSame([0], array_keys($requestHeaders['Content-Type']));
                     $this->assertSame(
                         1,
