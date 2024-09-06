@@ -26,11 +26,13 @@ final class GiveawayTest extends TestCase
         $this->assertNull($giveaway->prizeDescription);
         $this->assertNull($giveaway->countryCodes);
         $this->assertNull($giveaway->premiumSubscriptionMonthCount);
+        $this->assertNull($giveaway->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
     {
-        $giveaway = (new ObjectFactory())->create([
+        $giveaway = (new ObjectFactory())->create(
+            [
             'chats' => [
                 ['id' => 1, 'type' => 'private'],
             ],
@@ -40,8 +42,12 @@ final class GiveawayTest extends TestCase
             'has_public_winners' => true,
             'prize_description' => 'prize',
             'country_codes' => ['RU'],
+                'prize_star_count' => 19,
             'premium_subscription_month_count' => 7,
-        ], null, Giveaway::class);
+            ],
+            null,
+            Giveaway::class,
+        );
 
         $this->assertCount(1, $giveaway->chats);
         $this->assertInstanceOf(Chat::class, $giveaway->chats[0]);
@@ -55,5 +61,6 @@ final class GiveawayTest extends TestCase
         $this->assertSame('prize', $giveaway->prizeDescription);
         $this->assertSame(['RU'], $giveaway->countryCodes);
         $this->assertSame(7, $giveaway->premiumSubscriptionMonthCount);
+        $this->assertSame(19, $giveaway->prizeStarCount);
     }
 }

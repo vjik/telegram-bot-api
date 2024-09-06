@@ -20,20 +20,26 @@ final class ChatBoostSourceGiveawayTest extends TestCase
         $this->assertSame(12, $source->giveawayMessageId);
         $this->assertNull($source->user);
         $this->assertNull($source->isUnclaimed);
+        $this->assertNull($source->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
     {
-        $source = (new ObjectFactory())->create([
-            'source' => 'giveaway',
-            'giveaway_message_id' => 12,
-            'user' => [
-                'id' => 7,
-                'is_bot' => false,
-                'first_name' => 'Sergei',
+        $source = (new ObjectFactory())->create(
+            [
+                'source' => 'giveaway',
+                'giveaway_message_id' => 12,
+                'user' => [
+                    'id' => 7,
+                    'is_bot' => false,
+                    'first_name' => 'Sergei',
+                ],
+                'prize_star_count' => 19,
+                'is_unclaimed' => true,
             ],
-            'is_unclaimed' => true,
-        ], null, ChatBoostSourceGiveaway::class);
+            null,
+            ChatBoostSourceGiveaway::class,
+        );
 
         $this->assertSame(12, $source->giveawayMessageId);
 
@@ -41,5 +47,6 @@ final class ChatBoostSourceGiveawayTest extends TestCase
         $this->assertSame(7, $source->user->id);
 
         $this->assertTrue($source->isUnclaimed);
+        $this->assertSame(19, $source->prizeStarCount);
     }
 }
