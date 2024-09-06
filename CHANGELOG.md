@@ -1,5 +1,10 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.3 September 06, 2024
+
+- New #118: Add `PaidMediaPurchased` type.
+- New #118: Bump `php-http/multipart-stream-builder` dependency to `^1.4.2` version.
+
 ## 0.4.2 August 22, 2024
 
 - New #117: Add `createChatSubscriptionInviteLink` and `editChatSubscriptionInviteLink` methods.
