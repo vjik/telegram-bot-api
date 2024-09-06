@@ -22,6 +22,7 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQuery;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageReactionCountUpdated;
 use Vjik\TelegramBot\Api\Type\MessageReactionUpdated;
+use Vjik\TelegramBot\Api\Type\Payment\PaidMediaPurchased;
 use Vjik\TelegramBot\Api\Type\Payment\PreCheckoutQuery;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingQuery;
 use Vjik\TelegramBot\Api\Type\Poll;
@@ -59,6 +60,7 @@ final class Update
         public readonly ?ChatJoinRequest $chatJoinRequest = null,
         public readonly ?ChatBoostUpdated $chatBoost = null,
         public readonly ?ChatBoostRemoved $removedChatBoost = null,
+        public readonly ?PaidMediaPurchased $purchasedPaidMedia = null,
     ) {}
 
     /**
