@@ -10,6 +10,7 @@ namespace Vjik\TelegramBot\Api\Type;
 final readonly class GiveawayCompleted
 {
     public function __construct(
+        
         public int $winnerCount,
         public ?int $unclaimedPrizeCount = null,
         public ?Message $giveawayMessage = null,
