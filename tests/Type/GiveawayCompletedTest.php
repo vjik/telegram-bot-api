@@ -22,23 +22,29 @@ final class GiveawayCompletedTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $giveawayCompleted = (new ObjectFactory())->create([
-            'winner_count' => 3,
-            'unclaimed_prize_count' => 2,
-            'giveaway_message' => [
-                'message_id' => 123,
-                'date' => 1717501903,
-                'chat' => [
-                    'id' => 23,
-                    'type' => 'private',
+        $giveawayCompleted = (new ObjectFactory())->create(
+            [
+                'winner_count' => 3,
+                'unclaimed_prize_count' => 2,
+                'giveaway_message' => [
+                    'message_id' => 123,
+                    'date' => 1717501903,
+                    'chat' => [
+                        'id' => 23,
+                        'type' => 'private',
+                    ],
                 ],
+                'is_star_giveaway' => true,
             ],
-        ], null, GiveawayCompleted::class);
+            null,
+            GiveawayCompleted::class,
+        );
 
         $this->assertSame(3, $giveawayCompleted->winnerCount);
         $this->assertSame(2, $giveawayCompleted->unclaimedPrizeCount);
 
         $this->assertInstanceOf(Message::class, $giveawayCompleted->giveawayMessage);
         $this->assertSame(123, $giveawayCompleted->giveawayMessage->messageId);
+        $this->assertTrue($giveawayCompleted->isStarGiveaway);
     }
 }
