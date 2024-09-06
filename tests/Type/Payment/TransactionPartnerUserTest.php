@@ -35,7 +35,7 @@ final class TransactionPartnerUserTest extends TestCase
             $user,
             'test',
             $paidMedia,
-            'paid-payload'
+            'paid-payload',
         );
 
         $this->assertSame('user', $object->getType());

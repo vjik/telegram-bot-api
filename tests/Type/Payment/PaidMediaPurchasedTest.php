@@ -32,7 +32,7 @@ final class PaidMediaPurchasedTest extends TestCase
                 'paid_media_payload' => 'test',
             ],
             null,
-            PaidMediaPurchased::class
+            PaidMediaPurchased::class,
         );
 
         $this->assertInstanceOf(User::class, $object->from);

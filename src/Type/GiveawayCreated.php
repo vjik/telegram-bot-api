@@ -11,6 +11,5 @@ final readonly class GiveawayCreated
 {
     public function __construct(
         public ?int $prizeStarCount = null,
-    ) {
-    }
+    ) {}
 }

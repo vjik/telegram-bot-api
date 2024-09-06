@@ -33,17 +33,17 @@ final class GiveawayTest extends TestCase
     {
         $giveaway = (new ObjectFactory())->create(
             [
-            'chats' => [
-                ['id' => 1, 'type' => 'private'],
-            ],
-            'winners_selection_date' => 1234567890,
-            'winner_count' => 3,
-            'only_new_members' => true,
-            'has_public_winners' => true,
-            'prize_description' => 'prize',
-            'country_codes' => ['RU'],
+                'chats' => [
+                    ['id' => 1, 'type' => 'private'],
+                ],
+                'winners_selection_date' => 1234567890,
+                'winner_count' => 3,
+                'only_new_members' => true,
+                'has_public_winners' => true,
+                'prize_description' => 'prize',
+                'country_codes' => ['RU'],
                 'prize_star_count' => 19,
-            'premium_subscription_month_count' => 7,
+                'premium_subscription_month_count' => 7,
             ],
             null,
             Giveaway::class,

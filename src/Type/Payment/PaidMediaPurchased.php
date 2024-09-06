@@ -14,6 +14,5 @@ final readonly class PaidMediaPurchased
     public function __construct(
         public User $from,
         public string $paidMediaPayload,
-    ) {
-    }
+    ) {}
 }
