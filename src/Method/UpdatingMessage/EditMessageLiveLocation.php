@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 /**
  * @see https://core.telegram.org/bots/api#editmessagelivelocation
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue>
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
  */
 final readonly class EditMessageLiveLocation implements TelegramRequestWithResultPreparingInterface
 {

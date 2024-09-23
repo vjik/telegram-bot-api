@@ -11,13 +11,14 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use function is_array;
 
 /**
- * @template-implements ValueProcessorInterface<array>
+ * @template T
+ * @template-implements ValueProcessorInterface<array<array-key,T>>
  */
 #[Attribute(Attribute::TARGET_PARAMETER)]
 final readonly class ArrayMap implements ValueProcessorInterface
 {
     /**
-     * @psalm-param class-string<ValueProcessorInterface> $className
+     * @psalm-param class-string<ValueProcessorInterface<T>> $className
      */
     public function __construct(
         private string $className,

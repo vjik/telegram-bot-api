@@ -14,7 +14,7 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 /**
  * @see https://core.telegram.org/bots/api#editmessagecaption
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue>
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
  */
 final readonly class EditMessageCaption implements TelegramRequestWithResultPreparingInterface
 {

@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 /**
  * @see https://core.telegram.org/bots/api#getforumtopiciconstickers
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue>
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Sticker>>
  */
 final readonly class GetForumTopicIconStickers implements TelegramRequestWithResultPreparingInterface
 {
