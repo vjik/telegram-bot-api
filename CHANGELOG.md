@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.3.1 under development
+
+- Enh #119: Using fully qualified function calls to improve performance.
+
 ## 0.4.3 September 06, 2024
 
 - New #118: Add `PaidMediaPurchased` type.
