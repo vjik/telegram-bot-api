@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
+use Vjik\TelegramBot\Api\Type\ChatBoostSource;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourceGiftCode;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourceGiveaway;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 
+/**
+ * @template-extends InterfaceValue<ChatBoostSource>
+ */
 final readonly class ChatBoostSourceValue extends InterfaceValue
 {
     public function getTypeKey(): string

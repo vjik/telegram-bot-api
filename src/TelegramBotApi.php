@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api;
 use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
-use LogicException;
 use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
@@ -192,6 +191,8 @@ use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
 use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
+
+use function array_key_exists;
 
 final class TelegramBotApi
 {
