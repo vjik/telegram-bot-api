@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 
 /**
  * @see https://core.telegram.org/bots/api#getstartransactions
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<StarTransactions>>
  */
 final readonly class GetStarTransactions implements TelegramRequestWithResultPreparingInterface
 {

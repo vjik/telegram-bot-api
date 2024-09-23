@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#getcustomemojistickers
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Sticker>>
  */
 final readonly class GetCustomEmojiStickers implements TelegramRequestWithResultPreparingInterface
 {

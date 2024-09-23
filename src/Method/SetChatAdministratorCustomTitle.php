@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetChatAdministratorCustomTitle implements TelegramRequestWithResultPreparingInterface
 {

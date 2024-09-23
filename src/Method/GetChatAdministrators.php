@@ -8,9 +8,12 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Type\ChatMember;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatadministrators
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayMap<ChatMember>>
  */
 final readonly class GetChatAdministrators implements TelegramRequestWithResultPreparingInterface
 {

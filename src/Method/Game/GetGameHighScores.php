@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 
 /**
  * @see https://core.telegram.org/bots/api#getgamehighscores
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<GameHighScore>>
  */
 final readonly class GetGameHighScores implements TelegramRequestWithResultPreparingInterface
 {

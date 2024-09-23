@@ -15,6 +15,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#senddice
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
  */
 final readonly class SendDice implements TelegramRequestWithResultPreparingInterface
 {

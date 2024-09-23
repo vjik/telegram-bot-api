@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 
 /**
  * @see https://core.telegram.org/bots/api#setpassportdataerrors
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetPassportDataErrors implements TelegramRequestWithResultPreparingInterface
 {

@@ -11,6 +11,12 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\InaccessibleMessage;
 use Vjik\TelegramBot\Api\Type\Message;
 
+use function is_array;
+use function is_int;
+
+/**
+ * @template-implements ValueProcessorInterface<InaccessibleMessage|Message>
+ */
 #[Attribute(Attribute::TARGET_PARAMETER)]
 final readonly class MaybeInaccessibleMessageValue implements ValueProcessorInterface
 {

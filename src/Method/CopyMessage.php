@@ -16,6 +16,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#copymessage
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<MessageId>>
  */
 final readonly class CopyMessage implements TelegramRequestWithResultPreparingInterface
 {

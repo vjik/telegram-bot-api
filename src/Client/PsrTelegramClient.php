@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function is_string;
+
 final readonly class PsrTelegramClient implements TelegramClientInterface
 {
     private ApiUrlGenerator $apiUrlGenerator;

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class HideGeneralForumTopic implements TelegramRequestWithResultPreparingInterface
 {

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 
 /**
  * @see https://core.telegram.org/bots/api#getuserchatboosts
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<UserChatBoosts>>
  */
 final readonly class GetUserChatBoosts implements TelegramRequestWithResultPreparingInterface
 {

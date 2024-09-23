@@ -17,6 +17,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendmediagroup
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Message>>
  */
 final readonly class SendMediaGroup implements TelegramRequestWithResultPreparingInterface
 {

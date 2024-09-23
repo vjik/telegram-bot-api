@@ -6,11 +6,15 @@ namespace Vjik\TelegramBot\Api\Request;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 
+/**
+ * @template T as class-string|ValueProcessorInterface|null
+ * @template-implements TelegramRequestWithResultPreparingInterface<T>
+ */
 final readonly class TelegramRequest implements TelegramRequestWithResultPreparingInterface
 {
     /**
      * @psalm-param array<string,mixed> $data
-     * @psalm-param class-string|ValueProcessorInterface|null $resultType
+     * @psalm-param T $resultType
      */
     public function __construct(
         private HttpMethod $httpMethod,

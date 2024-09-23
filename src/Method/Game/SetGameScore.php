@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#setgamescore
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
  */
 final readonly class SetGameScore implements TelegramRequestWithResultPreparingInterface
 {

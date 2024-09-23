@@ -7,6 +7,11 @@ namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 
+use function is_string;
+
+/**
+ * @template-implements ValueProcessorInterface<string>
+ */
 final readonly class StringValue implements ValueProcessorInterface
 {
     public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): string

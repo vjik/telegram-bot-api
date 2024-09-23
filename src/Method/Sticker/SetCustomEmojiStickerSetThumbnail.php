@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetCustomEmojiStickerSetThumbnail implements TelegramRequestWithResultPreparingInterface
 {

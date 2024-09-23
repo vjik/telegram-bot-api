@@ -7,6 +7,8 @@ namespace Vjik\TelegramBot\Api\ParseResult;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 
+use function is_string;
+
 final readonly class ResultFactory
 {
     private ObjectFactory $objectFactory;
@@ -17,14 +19,15 @@ final readonly class ResultFactory
     }
 
     /**
-     * @psalm-param class-string|ValueProcessorInterface $type
+     * @psalm-template T
+     * @psalm-param class-string<T>|ValueProcessorInterface<T> $type
+     * @psalm-return T
      */
     public function create(mixed $result, string|ValueProcessorInterface $type): mixed
     {
         if (is_string($type)) {
             $type = new ObjectValue($type);
         }
-        /** @var ValueProcessorInterface $type */
 
         return $type->process($result, null, $this->objectFactory);
     }

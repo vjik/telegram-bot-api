@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\ForumTopic;
 
 /**
  * @see https://core.telegram.org/bots/api#createforumtopic
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ForumTopic>>
  */
 final readonly class CreateForumTopic implements TelegramRequestWithResultPreparingInterface
 {

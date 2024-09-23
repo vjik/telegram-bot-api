@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Poll;
 
 /**
  * @see https://core.telegram.org/bots/api#stoppoll
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Poll>>
  */
 final readonly class StopPoll implements TelegramRequestWithResultPreparingInterface
 {

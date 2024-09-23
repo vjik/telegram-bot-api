@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#editmessagereplymarkup
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
  */
 final readonly class EditMessageReplyMarkup implements TelegramRequestWithResultPreparingInterface
 {

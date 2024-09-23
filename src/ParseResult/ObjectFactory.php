@@ -35,6 +35,10 @@ use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalState;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartner;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 
+use function in_array;
+use function is_array;
+use function is_string;
+
 final class ObjectFactory
 {
     /**

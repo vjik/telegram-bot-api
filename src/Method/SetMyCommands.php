@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\BotCommandScope;
 
 /**
  * @see https://core.telegram.org/bots/api#setmycommands
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetMyCommands implements TelegramRequestWithResultPreparingInterface
 {

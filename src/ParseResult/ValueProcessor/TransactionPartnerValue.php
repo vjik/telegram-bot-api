@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartner;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 
+/**
+ * @template-extends InterfaceValue<TransactionPartner>
+ */
 final readonly class TransactionPartnerValue extends InterfaceValue
 {
     public function getTypeKey(): string

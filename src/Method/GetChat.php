@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\ChatFullInfo;
 
 /**
  * @see https://core.telegram.org/bots/api#getchat
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatFullInfo>>
  */
 final readonly class GetChat implements TelegramRequestWithResultPreparingInterface
 {

@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
+use Vjik\TelegramBot\Api\Type\PaidMedia;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
 use Vjik\TelegramBot\Api\Type\PaidMediaVideo;
 
+/**
+ * @template-extends InterfaceValue<PaidMedia>
+ */
 final readonly class PaidMediaValue extends InterfaceValue
 {
     public function getTypeKey(): string

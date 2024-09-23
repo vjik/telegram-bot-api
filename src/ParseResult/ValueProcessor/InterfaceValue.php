@@ -9,8 +9,18 @@ use Vjik\TelegramBot\Api\ParseResult\NotFoundKeyInResultException;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 
+use function is_array;
+use function is_string;
+
+/**
+ * @template T as object
+ * @template-implements ValueProcessorInterface<T>
+ */
 abstract readonly class InterfaceValue implements ValueProcessorInterface
 {
+    /**
+     * @psalm-return T
+     */
     final public function process(mixed $value, ?string $key, ObjectFactory $objectFactory): mixed
     {
         if (!is_array($value)) {
@@ -35,7 +45,7 @@ abstract readonly class InterfaceValue implements ValueProcessorInterface
     abstract public function getTypeKey(): string;
 
     /**
-     * @psalm-return array<string,class-string>
+     * @psalm-return array<string,class-string<T>>
      */
     abstract public function getClassMap(): array;
 

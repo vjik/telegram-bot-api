@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
 /**
  * @see https://core.telegram.org/bots/api#addstickertoset
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class AddStickerToSet implements TelegramRequestWithResultPreparingInterface
 {

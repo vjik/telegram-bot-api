@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\BusinessConnection;
 
 /**
  * @see https://core.telegram.org/bots/api#getbusinessconnection
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<BusinessConnection>>
  */
 final readonly class GetBusinessConnection implements TelegramRequestWithResultPreparingInterface
 {

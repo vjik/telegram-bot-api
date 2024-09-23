@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 
 /**
  * @see https://core.telegram.org/bots/api#answerinlinequery
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class AnswerInlineQuery implements TelegramRequestWithResultPreparingInterface
 {

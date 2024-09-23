@@ -4,10 +4,14 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
+use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\MenuButtonCommands;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\MenuButtonWebApp;
 
+/**
+ * @template-extends InterfaceValue<MenuButton>
+ */
 final readonly class MenuButtonValue extends InterfaceValue
 {
     public function getTypeKey(): string

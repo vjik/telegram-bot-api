@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendgame
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
  */
 final readonly class SendGame implements TelegramRequestWithResultPreparingInterface
 {

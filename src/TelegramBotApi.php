@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api;
 use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
-use LogicException;
 use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\Client\TelegramResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
@@ -134,6 +133,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
@@ -193,6 +193,11 @@ use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
+use function array_key_exists;
+use function is_array;
+use function is_bool;
+use function is_string;
+
 final class TelegramBotApi
 {
     private ResultFactory $resultFactory;
@@ -213,6 +218,26 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#making-requests
+     *
+     * @psalm-template TClass as object
+     * @psalm-template TValue as mixed
+     * @psalm-template TRawResult as mixed
+     * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
+     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
+     * @psalm-param TRequest $request
+     * @psalm-return (
+     *      TRequest is TelegramRequestWithResultPreparingInterface<TResultDefinition>
+     *      ? (
+     *          TResultDefinition is class-string
+     *          ? TClass
+     *          : (
+     *              TResultDefinition is null
+     *              ? TRawResult
+     *              : TValue
+     *            )
+     *        )
+     *      : TRawResult
+     * )|FailResult
      */
     public function send(TelegramRequestInterface $request): mixed
     {
@@ -245,6 +270,8 @@ final class TelegramBotApi
             );
         }
 
+        /** @psalm-var array{result?:TRawResult, ...} $decodedBody */
+
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             $this->logger?->error(
                 'Incorrect "ok" field in telegram response.',
@@ -274,8 +301,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#addstickertoset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function addStickerToSet(int $userId, string $name, InputSticker $sticker): FailResult|true
     {
@@ -286,8 +311,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#answercallbackquery
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function answerCallbackQuery(
         string $callbackQueryId,
@@ -305,8 +328,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#answerinlinequery
      *
      * @param InlineQueryResult[] $results
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function answerInlineQuery(
         string $inlineQueryId,
@@ -323,8 +344,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#answerprecheckoutquery
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function answerPreCheckoutQuery(
         string $preCheckoutQueryId,
@@ -340,8 +359,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#answershippingquery
      *
      * @param ShippingOption[]|null $shippingOptions
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function answerShippingQuery(
         string $shippingQueryId,
@@ -356,8 +373,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#answerwebappquery
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): FailResult|SentWebAppMessage
     {
@@ -368,8 +383,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#approvechatjoinrequest
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function approveChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
@@ -380,8 +393,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#banchatmember
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function banChatMember(
         int|string $chatId,
@@ -396,8 +407,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#banchatsenderchat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function banChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
     {
@@ -408,8 +417,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#close
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function close(): FailResult|true
     {
@@ -418,8 +425,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#closeforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function closeForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
@@ -428,8 +433,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#closegeneralforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function closeGeneralForumTopic(int|string $chatId): FailResult|true
     {
@@ -440,8 +443,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#copymessage
      *
      * @param MessageEntity[]|null $captionEntities
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function copyMessage(
         int|string $chatId,
@@ -480,8 +481,6 @@ final class TelegramBotApi
      *
      * @param int[] $messageIds
      * @return FailResult|MessageId[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function copyMessages(
         int|string $chatId,
@@ -507,8 +506,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#createchatinvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function createChatInviteLink(
         int|string $chatId,
@@ -524,8 +521,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function createChatSubscriptionInviteLink(
         int|string $chatId,
@@ -540,8 +535,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#createforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function createForumTopic(
         int|string $chatId,
@@ -559,8 +552,6 @@ final class TelegramBotApi
      *
      * @param LabeledPrice[] $prices
      * @param int[]|null $suggestedTipAmounts
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function createInvoiceLink(
         string $title,
@@ -614,8 +605,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#createnewstickerset
      *
      * @param InputSticker[] $stickers
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function createNewStickerSet(
         int $userId,
@@ -632,8 +621,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#declinechatjoinrequest
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function declineChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
@@ -644,8 +631,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletechatphoto
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteChatPhoto(int|string $chatId): FailResult|true
     {
@@ -656,8 +641,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletechatstickerset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteChatStickerSet(int|string $chatId): FailResult|true
     {
@@ -668,8 +651,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deleteforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
@@ -678,8 +659,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletemessage
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteMessage(int|string $chatId, int $messageId): FailResult|true
     {
@@ -690,8 +669,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#deletemessages
      *
      * @param int[] $messageIds
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteMessages(int|string $chatId, array $messageIds): FailResult|true
     {
@@ -700,8 +677,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletemycommands
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
@@ -710,8 +685,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletestickerfromset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteStickerFromSet(string $sticker): FailResult|true
     {
@@ -722,8 +695,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletestickerset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteStickerSet(string $name): FailResult|true
     {
@@ -732,8 +703,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editchatinvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editChatInviteLink(
         int|string $chatId,
@@ -750,8 +719,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editChatSubscriptionInviteLink(
         int|string $chatId,
@@ -765,8 +732,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editForumTopic(
         int|string $chatId,
@@ -781,8 +746,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editgeneralforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editGeneralForumTopic(int|string $chatId, string $name): FailResult|true
     {
@@ -795,8 +758,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#editmessagecaption
      *
      * @param MessageEntity[]|null $captionEntities
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editMessageCaption(
         ?string $businessConnectionId = null,
@@ -826,8 +787,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editmessagelivelocation
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editMessageLiveLocation(
         float $latitude,
@@ -861,8 +820,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editmessagemedia
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editMessageMedia(
         InputMedia $media,
@@ -886,8 +843,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#editmessagereplymarkup
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editMessageReplyMarkup(
         ?string $businessConnectionId = null,
@@ -911,8 +866,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#editmessagetext
      *
      * @param MessageEntity[]|null $entities
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function editMessageText(
         string $text,
@@ -942,8 +895,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#exportchatinvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function exportChatInviteLink(int|string $chatId): FailResult|string
     {
@@ -954,8 +905,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#forwardmessage
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function forwardMessage(
         int|string $chatId,
@@ -982,8 +931,6 @@ final class TelegramBotApi
      * @return FailResult|MessageId[]
      *
      * @see https://core.telegram.org/bots/api#forwardmessages
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function forwardMessages(
         int|string $chatId,
@@ -1007,8 +954,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#deletewebhook
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
     {
@@ -1017,8 +962,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getbusinessconnection
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getBusinessConnection(string $businessConnectionId): FailResult|BusinessConnection
     {
@@ -1027,8 +970,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getchat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getChat(int|string $chatId): FailResult|ChatFullInfo
     {
@@ -1039,8 +980,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#getchatadministrators
      *
      * @return FailResult|ChatMember[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getChatAdministrators(int|string $chatId): FailResult|array
     {
@@ -1049,8 +988,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getchatmembercount
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getChatMemberCount(int|string $chatId): FailResult|int
     {
@@ -1059,8 +996,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getchatmember
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getChatMember(int|string $chatId, int $userId): FailResult|ChatMember
     {
@@ -1069,8 +1004,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getchatmenubutton
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getChatMenuButton(?int $chatId = null): FailResult|MenuButton
     {
@@ -1082,8 +1015,6 @@ final class TelegramBotApi
      *
      * @param string[] $customEmojiIds
      * @return FailResult|Sticker[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getCustomEmojiStickers(array $customEmojiIds): FailResult|array
     {
@@ -1092,8 +1023,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getfile
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getFile(string $fileId): FailResult|File
     {
@@ -1104,8 +1033,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#getforumtopiciconstickers
      *
      * @return FailResult|Sticker[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getForumTopicIconStickers(): FailResult|array
     {
@@ -1116,8 +1043,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#getgamehighscores
      *
      * @return FailResult|GameHighScore[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getGameHighScores(
         int $userId,
@@ -1132,8 +1057,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getchat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMe(): FailResult|User
     {
@@ -1142,8 +1065,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getmycommands
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|array
     {
@@ -1152,8 +1073,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMyDefaultAdministratorRights(?bool $forChannels = null): FailResult|ChatAdministratorRights
     {
@@ -1162,8 +1081,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getmydescription
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMyDescription(?string $languageCode = null): FailResult|BotDescription
     {
@@ -1172,8 +1089,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getmyname
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMyName(?string $languageCode = null): FailResult|BotName
     {
@@ -1182,8 +1097,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getmyshortdescription
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
@@ -1192,8 +1105,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getstartransactions
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getStarTransactions(?int $offset = null, ?int $limit = null): FailResult|StarTransactions
     {
@@ -1204,8 +1115,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getstickerset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getStickerSet(string $name): FailResult|StickerSet
     {
@@ -1219,8 +1128,6 @@ final class TelegramBotApi
      *
      * @param string[]|null $allowedUpdates
      * @return FailResult|Update[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getUpdates(
         ?int $offset = null,
@@ -1233,8 +1140,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getuserchatboosts
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getUserChatBoosts(int|string $chatId, int $userId): FailResult|UserChatBoosts
     {
@@ -1245,8 +1150,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getuserprofilephotos
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getUserProfilePhotos(
         int $userId,
@@ -1260,8 +1163,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#getwebhookinfo
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
@@ -1270,8 +1171,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function hideGeneralForumTopic(int|string $chatId): FailResult|true
     {
@@ -1282,8 +1181,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#leavechat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function leaveChat(int|string $chatId): FailResult|true
     {
@@ -1294,8 +1191,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#logout
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function logOut(): FailResult|true
     {
@@ -1304,8 +1199,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#pinchatmessage
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function pinChatMessage(
         int|string $chatId,
@@ -1319,8 +1212,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#promotechatmember
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function promoteChatMember(
         int|string $chatId,
@@ -1366,8 +1257,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#refundstarpayment
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function refundStarPayment(int $userId, string $telegramPaymentChargeId): FailResult|true
     {
@@ -1378,8 +1267,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#reopenforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
@@ -1390,8 +1277,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#reopengeneralforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function reopenGeneralForumTopic(int|string $chatId): FailResult|true
     {
@@ -1402,8 +1287,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#replacestickerinset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function replaceStickerInSet(
         int $userId,
@@ -1418,8 +1301,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#restrictchatmember
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function restrictChatMember(
         int|string $chatId,
@@ -1435,8 +1316,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#revokechatinvitelink
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): FailResult|ChatInviteLink
     {
@@ -1449,8 +1328,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendanimation
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendAnimation(
         int|string $chatId,
@@ -1500,8 +1377,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendaudio
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendAudio(
         int|string $chatId,
@@ -1545,8 +1420,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendchataction
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendChatAction(
         int|string $chatId,
@@ -1566,8 +1439,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendcontact
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendContact(
         int|string $chatId,
@@ -1603,8 +1474,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#senddice
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendDice(
         int|string $chatId,
@@ -1636,8 +1505,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#senddocument
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendDocument(
         int|string $chatId,
@@ -1677,8 +1544,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendgame
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendGame(
         int $chatId,
@@ -1711,8 +1576,6 @@ final class TelegramBotApi
      *
      * @param LabeledPrice[] $prices
      * @param int[]|null $suggestedTipAmounts
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendInvoice(
         int|string $chatId,
@@ -1780,8 +1643,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendlocation
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendLocation(
         int|string $chatId,
@@ -1824,8 +1685,6 @@ final class TelegramBotApi
      *
      * @param InputMediaAudio[]|InputMediaDocument[]|InputMediaPhoto[]|InputMediaVideo[] $media
      * @return FailResult|Message[]
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendMediaGroup(
         int|string $chatId,
@@ -1855,8 +1714,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $entities
      *
      * @see https://core.telegram.org/bots/api#sendmessage
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendMessage(
         int|string $chatId,
@@ -1895,8 +1752,6 @@ final class TelegramBotApi
      *
      * @param InputPaidMedia[] $media
      * @param MessageEntity[]|null $captionEntities
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendPaidMedia(
         int|string $chatId,
@@ -1936,8 +1791,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendphoto
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendPhoto(
         int|string $chatId,
@@ -1981,8 +1834,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $explanationEntities
      *
      * @see https://core.telegram.org/bots/api#sendpoll
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendPoll(
         int|string $chatId,
@@ -2038,8 +1889,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendsticker
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendSticker(
         int|string $chatId,
@@ -2071,8 +1920,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendvenue
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendVenue(
         int|string $chatId,
@@ -2118,8 +1965,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendvideo
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendVideo(
         int|string $chatId,
@@ -2169,8 +2014,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#sendvideonote
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendVideoNote(
         int|string $chatId,
@@ -2208,8 +2051,6 @@ final class TelegramBotApi
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendvoice
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function sendVoice(
         int|string $chatId,
@@ -2247,8 +2088,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatAdministratorCustomTitle(
         int|string $chatId,
@@ -2262,8 +2101,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatdescription
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatDescription(int|string $chatId, ?string $description = null): FailResult|true
     {
@@ -2274,8 +2111,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatmenubutton
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatMenuButton(?int $chatId = null, ?MenuButton $menuButton = null): FailResult|true
     {
@@ -2284,8 +2119,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatpermissions
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatPermissions(
         int|string $chatId,
@@ -2299,8 +2132,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatphoto
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatPhoto(int|string $chatId, InputFile $photo): FailResult|true
     {
@@ -2311,8 +2142,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchatstickerset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): FailResult|true
     {
@@ -2323,8 +2152,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setchattitle
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setChatTitle(int|string $chatId, string $title): FailResult|true
     {
@@ -2335,8 +2162,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setcustomemojistickersetthumbnail
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
     {
@@ -2345,8 +2170,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setgamescore
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setGameScore(
         int $userId,
@@ -2374,8 +2197,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#setmessagereaction
      *
      * @param ReactionType[]|null $reaction
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMessageReaction(
         int|string $chatId,
@@ -2392,8 +2213,6 @@ final class TelegramBotApi
      * @param BotCommand[] $commands
      *
      * @see https://core.telegram.org/bots/api#setmycommands
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMyCommands(
         array $commands,
@@ -2405,8 +2224,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setmydefaultadministratorrights
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMyDefaultAdministratorRights(
         ?ChatAdministratorRights $rights = null,
@@ -2417,8 +2234,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setmydescription
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMyDescription(?string $description = null, ?string $languageCode = null): FailResult|true
     {
@@ -2427,8 +2242,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setmyname
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMyName(?string $name = null, ?string $languageCode = null): FailResult|true
     {
@@ -2437,8 +2250,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setmyshortdescription
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setMyShortDescription(
         ?string $shortDescription = null,
@@ -2451,8 +2262,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#setpassportdataerrors
      *
      * @param PassportElementError[] $errors
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setPassportDataErrors(int $userId, array $errors): FailResult|true
     {
@@ -2463,8 +2272,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#setstickeremojilist
      *
      * @param string[] $emojiList
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerEmojiList(string $sticker, array $emojiList): FailResult|true
     {
@@ -2475,8 +2282,6 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#setstickerkeywords
      *
      * @param string[]|null $keywords
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerKeywords(string $sticker, ?array $keywords = null): FailResult|true
     {
@@ -2485,8 +2290,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setstickermaskposition
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): FailResult|true
     {
@@ -2495,8 +2298,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setstickerpositioninset
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerPositionInSet(string $sticker, int $position): FailResult|true
     {
@@ -2505,8 +2306,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setstickersetthumbnail
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerSetThumbnail(
         string $name,
@@ -2526,8 +2325,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setstickersettitle
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setStickerSetTitle(string $name, string $title): FailResult|true
     {
@@ -2536,8 +2333,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#setwebhook
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function setWebhook(
         string $url,
@@ -2554,8 +2349,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#stopmessagelivelocation
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function stopMessageLiveLocation(
         ?string $businessConnectionId = null,
@@ -2577,8 +2370,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#stoppoll
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function stopPoll(
         int|string $chatId,
@@ -2598,8 +2389,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unbanchatmember
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unbanChatMember(
         int|string $chatId,
@@ -2613,8 +2402,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unbanchatsenderchat
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unbanChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
     {
@@ -2625,8 +2412,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unhideGeneralForumTopic(int|string $chatId): FailResult|true
     {
@@ -2637,8 +2422,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unpinchatmessage
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unpinChatMessage(int|string $chatId, ?int $messageId = null): FailResult|true
     {
@@ -2649,8 +2432,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unpinallchatmessages
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unpinAllChatMessages(int|string $chatId): FailResult|true
     {
@@ -2661,8 +2442,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): FailResult|true
     {
@@ -2673,8 +2452,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): FailResult|true
     {
@@ -2685,8 +2462,6 @@ final class TelegramBotApi
 
     /**
      * @see https://core.telegram.org/bots/api#uploadstickerfile
-     *
-     * @psalm-suppress MixedInferredReturnType,MixedReturnStatement
      */
     public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): FailResult|File
     {
@@ -2695,6 +2470,28 @@ final class TelegramBotApi
         );
     }
 
+    /**
+     * @psalm-template TClass as object
+     * @psalm-template TValue as mixed
+     * @psalm-template TRawResult as mixed
+     * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
+     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
+     * @psalm-param TRequest $request
+     * @psalm-param array{result?:TRawResult, ...} $decodedBody
+     * @psalm-return (
+     *      TRequest is TelegramRequestWithResultPreparingInterface
+     *      ? (
+     *          TResultDefinition is class-string
+     *          ? TClass
+     *          : (
+     *              TResultDefinition is null
+     *              ? TRawResult
+     *              : TValue
+     *            )
+     *        )
+     *      : TRawResult
+     * )
+     */
     private function prepareSuccessResult(
         TelegramRequestInterface $request,
         TelegramResponse $response,

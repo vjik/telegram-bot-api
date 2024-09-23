@@ -6,10 +6,14 @@ namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 
+/**
+ * @template T
+ * @template-implements ValueProcessorInterface<T|true>
+ */
 final readonly class ObjectOrTrueValue implements ValueProcessorInterface
 {
     /**
-     * @param class-string $className
+     * @psalm-param class-string<T> $className
      */
     public function __construct(
         private string $className,

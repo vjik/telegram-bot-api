@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 
 /**
  * @see https://core.telegram.org/bots/api#setstickermaskposition
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetStickerMaskPosition implements TelegramRequestWithResultPreparingInterface
 {

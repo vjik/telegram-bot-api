@@ -9,6 +9,11 @@ use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\InvalidTypeOfValueInResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 
+use function is_int;
+
+/**
+ * @template-implements ValueProcessorInterface<DateTimeImmutable|false>
+ */
 #[Attribute(Attribute::TARGET_PARAMETER)]
 final readonly class ChatMemberUntilDateValue implements ValueProcessorInterface
 {

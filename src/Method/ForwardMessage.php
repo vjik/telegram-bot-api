@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#forwardmessage
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
  */
 final readonly class ForwardMessage implements TelegramRequestWithResultPreparingInterface
 {

@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#setstickersetthumbnail
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetStickerSetThumbnail implements TelegramRequestWithResultPreparingInterface
 {

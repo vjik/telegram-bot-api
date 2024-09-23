@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\BotCommandScope;
 
 /**
  * @see https://core.telegram.org/bots/api#deletemycommands
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class DeleteMyCommands implements TelegramRequestWithResultPreparingInterface
 {
