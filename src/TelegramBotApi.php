@@ -220,6 +220,7 @@ final class TelegramBotApi
      *
      * @psalm-template TClass as object
      * @psalm-template TValue as mixed
+     * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
      * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
      * @psalm-param TRequest $request
@@ -230,11 +231,11 @@ final class TelegramBotApi
      *          ? TClass
      *          : (
      *              TResultDefinition is null
-     *              ? mixed
+     *              ? TRawResult
      *              : TValue
      *            )
      *        )
-     *      : mixed
+     *      : TRawResult
      * )|FailResult
      */
     public function send(TelegramRequestInterface $request): mixed
@@ -267,6 +268,8 @@ final class TelegramBotApi
                 'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
             );
         }
+
+        /** @psalm-var array{result?:TRawResult, ...} $decodedBody */
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             $this->logger?->error(
