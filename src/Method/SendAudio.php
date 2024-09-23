@@ -17,6 +17,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendaudio
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
  */
 final readonly class SendAudio implements TelegramRequestWithResultPreparingInterface
 {

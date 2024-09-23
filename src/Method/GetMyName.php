@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\BotName;
 
 /**
  * @see https://core.telegram.org/bots/api#getmyname
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<BotName>>
  */
 final readonly class GetMyName implements TelegramRequestWithResultPreparingInterface
 {

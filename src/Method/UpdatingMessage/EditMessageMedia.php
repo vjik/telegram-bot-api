@@ -14,6 +14,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#editmessagemedia
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue>
  */
 final readonly class EditMessageMedia implements TelegramRequestWithResultPreparingInterface
 {

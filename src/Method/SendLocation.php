@@ -15,6 +15,8 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendlocation
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
  */
 final readonly class SendLocation implements TelegramRequestWithResultPreparingInterface
 {

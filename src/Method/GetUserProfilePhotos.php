@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 
 /**
  * @see https://core.telegram.org/bots/api#getuserprofilephotos
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<UserProfilePhotos>>
  */
 final readonly class GetUserProfilePhotos implements TelegramRequestWithResultPreparingInterface
 {

@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#uploadstickerfile
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<File>>
  */
 final readonly class UploadStickerFile implements TelegramRequestWithResultPreparingInterface
 {

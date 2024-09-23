@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmembercount
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<IntegerValue>
  */
 final readonly class GetChatMemberCount implements TelegramRequestWithResultPreparingInterface
 {

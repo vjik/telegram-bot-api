@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 
 /**
  * @see https://core.telegram.org/bots/api#revokechatinvitelink
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatInviteLink>>
  */
 final readonly class RevokeChatInviteLink implements TelegramRequestWithResultPreparingInterface
 {

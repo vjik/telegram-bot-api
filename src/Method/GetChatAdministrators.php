@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatadministrators
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayMap>
  */
 final readonly class GetChatAdministrators implements TelegramRequestWithResultPreparingInterface
 {

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\File;
 
 /**
  * @see https://core.telegram.org/bots/api#getfile
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<File>>
  */
 final readonly class GetFile implements TelegramRequestWithResultPreparingInterface
 {

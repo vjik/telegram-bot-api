@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
 /**
  * @see https://core.telegram.org/bots/api#createinvoicelink
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<StringValue>
  */
 final readonly class CreateInvoiceLink implements TelegramRequestWithResultPreparingInterface
 {

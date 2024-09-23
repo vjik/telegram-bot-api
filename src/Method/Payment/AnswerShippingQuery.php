@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 
 /**
  * @see https://core.telegram.org/bots/api#answershippingquery
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class AnswerShippingQuery implements TelegramRequestWithResultPreparingInterface
 {

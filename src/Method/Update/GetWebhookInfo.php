@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 /**
  * @see https://core.telegram.org/bots/api#getwebhookinfo
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<WebhookInfo>>
  */
 final readonly class GetWebhookInfo implements TelegramRequestWithResultPreparingInterface
 {

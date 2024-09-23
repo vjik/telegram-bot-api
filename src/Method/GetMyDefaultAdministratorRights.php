@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
 /**
  * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatAdministratorRights>>
  */
 final readonly class GetMyDefaultAdministratorRights implements TelegramRequestWithResultPreparingInterface
 {

@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\ReactionType;
 
 /**
  * @see https://core.telegram.org/bots/api#setmessagereaction
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetMessageReaction implements TelegramRequestWithResultPreparingInterface
 {

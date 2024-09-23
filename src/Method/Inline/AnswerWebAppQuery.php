@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 
 /**
  * @see https://core.telegram.org/bots/api#answerwebappquery
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<SentWebAppMessage>>
  */
 final readonly class AnswerWebAppQuery implements TelegramRequestWithResultPreparingInterface
 {

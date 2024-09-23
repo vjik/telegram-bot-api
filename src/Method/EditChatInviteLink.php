@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 
 /**
  * @see https://core.telegram.org/bots/api#editchatinvitelink
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatInviteLink>>
  */
 final readonly class EditChatInviteLink implements TelegramRequestWithResultPreparingInterface
 {

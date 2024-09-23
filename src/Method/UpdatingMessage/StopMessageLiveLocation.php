@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#stopmessagelivelocation
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue>
  */
 final readonly class StopMessageLiveLocation implements TelegramRequestWithResultPreparingInterface
 {

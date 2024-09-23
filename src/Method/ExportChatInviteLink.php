@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#exportchatinvitelink
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<StringValue>
  */
 final readonly class ExportChatInviteLink implements TelegramRequestWithResultPreparingInterface
 {

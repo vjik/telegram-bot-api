@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 
 /**
  * @see https://core.telegram.org/bots/api#getstickerset
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<StickerSet>>
  */
 final readonly class GetStickerSet implements TelegramRequestWithResultPreparingInterface
 {

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmenubutton
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<MenuButtonValue>
  */
 final readonly class GetChatMenuButton implements TelegramRequestWithResultPreparingInterface
 {

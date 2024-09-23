@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#setchatphoto
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetChatPhoto implements TelegramRequestWithResultPreparingInterface
 {

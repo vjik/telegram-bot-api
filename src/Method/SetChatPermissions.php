@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
 /**
  * @see https://core.telegram.org/bots/api#setchatpermissions
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetChatPermissions implements TelegramRequestWithResultPreparingInterface
 {

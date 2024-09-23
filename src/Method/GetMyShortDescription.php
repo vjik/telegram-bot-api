@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\BotShortDescription;
 
 /**
  * @see https://core.telegram.org/bots/api#getmyshortdescription
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<BotShortDescription>>
  */
 final readonly class GetMyShortDescription implements TelegramRequestWithResultPreparingInterface
 {

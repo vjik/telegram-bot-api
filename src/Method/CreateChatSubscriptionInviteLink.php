@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 
 /**
  * @see https://core.telegram.org/bots/api#createchatsubscriptioninvitelink
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatInviteLink>>
  */
 final readonly class CreateChatSubscriptionInviteLink implements TelegramRequestWithResultPreparingInterface
 {

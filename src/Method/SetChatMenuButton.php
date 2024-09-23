@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\MenuButton;
 
 /**
  * @see https://core.telegram.org/bots/api#setchatmenubutton
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetChatMenuButton implements TelegramRequestWithResultPreparingInterface
 {

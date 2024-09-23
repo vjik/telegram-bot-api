@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 
 /**
  * @see https://core.telegram.org/bots/api#getupdates
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue>
  */
 final readonly class GetUpdates implements TelegramRequestWithResultPreparingInterface
 {

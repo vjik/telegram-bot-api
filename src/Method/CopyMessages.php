@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\MessageId;
 
 /**
  * @see https://core.telegram.org/bots/api#copymessages
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue>
  */
 final readonly class CopyMessages implements TelegramRequestWithResultPreparingInterface
 {

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#getchat
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<class-string<User>>
  */
 final readonly class GetMe implements TelegramRequestWithResultPreparingInterface
 {
