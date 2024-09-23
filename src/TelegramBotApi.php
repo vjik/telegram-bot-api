@@ -193,6 +193,8 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 use function array_key_exists;
+use function is_array;
+use function is_bool;
 
 final class TelegramBotApi
 {
