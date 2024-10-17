@@ -9,7 +9,7 @@
 
 The package provides a simple and convenient way to interact with the Telegram Bot API.
 
-✔️ Telegram Bot API 7.10 (September 6, 2024) is **full supported**.
+✔️ Telegram Bot API 7.10 (September 6, 2024) is **fully supported**.
 
 ## Requirements
 
@@ -17,7 +17,7 @@ The package provides a simple and convenient way to interact with the Telegram B
 
 ## Installation
 
-The package could be installed with [Composer](https://getcomposer.org/download/):
+The package can be installed with [Composer](https://getcomposer.org/download/):
 
 ```shell
 composer require vjik/telegram-bot-api
@@ -35,7 +35,7 @@ For example, you can use the [php-http/curl-client](https://github.com/php-http/
 composer require php-http/curl-client httpsoft/http-message
 ```
 
-In this case, `TelegramBotApi` instance will be created as follows:
+In this case, a `TelegramBotApi` instance can be created as follows:
 
 ```php
 use Http\Client\Curl\Client;
@@ -86,7 +86,7 @@ $api->sendPhoto(
 );
 ```
 
-The result will be either `FailResult` instance (on error) or an object of the corresponding type (on success). For example:
+The result will be either a `FailResult` instance (occuring on an error) or an object of the corresponding type (occuring on success). For example:
 
 ```php
 // Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects
@@ -100,7 +100,7 @@ $updates = $api->getUpdates();
 - [Custom requests](docs/custom-requests.md)
 - [Internals](docs/internals.md)
 
-If you have any questions or problems with the package, use [author telegram chat](https://t.me/predvoditelev_chat) for communication.
+If you have any questions or problems with this package, use [author telegram chat](https://t.me/predvoditelev_chat) for communication.
 
 ## License
 
