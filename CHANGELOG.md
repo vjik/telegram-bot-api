@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.4.3.1 under development
+## 0.4.4 October 26, 2024
 
 - Enh #119: Use fully qualified function calls to improve performance.
 - Enh #119: Use more specific psalm annotations.
