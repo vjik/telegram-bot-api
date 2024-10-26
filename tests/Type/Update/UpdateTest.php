@@ -208,7 +208,7 @@ final class UpdateTest extends TestCase
                     'is_bot' => false,
                     'first_name' => 'Vjik',
                 ],
-                'paid_media_payload' => 'test',
+                'payload' => 'test',
             ],
             'poll' => [
                 'id' => 'poll1',
