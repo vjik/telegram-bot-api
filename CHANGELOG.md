@@ -4,6 +4,7 @@
 
 - Enh #119: Use fully qualified function calls to improve performance.
 - Enh #119: Use more specific psalm annotations.
+- Bug #121: Rename `PaidMediaPurchased` property `paidMediaPayload` to `payload`. 
 
 ## 0.4.3 September 06, 2024
 
