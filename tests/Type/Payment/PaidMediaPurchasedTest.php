@@ -17,7 +17,7 @@ final class PaidMediaPurchasedTest extends TestCase
         $object = new PaidMediaPurchased($user, 'payload');
 
         $this->assertSame($user, $object->from);
-        $this->assertSame('payload', $object->paidMediaPayload);
+        $this->assertSame('payload', $object->payload);
     }
 
     public function testFromTelegramResult(): void
@@ -29,7 +29,7 @@ final class PaidMediaPurchasedTest extends TestCase
                     'is_bot' => false,
                     'first_name' => 'Vjik',
                 ],
-                'paid_media_payload' => 'test',
+                'payload' => 'test',
             ],
             null,
             PaidMediaPurchased::class,
@@ -38,6 +38,6 @@ final class PaidMediaPurchasedTest extends TestCase
         $this->assertInstanceOf(User::class, $object->from);
         $this->assertSame(1, $object->from->id);
 
-        $this->assertSame('test', $object->paidMediaPayload);
+        $this->assertSame('test', $object->payload);
     }
 }
