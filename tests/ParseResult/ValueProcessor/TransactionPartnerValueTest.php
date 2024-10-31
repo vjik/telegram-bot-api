@@ -12,6 +12,7 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TransactionPartnerValue;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramApi;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 
 final class TransactionPartnerValueTest extends TestCase
@@ -29,6 +30,13 @@ final class TransactionPartnerValueTest extends TestCase
                 TransactionPartnerTelegramAds::class,
                 [
                     'type' => 'telegram_ads',
+                ],
+            ],
+            [
+                TransactionPartnerTelegramApi::class,
+                [
+                    'type' => 'telegram_api',
+                    'request_count' => 3,
                 ],
             ],
             [

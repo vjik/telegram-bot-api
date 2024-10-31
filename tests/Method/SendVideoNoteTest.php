@@ -49,6 +49,7 @@ final class SendVideoNoteTest extends TestCase
             'meID',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -62,6 +63,7 @@ final class SendVideoNoteTest extends TestCase
                 'thumbnail' => $thumbnail,
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

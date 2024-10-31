@@ -46,6 +46,7 @@ final class SendContactTest extends TestCase
             'meid1',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -59,6 +60,7 @@ final class SendContactTest extends TestCase
                 'vcard' => 'vcard1',
                 'disable_notification' => true,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
+use Vjik\TelegramBot\Api\Type\CopyTextButton;
 use Vjik\TelegramBot\Api\Type\Game\CallbackGame;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\LoginUrl;
@@ -26,6 +27,7 @@ final class InlineKeyboardButtonTest extends TestCase
         $this->assertNull($button->switchInlineQuery);
         $this->assertNull($button->switchInlineQueryCurrentChat);
         $this->assertNull($button->switchInlineQueryChosenChat);
+        $this->assertNull($button->copyText);
         $this->assertNull($button->callbackGame);
         $this->assertNull($button->pay);
 
@@ -43,6 +45,7 @@ final class InlineKeyboardButtonTest extends TestCase
         $loginUrl = new LoginUrl('https://example.com/login');
         $switchInlineQueryChosenChat  = new SwitchInlineQueryChosenChat('dg');
         $callbackGame = new CallbackGame();
+        $copyText = new CopyTextButton('Copy it!');
         $button = new InlineKeyboardButton(
             'test',
             'https://example.com',
@@ -54,6 +57,7 @@ final class InlineKeyboardButtonTest extends TestCase
             $switchInlineQueryChosenChat,
             $callbackGame,
             true,
+            $copyText,
         );
 
         $this->assertSame('test', $button->text);
@@ -64,6 +68,7 @@ final class InlineKeyboardButtonTest extends TestCase
         $this->assertSame('switch-inline-query', $button->switchInlineQuery);
         $this->assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
         $this->assertSame($switchInlineQueryChosenChat, $button->switchInlineQueryChosenChat);
+        $this->assertSame($copyText, $button->copyText);
         $this->assertSame($callbackGame, $button->callbackGame);
         $this->assertTrue($button->pay);
 
@@ -77,6 +82,7 @@ final class InlineKeyboardButtonTest extends TestCase
                 'switch_inline_query' => 'switch-inline-query',
                 'switch_inline_query_current_chat' => 'switch-inline-query-current-chat',
                 'switch_inline_query_chosen_chat' => $switchInlineQueryChosenChat->toRequestArray(),
+                'copy_text' => $copyText->toRequestArray(),
                 'callback_game' => $callbackGame->toRequestArray(),
                 'pay' => true,
             ],
@@ -95,6 +101,7 @@ final class InlineKeyboardButtonTest extends TestCase
             'switch_inline_query' => 'switch-inline-query',
             'switch_inline_query_current_chat' => 'switch-inline-query-current-chat',
             'switch_inline_query_chosen_chat' => ['query' => 'dg'],
+            'copy_text' => ['text' => 'Copy it!'],
             'callback_game' => [],
             'pay' => true,
         ], null, InlineKeyboardButton::class);
@@ -107,6 +114,7 @@ final class InlineKeyboardButtonTest extends TestCase
         $this->assertSame('switch-inline-query', $button->switchInlineQuery);
         $this->assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
         $this->assertSame('dg', $button->switchInlineQueryChosenChat->query);
+        $this->assertSame('Copy it!', $button->copyText->text);
         $this->assertInstanceOf(CallbackGame::class, $button->callbackGame);
         $this->assertTrue($button->pay);
     }

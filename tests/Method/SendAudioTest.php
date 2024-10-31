@@ -55,6 +55,7 @@ final class SendAudioTest extends TestCase
             'meID',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -72,6 +73,7 @@ final class SendAudioTest extends TestCase
                 'thumbnail' => $thumbnail,
                 'disable_notification' => true,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

@@ -1,5 +1,15 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.5 October 31, 2024
+
+- New #124: Add `CopyTextButton` type.
+- New #124: Add `copyText` field to `InlineKeyboardButton` type.
+- New #124: Add `allowPaidBroadcast` field to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`, `sendAudio`, 
+  `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, `sendVenue`,
+  `sendContact`, `sendPoll`, `sendDice`, `sendInvoice`, `sendGame`, `sendMediaGroup` and `copyMessage` methods.
+- New #124: Add `TransactionPartnerTelegramApi` type.
+- Bug #124: Rename `PaidMediaPurchased` property `payload` to `paidMediaPayload`.
+
 ## 0.4.4 October 26, 2024
 
 - Enh #119: Use fully qualified function calls to improve performance.

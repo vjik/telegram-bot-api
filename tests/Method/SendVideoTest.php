@@ -58,6 +58,7 @@ final class SendVideoTest extends TestCase
             'meID',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -78,6 +79,7 @@ final class SendVideoTest extends TestCase
                 'supports_streaming' => false,
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

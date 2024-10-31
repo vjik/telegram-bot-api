@@ -69,6 +69,7 @@ final class SendPollTest extends TestCase
             'meid2',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -97,6 +98,7 @@ final class SendPollTest extends TestCase
                 'is_closed' => true,
                 'disable_notification' => false,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid2',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

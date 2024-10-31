@@ -53,6 +53,7 @@ final class SendDocumentTest extends TestCase
             'meID',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -68,6 +69,7 @@ final class SendDocumentTest extends TestCase
                 'disable_content_type_detection' => false,
                 'disable_notification' => true,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

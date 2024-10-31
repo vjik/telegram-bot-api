@@ -46,6 +46,7 @@ final class SendMediaGroupTest extends TestCase
             false,
             'id1',
             $replyParameters,
+            true,
         );
 
         $this->assertSame(
@@ -61,6 +62,7 @@ final class SendMediaGroupTest extends TestCase
                 ],
                 'disable_notification' => true,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'id1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'file0' => $file,

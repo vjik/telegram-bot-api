@@ -22,6 +22,7 @@ final readonly class InlineKeyboardButton
         public ?SwitchInlineQueryChosenChat $switchInlineQueryChosenChat = null,
         public ?CallbackGame $callbackGame = null,
         public ?bool $pay = null,
+        public ?CopyTextButton $copyText = null,
     ) {}
 
     public function toRequestArray(): array
@@ -36,6 +37,7 @@ final readonly class InlineKeyboardButton
                 'switch_inline_query' => $this->switchInlineQuery,
                 'switch_inline_query_current_chat' => $this->switchInlineQueryCurrentChat,
                 'switch_inline_query_chosen_chat' => $this->switchInlineQueryChosenChat?->toRequestArray(),
+                'copy_text' => $this->copyText?->toRequestArray(),
                 'callback_game' => $this->callbackGame?->toRequestArray(),
                 'pay' => $this->pay,
             ],

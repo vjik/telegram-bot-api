@@ -43,6 +43,7 @@ final class SendGameTest extends TestCase
             'meid',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -53,6 +54,7 @@ final class SendGameTest extends TestCase
                 'game_short_name' => 'Racing',
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

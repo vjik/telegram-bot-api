@@ -8,6 +8,7 @@ use Vjik\TelegramBot\Api\Type\Payment\TransactionPartner;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramApi;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 
 /**
@@ -25,6 +26,7 @@ final readonly class TransactionPartnerValue extends InterfaceValue
         return [
             'fragment' => TransactionPartnerFragment::class,
             'telegram_ads' => TransactionPartnerTelegramAds::class,
+            'telegram_api' => TransactionPartnerTelegramApi::class,
             'user' => TransactionPartnerUser::class,
             'other' => TransactionPartnerOther::class,
         ];
