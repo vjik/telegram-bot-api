@@ -34,6 +34,7 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
         private ?bool $protectContent = null,
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -66,6 +67,7 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
                 'media' => $media,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 ...$fileCollector->get(),

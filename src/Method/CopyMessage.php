@@ -37,6 +37,7 @@ final readonly class CopyMessage implements TelegramRequestWithResultPreparingIn
         private ?bool $protectContent = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
 
@@ -67,6 +68,7 @@ final readonly class CopyMessage implements TelegramRequestWithResultPreparingIn
                 'show_caption_above_media' => $this->showCaptionAboveMedia,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
             ],

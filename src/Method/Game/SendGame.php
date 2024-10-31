@@ -27,6 +27,7 @@ final readonly class SendGame implements TelegramRequestWithResultPreparingInter
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -49,6 +50,7 @@ final readonly class SendGame implements TelegramRequestWithResultPreparingInter
                 'game_short_name' => $this->gameShortName,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),

@@ -76,6 +76,7 @@ final class SendInvoiceTest extends TestCase
             'meid99',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -107,6 +108,7 @@ final class SendInvoiceTest extends TestCase
                 'is_flexible' => false,
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid99',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

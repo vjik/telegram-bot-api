@@ -57,6 +57,7 @@ final class SendAnimationTest extends TestCase
             'meID',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -76,6 +77,7 @@ final class SendAnimationTest extends TestCase
                 'has_spoiler' => false,
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

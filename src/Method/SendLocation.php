@@ -35,6 +35,7 @@ final readonly class SendLocation implements TelegramRequestWithResultPreparingI
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -62,6 +63,7 @@ final readonly class SendLocation implements TelegramRequestWithResultPreparingI
                 'proximity_alert_radius' => $this->proximityAlertRadius,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),

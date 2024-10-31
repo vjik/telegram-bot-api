@@ -30,6 +30,7 @@ final readonly class SendDice implements TelegramRequestWithResultPreparingInter
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -52,6 +53,7 @@ final readonly class SendDice implements TelegramRequestWithResultPreparingInter
                 'emoji' => $this->emoji,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),

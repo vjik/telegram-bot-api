@@ -48,6 +48,7 @@ final class SendLocationTest extends TestCase
             'id1',
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -63,6 +64,7 @@ final class SendLocationTest extends TestCase
                 'proximity_alert_radius' => 1,
                 'disable_notification' => true,
                 'protect_content' => false,
+                'allow_paid_broadcast' => true,
                 'message_effect_id' => 'id1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),

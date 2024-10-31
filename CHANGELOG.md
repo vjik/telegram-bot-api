@@ -4,6 +4,9 @@
 
 - New #124: Add `CopyTextButton` type.
 - New #124: Add `copyText` field to `InlineKeyboardButton` type.
+- New #124: Add `allowPaidBroadcast` field to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`, `sendAudio`, 
+  `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, `sendVenue`,
+  `sendContact`, `sendPoll`, `sendDice`, `sendInvoice`, `sendGame`, `sendMediaGroup` and `copyMessage` methods.
 - Bug #124: Rename `PaidMediaPurchased` property `payload` to `paidMediaPayload`.
 
 ## 0.4.4 October 26, 2024

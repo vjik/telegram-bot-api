@@ -41,6 +41,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?string $businessConnectionId = null,
         private ?string $payload = null,
+        private ?bool $allowPaidBroadcast = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -79,6 +80,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
                 'show_caption_above_media' => $this->showCaptionAboveMedia,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
                 ...$fileCollector->get(),

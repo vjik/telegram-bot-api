@@ -48,6 +48,7 @@ final class CopyMessageTest extends TestCase
             true,
             $replyParameters,
             $replyMarkup,
+            true,
         );
 
         $this->assertSame(
@@ -62,6 +63,7 @@ final class CopyMessageTest extends TestCase
                 'show_caption_above_media' => true,
                 'disable_notification' => false,
                 'protect_content' => true,
+                'allow_paid_broadcast' => true,
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],
