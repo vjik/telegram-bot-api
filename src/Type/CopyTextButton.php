@@ -11,8 +11,7 @@ final readonly class CopyTextButton
 {
     public function __construct(
         public string $text,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {
