@@ -2,6 +2,7 @@
 
 ## 0.4.5 October 31, 2024
 
+- New #124: Add `CopyTextButton` type.
 - Bug #124: Rename `PaidMediaPurchased` property `payload` to `paidMediaPayload`.
 
 ## 0.4.4 October 26, 2024
