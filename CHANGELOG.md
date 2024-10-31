@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.5 October 31, 2024
+
+- Bug #124: Rename `PaidMediaPurchased` property `payload` to `paidMediaPayload`.
+
 ## 0.4.4 October 26, 2024
 
 - Enh #119: Use fully qualified function calls to improve performance.
