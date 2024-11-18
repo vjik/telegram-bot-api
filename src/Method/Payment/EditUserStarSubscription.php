@@ -19,8 +19,7 @@ final readonly class EditUserStarSubscription implements TelegramRequestWithResu
         private int $userId,
         private string $telegramPaymentChargeId,
         private bool $isCanceled,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -17,6 +17,5 @@ final readonly class Gifts
     public function __construct(
         #[ArrayOfObjectsValue(Gift::class)]
         public array $gifts,
-    ) {
-    }
+    ) {}
 }

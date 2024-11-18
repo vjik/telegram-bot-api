@@ -23,8 +23,7 @@ final readonly class SavePreparedInlineMessage implements TelegramRequestWithRes
         private ?bool $allowBotChats = null,
         private ?bool $allowGroupChats = null,
         private ?bool $allowChannelChats = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

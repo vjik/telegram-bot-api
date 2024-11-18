@@ -25,8 +25,7 @@ final readonly class SendGift implements TelegramRequestWithResultPreparingInter
         private ?string $text = null,
         private ?string $textParseMode = null,
         private ?array $textEntities = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
