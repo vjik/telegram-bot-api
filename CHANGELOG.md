@@ -9,7 +9,8 @@
 - New #125: Add `subscriptionPeriod` field to `TransactionPartnerUser` type.
 - New #125: Add `setUserEmojiStatus` method.
 - New #125: Add `PreparedInlineMessage` type.
-- New #125: Add `SavePreparedInlineMessage` method.
+- New #125: Add `savePreparedInlineMessage` method.
+- New #125: Add `Gift` and `Gifts` types.
 
 ## 0.4.5 October 31, 2024
 
