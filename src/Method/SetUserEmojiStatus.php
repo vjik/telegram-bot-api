@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setuseremojistatus
+ *
+ * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
  */
 final readonly class SetUserEmojiStatus implements TelegramRequestWithResultPreparingInterface
 {
