@@ -100,6 +100,7 @@ use Vjik\TelegramBot\Api\Method\SetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\SetUserEmojiStatus;
 use Vjik\TelegramBot\Api\Method\Sticker\AddStickerToSet;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerFromSet;
@@ -2389,6 +2390,23 @@ final class TelegramBotApi
     public function setStickerSetTitle(string $name, string $title): FailResult|true
     {
         return $this->send(new SetStickerSetTitle($name, $title));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setuseremojistatus
+     */
+    public function setUserEmojiStatus(
+        int $userId,
+        ?string $emojiStatusCustomEmojiId = null,
+        ?DateTimeImmutable $emojiStatusExpirationDate = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetUserEmojiStatus(
+                $userId,
+                $emojiStatusCustomEmojiId,
+                $emojiStatusExpirationDate,
+            ),
+        );
     }
 
     /**
