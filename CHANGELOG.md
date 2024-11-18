@@ -6,7 +6,7 @@
 - New #125: Add `subscriptionExpiration_date`, `isRecurring` and `isFirstRecurring` fields to `SuccessfulPayment`
   type.
 - New #125: Add `editUserStarSubscription` method.
-- New #125: Add `subscriptionPeriod` field to `TransactionPartnerUser` type.
+- New #125: Add `subscriptionPeriod` and `gift` fields to `TransactionPartnerUser` type.
 - New #125: Add `setUserEmojiStatus` method.
 - New #125: Add `PreparedInlineMessage` type.
 - New #125: Add `savePreparedInlineMessage` method.
