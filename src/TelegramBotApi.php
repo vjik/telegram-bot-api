@@ -61,6 +61,7 @@ use Vjik\TelegramBot\Api\Method\Passport\SetPassportDataErrors;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
+use Vjik\TelegramBot\Api\Method\Payment\EditUserStarSubscription;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
@@ -895,6 +896,23 @@ final class TelegramBotApi
                 $entities,
                 $linkPreviewOptions,
                 $replyMarkup,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#edituserstarsubscription
+     */
+    public function editUserStarSubscription(
+        int $userId,
+        string $telegramPaymentChargeId,
+        bool $isCanceled,
+    ): FailResult|true {
+        return $this->send(
+            new EditUserStarSubscription(
+                $userId,
+                $telegramPaymentChargeId,
+                $isCanceled,
             ),
         );
     }
