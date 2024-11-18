@@ -1630,6 +1630,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(7, $result->messageId);
     }
 
+    public function testSendGift(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->sendGift(12, 'gid');
+
+        $this->assertTrue($result);
+    }
+
     public function testSendInvoice(): void
     {
         $api = $this->createApi([

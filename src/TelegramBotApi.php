@@ -110,6 +110,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\GetAvailableGifts;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
+use Vjik\TelegramBot\Api\Method\Sticker\SendGift;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
 use Vjik\TelegramBot\Api\Method\Sticker\SetCustomEmojiStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
@@ -1639,6 +1640,29 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendgift
+     *
+     * @param MessageEntity[]|null $textEntities
+     */
+    public function sendGift(
+        int $userId,
+        string $giftId,
+        ?string $text = null,
+        ?string $textParseMode = null,
+        ?array $textEntities = null,
+    ): FailResult|true {
+        return $this->send(
+            new SendGift(
+                $userId,
+                $giftId,
+                $text,
+                $textParseMode,
+                $textEntities,
             ),
         );
     }

@@ -11,7 +11,7 @@
 - New #125: Add `PreparedInlineMessage` type.
 - New #125: Add `savePreparedInlineMessage` method.
 - New #125: Add `Gift` and `Gifts` types.
-- New #125: Add `getAvailableGifts` method.
+- New #125: Add `getAvailableGifts` and `SendGift` methods.
 
 ## 0.4.5 October 31, 2024
 
