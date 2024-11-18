@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.6 November 18, 2024
+
+- New #125: Add `subscription_period` and `business_connection_id` parameters to `createInvoiceLink` method.
+
 ## 0.4.5 October 31, 2024
 
 - New #124: Add `CopyTextButton` type.

@@ -41,6 +41,8 @@ final readonly class CreateInvoiceLink implements TelegramRequestWithResultPrepa
         private ?bool $sendPhoneNumberToProvider = null,
         private ?bool $sendEmailToProvider = null,
         private ?bool $isFlexible = null,
+        private ?int $subscriptionPeriod = null,
+        private ?string $businessConnectionId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -57,6 +59,7 @@ final readonly class CreateInvoiceLink implements TelegramRequestWithResultPrepa
     {
         return array_filter(
             [
+                'business_connection_id' => $this->businessConnectionId,
                 'title' => $this->title,
                 'description' => $this->description,
                 'payload' => $this->payload,
@@ -66,6 +69,7 @@ final readonly class CreateInvoiceLink implements TelegramRequestWithResultPrepa
                     static fn(LabeledPrice $price) => $price->toRequestArray(),
                     $this->prices,
                 ),
+                'subscription_period' => $this->subscriptionPeriod,
                 'max_tip_amount' => $this->maxTipAmount,
                 'suggested_tip_amounts' => $this->suggestedTipAmounts,
                 'provider_data' => $this->providerData,

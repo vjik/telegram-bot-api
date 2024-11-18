@@ -576,6 +576,8 @@ final class TelegramBotApi
         ?bool $sendPhoneNumberToProvider = null,
         ?bool $sendEmailToProvider = null,
         ?bool $isFlexible = null,
+        ?int $subscriptionPeriod = null,
+        ?string $businessConnectionId = null,
     ): FailResult|string {
         return $this->send(
             new CreateInvoiceLink(
@@ -599,6 +601,8 @@ final class TelegramBotApi
                 $sendPhoneNumberToProvider,
                 $sendEmailToProvider,
                 $isFlexible,
+                $subscriptionPeriod,
+                $businessConnectionId,
             ),
         );
     }
