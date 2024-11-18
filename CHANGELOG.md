@@ -8,6 +8,7 @@
 - New #125: Add `editUserStarSubscription` method.
 - New #125: Add `subscriptionPeriod` field to `TransactionPartnerUser` type.
 - New #125: Add `setUserEmojiStatus` method.
+- New #125: Add `PreparedInlineMessage` type.
 
 ## 0.4.5 October 31, 2024
 
