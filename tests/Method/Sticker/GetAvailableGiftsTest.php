@@ -25,34 +25,34 @@ final class GetAvailableGiftsTest extends TestCase
         $method = new GetAvailableGifts();
 
         $preparedResult = TestHelper::createSuccessStubApi([
-           'gifts' => [
-               [
-                   'id' => 'test-id1',
-                   'sticker' => [
-                       'file_id' => 'x1',
-                       'file_unique_id' => 'fullX1',
-                       'type' => 'regular',
-                       'width' => 100,
-                       'height' => 120,
-                       'is_animated' => false,
-                       'is_video' => true,
-                   ],
-                   'star_count' => 11,
-               ],
-               [
-                   'id' => 'test-id2',
-                   'sticker' => [
-                       'file_id' => 'x1',
-                       'file_unique_id' => 'fullX1',
-                       'type' => 'regular',
-                       'width' => 100,
-                       'height' => 120,
-                       'is_animated' => false,
-                       'is_video' => true,
-                   ],
-                   'star_count' => 11,
-               ],
-           ],
+            'gifts' => [
+                [
+                    'id' => 'test-id1',
+                    'sticker' => [
+                        'file_id' => 'x1',
+                        'file_unique_id' => 'fullX1',
+                        'type' => 'regular',
+                        'width' => 100,
+                        'height' => 120,
+                        'is_animated' => false,
+                        'is_video' => true,
+                    ],
+                    'star_count' => 11,
+                ],
+                [
+                    'id' => 'test-id2',
+                    'sticker' => [
+                        'file_id' => 'x1',
+                        'file_unique_id' => 'fullX1',
+                        'type' => 'regular',
+                        'width' => 100,
+                        'height' => 120,
+                        'is_animated' => false,
+                        'is_video' => true,
+                    ],
+                    'star_count' => 11,
+                ],
+            ],
         ])->send($method);
 
         $this->assertCount(2, $preparedResult->gifts);

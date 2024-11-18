@@ -14,6 +14,5 @@ final readonly class PreparedInlineMessage
     public function __construct(
         public string $id,
         public DateTimeImmutable $expirationDate,
-    ) {
-    }
+    ) {}
 }

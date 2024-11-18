@@ -20,8 +20,7 @@ final readonly class SetUserEmojiStatus implements TelegramRequestWithResultPrep
         private int $userId,
         private ?string $emojiStatusCustomEmojiId = null,
         private ?DateTimeImmutable $emojiStatusExpirationDate = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {
