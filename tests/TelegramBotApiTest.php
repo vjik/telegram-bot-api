@@ -29,6 +29,8 @@ use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
+use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
+use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
@@ -1463,6 +1465,22 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(ChatInviteLink::class, $result);
         $this->assertSame(23, $result->creator->id);
+    }
+
+    public function testSavePreparedInlineMessage(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => 'test-id',
+                'expiration_date' => 1620000000,
+            ],
+        ]);
+
+        $result = $api->savePreparedInlineMessage(12, new InlineQueryResultGame('test', 'Hello'));
+
+        $this->assertInstanceOf(PreparedInlineMessage::class, $result);
+        $this->assertSame('test-id', $result->id);
     }
 
     public function testSendAnimation(): void

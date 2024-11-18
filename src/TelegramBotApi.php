@@ -55,6 +55,7 @@ use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
+use Vjik\TelegramBot\Api\Method\Inline\SavePreparedInlineMessage;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Passport\SetPassportDataErrors;
@@ -156,6 +157,7 @@ use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
+use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -1346,6 +1348,29 @@ final class TelegramBotApi
     {
         return $this->send(
             new RevokeChatInviteLink($chatId, $inviteLink),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#savepreparedinlinemessage
+     */
+    public function savePreparedInlineMessage(
+        int $userId,
+        InlineQueryResult $result,
+        ?bool $allowUserChats = null,
+        ?bool $allowBotChats = null,
+        ?bool $allowGroupChats = null,
+        ?bool $allowChannelChats = null,
+    ): FailResult|PreparedInlineMessage {
+        return $this->send(
+            new SavePreparedInlineMessage(
+                $userId,
+                $result,
+                $allowUserChats,
+                $allowBotChats,
+                $allowGroupChats,
+                $allowChannelChats,
+            ),
         );
     }
 
