@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Payment;
 
+use DateTimeImmutable;
+
 /**
  * @see https://core.telegram.org/bots/api#successfulpayment
  */
@@ -17,5 +19,8 @@ final readonly class SuccessfulPayment
         public string $providerPaymentChargeId,
         public ?string $shippingOptionId = null,
         public ?OrderInfo $orderInfo = null,
+        public ?DateTimeImmutable $subscriptionExpirationDate = null,
+        public ?true $isRecurring = null,
+        public ?true $isFirstRecurring = null,
     ) {}
 }

@@ -13,7 +13,7 @@ final class SuccessfulPaymentTest extends TestCase
 {
     public function testSuccessfulPayment(): void
     {
-        $successfulPayment = new SuccessfulPayment(
+        $type = new SuccessfulPayment(
             'RUB',
             200,
             'pl12',
@@ -21,21 +21,27 @@ final class SuccessfulPaymentTest extends TestCase
             'ppc_id',
         );
 
-        $this->assertSame('RUB', $successfulPayment->currency);
-        $this->assertSame(200, $successfulPayment->totalAmount);
-        $this->assertSame('pl12', $successfulPayment->invoicePayload);
-        $this->assertSame('tpc_id', $successfulPayment->telegramPaymentChargeId);
-        $this->assertSame('ppc_id', $successfulPayment->providerPaymentChargeId);
-        $this->assertNull($successfulPayment->shippingOptionId);
-        $this->assertNull($successfulPayment->orderInfo);
+        $this->assertSame('RUB', $type->currency);
+        $this->assertSame(200, $type->totalAmount);
+        $this->assertSame('pl12', $type->invoicePayload);
+        $this->assertSame('tpc_id', $type->telegramPaymentChargeId);
+        $this->assertSame('ppc_id', $type->providerPaymentChargeId);
+        $this->assertNull($type->shippingOptionId);
+        $this->assertNull($type->orderInfo);
+        $this->assertNull($type->subscriptionExpirationDate);
+        $this->assertNull($type->isRecurring);
+        $this->assertNull($type->isFirstRecurring);
     }
 
     public function testFromTelegramResult(): void
     {
-        $successfulPayment = (new ObjectFactory())->create([
+        $type = (new ObjectFactory())->create([
             'currency' => 'RUB',
             'total_amount' => 900,
             'invoice_payload' => 'pl12',
+            'subscription_expiration_date' => 1731915609,
+            'is_recurring' => true,
+            'is_first_recurring' => true,
             'telegram_payment_charge_id' => 'tpcId',
             'provider_payment_charge_id' => 'ppcId',
             'shipping_option_id' => 'soId',
@@ -44,14 +50,18 @@ final class SuccessfulPaymentTest extends TestCase
             ],
         ], null, SuccessfulPayment::class);
 
-        $this->assertSame('RUB', $successfulPayment->currency);
-        $this->assertSame(900, $successfulPayment->totalAmount);
-        $this->assertSame('pl12', $successfulPayment->invoicePayload);
-        $this->assertSame('tpcId', $successfulPayment->telegramPaymentChargeId);
-        $this->assertSame('ppcId', $successfulPayment->providerPaymentChargeId);
-        $this->assertSame('soId', $successfulPayment->shippingOptionId);
+        $this->assertSame('RUB', $type->currency);
+        $this->assertSame(900, $type->totalAmount);
+        $this->assertSame('pl12', $type->invoicePayload);
+        $this->assertSame('tpcId', $type->telegramPaymentChargeId);
+        $this->assertSame('ppcId', $type->providerPaymentChargeId);
+        $this->assertSame('soId', $type->shippingOptionId);
 
-        $this->assertInstanceOf(OrderInfo::class, $successfulPayment->orderInfo);
-        $this->assertSame('OrderName', $successfulPayment->orderInfo->name);
+        $this->assertInstanceOf(OrderInfo::class, $type->orderInfo);
+        $this->assertSame('OrderName', $type->orderInfo->name);
+
+        $this->assertSame(1731915609, $type->subscriptionExpirationDate?->getTimestamp());
+        $this->assertTrue($type->isRecurring);
+        $this->assertTrue($type->isFirstRecurring);
     }
 }
