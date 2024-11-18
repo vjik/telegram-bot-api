@@ -1,5 +1,17 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.6 November 18, 2024
+
+- New #125: Add `subscriptionPeriod` and `businessConnectionId` parameters to `createInvoiceLink` method.
+- New #125: Add `subscriptionExpirationDate`, `isRecurring` and `isFirstRecurring` fields to `SuccessfulPayment` type.
+- New #125: Add `editUserStarSubscription` method.
+- New #125: Add `subscriptionPeriod` and `gift` fields to `TransactionPartnerUser` type.
+- New #125: Add `setUserEmojiStatus` method.
+- New #125: Add `PreparedInlineMessage` type.
+- New #125: Add `savePreparedInlineMessage` method.
+- New #125: Add `Gift` and `Gifts` types.
+- New #125: Add `getAvailableGifts` and `SendGift` methods.
+
 ## 0.4.5 October 31, 2024
 
 - New #124: Add `CopyTextButton` type.

@@ -55,12 +55,14 @@ use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
+use Vjik\TelegramBot\Api\Method\Inline\SavePreparedInlineMessage;
 use Vjik\TelegramBot\Api\Method\LeaveChat;
 use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Method\Passport\SetPassportDataErrors;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
 use Vjik\TelegramBot\Api\Method\Payment\AnswerShippingQuery;
 use Vjik\TelegramBot\Api\Method\Payment\CreateInvoiceLink;
+use Vjik\TelegramBot\Api\Method\Payment\EditUserStarSubscription;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
@@ -99,13 +101,16 @@ use Vjik\TelegramBot\Api\Method\SetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Method\SetMyName;
 use Vjik\TelegramBot\Api\Method\SetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\SetUserEmojiStatus;
 use Vjik\TelegramBot\Api\Method\Sticker\AddStickerToSet;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerFromSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\GetAvailableGifts;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
+use Vjik\TelegramBot\Api\Method\Sticker\SendGift;
 use Vjik\TelegramBot\Api\Method\Sticker\SendSticker;
 use Vjik\TelegramBot\Api\Method\Sticker\SetCustomEmojiStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerEmojiList;
@@ -154,6 +159,7 @@ use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
+use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -179,6 +185,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
+use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
@@ -576,6 +583,8 @@ final class TelegramBotApi
         ?bool $sendPhoneNumberToProvider = null,
         ?bool $sendEmailToProvider = null,
         ?bool $isFlexible = null,
+        ?int $subscriptionPeriod = null,
+        ?string $businessConnectionId = null,
     ): FailResult|string {
         return $this->send(
             new CreateInvoiceLink(
@@ -599,6 +608,8 @@ final class TelegramBotApi
                 $sendPhoneNumberToProvider,
                 $sendEmailToProvider,
                 $isFlexible,
+                $subscriptionPeriod,
+                $businessConnectionId,
             ),
         );
     }
@@ -896,6 +907,23 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#edituserstarsubscription
+     */
+    public function editUserStarSubscription(
+        int $userId,
+        string $telegramPaymentChargeId,
+        bool $isCanceled,
+    ): FailResult|true {
+        return $this->send(
+            new EditUserStarSubscription(
+                $userId,
+                $telegramPaymentChargeId,
+                $isCanceled,
+            ),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#exportchatinvitelink
      */
     public function exportChatInviteLink(int|string $chatId): FailResult|string
@@ -960,6 +988,14 @@ final class TelegramBotApi
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
     {
         return $this->send(new DeleteWebhook($dropPendingUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getavailablegifts
+     */
+    public function getAvailableGifts(): FailResult|Gifts
+    {
+        return $this->send(new GetAvailableGifts());
     }
 
     /**
@@ -1327,6 +1363,29 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#savepreparedinlinemessage
+     */
+    public function savePreparedInlineMessage(
+        int $userId,
+        InlineQueryResult $result,
+        ?bool $allowUserChats = null,
+        ?bool $allowBotChats = null,
+        ?bool $allowGroupChats = null,
+        ?bool $allowChannelChats = null,
+    ): FailResult|PreparedInlineMessage {
+        return $this->send(
+            new SavePreparedInlineMessage(
+                $userId,
+                $result,
+                $allowUserChats,
+                $allowBotChats,
+                $allowGroupChats,
+                $allowChannelChats,
+            ),
+        );
+    }
+
+    /**
      * @param MessageEntity[]|null $captionEntities
      *
      * @see https://core.telegram.org/bots/api#sendanimation
@@ -1581,6 +1640,29 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendgift
+     *
+     * @param MessageEntity[]|null $textEntities
+     */
+    public function sendGift(
+        int $userId,
+        string $giftId,
+        ?string $text = null,
+        ?string $textParseMode = null,
+        ?array $textEntities = null,
+    ): FailResult|true {
+        return $this->send(
+            new SendGift(
+                $userId,
+                $giftId,
+                $text,
+                $textParseMode,
+                $textEntities,
             ),
         );
     }
@@ -2367,6 +2449,23 @@ final class TelegramBotApi
     public function setStickerSetTitle(string $name, string $title): FailResult|true
     {
         return $this->send(new SetStickerSetTitle($name, $title));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setuseremojistatus
+     */
+    public function setUserEmojiStatus(
+        int $userId,
+        ?string $emojiStatusCustomEmojiId = null,
+        ?DateTimeImmutable $emojiStatusExpirationDate = null,
+    ): FailResult|true {
+        return $this->send(
+            new SetUserEmojiStatus(
+                $userId,
+                $emojiStatusCustomEmojiId,
+                $emojiStatusExpirationDate,
+            ),
+        );
     }
 
     /**

@@ -29,6 +29,8 @@ use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
+use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
+use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
@@ -36,6 +38,7 @@ use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
@@ -799,6 +802,18 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testEditUserStarSubscription(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->editUserStarSubscription(7, 'id', false);
+
+        $this->assertTrue($result);
+    }
+
     public function testExportChatInviteLink(): void
     {
         $api = $this->createApi([
@@ -865,6 +880,20 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->deleteWebhook();
 
         $this->assertTrue($result);
+    }
+
+    public function testGetAvailableGifts(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'gifts' => [],
+            ],
+        ]);
+
+        $result = $api->getAvailableGifts();
+
+        $this->assertInstanceOf(Gifts::class, $result);
     }
 
     public function testGetBusinessConnection(): void
@@ -1453,6 +1482,22 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame(23, $result->creator->id);
     }
 
+    public function testSavePreparedInlineMessage(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'id' => 'test-id',
+                'expiration_date' => 1620000000,
+            ],
+        ]);
+
+        $result = $api->savePreparedInlineMessage(12, new InlineQueryResultGame('test', 'Hello'));
+
+        $this->assertInstanceOf(PreparedInlineMessage::class, $result);
+        $this->assertSame('test-id', $result->id);
+    }
+
     public function testSendAnimation(): void
     {
         $api = $this->createApi([
@@ -1583,6 +1628,18 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(Message::class, $result);
         $this->assertSame(7, $result->messageId);
+    }
+
+    public function testSendGift(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->sendGift(12, 'gid');
+
+        $this->assertTrue($result);
     }
 
     public function testSendInvoice(): void
@@ -2099,6 +2156,18 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->setStickerSetTitle('name_by_bot', 'New Title');
+
+        $this->assertTrue($result);
+    }
+
+    public function testSetUserEmojiStatus(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->setUserEmojiStatus(19);
 
         $this->assertTrue($result);
     }

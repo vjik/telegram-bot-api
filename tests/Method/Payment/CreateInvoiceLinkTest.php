@@ -61,18 +61,22 @@ final class CreateInvoiceLinkTest extends TestCase
             true,
             true,
             false,
+            11,
+            'buid1',
         );
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('createInvoiceLink', $method->getApiMethod());
         $this->assertSame(
             [
+                'business_connection_id' => 'buid1',
                 'title' => 'The title',
                 'description' => 'The description',
                 'payload' => 'The payload',
                 'provider_token' => 'The provider token',
                 'currency' => 'XTR',
                 'prices' => [$price->toRequestArray()],
+                'subscription_period' => 11,
                 'max_tip_amount' => 2,
                 'suggested_tip_amounts' => [3, 4],
                 'provider_data' => 'The provider data',
