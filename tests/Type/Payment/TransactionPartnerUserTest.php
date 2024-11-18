@@ -25,6 +25,7 @@ final class TransactionPartnerUserTest extends TestCase
         $this->assertNull($object->invoicePayload);
         $this->assertNull($object->paidMedia);
         $this->assertNull($object->paidMediaPayload);
+        $this->assertNull($object->subscriptionPeriod);
     }
 
     public function testFull(): void
@@ -36,6 +37,7 @@ final class TransactionPartnerUserTest extends TestCase
             'test',
             $paidMedia,
             'paid-payload',
+            19,
         );
 
         $this->assertSame('user', $object->getType());
@@ -43,6 +45,7 @@ final class TransactionPartnerUserTest extends TestCase
         $this->assertSame('test', $object->invoicePayload);
         $this->assertSame($paidMedia, $object->paidMedia);
         $this->assertSame('paid-payload', $object->paidMediaPayload);
+        $this->assertSame(19, $object->subscriptionPeriod);
     }
 
     public function testFromTelegramResult(): void

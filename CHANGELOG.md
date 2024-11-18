@@ -2,10 +2,11 @@
 
 ## 0.4.6 November 18, 2024
 
-- New #125: Add `subscription_period` and `business_connection_id` parameters to `createInvoiceLink` method.
-- New #125: Add `subscription_expiration_date`, `is_recurring` and `is_first_recurring` fields to `SuccessfulPayment`
+- New #125: Add `subscriptionPeriod` and `businessConnectionId` parameters to `createInvoiceLink` method.
+- New #125: Add `subscriptionExpiration_date`, `isRecurring` and `isFirstRecurring` fields to `SuccessfulPayment`
   type.
 - New #125: Add `editUserStarSubscription` method.
+- New #125: Add `subscriptionPeriod` field to `TransactionPartnerUser` type.
 
 ## 0.4.5 October 31, 2024
 

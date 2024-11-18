@@ -19,6 +19,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
         #[ArrayMap(PaidMediaValue::class)]
         public ?array $paidMedia = null,
         public ?string $paidMediaPayload = null,
+        public ?int $subscriptionPeriod = null,
     ) {}
 
     public function getType(): string
