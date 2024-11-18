@@ -106,6 +106,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\AddStickerToSet;
 use Vjik\TelegramBot\Api\Method\Sticker\CreateNewStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerFromSet;
 use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
+use Vjik\TelegramBot\Api\Method\Sticker\GetAvailableGifts;
 use Vjik\TelegramBot\Api\Method\Sticker\GetCustomEmojiStickers;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
@@ -183,6 +184,7 @@ use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
+use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
@@ -985,6 +987,14 @@ final class TelegramBotApi
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
     {
         return $this->send(new DeleteWebhook($dropPendingUpdates));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getavailablegifts
+     */
+    public function getAvailableGifts(): FailResult|Gifts
+    {
+        return $this->send(new GetAvailableGifts());
     }
 
     /**

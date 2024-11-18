@@ -38,6 +38,7 @@ use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
+use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\User;
@@ -879,6 +880,20 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->deleteWebhook();
 
         $this->assertTrue($result);
+    }
+
+    public function testGetAvailableGifts(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => [
+                'gifts' => [],
+            ],
+        ]);
+
+        $result = $api->getAvailableGifts();
+
+        $this->assertInstanceOf(Gifts::class, $result);
     }
 
     public function testGetBusinessConnection(): void
