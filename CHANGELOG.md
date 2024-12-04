@@ -3,6 +3,7 @@
 ## 0.4.7 December 04, 2024
 
 - New #126: Add `nanostarAmount` field to `StarTransaction` type.
+- New #126: Add `TransactionPartnerAffiliateProgram` type.
 
 ## 0.4.6 November 18, 2024
 
