@@ -23,6 +23,7 @@ final class StarTransactionTest extends TestCase
         $this->assertSame($date, $object->date);
         $this->assertNull($object->source);
         $this->assertNull($object->receiver);
+        $this->assertNull($object->nanostarAmount);
     }
 
     public function testFull(): void
@@ -36,6 +37,7 @@ final class StarTransactionTest extends TestCase
             $date,
             $partner1,
             $partner2,
+            900,
         );
 
         $this->assertSame('id1', $object->id);
@@ -43,6 +45,7 @@ final class StarTransactionTest extends TestCase
         $this->assertSame($date, $object->date);
         $this->assertSame($partner1, $object->source);
         $this->assertSame($partner2, $object->receiver);
+        $this->assertSame(900, $object->nanostarAmount);
     }
 
     public function testFromTelegramResult(): void
@@ -57,6 +60,7 @@ final class StarTransactionTest extends TestCase
             'receiver' => [
                 'type' => 'other',
             ],
+            'nanostar_amount' => 900,
         ], null, StarTransaction::class);
 
         $this->assertSame('id1', $object->id);
@@ -64,6 +68,7 @@ final class StarTransactionTest extends TestCase
         $this->assertEquals(new DateTimeImmutable('@123456789'), $object->date);
         $this->assertInstanceOf(TransactionPartnerOther::class, $object->source);
         $this->assertInstanceOf(TransactionPartnerOther::class, $object->receiver);
+        $this->assertSame(900, $object->nanostarAmount);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

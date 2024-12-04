@@ -21,6 +21,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
         public ?string $paidMediaPayload = null,
         public ?int $subscriptionPeriod = null,
         public ?string $gift = null,
+        public ?AffiliateInfo $affiliate = null,
     ) {}
 
     public function getType(): string

@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\ParseResult\ValueProcessor;
 
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartner;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerAffiliateProgram;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
@@ -24,6 +25,7 @@ final readonly class TransactionPartnerValue extends InterfaceValue
     public function getClassMap(): array
     {
         return [
+            'affiliate_program' => TransactionPartnerAffiliateProgram::class,
             'fragment' => TransactionPartnerFragment::class,
             'telegram_ads' => TransactionPartnerTelegramAds::class,
             'telegram_api' => TransactionPartnerTelegramApi::class,

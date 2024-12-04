@@ -9,6 +9,7 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TransactionPartnerValue;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerAffiliateProgram;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
@@ -20,6 +21,13 @@ final class TransactionPartnerValueTest extends TestCase
     public static function dataBase(): array
     {
         return [
+            [
+                TransactionPartnerAffiliateProgram::class,
+                [
+                    'type' => 'affiliate_program',
+                    'commission_per_mille' => 200,
+                ],
+            ],
             [
                 TransactionPartnerFragment::class,
                 [

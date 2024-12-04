@@ -9,6 +9,7 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
+use Vjik\TelegramBot\Api\Type\Payment\AffiliateInfo;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\User;
@@ -27,12 +28,14 @@ final class TransactionPartnerUserTest extends TestCase
         $this->assertNull($object->paidMediaPayload);
         $this->assertNull($object->subscriptionPeriod);
         $this->assertNull($object->gift);
+        $this->assertNull($object->affiliate);
     }
 
     public function testFull(): void
     {
         $user = new User(123, false, 'Mike');
         $paidMedia = [new PaidMediaPreview(), new PaidMediaPreview()];
+        $affiliate = new AffiliateInfo(100, 200);
         $object = new TransactionPartnerUser(
             $user,
             'test',
@@ -40,6 +43,7 @@ final class TransactionPartnerUserTest extends TestCase
             'paid-payload',
             19,
             'The Gift',
+            $affiliate,
         );
 
         $this->assertSame('user', $object->getType());
@@ -49,6 +53,7 @@ final class TransactionPartnerUserTest extends TestCase
         $this->assertSame('paid-payload', $object->paidMediaPayload);
         $this->assertSame(19, $object->subscriptionPeriod);
         $this->assertSame('The Gift', $object->gift);
+        $this->assertSame($affiliate, $object->affiliate);
     }
 
     public function testFromTelegramResult(): void
@@ -60,6 +65,10 @@ final class TransactionPartnerUserTest extends TestCase
                     'id' => 123,
                     'is_bot' => false,
                     'first_name' => 'Mike',
+                ],
+                'affiliate' => [
+                    'commission_per_mille' => 100,
+                    'amount' => 200,
                 ],
                 'invoice_payload' => 'test',
                 'paid_media' => [
@@ -96,6 +105,7 @@ final class TransactionPartnerUserTest extends TestCase
             $object->paidMedia,
         );
         $this->assertSame('test-payload', $object->paidMediaPayload);
+        $this->assertSame(100, $object->affiliate->commissionPerMille);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void
