@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.7 December 04, 2024
+
+- New #126: Add `nanostarAmount` field to `StarTransaction` type.
+
 ## 0.4.6 November 18, 2024
 
 - New #125: Add `subscriptionPeriod` and `businessConnectionId` parameters to `createInvoiceLink` method.
