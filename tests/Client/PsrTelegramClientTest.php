@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Client;
 
 use HttpSoft\Message\Request;
 use HttpSoft\Message\Response;
+use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\TestCase;
@@ -205,5 +206,30 @@ final class PsrTelegramClientTest extends TestCase
         );
 
         $this->assertSame(201, $response->statusCode);
+    }
+
+    public function testRewind(): void
+    {
+        $streamFactory = new StreamFactory();
+
+        $httpResponse = new Response(201, body: $streamFactory->createStream('hello'));
+        $httpResponse->getBody()->getContents();
+
+        $httpClient = $this->createMock(ClientInterface::class);
+        $httpClient->method('sendRequest')->willReturn($httpResponse);
+
+        $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
+
+        $client = new PsrTelegramClient(
+            '04062024',
+            $httpClient,
+            $httpRequestFactory,
+            $streamFactory,
+        );
+
+        $response = $client->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
+
+        $this->assertSame(201, $response->statusCode);
+        $this->assertSame('hello', $response->body);
     }
 }
