@@ -38,9 +38,14 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             },
         );
 
+        $body = $httpResponse->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
         return new TelegramResponse(
             $httpResponse->getStatusCode(),
-            $httpResponse->getBody()->getContents(),
+            $body->getContents(),
         );
     }
 

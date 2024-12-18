@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.7.1 December 18, 2024
+
+- Bug #128: Add a check for a seekable response body and rewind in `PsrTelegramClient`.
+
 ## 0.4.7 December 04, 2024
 
 - New #126: Add `nanostarAmount` field to `StarTransaction` type.
