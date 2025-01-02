@@ -1,10 +1,11 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.4.8 January 02, 2025
+## 0.5.0 January 02, 2025
 
 - New #129: Add `verifyUser`, `verifyChat`, `removeUserVerification` and `removeChatVerification` methods.
 - New #129: Add `upgradeStarCount` field to `Gift` type.
 - New #129: Add `payForUpgrade` parameter to `SendGift` method.
+- Chg #129: Remove `hideUrl` field from `InlineQueryResultArticle` type.
 
 ## 0.4.7.1 December 18, 2024
 
