@@ -4,6 +4,7 @@
 
 - New #129: Add `verifyUser`, `verifyChat`, `removeUserVerification` and `removeChatVerification` methods.
 - New #129: Add `upgradeStarCount` field to `Gift` type.
+- New #129: Add `payForUpgrade` parameter to `SendGift` method.
 
 ## 0.4.7.1 December 18, 2024
 

@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method\Sticker;
+namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\SendGift;
@@ -30,7 +30,7 @@ final class SendGiftTest extends TestCase
     public function testFull(): void
     {
         $entity = new MessageEntity('bold', 0, 5);
-        $method = new SendGift(9, 'gift-id', 'hello', 'MarkdownV2', [$entity]);
+        $method = new SendGift(9, 'gift-id', 'hello', 'MarkdownV2', [$entity], true);
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('sendGift', $method->getApiMethod());
@@ -38,6 +38,7 @@ final class SendGiftTest extends TestCase
             [
                 'user_id' => 9,
                 'gift_id' => 'gift-id',
+                'pay_for_upgrade' => true,
                 'text' => 'hello',
                 'text_parse_mode' => 'MarkdownV2',
                 'text_entities' => [$entity->toRequestArray()],
