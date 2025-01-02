@@ -1406,6 +1406,30 @@ final class TelegramBotApiTest extends TestCase
         $this->assertTrue($result);
     }
 
+    public function testRemoveChatVerification(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->removeChatVerification(1);
+
+        $this->assertTrue($result);
+    }
+
+    public function testRemoveUserVerification(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->removeUserVerification(1);
+
+        $this->assertTrue($result);
+    }
+
     public function testReopenForumTopic(): void
     {
         $api = $this->createApi([
@@ -2319,6 +2343,30 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(File::class, $result);
         $this->assertSame('f1', $result->fileId);
+    }
+
+    public function testVerifyChat(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->verifyChat(1);
+
+        $this->assertTrue($result);
+    }
+
+    public function testVerifyUser(): void
+    {
+        $api = $this->createApi([
+            'ok' => true,
+            'result' => true,
+        ]);
+
+        $result = $api->verifyUser(1);
+
+        $this->assertTrue($result);
     }
 
     private function createApi(

@@ -68,6 +68,8 @@ use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
+use Vjik\TelegramBot\Api\Method\RemoveChatVerification;
+use Vjik\TelegramBot\Api\Method\RemoveUserVerification;
 use Vjik\TelegramBot\Api\Method\ReopenForumTopic;
 use Vjik\TelegramBot\Api\Method\ReopenGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\RestrictChatMember;
@@ -136,6 +138,8 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
+use Vjik\TelegramBot\Api\Method\VerifyChat;
+use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
@@ -1300,6 +1304,26 @@ final class TelegramBotApi
     {
         return $this->send(
             new RefundStarPayment($userId, $telegramPaymentChargeId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#removechatverification
+     */
+    public function removeChatVerification(int|string $chatId): FailResult|true
+    {
+        return $this->send(
+            new RemoveChatVerification($chatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#removeuserverification
+     */
+    public function removeUserVerification(int $userId): FailResult|true
+    {
+        return $this->send(
+            new RemoveUserVerification($userId),
         );
     }
 
@@ -2604,6 +2628,26 @@ final class TelegramBotApi
     {
         return $this->send(
             new UploadStickerFile($userId, $sticker, $stickerFormat),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#verifychat
+     */
+    public function verifyChat(int|string $chatId, ?string $customDescription = null): FailResult|true
+    {
+        return $this->send(
+            new VerifyChat($chatId, $customDescription),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#verifyuser
+     */
+    public function verifyUser(int $userId, ?string $customDescription = null): FailResult|true
+    {
+        return $this->send(
+            new VerifyUser($userId, $customDescription),
         );
     }
 

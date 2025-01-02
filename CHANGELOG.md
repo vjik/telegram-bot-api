@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.4.8 January 02, 2025
+
+- New #129: Add `verifyUser`, `verifyChat`, `removeUserVerification` and `removeChatVerification` methods.
+
 ## 0.4.7.1 December 18, 2024
 
 - Bug #128: Add a check for a seekable response body and rewind in `PsrTelegramClient`.
