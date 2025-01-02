@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Sticker;
+namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
@@ -49,6 +49,7 @@ final class GiftTest extends TestCase
                 'is_video' => true,
             ],
             'star_count' => 11,
+            'upgrade_star_count' => 53,
             'total_count' => 200,
             'remaining_count' => 30,
         ], null, Gift::class);
@@ -56,6 +57,7 @@ final class GiftTest extends TestCase
         $this->assertSame('test-id', $object->id);
         $this->assertSame('x1', $object->sticker->fileId);
         $this->assertSame(11, $object->starCount);
+        $this->assertSame(53, $object->upgradeStarCount);
         $this->assertSame(200, $object->totalCount);
         $this->assertSame(30, $object->remainingCount);
     }

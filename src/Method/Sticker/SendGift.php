@@ -25,6 +25,7 @@ final readonly class SendGift implements TelegramRequestWithResultPreparingInter
         private ?string $text = null,
         private ?string $textParseMode = null,
         private ?array $textEntities = null,
+        private ?bool $payForUpgrade = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -43,6 +44,7 @@ final readonly class SendGift implements TelegramRequestWithResultPreparingInter
             [
                 'user_id' => $this->userId,
                 'gift_id' => $this->giftId,
+                'pay_for_upgrade' => $this->payForUpgrade,
                 'text' => $this->text,
                 'text_parse_mode' => $this->textParseMode,
                 'text_entities' => $this->textEntities === null
