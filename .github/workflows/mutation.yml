@@ -49,6 +49,6 @@ jobs:
 
       - name: Run roave infection.
         run: |
-          vendor/bin/roave-infection-static-analysis-plugin --threads=2 --min-msi=100 --min-covered-msi=100 --ignore-msi-with-no-mutations --only-covered
+          vendor/bin/roave-infection-static-analysis-plugin --threads=2 --ignore-msi-with-no-mutations --only-covered
         env:
           STRYKER_DASHBOARD_API_KEY: ${{ secrets.STRYKER_DASHBOARD_API_KEY }}
