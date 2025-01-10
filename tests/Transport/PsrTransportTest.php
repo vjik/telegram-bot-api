@@ -47,8 +47,8 @@ final class PsrTransportTest extends TestCase
         $response = $transport->send(
             'getMe',
             [
-            'key' => 'value',
-            'array' => [1, 'test'],
+                'key' => 'value',
+                'array' => [1, 'test'],
             ],
             HttpMethod::GET,
         );
