@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Transport;
 
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
-interface TelegramClientInterface
+interface TransportInterface
 {
     public function send(TelegramRequestInterface $request): TelegramResponse;
 }

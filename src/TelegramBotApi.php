@@ -144,7 +144,7 @@ use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
-use Vjik\TelegramBot\Api\Transport\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -214,7 +214,7 @@ final class TelegramBotApi
     private ResultFactory $resultFactory;
 
     public function __construct(
-        private readonly TelegramClientInterface $telegramClient,
+        private readonly TransportInterface $transport,
         private ?LoggerInterface $logger = null,
     ) {
         $this->resultFactory = new ResultFactory();
@@ -256,7 +256,7 @@ final class TelegramBotApi
             'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
             LogType::createSendRequestContext($request),
         );
-        $response = $this->telegramClient->send($request);
+        $response = $this->transport->send($request);
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);

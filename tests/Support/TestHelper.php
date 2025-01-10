@@ -12,7 +12,7 @@ final class TestHelper
     public static function createSuccessStubApi(mixed $result): TelegramBotApi
     {
         return new TelegramBotApi(
-            new StubTelegramClient(
+            new StubTransport(
                 new TelegramResponse(
                     200,
                     json_encode([

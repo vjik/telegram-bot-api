@@ -26,8 +26,8 @@ composer require vjik/telegram-bot-api
 ## General usage
 
 To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class 
-that requires an instance of the `TelegramClientInterface` implementation. Out of the box, the package provides `PsrTelegramClient` based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client
-and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
+that requires an instance of the `TransportInterface` implementation. Out of the box, the package provides
+`PsrTransport` based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
 
 For example, you can use the [php-http/curl-client](https://github.com/php-http/curl-client) and [httpsoft/http-message](https://github.com/httpsoft/http-message):
 
@@ -42,7 +42,7 @@ use Http\Client\Curl\Client;
 use HttpSoft\Message\RequestFactory;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
-use Vjik\TelegramBot\Api\Transport\PsrTelegramClient;
+use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 // Telegram bot authentication token
@@ -56,7 +56,7 @@ $client = new Client($responseFactory, $streamFactory);
 
 // API
 $api = new TelegramBotApi(
-    new PsrTelegramClient(
+    new PsrTransport(
         $token,
         $client,
         $requestFactory,

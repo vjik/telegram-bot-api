@@ -12,39 +12,39 @@ use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Vjik\TelegramBot\Api\Transport\PsrTelegramClient;
+use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequest;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
-final class PsrTelegramClientTest extends TestCase
+final class PsrTransportTest extends TestCase
 {
     public function testGet(): void
     {
         $httpRequest = new Request();
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient
+        $client = $this->createMock(ClientInterface::class);
+        $client
             ->expects($this->once())
             ->method('sendRequest')
             ->with($httpRequest)
             ->willReturn(new Response(201));
 
-        $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
-        $httpRequestFactory
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory
             ->expects($this->once())
             ->method('createRequest')
             ->with('GET', 'https://api.telegram.org/bot04062024/getMe?key=value&array=%5B1%2C%22test%22%5D')
             ->willReturn($httpRequest);
 
-        $client = new PsrTelegramClient(
+        $transport = new PsrTransport(
             '04062024',
-            $httpClient,
-            $httpRequestFactory,
+            $client,
+            $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $client->send(new TelegramRequest(HttpMethod::GET, 'getMe', [
+        $response = $transport->send(new TelegramRequest(HttpMethod::GET, 'getMe', [
             'key' => 'value',
             'array' => [1, 'test'],
         ]));
@@ -56,28 +56,28 @@ final class PsrTelegramClientTest extends TestCase
     {
         $httpRequest = new Request();
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient
+        $client = $this->createMock(ClientInterface::class);
+        $client
             ->expects($this->once())
             ->method('sendRequest')
             ->with($httpRequest)
             ->willReturn(new Response(201));
 
-        $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
-        $httpRequestFactory
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory
             ->expects($this->once())
             ->method('createRequest')
             ->with('POST', 'https://api.telegram.org/bot04062024/logOut')
             ->willReturn($httpRequest);
 
-        $client = new PsrTelegramClient(
+        $transport = new PsrTransport(
             '04062024',
-            $httpClient,
-            $httpRequestFactory,
+            $client,
+            $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $client->send(new TelegramRequest(HttpMethod::POST, 'logOut'));
+        $response = $transport->send(new TelegramRequest(HttpMethod::POST, 'logOut'));
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -86,8 +86,8 @@ final class PsrTelegramClientTest extends TestCase
     {
         $httpRequest = new Request();
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient
+        $client = $this->createMock(ClientInterface::class);
+        $client
             ->expects($this->once())
             ->method('sendRequest')
             ->with(
@@ -107,21 +107,21 @@ final class PsrTelegramClientTest extends TestCase
             )
             ->willReturn(new Response(201));
 
-        $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
-        $httpRequestFactory
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory
             ->expects($this->once())
             ->method('createRequest')
             ->with('POST', 'https://api.telegram.org/bot04062024/sendMessage')
             ->willReturn($httpRequest);
 
-        $client = new PsrTelegramClient(
+        $transport = new PsrTransport(
             '04062024',
-            $httpClient,
-            $httpRequestFactory,
+            $client,
+            $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $client->send(
+        $response = $transport->send(
             new TelegramRequest(HttpMethod::POST, 'sendMessage', ['chat_id' => 123, 'text' => 'test']),
         );
 
@@ -132,8 +132,8 @@ final class PsrTelegramClientTest extends TestCase
     {
         $httpRequest = new Request();
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient
+        $client = $this->createMock(ClientInterface::class);
+        $client
             ->expects($this->once())
             ->method('sendRequest')
             ->with(
@@ -176,21 +176,21 @@ final class PsrTelegramClientTest extends TestCase
             )
             ->willReturn(new Response(201));
 
-        $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
-        $httpRequestFactory
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory
             ->expects($this->once())
             ->method('createRequest')
             ->with('POST', 'https://api.telegram.org/bot04062024/sendPhoto')
             ->willReturn($httpRequest);
 
-        $client = new PsrTelegramClient(
+        $transport = new PsrTransport(
             '04062024',
-            $httpClient,
-            $httpRequestFactory,
+            $client,
+            $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $client->send(
+        $response = $transport->send(
             new TelegramRequest(
                 HttpMethod::POST,
                 'sendPhoto',
@@ -215,19 +215,19 @@ final class PsrTelegramClientTest extends TestCase
         $httpResponse = new Response(201, body: $streamFactory->createStream('hello'));
         $httpResponse->getBody()->getContents();
 
-        $httpClient = $this->createMock(ClientInterface::class);
-        $httpClient->method('sendRequest')->willReturn($httpResponse);
+        $client = $this->createMock(ClientInterface::class);
+        $client->method('sendRequest')->willReturn($httpResponse);
 
         $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
 
-        $client = new PsrTelegramClient(
+        $transport = new PsrTransport(
             '04062024',
-            $httpClient,
+            $client,
             $httpRequestFactory,
             $streamFactory,
         );
 
-        $response = $client->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
+        $response = $transport->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
 
         $this->assertSame(201, $response->statusCode);
         $this->assertSame('hello', $response->body);

@@ -10,16 +10,16 @@ Pass logger to `TelegramBotApi` constructor:
 
 ```php
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Transport\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**
- * @var TelegramClientInterface $telegramClient
+ * @var TransportInterface $transport
  * @var LoggerInterface $logger
  */
 
 // API
-$api = new TelegramBotApi($telegramClient, $logger);
+$api = new TelegramBotApi($transport, $logger);
 ```
 
 You can use logger on create `Update` object also:

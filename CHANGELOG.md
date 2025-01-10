@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.6.0 under development
+
+- Chg #132: Rename definition "telegram client" to "transport". Classes, namespaces, and variables rename accordingly.
+
 ## 0.5.0 January 02, 2025
 
 - New #129: Add `verifyUser`, `verifyChat`, `removeUserVerification` and `removeChatVerification` methods.

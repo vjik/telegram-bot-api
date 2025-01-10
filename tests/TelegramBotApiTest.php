@@ -14,7 +14,7 @@ use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
-use Vjik\TelegramBot\Api\Tests\Support\StubTelegramClient;
+use Vjik\TelegramBot\Api\Tests\Support\StubTransport;
 use Vjik\TelegramBot\Api\Tests\Support\StubTelegramRequest;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
@@ -56,7 +56,7 @@ final class TelegramBotApiTest extends TestCase
         $logger2 = new SimpleLogger();
 
         $api1 = new TelegramBotApi(
-            new StubTelegramClient(
+            new StubTransport(
                 new TelegramResponse(200, '[]'),
             ),
             $logger1,
@@ -2375,7 +2375,7 @@ final class TelegramBotApiTest extends TestCase
         ?LoggerInterface $logger = null,
     ): TelegramBotApi {
         return new TelegramBotApi(
-            new StubTelegramClient(
+            new StubTransport(
                 $response instanceof TelegramResponse
                     ? $response
                     : new TelegramResponse(

@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Support;
 
-use Vjik\TelegramBot\Api\Transport\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 
-final class StubTelegramClient implements TelegramClientInterface
+final class StubTransport implements TransportInterface
 {
     public function __construct(
         private ?TelegramResponse $response = null,

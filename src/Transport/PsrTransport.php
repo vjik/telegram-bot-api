@@ -13,16 +13,18 @@ use Vjik\TelegramBot\Api\Request\HttpMethod;
 use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function is_scalar;
 use function is_string;
+use function json_encode;
 
-final readonly class PsrTelegramClient implements TelegramClientInterface
+final readonly class PsrTransport implements TransportInterface
 {
     private ApiUrlGenerator $apiUrlGenerator;
 
     public function __construct(
         private string $token,
-        private ClientInterface $httpClient,
-        private RequestFactoryInterface $httpRequestFactory,
+        private ClientInterface $client,
+        private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
         private string $baseUrl = 'https://api.telegram.org',
     ) {
@@ -31,27 +33,27 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
 
     public function send(TelegramRequestInterface $request): TelegramResponse
     {
-        $httpResponse = $this->httpClient->sendRequest(
+        $response = $this->client->sendRequest(
             match ($request->getHttpMethod()) {
                 HttpMethod::GET => $this->createGetRequest($request),
                 HttpMethod::POST => $this->createPostRequest($request),
             },
         );
 
-        $body = $httpResponse->getBody();
+        $body = $response->getBody();
         if ($body->isSeekable()) {
             $body->rewind();
         }
 
         return new TelegramResponse(
-            $httpResponse->getStatusCode(),
+            $response->getStatusCode(),
             $body->getContents(),
         );
     }
 
     private function createPostRequest(TelegramRequestInterface $request): HttpRequestInterface
     {
-        $httpRequest = $this->httpRequestFactory->createRequest(
+        $httpRequest = $this->requestFactory->createRequest(
             'POST',
             $this->apiUrlGenerator->generate($request->getApiMethod()),
         );
@@ -105,7 +107,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
         }
 
-        return $this->httpRequestFactory->createRequest(
+        return $this->requestFactory->createRequest(
             'GET',
             $this->apiUrlGenerator->generate($request->getApiMethod(), $queryParameters),
         );
