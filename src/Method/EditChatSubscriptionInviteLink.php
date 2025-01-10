@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 
 /**
  * @see https://core.telegram.org/bots/api#editchatsubscriptioninvitelink
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ChatInviteLink>>
+ * @template-implements TelegramRequestInterface<class-string<ChatInviteLink>>
  */
-final readonly class EditChatSubscriptionInviteLink implements TelegramRequestWithResultPreparingInterface
+final readonly class EditChatSubscriptionInviteLink implements TelegramRequestInterface
 {
     public function __construct(
         private int|string $chatId,

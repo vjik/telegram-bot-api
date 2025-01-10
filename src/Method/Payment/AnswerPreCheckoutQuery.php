@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method\Payment;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#answerprecheckoutquery
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class AnswerPreCheckoutQuery implements TelegramRequestWithResultPreparingInterface
+final readonly class AnswerPreCheckoutQuery implements TelegramRequestInterface
 {
     public function __construct(
         private string $preCheckoutQueryId,

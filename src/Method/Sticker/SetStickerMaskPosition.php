@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 
 /**
  * @see https://core.telegram.org/bots/api#setstickermaskposition
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class SetStickerMaskPosition implements TelegramRequestWithResultPreparingInterface
+final readonly class SetStickerMaskPosition implements TelegramRequestInterface
 {
     public function __construct(
         private string $sticker,

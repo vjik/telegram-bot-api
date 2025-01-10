@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#deletemessages
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class DeleteMessages implements TelegramRequestWithResultPreparingInterface
+final readonly class DeleteMessages implements TelegramRequestInterface
 {
     /**
      * @param int[] $messageIds

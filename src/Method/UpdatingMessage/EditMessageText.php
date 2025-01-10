@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -15,9 +15,9 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 /**
  * @see https://core.telegram.org/bots/api#editmessagetext
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
+ * @template-implements TelegramRequestInterface<ObjectOrTrueValue<Message>>
  */
-final readonly class EditMessageText implements TelegramRequestWithResultPreparingInterface
+final readonly class EditMessageText implements TelegramRequestInterface
 {
     /**
      * @param MessageEntity[]|null $entities

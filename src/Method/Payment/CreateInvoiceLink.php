@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Payment;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
 /**
  * @see https://core.telegram.org/bots/api#createinvoicelink
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<StringValue>
+ * @template-implements TelegramRequestInterface<StringValue>
  */
-final readonly class CreateInvoiceLink implements TelegramRequestWithResultPreparingInterface
+final readonly class CreateInvoiceLink implements TelegramRequestInterface
 {
     /**
      * @param LabeledPrice[] $prices

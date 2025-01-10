@@ -9,9 +9,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 /**
  * @template T as class-string|ValueProcessorInterface|null
- * @template-implements TelegramRequestWithResultPreparingInterface<T>
+ * @template-implements TelegramRequestInterface<T>
  */
-final readonly class TelegramRequest implements TelegramRequestWithResultPreparingInterface
+final readonly class TelegramRequest implements TelegramRequestInterface
 {
     /**
      * @psalm-param array<string,mixed> $data

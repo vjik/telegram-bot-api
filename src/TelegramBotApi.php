@@ -143,9 +143,7 @@ use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
-use Vjik\TelegramBot\Api\Transport\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
@@ -234,21 +232,9 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
+     * @psalm-template TRequest as TelegramRequestInterface<TResultDefinition>
      * @psalm-param TRequest $request
-     * @psalm-return (
-     *      TRequest is TelegramRequestWithResultPreparingInterface<TResultDefinition>
-     *      ? (
-     *          TResultDefinition is class-string
-     *          ? TClass
-     *          : (
-     *              TResultDefinition is null
-     *              ? TRawResult
-     *              : TValue
-     *            )
-     *        )
-     *      : TRawResult
-     * )|FailResult
+     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))|FailResult
      */
     public function send(TelegramRequestInterface $request): mixed
     {
@@ -256,7 +242,11 @@ final class TelegramBotApi
             'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
             LogType::createSendRequestContext($request),
         );
-        $response = $this->transport->send($request);
+        $response = $this->transport->send(
+            $request->getApiMethod(),
+            $request->getData(),
+            $request->getHttpMethod(),
+        );
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -2658,22 +2648,10 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
+     * @psalm-template TRequest as TelegramRequestInterface<TResultDefinition>
      * @psalm-param TRequest $request
      * @psalm-param array{result?:TRawResult, ...} $decodedBody
-     * @psalm-return (
-     *      TRequest is TelegramRequestWithResultPreparingInterface
-     *      ? (
-     *          TResultDefinition is class-string
-     *          ? TClass
-     *          : (
-     *              TResultDefinition is null
-     *              ? TRawResult
-     *              : TValue
-     *            )
-     *        )
-     *      : TRawResult
-     * )
+     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))
      */
     private function prepareSuccessResult(
         TelegramRequestInterface $request,
@@ -2690,7 +2668,7 @@ final class TelegramBotApi
             );
         }
 
-        if (!$request instanceof TelegramRequestWithResultPreparingInterface) {
+        if (!$request instanceof TelegramRequestInterface) {
             return $decodedBody['result'];
         }
 

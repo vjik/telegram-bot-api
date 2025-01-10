@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 
 /**
  * @see https://core.telegram.org/bots/api#getuserchatboosts
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<UserChatBoosts>>
+ * @template-implements TelegramRequestInterface<class-string<UserChatBoosts>>
  */
-final readonly class GetUserChatBoosts implements TelegramRequestWithResultPreparingInterface
+final readonly class GetUserChatBoosts implements TelegramRequestInterface
 {
     public function __construct(
         private int|string $chatId,

@@ -7,15 +7,15 @@ namespace Vjik\TelegramBot\Api\Method;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayMap;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ChatMember;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatadministrators
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayMap<ChatMember>>
+ * @template-implements TelegramRequestInterface<ArrayMap<ChatMember>>
  */
-final readonly class GetChatAdministrators implements TelegramRequestWithResultPreparingInterface
+final readonly class GetChatAdministrators implements TelegramRequestInterface
 {
     public function __construct(
         private int|string $chatId,

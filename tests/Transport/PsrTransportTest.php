@@ -44,10 +44,14 @@ final class PsrTransportTest extends TestCase
             new StreamFactory(),
         );
 
-        $response = $transport->send(new TelegramRequest(HttpMethod::GET, 'getMe', [
+        $response = $transport->send(
+            'getMe',
+            [
             'key' => 'value',
             'array' => [1, 'test'],
-        ]));
+            ],
+            HttpMethod::GET,
+        );
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -77,7 +81,7 @@ final class PsrTransportTest extends TestCase
             new StreamFactory(),
         );
 
-        $response = $transport->send(new TelegramRequest(HttpMethod::POST, 'logOut'));
+        $response = $transport->send('logOut');
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -121,9 +125,7 @@ final class PsrTransportTest extends TestCase
             new StreamFactory(),
         );
 
-        $response = $transport->send(
-            new TelegramRequest(HttpMethod::POST, 'sendMessage', ['chat_id' => 123, 'text' => 'test']),
-        );
+        $response = $transport->send('sendMessage', ['chat_id' => 123, 'text' => 'test']);
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -191,18 +193,15 @@ final class PsrTransportTest extends TestCase
         );
 
         $response = $transport->send(
-            new TelegramRequest(
-                HttpMethod::POST,
-                'sendPhoto',
-                [
-                    'chat_id' => 123,
-                    'caption' => 'hello',
-                    'photo' => new InputFile(
-                        (new StreamFactory())->createStream('test-file-body'),
-                        'face.png',
-                    ),
-                ],
-            ),
+            'sendPhoto',
+            [
+                'chat_id' => 123,
+                'caption' => 'hello',
+                'photo' => new InputFile(
+                    (new StreamFactory())->createStream('test-file-body'),
+                    'face.png',
+                ),
+            ],
         );
 
         $this->assertSame(201, $response->statusCode);
@@ -227,7 +226,7 @@ final class PsrTransportTest extends TestCase
             $streamFactory,
         );
 
-        $response = $transport->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
+        $response = $transport->send('getMe');
 
         $this->assertSame(201, $response->statusCode);
         $this->assertSame('hello', $response->body);

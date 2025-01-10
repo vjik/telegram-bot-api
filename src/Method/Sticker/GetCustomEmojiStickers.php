@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#getcustomemojistickers
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Sticker>>
+ * @template-implements TelegramRequestInterface<ArrayOfObjectsValue<Sticker>>
  */
-final readonly class GetCustomEmojiStickers implements TelegramRequestWithResultPreparingInterface
+final readonly class GetCustomEmojiStickers implements TelegramRequestInterface
 {
     /**
      * @param string[] $customEmojiIds

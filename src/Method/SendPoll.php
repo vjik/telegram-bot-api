@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
@@ -19,9 +19,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendpoll
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
+ * @template-implements TelegramRequestInterface<class-string<Message>>
  */
-final readonly class SendPoll implements TelegramRequestWithResultPreparingInterface
+final readonly class SendPoll implements TelegramRequestInterface
 {
     /**
      * @param InputPollOption[] $options

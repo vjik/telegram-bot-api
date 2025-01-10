@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Update;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 
 /**
  * @see https://core.telegram.org/bots/api#getupdates
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Update>>
+ * @template-implements TelegramRequestInterface<ArrayOfObjectsValue<Update>>
  */
-final readonly class GetUpdates implements TelegramRequestWithResultPreparingInterface
+final readonly class GetUpdates implements TelegramRequestInterface
 {
     /**
      * @param string[]|null $allowedUpdates

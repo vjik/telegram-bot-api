@@ -6,7 +6,6 @@ namespace Vjik\TelegramBot\Api;
 
 use JsonException;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
-use Vjik\TelegramBot\Api\Transport\TelegramRequestInterface;
 
 /**
  * @psalm-type SendRequestContext = array{

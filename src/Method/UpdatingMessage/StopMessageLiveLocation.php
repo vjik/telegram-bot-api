@@ -6,16 +6,16 @@ namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#stopmessagelivelocation
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
+ * @template-implements TelegramRequestInterface<ObjectOrTrueValue<Message>>
  */
-final readonly class StopMessageLiveLocation implements TelegramRequestWithResultPreparingInterface
+final readonly class StopMessageLiveLocation implements TelegramRequestInterface
 {
     public function __construct(
         private ?string $businessConnectionId = null,

@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 
 /**
  * @see https://core.telegram.org/bots/api#getmydescription
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<BotDescription>>
+ * @template-implements TelegramRequestInterface<class-string<BotDescription>>
  */
-final readonly class GetMyDescription implements TelegramRequestWithResultPreparingInterface
+final readonly class GetMyDescription implements TelegramRequestInterface
 {
     public function __construct(
         private ?string $languageCode = null,

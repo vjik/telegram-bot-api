@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ReactionType;
 
 /**
  * @see https://core.telegram.org/bots/api#setmessagereaction
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class SetMessageReaction implements TelegramRequestWithResultPreparingInterface
+final readonly class SetMessageReaction implements TelegramRequestInterface
 {
     /**
      * @param ReactionType[]|null $reaction

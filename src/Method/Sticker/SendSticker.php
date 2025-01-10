@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -17,9 +17,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendsticker
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
+ * @template-implements TelegramRequestInterface<class-string<Message>>
  */
-final readonly class SendSticker implements TelegramRequestWithResultPreparingInterface
+final readonly class SendSticker implements TelegramRequestInterface
 {
     public function __construct(
         private int|string $chatId,

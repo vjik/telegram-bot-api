@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Passport;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 
 /**
  * @see https://core.telegram.org/bots/api#setpassportdataerrors
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class SetPassportDataErrors implements TelegramRequestWithResultPreparingInterface
+final readonly class SetPassportDataErrors implements TelegramRequestInterface
 {
     /**
      * @param PassportElementError[] $errors

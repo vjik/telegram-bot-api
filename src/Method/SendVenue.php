@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -16,9 +16,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendvenue
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
+ * @template-implements TelegramRequestInterface<class-string<Message>>
  */
-final readonly class SendVenue implements TelegramRequestWithResultPreparingInterface
+final readonly class SendVenue implements TelegramRequestInterface
 {
     public function __construct(
         private int|string $chatId,

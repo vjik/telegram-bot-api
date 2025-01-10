@@ -6,5 +6,12 @@ namespace Vjik\TelegramBot\Api\Transport;
 
 interface TransportInterface
 {
-    public function send(TelegramRequestInterface $request): TelegramResponse;
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    public function send(
+        string $apiMethod,
+        array $data = [],
+        HttpMethod $httpMethod = HttpMethod::POST,
+    ): TelegramResponse;
 }

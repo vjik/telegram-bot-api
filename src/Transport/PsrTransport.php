@@ -29,12 +29,15 @@ final readonly class PsrTransport implements TransportInterface
         $this->apiUrlGenerator = new ApiUrlGenerator($this->token, $this->baseUrl);
     }
 
-    public function send(TelegramRequestInterface $request): TelegramResponse
-    {
+    public function send(
+        string $apiMethod,
+        array $data = [],
+        HttpMethod $httpMethod = HttpMethod::POST,
+    ): TelegramResponse {
         $response = $this->client->sendRequest(
-            match ($request->getHttpMethod()) {
-                HttpMethod::GET => $this->createGetRequest($request),
-                HttpMethod::POST => $this->createPostRequest($request),
+            match ($httpMethod) {
+                HttpMethod::GET => $this->createGetRequest($apiMethod, $data),
+                HttpMethod::POST => $this->createPostRequest($apiMethod, $data),
             },
         );
 
@@ -49,14 +52,15 @@ final readonly class PsrTransport implements TransportInterface
         );
     }
 
-    private function createPostRequest(TelegramRequestInterface $request): HttpRequestInterface
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    private function createPostRequest(string $apiMethod, array $data): HttpRequestInterface
     {
         $httpRequest = $this->requestFactory->createRequest(
             'POST',
-            $this->apiUrlGenerator->generate($request->getApiMethod()),
+            $this->apiUrlGenerator->generate($apiMethod),
         );
-
-        $data = $request->getData();
 
         $files = [];
         foreach ($data as $key => $value) {
@@ -98,16 +102,19 @@ final readonly class PsrTransport implements TransportInterface
             ->withBody($body);
     }
 
-    private function createGetRequest(TelegramRequestInterface $request): HttpRequestInterface
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    private function createGetRequest(string $apiMethod, array $data): HttpRequestInterface
     {
         $queryParameters = [];
-        foreach ($request->getData() as $key => $value) {
+        foreach ($data as $key => $value) {
             $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
         }
 
         return $this->requestFactory->createRequest(
             'GET',
-            $this->apiUrlGenerator->generate($request->getApiMethod(), $queryParameters),
+            $this->apiUrlGenerator->generate($apiMethod, $queryParameters),
         );
     }
 }

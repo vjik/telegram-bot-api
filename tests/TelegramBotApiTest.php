@@ -9,13 +9,14 @@ use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
+use Vjik\TelegramBot\Api\TelegramRequest;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\StubTransport;
-use Vjik\TelegramBot\Api\Tests\Support\StubTelegramRequest;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
@@ -64,7 +65,7 @@ final class TelegramBotApiTest extends TestCase
         $api2 = $api1->withLogger($logger2);
 
         try {
-            $api2->send(new StubTelegramRequest());
+            $api2->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
         } catch (TelegramParseResultException) {
         }
 
@@ -130,7 +131,7 @@ final class TelegramBotApiTest extends TestCase
             ],
         ]);
 
-        $result = $api->send(new StubTelegramRequest());
+        $result = $api->send(new TelegramRequest(HttpMethod::GET, 'getMe'));
 
         $this->assertSame(
             [

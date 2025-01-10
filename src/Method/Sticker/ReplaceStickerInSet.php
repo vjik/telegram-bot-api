@@ -7,15 +7,15 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\RequestFileCollector;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
 /**
  * @see https://core.telegram.org/bots/api#replacestickerinset
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements TelegramRequestInterface<TrueValue>
  */
-final readonly class ReplaceStickerInSet implements TelegramRequestWithResultPreparingInterface
+final readonly class ReplaceStickerInSet implements TelegramRequestInterface
 {
     public function __construct(
         private int $userId,

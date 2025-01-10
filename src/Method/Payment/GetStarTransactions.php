@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 
 /**
  * @see https://core.telegram.org/bots/api#getstartransactions
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<StarTransactions>>
+ * @template-implements TelegramRequestInterface<class-string<StarTransactions>>
  */
-final readonly class GetStarTransactions implements TelegramRequestWithResultPreparingInterface
+final readonly class GetStarTransactions implements TelegramRequestInterface
 {
     public function __construct(
         private ?int $offset = null,

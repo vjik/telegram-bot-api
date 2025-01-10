@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\File;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#uploadstickerfile
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<File>>
+ * @template-implements TelegramRequestInterface<class-string<File>>
  */
-final readonly class UploadStickerFile implements TelegramRequestWithResultPreparingInterface
+final readonly class UploadStickerFile implements TelegramRequestInterface
 {
     public function __construct(
         private int $userId,
