@@ -9,7 +9,7 @@ use Vjik\TelegramBot\Api\CustomMethod;
  * @var \Vjik\TelegramBot\Api\TelegramBotApi $api 
  */
 
-$request = new CustomMethod(
+$method = new CustomMethod(
     apiMethod: 'getChat',
     data: ['chat_id' => '@sergei_predvoditelev'],
     resultType: ChatFullInfo::class,
@@ -17,5 +17,5 @@ $request = new CustomMethod(
 );
 
 // Result is an object of `Vjik\TelegramBot\Api\Type\ChatFullInfo`
-$result = $api->call($request);
+$result = $api->call($method);
 ```
