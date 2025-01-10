@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport;
 
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
-
 interface TelegramRequestInterface
 {
     public function getHttpMethod(): HttpMethod;

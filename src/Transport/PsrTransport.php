@@ -9,8 +9,6 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface as HttpRequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\Transport\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function is_scalar;
