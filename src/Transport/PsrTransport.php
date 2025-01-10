@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Transport;
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface as HttpRequestInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
@@ -33,7 +33,7 @@ final readonly class PsrTransport implements TransportInterface
         string $apiMethod,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
-    ): TelegramResponse {
+    ): ApiResponse {
         $response = $this->client->sendRequest(
             match ($httpMethod) {
                 HttpMethod::GET => $this->createGetRequest($apiMethod, $data),
@@ -46,7 +46,7 @@ final readonly class PsrTransport implements TransportInterface
             $body->rewind();
         }
 
-        return new TelegramResponse(
+        return new ApiResponse(
             $response->getStatusCode(),
             $body->getContents(),
         );
@@ -55,9 +55,9 @@ final readonly class PsrTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createPostRequest(string $apiMethod, array $data): HttpRequestInterface
+    private function createPostRequest(string $apiMethod, array $data): RequestInterface
     {
-        $httpRequest = $this->requestFactory->createRequest(
+        $request = $this->requestFactory->createRequest(
             'POST',
             $this->apiUrlGenerator->generate($apiMethod),
         );
@@ -71,7 +71,7 @@ final readonly class PsrTransport implements TransportInterface
         }
 
         if (empty($data) && empty($files)) {
-            return $httpRequest;
+            return $request;
         }
         if (empty($files)) {
             $content = json_encode($data, JSON_THROW_ON_ERROR);
@@ -96,7 +96,7 @@ final readonly class PsrTransport implements TransportInterface
             $contentType = 'multipart/form-data; boundary=' . $streamBuilder->getBoundary() . '; charset=utf-8';
         }
 
-        return $httpRequest
+        return $request
             ->withHeader('Content-Length', (string) $body->getSize())
             ->withHeader('Content-Type', $contentType)
             ->withBody($body);
@@ -105,7 +105,7 @@ final readonly class PsrTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createGetRequest(string $apiMethod, array $data): HttpRequestInterface
+    private function createGetRequest(string $apiMethod, array $data): RequestInterface
     {
         $queryParameters = [];
         foreach ($data as $key => $value) {

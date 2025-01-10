@@ -13,5 +13,5 @@ interface TransportInterface
         string $apiMethod,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
-    ): TelegramResponse;
+    ): ApiResponse;
 }

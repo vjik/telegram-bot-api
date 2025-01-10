@@ -60,7 +60,7 @@ To logger passed 4 types of messages.
     'type' => LogType::SUCCESS_RESULT,
     'payload' => $payload, // Response body as JSON encoded string
     'request' => $request, // `TelegramRequestInterface` implementation
-    'response' => $response, // `TelegramResponse` object
+    'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 
 ]
 ```
@@ -72,7 +72,7 @@ To logger passed 4 types of messages.
     'type' => LogType::FAIL_RESULT,
     'payload' => $payload, // Response body as JSON encoded string
     'request' => $request, // `TelegramRequestInterface` implementation
-    'response' => $response, // `TelegramResponse` object
+    'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 
 ]
 ```

@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Transport\TelegramResponse;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
@@ -232,20 +232,19 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as MethodInterface<TResultDefinition>
-     * @psalm-param TRequest $request
+     * @psalm-param MethodInterface<TResultDefinition> $method
      * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))|FailResult
      */
-    public function send(MethodInterface $request): mixed
+    public function send(MethodInterface $method): mixed
     {
         $this->logger?->info(
-            'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
-            LogType::createSendRequestContext($request),
+            'Send ' . $method->getHttpMethod()->value . '-request "' . $method->getApiMethod() . '".',
+            LogType::createSendRequestContext($method),
         );
         $response = $this->transport->send(
-            $request->getApiMethod(),
-            $request->getData(),
-            $request->getHttpMethod(),
+            $method->getApiMethod(),
+            $method->getData(),
+            $method->getHttpMethod(),
         );
 
         try {
@@ -284,16 +283,16 @@ final class TelegramBotApi
         }
 
         if ($decodedBody['ok']) {
-            $result = $this->prepareSuccessResult($request, $response, $decodedBody);
+            $result = $this->prepareSuccessResult($method, $response, $decodedBody);
             $this->logger?->info(
-                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned successful result.',
-                LogType::createSuccessResultContext($request, $response, $decodedBody),
+                'On "' . $method->getApiMethod() . '" request Telegram Bot API returned successful result.',
+                LogType::createSuccessResultContext($method, $response, $decodedBody),
             );
         } else {
-            $result = $this->prepareFailResult($request, $response, $decodedBody);
+            $result = $this->prepareFailResult($method, $response, $decodedBody);
             $this->logger?->warning(
-                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned fail result.',
-                LogType::createFailResultContext($request, $response, $decodedBody),
+                'On "' . $method->getApiMethod() . '" request Telegram Bot API returned fail result.',
+                LogType::createFailResultContext($method, $response, $decodedBody),
             );
         }
 
@@ -2648,14 +2647,14 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as MethodInterface<TResultDefinition>
-     * @psalm-param TRequest $request
+     * @psalm-template TMethod as MethodInterface<TResultDefinition>
+     * @psalm-param TMethod $method
      * @psalm-param array{result?:TRawResult, ...} $decodedBody
      * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))
      */
     private function prepareSuccessResult(
-        MethodInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         array $decodedBody,
     ): mixed {
         if (!array_key_exists('result', $decodedBody)) {
@@ -2668,11 +2667,11 @@ final class TelegramBotApi
             );
         }
 
-        if (!$request instanceof MethodInterface) {
+        if (!$method instanceof MethodInterface) {
             return $decodedBody['result'];
         }
 
-        $resultType = $request->getResultType();
+        $resultType = $method->getResultType();
         if ($resultType === null) {
             return $decodedBody['result'];
         }
@@ -2689,12 +2688,12 @@ final class TelegramBotApi
     }
 
     private function prepareFailResult(
-        MethodInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         array $decodedBody,
     ): FailResult {
         return new FailResult(
-            $request,
+            $method,
             $response,
             (isset($decodedBody['description']) && is_string($decodedBody['description']))
                 ? $decodedBody['description']

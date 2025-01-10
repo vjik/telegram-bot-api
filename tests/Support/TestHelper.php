@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Support;
 
-use Vjik\TelegramBot\Api\Transport\TelegramResponse;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 final class TestHelper
@@ -13,7 +13,7 @@ final class TestHelper
     {
         return new TelegramBotApi(
             new StubTransport(
-                new TelegramResponse(
+                new ApiResponse(
                     200,
                     json_encode([
                         'ok' => true,

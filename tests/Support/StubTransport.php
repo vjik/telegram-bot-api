@@ -6,19 +6,19 @@ namespace Vjik\TelegramBot\Api\Tests\Support;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
-use Vjik\TelegramBot\Api\Transport\TelegramResponse;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 final class StubTransport implements TransportInterface
 {
     public function __construct(
-        private ?TelegramResponse $response = null,
+        private ?ApiResponse $response = null,
     ) {}
 
     public function send(
         string $apiMethod,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
-    ): TelegramResponse {
-        return $this->response ?? new TelegramResponse(200, '');
+    ): ApiResponse {
+        return $this->response ?? new ApiResponse(200, '');
     }
 }
