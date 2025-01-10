@@ -72,7 +72,7 @@ final class SendDiceTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(7, $preparedResult->messageId);
     }

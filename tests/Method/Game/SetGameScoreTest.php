@@ -57,7 +57,7 @@ final class SetGameScoreTest extends TestCase
     {
         $method = new SetGameScore(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
         $this->assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
@@ -67,7 +67,7 @@ final class SetGameScoreTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
         $this->assertInstanceOf(Message::class, $preparedResult);
         $this->assertSame(7, $preparedResult->messageId);
     }

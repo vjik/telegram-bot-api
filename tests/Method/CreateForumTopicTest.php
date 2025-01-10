@@ -52,7 +52,7 @@ final class CreateForumTopicTest extends TestCase
             'name' => 'test',
             'icon_color' => 0x00FF00,
             'icon_custom_emoji_id' => '2351346235143',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(19, $preparedResult->messageThreadId);
     }

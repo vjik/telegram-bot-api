@@ -38,7 +38,7 @@ final class DeleteWebhookTest extends TestCase
     {
         $method = new DeleteWebhook();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

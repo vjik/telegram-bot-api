@@ -29,7 +29,7 @@ final class GetChatMemberCountTest extends TestCase
     {
         $method = new GetChatMemberCount(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi(23)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(23)->call($method);
 
         $this->assertSame(23, $preparedResult);
     }

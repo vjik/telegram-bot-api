@@ -44,7 +44,7 @@ final class GetStickerSetTest extends TestCase
                     'is_video' => false,
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test name', $preparedResult->title);
     }

@@ -30,7 +30,7 @@ final class EditGeneralForumTopicTest extends TestCase
     {
         $method = new EditGeneralForumTopic(1, 'test');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

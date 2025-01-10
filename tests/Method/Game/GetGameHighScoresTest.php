@@ -55,7 +55,7 @@ final class GetGameHighScoresTest extends TestCase
                 ],
                 'score' => 300,
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(GameHighScore::class, $preparedResult[0]);

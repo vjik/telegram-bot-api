@@ -44,7 +44,7 @@ final class UnbanChatMemberTest extends TestCase
     {
         $method = new UnbanChatMember(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

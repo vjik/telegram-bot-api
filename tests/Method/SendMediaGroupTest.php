@@ -84,7 +84,7 @@ final class SendMediaGroupTest extends TestCase
                     'type' => 'private',
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertIsArray($result);
         $this->assertCount(1, $result);

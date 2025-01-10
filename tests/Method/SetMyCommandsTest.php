@@ -54,7 +54,7 @@ final class SetMyCommandsTest extends TestCase
     {
         $method = new SetMyCommands([]);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

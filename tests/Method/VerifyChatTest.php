@@ -44,7 +44,7 @@ final class VerifyChatTest extends TestCase
     {
         $method = new VerifyChat(5);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

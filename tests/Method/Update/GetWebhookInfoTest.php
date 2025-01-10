@@ -28,7 +28,7 @@ final class GetWebhookInfoTest extends TestCase
             'url' => 'https://example.com/',
             'has_custom_certificate' => true,
             'pending_update_count' => 12,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('https://example.com/', $preparedResult->url);
     }

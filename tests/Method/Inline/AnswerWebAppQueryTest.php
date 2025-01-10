@@ -34,7 +34,7 @@ final class AnswerWebAppQueryTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'inline_message_id' => 'idMessage',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('idMessage', $preparedResult->inlineMessageId);
     }

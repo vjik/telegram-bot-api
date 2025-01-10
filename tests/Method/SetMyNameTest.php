@@ -37,7 +37,7 @@ final class SetMyNameTest extends TestCase
     {
         $method = new SetMyName();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

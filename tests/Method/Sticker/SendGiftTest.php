@@ -51,7 +51,7 @@ final class SendGiftTest extends TestCase
     {
         $method = new SendGift(7, 'gid');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

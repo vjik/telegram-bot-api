@@ -55,7 +55,7 @@ final class SetWebhookTest extends TestCase
     {
         $method = new SetWebhook('https://example.com/hook');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

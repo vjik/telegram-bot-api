@@ -30,7 +30,7 @@ final class DeleteForumTopicTest extends TestCase
     {
         $method = new DeleteForumTopic(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

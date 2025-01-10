@@ -38,7 +38,7 @@ final class GetMyDescriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'description' => 'test',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test', $preparedResult->description);
     }

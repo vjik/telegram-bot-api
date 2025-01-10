@@ -37,7 +37,7 @@ final class SetMyShortDescriptionTest extends TestCase
     {
         $method = new SetMyShortDescription();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

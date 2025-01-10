@@ -30,7 +30,7 @@ final class SetStickerSetTitleTest extends TestCase
     {
         $method = new SetStickerSetTitle('animals_by_bot', 'The Animal');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

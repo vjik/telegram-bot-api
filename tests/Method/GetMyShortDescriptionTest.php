@@ -38,7 +38,7 @@ final class GetMyShortDescriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'short_description' => 'test',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test', $preparedResult->shortDescription);
     }

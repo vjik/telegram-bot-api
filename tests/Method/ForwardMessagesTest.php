@@ -58,7 +58,7 @@ final class ForwardMessagesTest extends TestCase
             [
                 'message_id' => 8,
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(2, $preparedResult);
         $this->assertInstanceOf(MessageId::class, $preparedResult[0]);

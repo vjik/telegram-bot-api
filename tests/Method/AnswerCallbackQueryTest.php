@@ -47,7 +47,7 @@ final class AnswerCallbackQueryTest extends TestCase
     {
         $method = new AnswerCallbackQuery('id');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -39,7 +39,7 @@ final class SetMyDefaultAdministratorRightsTest extends TestCase
     {
         $method = new SetMyDefaultAdministratorRights();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

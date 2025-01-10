@@ -18,6 +18,6 @@ final class LogOutTest extends TestCase
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('logOut', $method->getApiMethod());
         $this->assertSame([], $method->getData());
-        $this->assertTrue(TestHelper::createSuccessStubApi(true)->send($method));
+        $this->assertTrue(TestHelper::createSuccessStubApi(true)->call($method));
     }
 }

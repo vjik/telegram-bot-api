@@ -106,7 +106,7 @@ final class CreateInvoiceLinkTest extends TestCase
             [],
         );
 
-        $preparedResult = TestHelper::createSuccessStubApi('https://example.com/invoice')->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi('https://example.com/invoice')->call($method);
 
         $this->assertSame('https://example.com/invoice', $preparedResult);
     }

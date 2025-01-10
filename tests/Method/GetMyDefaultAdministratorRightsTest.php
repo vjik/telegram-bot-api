@@ -52,7 +52,7 @@ final class GetMyDefaultAdministratorRightsTest extends TestCase
             'can_edit_messages' => true,
             'can_pin_messages' => false,
             'can_manage_topics' => true,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertTrue($preparedResult->isAnonymous);
         $this->assertFalse($preparedResult->canManageChat);

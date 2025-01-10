@@ -39,7 +39,7 @@ final class UploadStickerFileTest extends TestCase
             'file_unique_id' => 'fullX1',
             'file_size' => 123,
             'file_path' => 'path/to/file',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('f1', $preparedResult->fileId);
     }

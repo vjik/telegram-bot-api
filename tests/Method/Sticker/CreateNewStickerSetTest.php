@@ -51,7 +51,7 @@ final class CreateNewStickerSetTest extends TestCase
     {
         $method = new CreateNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

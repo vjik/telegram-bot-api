@@ -49,7 +49,7 @@ final class SetMessageReactionTest extends TestCase
     {
         $method = new SetMessageReaction(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

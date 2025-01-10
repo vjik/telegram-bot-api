@@ -77,7 +77,7 @@ final class CopyMessageTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(7, $preparedResult->messageId);
     }

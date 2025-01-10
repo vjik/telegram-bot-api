@@ -34,7 +34,7 @@ final class GetChatMenuButtonTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'type' => 'default',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertInstanceOf(MenuButtonDefault::class, $preparedResult);
     }

@@ -47,7 +47,7 @@ final class EditForumTopicTest extends TestCase
     {
         $method = new EditForumTopic(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

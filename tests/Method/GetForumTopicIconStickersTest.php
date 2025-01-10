@@ -35,7 +35,7 @@ final class GetForumTopicIconStickersTest extends TestCase
                 'is_animated' => false,
                 'is_video' => true,
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertIsArray($preparedResult);
         $this->assertCount(1, $preparedResult);

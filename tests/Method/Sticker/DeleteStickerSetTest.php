@@ -29,7 +29,7 @@ final class DeleteStickerSetTest extends TestCase
     {
         $method = new DeleteStickerSet('test_by_bot');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

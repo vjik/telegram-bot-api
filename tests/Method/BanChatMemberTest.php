@@ -47,7 +47,7 @@ final class BanChatMemberTest extends TestCase
     {
         $method = new BanChatMember(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

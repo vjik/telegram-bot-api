@@ -44,7 +44,7 @@ final class VerifyUserTest extends TestCase
     {
         $method = new VerifyUser(5);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

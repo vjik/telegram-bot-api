@@ -56,7 +56,7 @@ final class SavePreparedInlineMessageTest extends TestCase
         $preparedResult = TestHelper::createSuccessStubApi([
             'id' => 'testId',
             'expiration_date' => 1731917862,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertInstanceOf(PreparedInlineMessage::class, $preparedResult);
         $this->assertSame('testId', $preparedResult->id);

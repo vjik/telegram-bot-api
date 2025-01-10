@@ -29,7 +29,7 @@ final class RemoveChatVerificationTest extends TestCase
     {
         $method = new RemoveChatVerification('id5');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -44,7 +44,7 @@ final class SetStickerKeywordsTest extends TestCase
     {
         $method = new SetStickerKeywords('sid');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

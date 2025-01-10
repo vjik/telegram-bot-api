@@ -45,7 +45,7 @@ final class SendChatActionTest extends TestCase
     {
         $method = new SendChatAction(12, 'testing');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

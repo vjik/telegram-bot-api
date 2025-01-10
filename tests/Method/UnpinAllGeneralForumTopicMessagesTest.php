@@ -29,7 +29,7 @@ final class UnpinAllGeneralForumTopicMessagesTest extends TestCase
     {
         $method = new UnpinAllGeneralForumTopicMessages(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

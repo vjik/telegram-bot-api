@@ -31,7 +31,7 @@ final class SetChatAdministratorCustomTitleTest extends TestCase
     {
         $method = new SetChatAdministratorCustomTitle(1, 2, 'test');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -44,7 +44,7 @@ final class SetChatDescriptionTest extends TestCase
     {
         $method = new SetChatDescription(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

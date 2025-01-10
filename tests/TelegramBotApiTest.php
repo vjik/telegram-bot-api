@@ -5,12 +5,10 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
-use LogicException;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
 use Vjik\TelegramBot\Api\Method;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
@@ -65,7 +63,7 @@ final class TelegramBotApiTest extends TestCase
         $api2 = $api1->withLogger($logger2);
 
         try {
-            $api2->send(new Method('getMe'));
+            $api2->call(new Method('getMe'));
         } catch (TelegramParseResultException) {
         }
 
@@ -74,14 +72,14 @@ final class TelegramBotApiTest extends TestCase
         $this->assertCount(2, $logger2->getMessages());
     }
 
-    public function testSendSuccess(): void
+    public function testCallSuccess(): void
     {
         $logger = new SimpleLogger();
         $method = new GetMe();
         $response = new ApiResponse(200, '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}');
         $api = $this->createApi($response, logger: $logger);
 
-        $result = $api->send($method);
+        $result = $api->call($method);
 
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
@@ -120,7 +118,7 @@ final class TelegramBotApiTest extends TestCase
         );
     }
 
-    public function testSendSimpleRequest(): void
+    public function testCallSimpleMethod(): void
     {
         $api = $this->createApi([
             'ok' => true,
@@ -131,7 +129,7 @@ final class TelegramBotApiTest extends TestCase
             ],
         ]);
 
-        $result = $api->send(new Method('getMe'));
+        $result = $api->call(new Method('getMe'));
 
         $this->assertSame(
             [
@@ -143,14 +141,14 @@ final class TelegramBotApiTest extends TestCase
         );
     }
 
-    public function testSendFail(): void
+    public function testCallFail(): void
     {
         $logger = new SimpleLogger();
         $method = new GetMe();
         $response = new ApiResponse(200, '{"ok":false,"description":"test error"}');
         $api = $this->createApi($response, logger: $logger);
 
-        $result = $api->send($method);
+        $result = $api->call($method);
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
@@ -193,7 +191,7 @@ final class TelegramBotApiTest extends TestCase
 
         $exception = null;
         try {
-            $api->send(new GetMe());
+            $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
@@ -206,7 +204,7 @@ final class TelegramBotApiTest extends TestCase
 
         $exception = null;
         try {
-            $api->send(new GetMe());
+            $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
@@ -221,7 +219,7 @@ final class TelegramBotApiTest extends TestCase
 
         $exception = null;
         try {
-            $api->send($method);
+            $api->call($method);
         } catch (Throwable $exception) {
         }
 
@@ -257,7 +255,7 @@ final class TelegramBotApiTest extends TestCase
 
         $exception = null;
         try {
-            $api->send(new GetMe());
+            $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
@@ -272,7 +270,7 @@ final class TelegramBotApiTest extends TestCase
 
         $exception = null;
         try {
-            $api->send(new GetMe());
+            $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);

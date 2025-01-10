@@ -45,7 +45,7 @@ final class SetUserEmojiStatusTest extends TestCase
     {
         $method = new SetUserEmojiStatus(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

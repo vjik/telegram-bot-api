@@ -56,7 +56,7 @@ final class EditChatSubscriptionInviteLinkTest extends TestCase
             'creates_join_request' => true,
             'is_primary' => true,
             'is_revoked' => false,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(23, $preparedResult->creator->id);
     }

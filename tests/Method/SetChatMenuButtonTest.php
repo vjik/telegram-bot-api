@@ -39,7 +39,7 @@ final class SetChatMenuButtonTest extends TestCase
     {
         $method = new SetChatMenuButton();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -47,7 +47,7 @@ final class ReplaceStickerInSetTest extends TestCase
             new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

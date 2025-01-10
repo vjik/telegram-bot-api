@@ -47,7 +47,7 @@ final class GetUpdatesTest extends TestCase
         $preparedResult = TestHelper::createSuccessStubApi([
             ['update_id' => 1],
             ['update_id' => 2],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(2, $preparedResult);
         $this->assertSame(1, $preparedResult[0]->updateId);

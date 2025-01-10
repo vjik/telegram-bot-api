@@ -44,7 +44,7 @@ final class SetCustomEmojiStickerSetThumbnailTest extends TestCase
     {
         $method = new SetCustomEmojiStickerSetThumbnail('animals_by_my_bot');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

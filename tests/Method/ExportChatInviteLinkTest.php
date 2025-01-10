@@ -29,7 +29,7 @@ final class ExportChatInviteLinkTest extends TestCase
     {
         $method = new ExportChatInviteLink(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi('https://t.me/+example')->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi('https://t.me/+example')->call($method);
 
         $this->assertSame('https://t.me/+example', $preparedResult);
     }

@@ -34,7 +34,7 @@ final class GetChatMemberTest extends TestCase
         $preparedResult = TestHelper::createSuccessStubApi([
             'status' => 'member',
             'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertInstanceOf(ChatMemberMember::class, $preparedResult);
         $this->assertSame(23, $preparedResult->user->id);

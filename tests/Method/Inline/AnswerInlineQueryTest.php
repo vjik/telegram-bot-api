@@ -55,7 +55,7 @@ final class AnswerInlineQueryTest extends TestCase
     {
         $method = new AnswerInlineQuery('id', []);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

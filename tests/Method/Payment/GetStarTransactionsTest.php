@@ -38,7 +38,7 @@ final class GetStarTransactionsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'transactions' => [],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame([], $preparedResult->transactions);
     }

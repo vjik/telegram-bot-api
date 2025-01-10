@@ -45,7 +45,7 @@ final class GetMyCommandsTest extends TestCase
                 'command' => 'start',
                 'description' => 'Start command',
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(BotCommand::class, $preparedResult[0]);

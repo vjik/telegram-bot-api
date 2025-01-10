@@ -35,7 +35,7 @@ final class GetBusinessConnectionTest extends TestCase
             'date' => 1717517779,
             'can_reply' => true,
             'is_enabled' => false,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('id1', $preparedResult->id);
     }

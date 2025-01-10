@@ -18,6 +18,6 @@ final class CloseTest extends TestCase
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('close', $method->getApiMethod());
         $this->assertSame([], $method->getData());
-        $this->assertTrue(TestHelper::createSuccessStubApi(true)->send($method));
+        $this->assertTrue(TestHelper::createSuccessStubApi(true)->call($method));
     }
 }

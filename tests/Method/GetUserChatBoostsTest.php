@@ -32,7 +32,7 @@ final class GetUserChatBoostsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'boosts' => [],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame([], $preparedResult->boosts);
     }

@@ -30,7 +30,7 @@ final class SetChatTitleTest extends TestCase
     {
         $method = new SetChatTitle(1, 'test');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

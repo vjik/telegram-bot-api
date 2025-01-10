@@ -29,7 +29,7 @@ final class RemoveUserVerificationTest extends TestCase
     {
         $method = new RemoveUserVerification(5);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

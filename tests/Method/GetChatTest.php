@@ -29,7 +29,7 @@ final class GetChatTest extends TestCase
             'type' => 'private',
             'accent_color_id' => 0x123456,
             'max_reaction_count' => 5,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(23, $preparedResult->id);
     }

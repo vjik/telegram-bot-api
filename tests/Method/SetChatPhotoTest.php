@@ -33,7 +33,7 @@ final class SetChatPhotoTest extends TestCase
         $photo = new InputFile('/path/to/photo.jpg');
         $method = new SetChatPhoto(1, $photo);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

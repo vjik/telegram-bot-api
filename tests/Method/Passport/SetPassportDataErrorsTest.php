@@ -32,7 +32,7 @@ final class SetPassportDataErrorsTest extends TestCase
     {
         $method = new SetPassportDataErrors(1, []);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

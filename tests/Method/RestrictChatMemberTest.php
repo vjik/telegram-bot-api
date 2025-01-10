@@ -52,7 +52,7 @@ final class RestrictChatMemberTest extends TestCase
     {
         $method = new RestrictChatMember(1, 2, new ChatPermissions());
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

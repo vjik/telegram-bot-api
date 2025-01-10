@@ -27,13 +27,13 @@ final class TelegramRequestTest extends TestCase
         $this->assertSame('getMe', $request->getApiMethod());
         $this->assertSame(['param1' => 'value1', 'photo' => $photo], $request->getData());
 
-        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->send($request));
+        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->call($request));
     }
 
     public function testWithoutSuccessCallback(): void
     {
         $request = new Method('getMe');
 
-        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->send($request));
+        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->call($request));
     }
 }

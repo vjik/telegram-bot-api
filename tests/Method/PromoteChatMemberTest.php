@@ -76,7 +76,7 @@ final class PromoteChatMemberTest extends TestCase
     {
         $method = new PromoteChatMember(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

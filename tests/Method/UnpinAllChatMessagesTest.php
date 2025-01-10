@@ -29,7 +29,7 @@ final class UnpinAllChatMessagesTest extends TestCase
     {
         $method = new UnpinAllChatMessages(1);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -28,7 +28,7 @@ final class GetMeTest extends TestCase
             'id' => 1,
             'is_bot' => false,
             'first_name' => 'Sergei',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(1, $preparedResult->id);
     }

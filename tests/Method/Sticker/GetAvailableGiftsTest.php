@@ -53,7 +53,7 @@ final class GetAvailableGiftsTest extends TestCase
                     'star_count' => 11,
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(2, $preparedResult->gifts);
     }

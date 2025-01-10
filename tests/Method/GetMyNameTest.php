@@ -38,7 +38,7 @@ final class GetMyNameTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'name' => 'test',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test', $preparedResult->name);
     }

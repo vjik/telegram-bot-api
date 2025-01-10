@@ -31,7 +31,7 @@ final class EditUserStarSubscriptionTest extends TestCase
     {
         $method = new EditUserStarSubscription(1, 'tpcid2', false);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

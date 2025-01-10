@@ -49,7 +49,7 @@ final class SetChatPermissionsTest extends TestCase
     {
         $method = new SetChatPermissions(1, new ChatPermissions());
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

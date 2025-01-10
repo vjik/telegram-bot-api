@@ -35,7 +35,7 @@ final class GetChatAdministratorsTest extends TestCase
                 'status' => 'member',
                 'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(ChatMemberMember::class, $preparedResult[0]);

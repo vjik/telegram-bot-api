@@ -60,7 +60,7 @@ final class GetUserProfilePhotosTest extends TestCase
                     ],
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(1, $preparedResult->totalCount);
         $this->assertCount(1, $preparedResult->photos);

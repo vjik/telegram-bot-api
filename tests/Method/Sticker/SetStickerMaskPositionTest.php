@@ -46,7 +46,7 @@ final class SetStickerMaskPositionTest extends TestCase
     {
         $method = new SetStickerMaskPosition('sid');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

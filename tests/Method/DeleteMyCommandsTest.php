@@ -41,7 +41,7 @@ final class DeleteMyCommandsTest extends TestCase
     {
         $method = new DeleteMyCommands();
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }
