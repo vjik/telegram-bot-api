@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api\Tests;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\FailResult;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
@@ -15,11 +14,11 @@ final class FailResultTest extends TestCase
 {
     public function testBase(): void
     {
-        $request = new CustomMethod('getMe');
+        $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, 'test');
-        $result = new FailResult($request, $response);
+        $result = new FailResult($method, $response);
 
-        $this->assertSame($request, $result->method);
+        $this->assertSame($method, $result->method);
         $this->assertSame($response, $result->response);
         $this->assertNull($result->description);
         $this->assertNull($result->parameters);
@@ -28,13 +27,12 @@ final class FailResultTest extends TestCase
 
     public function testFull(): void
     {
-
-        $request = new CustomMethod('getMe');
+        $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, 'test');
         $responseParameters = new ResponseParameters();
-        $result = new FailResult($request, $response, 'desc', $responseParameters, 200);
+        $result = new FailResult($method, $response, 'desc', $responseParameters, 200);
 
-        $this->assertSame($request, $result->method);
+        $this->assertSame($method, $result->method);
         $this->assertSame($response, $result->response);
         $this->assertSame('desc', $result->description);
         $this->assertSame($responseParameters, $result->parameters);
