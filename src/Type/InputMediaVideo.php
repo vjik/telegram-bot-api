@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 
 /**
  * @see https://core.telegram.org/bots/api#inputmediavideo
@@ -33,7 +33,7 @@ final readonly class InputMediaVideo implements InputMedia
         return 'video';
     }
 
-    public function toRequestArray(?RequestFileCollector $fileCollector = null): array
+    public function toRequestArray(?InputFileCollector $fileCollector = null): array
     {
         if ($fileCollector !== null) {
             $media = $this->media instanceof InputFile

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputMedia;
@@ -40,7 +40,7 @@ final readonly class EditMessageMedia implements MethodInterface
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $media = $this->media->toRequestArray($fileCollector);
 
         return array_filter(

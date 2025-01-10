@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
 use Vjik\TelegramBot\Api\Type\InputMediaDocument;
@@ -49,7 +49,7 @@ final readonly class SendMediaGroup implements MethodInterface
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $media = array_map(
             static function (
                 InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo $inputMedia,

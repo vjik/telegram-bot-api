@@ -6,7 +6,7 @@ namespace Type;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputPaidMediaPhoto;
 
@@ -25,7 +25,7 @@ final class InputPaidMediaPhotoTest extends TestCase
             $inputMedia->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $this->assertSame(
             [
                 'type' => 'photo',
@@ -50,7 +50,7 @@ final class InputPaidMediaPhotoTest extends TestCase
             $inputMedia->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $this->assertSame(
             [
                 'type' => 'photo',

@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Sticker;
 
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
@@ -24,7 +24,7 @@ final readonly class InputSticker
         private ?array $keywords = null,
     ) {}
 
-    public function toRequestArray(?RequestFileCollector $fileCollector = null): array
+    public function toRequestArray(?InputFileCollector $fileCollector = null): array
     {
         if ($fileCollector !== null) {
             $sticker = $this->sticker instanceof InputFile

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaVideo;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
@@ -26,7 +26,7 @@ final class InputMediaVideoTest extends TestCase
             $inputMedia->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $this->assertSame(
             [
                 'type' => 'video',
@@ -75,7 +75,7 @@ final class InputMediaVideoTest extends TestCase
             $inputMedia->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new InputFileCollector();
         $this->assertSame(
             [
                 'type' => 'video',

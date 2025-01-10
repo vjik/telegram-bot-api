@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\RequestFileCollector;
+use Vjik\TelegramBot\Api\InputFileCollector;
 
 /**
  * @see https://core.telegram.org/bots/api#inputmedia
@@ -16,5 +16,5 @@ interface InputMedia
     /**
      * @psalm-return array<string, mixed>
      */
-    public function toRequestArray(?RequestFileCollector $fileCollector = null): array;
+    public function toRequestArray(?InputFileCollector $fileCollector = null): array;
 }
