@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Method;
+use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\LogType;
@@ -17,7 +17,7 @@ final class LogTypeTest extends TestCase
 {
     public static function dataCreateSendRequestContext(): Generator
     {
-        $method = new Method(
+        $method = new CustomMethod(
             'getMe',
             ['param1' => 'Привет'],
         );
@@ -30,7 +30,7 @@ final class LogTypeTest extends TestCase
             $method,
         ];
 
-        $method = new Method(
+        $method = new CustomMethod(
             'getMe',
             ['param1' => fopen('php://temp', 'r+')],
         );
@@ -55,7 +55,7 @@ final class LogTypeTest extends TestCase
 
     public static function dataCreateSuccessResultContext(): Generator
     {
-        $method = new Method('getMe');
+        $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, '');
         $decodedResponse = ['param1' => 'Привет'];
         yield 'base' => [
@@ -71,7 +71,7 @@ final class LogTypeTest extends TestCase
             $decodedResponse,
         ];
 
-        $method = new Method('getMe');
+        $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, '{"param1":"Привет"}');
         $decodedResponse = fopen('php://temp', 'r+');
         yield 'json-error' => [
@@ -101,7 +101,7 @@ final class LogTypeTest extends TestCase
 
     public function testCreateFailResultContext(): void
     {
-        $method = new Method('getMe');
+        $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, 'test');
         $decodedResponse = ['param1' => 'Привет'];
 

@@ -8,7 +8,7 @@ use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
-use Vjik\TelegramBot\Api\Method;
+use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
@@ -63,7 +63,7 @@ final class TelegramBotApiTest extends TestCase
         $api2 = $api1->withLogger($logger2);
 
         try {
-            $api2->call(new Method('getMe'));
+            $api2->call(new CustomMethod('getMe'));
         } catch (TelegramParseResultException) {
         }
 
@@ -129,7 +129,7 @@ final class TelegramBotApiTest extends TestCase
             ],
         ]);
 
-        $result = $api->call(new Method('getMe'));
+        $result = $api->call(new CustomMethod('getMe'));
 
         $this->assertSame(
             [

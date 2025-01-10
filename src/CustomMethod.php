@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
  * @template T as class-string|ValueProcessorInterface|null
  * @template-implements MethodInterface<T>
  */
-final readonly class Method implements MethodInterface
+final readonly class CustomMethod implements MethodInterface
 {
     /**
      * @psalm-param array<string,mixed> $data

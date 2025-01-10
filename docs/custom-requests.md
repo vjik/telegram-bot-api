@@ -1,15 +1,15 @@
 # Custom requests
 
-You can make custom requests to API using the `call()` method and `Method` object:
+You can make custom requests to API using the `call()` method and `CustomMethod` object:
 
 ```php
-use Vjik\TelegramBot\Api\Method;
+use Vjik\TelegramBot\Api\CustomMethod;
 
 /** 
  * @var \Vjik\TelegramBot\Api\TelegramBotApi $api 
  */
 
-$request = new Method(
+$request = new CustomMethod(
     apiMethod: 'getChat',
     data: ['chat_id' => '@sergei_predvoditelev'],
     resultType: ChatFullInfo::class,
