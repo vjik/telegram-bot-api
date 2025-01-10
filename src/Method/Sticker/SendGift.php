@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
 /**
  * @see https://core.telegram.org/bots/api#sendgift
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SendGift implements TelegramRequestInterface
+final readonly class SendGift implements MethodInterface
 {
     /**
      * @param MessageEntity[]|null $textEntities

@@ -10,10 +10,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 /**
  * @template T as class-string|ValueProcessorInterface|null
  */
-interface TelegramRequestInterface
+interface MethodInterface
 {
-    public function getHttpMethod(): HttpMethod;
-
     /**
      * @see https://core.telegram.org/bots/api#available-methods
      */
@@ -28,4 +26,6 @@ interface TelegramRequestInterface
      * @psalm-return T
      */
     public function getResultType(): string|ValueProcessorInterface|null;
+
+    public function getHttpMethod(): HttpMethod;
 }

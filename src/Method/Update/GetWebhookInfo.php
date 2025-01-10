@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Update;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 /**
  * @see https://core.telegram.org/bots/api#getwebhookinfo
  *
- * @template-implements TelegramRequestInterface<class-string<WebhookInfo>>
+ * @template-implements MethodInterface<class-string<WebhookInfo>>
  */
-final readonly class GetWebhookInfo implements TelegramRequestInterface
+final readonly class GetWebhookInfo implements MethodInterface
 {
     public function getHttpMethod(): HttpMethod
     {

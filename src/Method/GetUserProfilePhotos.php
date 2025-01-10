@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 
 /**
  * @see https://core.telegram.org/bots/api#getuserprofilephotos
  *
- * @template-implements TelegramRequestInterface<class-string<UserProfilePhotos>>
+ * @template-implements MethodInterface<class-string<UserProfilePhotos>>
  */
-final readonly class GetUserProfilePhotos implements TelegramRequestInterface
+final readonly class GetUserProfilePhotos implements MethodInterface
 {
     public function __construct(
         private int $userId,

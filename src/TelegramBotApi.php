@@ -232,11 +232,11 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface<TResultDefinition>
+     * @psalm-template TRequest as MethodInterface<TResultDefinition>
      * @psalm-param TRequest $request
      * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))|FailResult
      */
-    public function send(TelegramRequestInterface $request): mixed
+    public function send(MethodInterface $request): mixed
     {
         $this->logger?->info(
             'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
@@ -2648,13 +2648,13 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface<TResultDefinition>
+     * @psalm-template TRequest as MethodInterface<TResultDefinition>
      * @psalm-param TRequest $request
      * @psalm-param array{result?:TRawResult, ...} $decodedBody
      * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))
      */
     private function prepareSuccessResult(
-        TelegramRequestInterface $request,
+        MethodInterface $request,
         TelegramResponse $response,
         array $decodedBody,
     ): mixed {
@@ -2668,7 +2668,7 @@ final class TelegramBotApi
             );
         }
 
-        if (!$request instanceof TelegramRequestInterface) {
+        if (!$request instanceof MethodInterface) {
             return $decodedBody['result'];
         }
 
@@ -2689,7 +2689,7 @@ final class TelegramBotApi
     }
 
     private function prepareFailResult(
-        TelegramRequestInterface $request,
+        MethodInterface $request,
         TelegramResponse $response,
         array $decodedBody,
     ): FailResult {

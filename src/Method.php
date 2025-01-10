@@ -9,25 +9,20 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 /**
  * @template T as class-string|ValueProcessorInterface|null
- * @template-implements TelegramRequestInterface<T>
+ * @template-implements MethodInterface<T>
  */
-final readonly class TelegramRequest implements TelegramRequestInterface
+final readonly class Method implements MethodInterface
 {
     /**
      * @psalm-param array<string,mixed> $data
      * @psalm-param T $resultType
      */
     public function __construct(
-        private HttpMethod $httpMethod,
         private string $apiMethod,
         private array $data = [],
         private string|ValueProcessorInterface|null $resultType = null,
+        private HttpMethod $httpMethod = HttpMethod::POST,
     ) {}
-
-    public function getHttpMethod(): HttpMethod
-    {
-        return $this->httpMethod;
-    }
 
     public function getApiMethod(): string
     {
@@ -42,5 +37,10 @@ final readonly class TelegramRequest implements TelegramRequestInterface
     public function getResultType(): string|ValueProcessorInterface|null
     {
         return $this->resultType;
+    }
+
+    public function getHttpMethod(): HttpMethod
+    {
+        return $this->httpMethod;
     }
 }

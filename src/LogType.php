@@ -11,13 +11,13 @@ use Vjik\TelegramBot\Api\Transport\TelegramResponse;
  * @psalm-type SendRequestContext = array{
  *     type: LogType::SEND_REQUEST,
  *     payload: string,
- *     request: TelegramRequestInterface,
+ *     request: MethodInterface,
  * }
  *
  * @psalm-type SuccessResultContext = array{
  *     type: LogType::SUCCESS_RESULT,
  *     payload: string,
- *     request: TelegramRequestInterface,
+ *     request: MethodInterface,
  *     response: TelegramResponse,
  *     decodedResponse: mixed
  * }
@@ -25,7 +25,7 @@ use Vjik\TelegramBot\Api\Transport\TelegramResponse;
  * @psalm-type FailResultContext = array{
  *     type: LogType::FAIL_RESULT,
  *     payload: string,
- *     request: TelegramRequestInterface,
+ *     request: MethodInterface,
  *     response: TelegramResponse,
  *     decodedResponse: mixed
  * }
@@ -45,7 +45,7 @@ final readonly class LogType
     /**
      * @psalm-return SendRequestContext
      */
-    public static function createSendRequestContext(TelegramRequestInterface $request): array
+    public static function createSendRequestContext(MethodInterface $request): array
     {
         try {
             $payload = json_encode($request->getData(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
@@ -63,7 +63,7 @@ final readonly class LogType
      * @psalm-return SuccessResultContext
      */
     public static function createSuccessResultContext(
-        TelegramRequestInterface $request,
+        MethodInterface $request,
         TelegramResponse $response,
         mixed $decodedResponse,
     ): array {
@@ -85,7 +85,7 @@ final readonly class LogType
      * @psalm-return FailResultContext
      */
     public static function createFailResultContext(
-        TelegramRequestInterface $request,
+        MethodInterface $request,
         TelegramResponse $response,
         mixed $decodedResponse,
     ): array {

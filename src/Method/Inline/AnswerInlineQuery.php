@@ -6,16 +6,16 @@ namespace Vjik\TelegramBot\Api\Method\Inline;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 
 /**
  * @see https://core.telegram.org/bots/api#answerinlinequery
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class AnswerInlineQuery implements TelegramRequestInterface
+final readonly class AnswerInlineQuery implements MethodInterface
 {
     /**
      * @param InlineQueryResult[] $results

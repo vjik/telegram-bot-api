@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#exportchatinvitelink
  *
- * @template-implements TelegramRequestInterface<StringValue>
+ * @template-implements MethodInterface<StringValue>
  */
-final readonly class ExportChatInviteLink implements TelegramRequestInterface
+final readonly class ExportChatInviteLink implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

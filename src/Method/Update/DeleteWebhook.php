@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method\Update;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#deletewebhook
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class DeleteWebhook implements TelegramRequestInterface
+final readonly class DeleteWebhook implements MethodInterface
 {
     public function __construct(
         private ?bool $dropPendingUpdates = null,

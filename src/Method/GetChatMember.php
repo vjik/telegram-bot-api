@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmember
  *
- * @template-implements TelegramRequestInterface<ChatMemberValue>
+ * @template-implements MethodInterface<ChatMemberValue>
  */
-final readonly class GetChatMember implements TelegramRequestInterface
+final readonly class GetChatMember implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

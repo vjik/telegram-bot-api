@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -16,9 +16,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendcontact
  *
- * @template-implements TelegramRequestInterface<class-string<Message>>
+ * @template-implements MethodInterface<class-string<Message>>
  */
-final readonly class SendContact implements TelegramRequestInterface
+final readonly class SendContact implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

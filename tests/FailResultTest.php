@@ -8,14 +8,14 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequest;
+use Vjik\TelegramBot\Api\Method;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
 final class FailResultTest extends TestCase
 {
     public function testBase(): void
     {
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
+        $request = new Method('getMe');
         $response = new TelegramResponse(200, 'test');
         $result = new FailResult($request, $response);
 
@@ -29,7 +29,7 @@ final class FailResultTest extends TestCase
     public function testFull(): void
     {
 
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
+        $request = new Method('getMe');
         $response = new TelegramResponse(200, 'test');
         $responseParameters = new ResponseParameters();
         $result = new FailResult($request, $response, 'desc', $responseParameters, 200);

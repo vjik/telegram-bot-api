@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Inline;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 
 /**
  * @see https://core.telegram.org/bots/api#savepreparedinlinemessage
  *
- * @template-implements TelegramRequestInterface<class-string<PreparedInlineMessage>>
+ * @template-implements MethodInterface<class-string<PreparedInlineMessage>>
  */
-final readonly class SavePreparedInlineMessage implements TelegramRequestInterface
+final readonly class SavePreparedInlineMessage implements MethodInterface
 {
     public function __construct(
         private int $userId,

@@ -6,16 +6,16 @@ namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
 
 /**
  * @see https://core.telegram.org/bots/api#editmessagereplymarkup
  *
- * @template-implements TelegramRequestInterface<ObjectOrTrueValue<Message>>
+ * @template-implements MethodInterface<ObjectOrTrueValue<Message>>
  */
-final readonly class EditMessageReplyMarkup implements TelegramRequestInterface
+final readonly class EditMessageReplyMarkup implements MethodInterface
 {
     public function __construct(
         private ?string $businessConnectionId = null,

@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
 /**
  * @see https://core.telegram.org/bots/api#setchatpermissions
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetChatPermissions implements TelegramRequestInterface
+final readonly class SetChatPermissions implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

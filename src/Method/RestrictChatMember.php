@@ -7,15 +7,15 @@ namespace Vjik\TelegramBot\Api\Method;
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
 /**
  * @see https://core.telegram.org/bots/api#restrictchatmember
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class RestrictChatMember implements TelegramRequestInterface
+final readonly class RestrictChatMember implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

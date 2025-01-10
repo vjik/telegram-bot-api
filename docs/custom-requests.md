@@ -3,9 +3,9 @@
 You can make custom requests using the `send()` method and `TelegramRequest` object:
 
 ```php
-use Vjik\TelegramBot\Api\TelegramRequest;
+use Vjik\TelegramBot\Api\Method;
 
-$request = new TelegramRequest(
+$request = new Method(
     httpMethod: HttpMethod::GET,
     apiMethod: 'getChat',
     data: ['chat_id' => '@sergei_predvoditelev'],

@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#unpinallgeneralforumtopicmessages
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class UnpinAllGeneralForumTopicMessages implements TelegramRequestInterface
+final readonly class UnpinAllGeneralForumTopicMessages implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

@@ -14,7 +14,7 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequest;
+use Vjik\TelegramBot\Api\Method;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class PsrTransportTest extends TestCase

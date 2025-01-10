@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\MessageId;
 
 /**
  * @see https://core.telegram.org/bots/api#forwardmessages
  *
- * @template-implements TelegramRequestInterface<ArrayOfObjectsValue<MessageId>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<MessageId>>
  */
-final readonly class ForwardMessages implements TelegramRequestInterface
+final readonly class ForwardMessages implements MethodInterface
 {
     /**
      * @param int[] $messageIds

@@ -10,7 +10,7 @@ use Vjik\TelegramBot\Api\Type\ResponseParameters;
 final readonly class FailResult
 {
     public function __construct(
-        public TelegramRequestInterface $request,
+        public MethodInterface $request,
         public TelegramResponse $response,
         public ?string $description = null,
         public ?ResponseParameters $parameters = null,

@@ -6,14 +6,14 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setstickeremojilist
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetStickerEmojiList implements TelegramRequestInterface
+final readonly class SetStickerEmojiList implements MethodInterface
 {
     /**
      * @param string[] $emojiList

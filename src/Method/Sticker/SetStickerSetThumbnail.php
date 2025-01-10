@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#setstickersetthumbnail
  *
- * @template-implements TelegramRequestInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetStickerSetThumbnail implements TelegramRequestInterface
+final readonly class SetStickerSetThumbnail implements MethodInterface
 {
     public function __construct(
         private string $name,

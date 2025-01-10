@@ -6,16 +6,16 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 
 /**
  * @see https://core.telegram.org/bots/api#getmycommands
  *
- * @template-implements TelegramRequestInterface<ArrayOfObjectsValue<BotCommand>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<BotCommand>>
  */
-final readonly class GetMyCommands implements TelegramRequestInterface
+final readonly class GetMyCommands implements MethodInterface
 {
     public function __construct(
         private ?BotCommandScope $scope = null,

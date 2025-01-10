@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 
 /**
  * @see https://core.telegram.org/bots/api#getstartransactions
  *
- * @template-implements TelegramRequestInterface<class-string<StarTransactions>>
+ * @template-implements MethodInterface<class-string<StarTransactions>>
  */
-final readonly class GetStarTransactions implements TelegramRequestInterface
+final readonly class GetStarTransactions implements MethodInterface
 {
     public function __construct(
         private ?int $offset = null,

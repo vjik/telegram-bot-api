@@ -7,8 +7,8 @@ namespace Vjik\TelegramBot\Api\Tests;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\TelegramRequest;
-use Vjik\TelegramBot\Api\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Method;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
 use Vjik\TelegramBot\Api\LogType;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
@@ -17,8 +17,7 @@ final class LogTypeTest extends TestCase
 {
     public static function dataCreateSendRequestContext(): Generator
     {
-        $request = new TelegramRequest(
-            HttpMethod::POST,
+        $request = new Method(
             'getMe',
             ['param1' => 'Привет'],
         );
@@ -31,8 +30,7 @@ final class LogTypeTest extends TestCase
             $request,
         ];
 
-        $request = new TelegramRequest(
-            HttpMethod::POST,
+        $request = new Method(
             'getMe',
             ['param1' => fopen('php://temp', 'r+')],
         );
@@ -49,7 +47,7 @@ final class LogTypeTest extends TestCase
     #[DataProvider('dataCreateSendRequestContext')]
     public function testCreateSendRequestContext(
         array $expected,
-        TelegramRequestInterface $request,
+        MethodInterface $request,
     ): void {
         $context = LogType::createSendRequestContext($request);
         $this->assertSame($expected, $context);
@@ -57,7 +55,7 @@ final class LogTypeTest extends TestCase
 
     public static function dataCreateSuccessResultContext(): Generator
     {
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
+        $request = new Method('getMe');
         $response = new TelegramResponse(200, '');
         $decodedResponse = ['param1' => 'Привет'];
         yield 'base' => [
@@ -73,7 +71,7 @@ final class LogTypeTest extends TestCase
             $decodedResponse,
         ];
 
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
+        $request = new Method('getMe');
         $response = new TelegramResponse(200, '{"param1":"Привет"}');
         $decodedResponse = fopen('php://temp', 'r+');
         yield 'json-error' => [
@@ -93,7 +91,7 @@ final class LogTypeTest extends TestCase
     #[DataProvider('dataCreateSuccessResultContext')]
     public function testCreateSuccessResultContext(
         array $expected,
-        TelegramRequestInterface $request,
+        MethodInterface $request,
         TelegramResponse $response,
         mixed $decodedResponse,
     ): void {
@@ -103,7 +101,7 @@ final class LogTypeTest extends TestCase
 
     public function testCreateFailResultContext(): void
     {
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
+        $request = new Method('getMe');
         $response = new TelegramResponse(200, 'test');
         $decodedResponse = ['param1' => 'Привет'];
 
