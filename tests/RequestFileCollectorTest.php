@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Request;
+namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\RequestFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class RequestFileCollectorTest extends TestCase

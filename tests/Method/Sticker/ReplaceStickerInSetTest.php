@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\ReplaceStickerInSet;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;

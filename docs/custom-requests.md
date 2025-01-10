@@ -3,7 +3,7 @@
 You can make custom requests using the `send()` method and `TelegramRequest` object:
 
 ```php
-use Vjik\TelegramBot\Api\Request\TelegramRequest;
+use Vjik\TelegramBot\Api\TelegramRequest;
 
 $request = new TelegramRequest(
     httpMethod: HttpMethod::GET,

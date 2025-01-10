@@ -7,8 +7,8 @@ namespace Vjik\TelegramBot\Api\Tests;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Transport\TelegramResponse;
 use Vjik\TelegramBot\Api\FailResult;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequest;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\TelegramRequest;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
 final class FailResultTest extends TestCase

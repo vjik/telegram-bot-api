@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport;
 
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Transport\TelegramRequestInterface;
 
 interface TransportInterface
 {

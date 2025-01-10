@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Request;
+namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequest;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\TelegramRequest;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 

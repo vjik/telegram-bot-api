@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\RequestFileCollector;
 
 /**
  * @see https://core.telegram.org/bots/api#inputmediaanimation

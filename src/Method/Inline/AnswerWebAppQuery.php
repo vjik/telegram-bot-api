@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Inline;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 

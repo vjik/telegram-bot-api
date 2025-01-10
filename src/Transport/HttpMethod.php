@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Request;
+namespace Vjik\TelegramBot\Api\Transport;
 
 enum HttpMethod: string
 {

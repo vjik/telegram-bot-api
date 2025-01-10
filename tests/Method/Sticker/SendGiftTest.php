@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\SendGift;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 

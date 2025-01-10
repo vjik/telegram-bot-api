@@ -6,7 +6,7 @@ namespace Method\Inline;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Inline\SavePreparedInlineMessage;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;

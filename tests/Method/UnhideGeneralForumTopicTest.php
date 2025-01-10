@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UnhideGeneralForumTopic;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class UnhideGeneralForumTopicTest extends TestCase

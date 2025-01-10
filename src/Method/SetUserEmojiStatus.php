@@ -6,8 +6,8 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\TelegramRequestWithResultPreparingInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setuseremojistatus

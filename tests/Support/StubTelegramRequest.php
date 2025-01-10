@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Support;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\TelegramRequestInterface;
 
 final readonly class StubTelegramRequest implements TelegramRequestInterface
 {

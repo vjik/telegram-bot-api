@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Constant\Sticker\StickerFormat;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\RequestFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;

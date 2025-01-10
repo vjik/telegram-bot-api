@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\RequestFileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
