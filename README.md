@@ -42,7 +42,7 @@ use Http\Client\Curl\Client;
 use HttpSoft\Message\RequestFactory;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
-use Vjik\TelegramBot\Api\Client\PsrTelegramClient;
+use Vjik\TelegramBot\Api\Transport\PsrTelegramClient;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 // Telegram bot authentication token

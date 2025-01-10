@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Client;
+namespace Vjik\TelegramBot\Api\Transport;
 
 final readonly class TelegramResponse
 {

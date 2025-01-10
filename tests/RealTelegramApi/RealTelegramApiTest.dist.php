@@ -9,7 +9,7 @@ use HttpSoft\Message\RequestFactory;
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Client\PsrTelegramClient;
+use Vjik\TelegramBot\Api\Transport\PsrTelegramClient;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**

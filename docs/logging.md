@@ -10,7 +10,7 @@ Pass logger to `TelegramBotApi` constructor:
 
 ```php
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Transport\TelegramClientInterface;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**
