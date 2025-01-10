@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\InputFileCollector;
+use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -56,7 +56,7 @@ final readonly class SendPaidMedia implements MethodInterface
 
     public function getData(): array
     {
-        $fileCollector = new InputFileCollector();
+        $fileCollector = new FileCollector();
         $media = array_map(
             static function (InputPaidMedia $inputMedia) use ($fileCollector): array {
                 return $inputMedia->toRequestArray($fileCollector);

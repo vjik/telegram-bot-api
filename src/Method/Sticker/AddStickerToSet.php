@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\InputFileCollector;
+use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
@@ -35,7 +35,7 @@ final readonly class AddStickerToSet implements MethodInterface
 
     public function getData(): array
     {
-        $fileCollector = new InputFileCollector();
+        $fileCollector = new FileCollector();
         $sticker = $this->sticker->toRequestArray($fileCollector);
 
         return [

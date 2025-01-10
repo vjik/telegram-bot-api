@@ -2,8 +2,9 @@
 
 ## 0.6.0 under development
 
-- Chg #132: Rename definition "telegram client" to "transport". Classes, namespaces, and variables rename accordingly.
-- Chg #132: Rename `RequestFileCollector` to `InputFileCollector` and move to root namespace.
+- Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and 
+  "telegram request" to "method". Classes, namespaces, and variables rename accordingly.
+- Chg #132: Rename `RequestFileCollector` to `FileCollector` and move to root namespace.
 - Chg #132: Rename `TelegramBotApi::send()` method to `call()`.
 
 ## 0.5.0 January 02, 2025
