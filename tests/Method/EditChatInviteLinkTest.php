@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class EditChatInviteLinkTest extends TestCase
@@ -61,7 +61,7 @@ final class EditChatInviteLinkTest extends TestCase
             'creates_join_request' => true,
             'is_primary' => true,
             'is_revoked' => false,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(23, $preparedResult->creator->id);
     }

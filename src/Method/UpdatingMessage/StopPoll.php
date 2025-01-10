@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Poll;
 
 /**
  * @see https://core.telegram.org/bots/api#stoppoll
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Poll>>
+ * @template-implements MethodInterface<class-string<Poll>>
  */
-final readonly class StopPoll implements TelegramRequestWithResultPreparingInterface
+final readonly class StopPoll implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

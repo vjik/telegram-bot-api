@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
@@ -47,7 +47,7 @@ final class GetUpdatesTest extends TestCase
         $preparedResult = TestHelper::createSuccessStubApi([
             ['update_id' => 1],
             ['update_id' => 2],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(2, $preparedResult);
         $this->assertSame(1, $preparedResult[0]->updateId);

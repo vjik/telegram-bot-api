@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MenuButtonValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmenubutton
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<MenuButtonValue>
+ * @template-implements MethodInterface<MenuButtonValue>
  */
-final readonly class GetChatMenuButton implements TelegramRequestWithResultPreparingInterface
+final readonly class GetChatMenuButton implements MethodInterface
 {
     public function __construct(
         private ?int $chatId = null,

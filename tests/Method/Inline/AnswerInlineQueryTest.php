@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Inline;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
@@ -55,7 +55,7 @@ final class AnswerInlineQueryTest extends TestCase
     {
         $method = new AnswerInlineQuery('id', []);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

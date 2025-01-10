@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 
 /**
  * @see https://core.telegram.org/bots/api#createforumtopic
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<ForumTopic>>
+ * @template-implements MethodInterface<class-string<ForumTopic>>
  */
-final readonly class CreateForumTopic implements TelegramRequestWithResultPreparingInterface
+final readonly class CreateForumTopic implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

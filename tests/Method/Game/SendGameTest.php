@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Game;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -74,7 +74,7 @@ final class SendGameTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(7, $preparedResult->messageId);
     }

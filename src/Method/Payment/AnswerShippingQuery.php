@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 
 /**
  * @see https://core.telegram.org/bots/api#answershippingquery
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class AnswerShippingQuery implements TelegramRequestWithResultPreparingInterface
+final readonly class AnswerShippingQuery implements MethodInterface
 {
     /**
      * @param ShippingOption[]|null $shippingOptions

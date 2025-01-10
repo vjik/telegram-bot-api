@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class BanChatMemberTest extends TestCase
@@ -47,7 +47,7 @@ final class BanChatMemberTest extends TestCase
     {
         $method = new BanChatMember(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class DeclineChatJoinRequestTest extends TestCase
@@ -30,7 +30,7 @@ final class DeclineChatJoinRequestTest extends TestCase
     {
         $method = new DeclineChatJoinRequest(1, 2);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

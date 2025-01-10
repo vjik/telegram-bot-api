@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
@@ -17,9 +17,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#copymessage
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<MessageId>>
+ * @template-implements MethodInterface<class-string<MessageId>>
  */
-final readonly class CopyMessage implements TelegramRequestWithResultPreparingInterface
+final readonly class CopyMessage implements MethodInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities

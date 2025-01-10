@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -18,9 +18,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendanimation
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
+ * @template-implements MethodInterface<class-string<Message>>
  */
-final readonly class SendAnimation implements TelegramRequestWithResultPreparingInterface
+final readonly class SendAnimation implements MethodInterface
 {
     /**
      * @param MessageEntity[]|null $captionEntities

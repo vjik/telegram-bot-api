@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
 /**
  * @see https://core.telegram.org/bots/api#setmydefaultadministratorrights
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetMyDefaultAdministratorRights implements TelegramRequestWithResultPreparingInterface
+final readonly class SetMyDefaultAdministratorRights implements MethodInterface
 {
     public function __construct(
         private ?ChatAdministratorRights $rights = null,

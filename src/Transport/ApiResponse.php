@@ -2,9 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Client;
+namespace Vjik\TelegramBot\Api\Transport;
 
-final readonly class TelegramResponse
+final readonly class ApiResponse
 {
     public function __construct(
         public int $statusCode,

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class RefundStarPaymentTest extends TestCase
@@ -30,7 +30,7 @@ final class RefundStarPaymentTest extends TestCase
     {
         $method = new RefundStarPayment(1, 'test');
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
         $this->assertTrue($preparedResult);
     }

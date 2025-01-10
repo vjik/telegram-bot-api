@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\FileCollector;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputPaidMedia;
@@ -19,9 +19,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendpaidmedia
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<Message>>
+ * @template-implements MethodInterface<class-string<Message>>
  */
-final readonly class SendPaidMedia implements TelegramRequestWithResultPreparingInterface
+final readonly class SendPaidMedia implements MethodInterface
 {
     /**
      * @param InputPaidMedia[] $media
@@ -56,7 +56,7 @@ final readonly class SendPaidMedia implements TelegramRequestWithResultPreparing
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $media = array_map(
             static function (InputPaidMedia $inputMedia) use ($fileCollector): array {
                 return $inputMedia->toRequestArray($fileCollector);

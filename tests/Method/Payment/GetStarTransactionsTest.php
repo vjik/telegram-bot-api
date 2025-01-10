@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetStarTransactionsTest extends TestCase
@@ -38,7 +38,7 @@ final class GetStarTransactionsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'transactions' => [],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame([], $preparedResult->transactions);
     }

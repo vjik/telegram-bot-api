@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#getcustomemojistickers
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Sticker>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<Sticker>>
  */
-final readonly class GetCustomEmojiStickers implements TelegramRequestWithResultPreparingInterface
+final readonly class GetCustomEmojiStickers implements MethodInterface
 {
     /**
      * @param string[] $customEmojiIds

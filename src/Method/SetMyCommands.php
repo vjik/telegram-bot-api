@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 
 /**
  * @see https://core.telegram.org/bots/api#setmycommands
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetMyCommands implements TelegramRequestWithResultPreparingInterface
+final readonly class SetMyCommands implements MethodInterface
 {
     /**
      * @param BotCommand[] $commands

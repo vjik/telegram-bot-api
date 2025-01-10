@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#exportchatinvitelink
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<StringValue>
+ * @template-implements MethodInterface<StringValue>
  */
-final readonly class ExportChatInviteLink implements TelegramRequestWithResultPreparingInterface
+final readonly class ExportChatInviteLink implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

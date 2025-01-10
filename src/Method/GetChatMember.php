@@ -5,15 +5,15 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmember
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ChatMemberValue>
+ * @template-implements MethodInterface<ChatMemberValue>
  */
-final readonly class GetChatMember implements TelegramRequestWithResultPreparingInterface
+final readonly class GetChatMember implements MethodInterface
 {
     public function __construct(
         private int|string $chatId,

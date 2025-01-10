@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -68,7 +68,7 @@ final class EditMessageLiveLocationTest extends TestCase
     {
         $method = new EditMessageLiveLocation(51.660781, 39.200296);
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
         $this->assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
@@ -78,7 +78,7 @@ final class EditMessageLiveLocationTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
         $this->assertInstanceOf(Message::class, $preparedResult);
         $this->assertSame(7, $preparedResult->messageId);
     }

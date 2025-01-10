@@ -2,61 +2,65 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Client;
+namespace Vjik\TelegramBot\Api\Transport;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
-use Psr\Http\Message\RequestInterface as HttpRequestInterface;
+use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function is_scalar;
 use function is_string;
+use function json_encode;
 
-final readonly class PsrTelegramClient implements TelegramClientInterface
+final readonly class PsrTransport implements TransportInterface
 {
     private ApiUrlGenerator $apiUrlGenerator;
 
     public function __construct(
         private string $token,
-        private ClientInterface $httpClient,
-        private RequestFactoryInterface $httpRequestFactory,
+        private ClientInterface $client,
+        private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
         private string $baseUrl = 'https://api.telegram.org',
     ) {
         $this->apiUrlGenerator = new ApiUrlGenerator($this->token, $this->baseUrl);
     }
 
-    public function send(TelegramRequestInterface $request): TelegramResponse
-    {
-        $httpResponse = $this->httpClient->sendRequest(
-            match ($request->getHttpMethod()) {
-                HttpMethod::GET => $this->createGetRequest($request),
-                HttpMethod::POST => $this->createPostRequest($request),
+    public function send(
+        string $apiMethod,
+        array $data = [],
+        HttpMethod $httpMethod = HttpMethod::POST,
+    ): ApiResponse {
+        $response = $this->client->sendRequest(
+            match ($httpMethod) {
+                HttpMethod::GET => $this->createGetRequest($apiMethod, $data),
+                HttpMethod::POST => $this->createPostRequest($apiMethod, $data),
             },
         );
 
-        $body = $httpResponse->getBody();
+        $body = $response->getBody();
         if ($body->isSeekable()) {
             $body->rewind();
         }
 
-        return new TelegramResponse(
-            $httpResponse->getStatusCode(),
+        return new ApiResponse(
+            $response->getStatusCode(),
             $body->getContents(),
         );
     }
 
-    private function createPostRequest(TelegramRequestInterface $request): HttpRequestInterface
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    private function createPostRequest(string $apiMethod, array $data): RequestInterface
     {
-        $httpRequest = $this->httpRequestFactory->createRequest(
+        $request = $this->requestFactory->createRequest(
             'POST',
-            $this->apiUrlGenerator->generate($request->getApiMethod()),
+            $this->apiUrlGenerator->generate($apiMethod),
         );
-
-        $data = $request->getData();
 
         $files = [];
         foreach ($data as $key => $value) {
@@ -67,7 +71,7 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
         }
 
         if (empty($data) && empty($files)) {
-            return $httpRequest;
+            return $request;
         }
         if (empty($files)) {
             $content = json_encode($data, JSON_THROW_ON_ERROR);
@@ -92,22 +96,25 @@ final readonly class PsrTelegramClient implements TelegramClientInterface
             $contentType = 'multipart/form-data; boundary=' . $streamBuilder->getBoundary() . '; charset=utf-8';
         }
 
-        return $httpRequest
+        return $request
             ->withHeader('Content-Length', (string) $body->getSize())
             ->withHeader('Content-Type', $contentType)
             ->withBody($body);
     }
 
-    private function createGetRequest(TelegramRequestInterface $request): HttpRequestInterface
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    private function createGetRequest(string $apiMethod, array $data): RequestInterface
     {
         $queryParameters = [];
-        foreach ($request->getData() as $key => $value) {
+        foreach ($data as $key => $value) {
             $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
         }
 
-        return $this->httpRequestFactory->createRequest(
+        return $this->requestFactory->createRequest(
             'GET',
-            $this->apiUrlGenerator->generate($request->getApiMethod(), $queryParameters),
+            $this->apiUrlGenerator->generate($apiMethod, $queryParameters),
         );
     }
 }

@@ -4,16 +4,16 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 
 /**
  * @see https://core.telegram.org/bots/api#getbusinessconnection
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<class-string<BusinessConnection>>
+ * @template-implements MethodInterface<class-string<BusinessConnection>>
  */
-final readonly class GetBusinessConnection implements TelegramRequestWithResultPreparingInterface
+final readonly class GetBusinessConnection implements MethodInterface
 {
     public function __construct(
         private string $businessConnectionId,

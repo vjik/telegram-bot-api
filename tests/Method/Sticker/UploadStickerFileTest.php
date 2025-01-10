@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
@@ -39,7 +39,7 @@ final class UploadStickerFileTest extends TestCase
             'file_unique_id' => 'fullX1',
             'file_size' => 123,
             'file_path' => 'path/to/file',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('f1', $preparedResult->fileId);
     }

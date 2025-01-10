@@ -5,21 +5,20 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\FailResult;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequest;
+use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
 final class FailResultTest extends TestCase
 {
     public function testBase(): void
     {
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
-        $response = new TelegramResponse(200, 'test');
-        $result = new FailResult($request, $response);
+        $method = new CustomMethod('getMe');
+        $response = new ApiResponse(200, 'test');
+        $result = new FailResult($method, $response);
 
-        $this->assertSame($request, $result->request);
+        $this->assertSame($method, $result->method);
         $this->assertSame($response, $result->response);
         $this->assertNull($result->description);
         $this->assertNull($result->parameters);
@@ -28,13 +27,12 @@ final class FailResultTest extends TestCase
 
     public function testFull(): void
     {
-
-        $request = new TelegramRequest(HttpMethod::GET, 'getMe');
-        $response = new TelegramResponse(200, 'test');
+        $method = new CustomMethod('getMe');
+        $response = new ApiResponse(200, 'test');
         $responseParameters = new ResponseParameters();
-        $result = new FailResult($request, $response, 'desc', $responseParameters, 200);
+        $result = new FailResult($method, $response, 'desc', $responseParameters, 200);
 
-        $this->assertSame($request, $result->request);
+        $this->assertSame($method, $result->method);
         $this->assertSame($response, $result->response);
         $this->assertSame('desc', $result->description);
         $this->assertSame($responseParameters, $result->parameters);

@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetUserProfilePhotosTest extends TestCase
@@ -60,7 +60,7 @@ final class GetUserProfilePhotosTest extends TestCase
                     ],
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(1, $preparedResult->totalCount);
         $this->assertCount(1, $preparedResult->photos);

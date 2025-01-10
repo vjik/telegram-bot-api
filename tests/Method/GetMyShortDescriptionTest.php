@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetMyShortDescriptionTest extends TestCase
@@ -38,7 +38,7 @@ final class GetMyShortDescriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'short_description' => 'test',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test', $preparedResult->shortDescription);
     }

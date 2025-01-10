@@ -6,15 +6,15 @@ namespace Vjik\TelegramBot\Api\Method;
 
 use DateTimeImmutable;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 
 /**
  * @see https://core.telegram.org/bots/api#setuseremojistatus
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class SetUserEmojiStatus implements TelegramRequestWithResultPreparingInterface
+final readonly class SetUserEmojiStatus implements MethodInterface
 {
     public function __construct(
         private int $userId,

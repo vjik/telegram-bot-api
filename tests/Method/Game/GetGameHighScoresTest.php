@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Game;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Game\GetGameHighScores;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 
@@ -55,7 +55,7 @@ final class GetGameHighScoresTest extends TestCase
                 ],
                 'score' => 300,
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(1, $preparedResult);
         $this->assertInstanceOf(GameHighScore::class, $preparedResult[0]);

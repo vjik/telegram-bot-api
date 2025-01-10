@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Constant\Sticker\StickerFormat;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
@@ -31,7 +31,7 @@ final class InputStickerTest extends TestCase
             $inputSticker->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $this->assertSame(
             [
                 'sticker' => 'https://example.com/emoji.png',
@@ -66,7 +66,7 @@ final class InputStickerTest extends TestCase
             $inputSticker->toRequestArray(),
         );
 
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $this->assertSame(
             [
                 'sticker' => 'attach://file0',

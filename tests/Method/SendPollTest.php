@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\SendPoll;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
@@ -118,7 +118,7 @@ final class SendPollTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(7, $preparedResult->messageId);
     }

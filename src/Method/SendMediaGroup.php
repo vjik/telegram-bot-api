@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\FileCollector;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
 use Vjik\TelegramBot\Api\Type\InputMediaDocument;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
@@ -18,9 +18,9 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendmediagroup
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<Message>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<Message>>
  */
-final readonly class SendMediaGroup implements TelegramRequestWithResultPreparingInterface
+final readonly class SendMediaGroup implements MethodInterface
 {
     /**
      * @param InputMediaAudio[]|InputMediaDocument[]|InputMediaPhoto[]|InputMediaVideo[] $media
@@ -49,7 +49,7 @@ final readonly class SendMediaGroup implements TelegramRequestWithResultPreparin
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $media = array_map(
             static function (
                 InputMediaAudio|InputMediaDocument|InputMediaPhoto|InputMediaVideo $inputMedia,

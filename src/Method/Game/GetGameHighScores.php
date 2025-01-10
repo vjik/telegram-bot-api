@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Game;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 
 /**
  * @see https://core.telegram.org/bots/api#getgamehighscores
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<GameHighScore>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<GameHighScore>>
  */
-final readonly class GetGameHighScores implements TelegramRequestWithResultPreparingInterface
+final readonly class GetGameHighScores implements MethodInterface
 {
     public function __construct(
         private int $userId,

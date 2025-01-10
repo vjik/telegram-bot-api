@@ -6,7 +6,7 @@ namespace Method\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\GetAvailableGifts;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetAvailableGiftsTest extends TestCase
@@ -53,7 +53,7 @@ final class GetAvailableGiftsTest extends TestCase
                     'star_count' => 11,
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertCount(2, $preparedResult->gifts);
     }

@@ -5,16 +5,16 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\MessageId;
 
 /**
  * @see https://core.telegram.org/bots/api#copymessages
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ArrayOfObjectsValue<MessageId>>
+ * @template-implements MethodInterface<ArrayOfObjectsValue<MessageId>>
  */
-final readonly class CopyMessages implements TelegramRequestWithResultPreparingInterface
+final readonly class CopyMessages implements MethodInterface
 {
     /**
      * @param int[] $messageIds

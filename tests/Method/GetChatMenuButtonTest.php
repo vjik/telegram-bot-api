@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetChatMenuButton;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 
@@ -34,7 +34,7 @@ final class GetChatMenuButtonTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'type' => 'default',
-        ])->send($method);
+        ])->call($method);
 
         $this->assertInstanceOf(MenuButtonDefault::class, $preparedResult);
     }

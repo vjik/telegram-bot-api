@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GetChat;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetChatTest extends TestCase
@@ -29,7 +29,7 @@ final class GetChatTest extends TestCase
             'type' => 'private',
             'accent_color_id' => 0x123456,
             'max_reaction_count' => 5,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame(23, $preparedResult->id);
     }

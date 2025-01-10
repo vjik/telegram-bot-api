@@ -7,7 +7,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -71,7 +71,7 @@ final class EditMessageMediaTest extends TestCase
             new InputMediaPhoto('https://example.com/photo.jpg'),
         );
 
-        $preparedResult = TestHelper::createSuccessStubApi(true)->send($method);
+        $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
         $this->assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
@@ -81,7 +81,7 @@ final class EditMessageMediaTest extends TestCase
                 'id' => 1,
                 'type' => 'private',
             ],
-        ])->send($method);
+        ])->call($method);
         $this->assertInstanceOf(Message::class, $preparedResult);
         $this->assertSame(7, $preparedResult->messageId);
     }

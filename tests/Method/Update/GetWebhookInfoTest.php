@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Method\Update;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
@@ -28,7 +28,7 @@ final class GetWebhookInfoTest extends TestCase
             'url' => 'https://example.com/',
             'has_custom_certificate' => true,
             'pending_update_count' => 12,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('https://example.com/', $preparedResult->url);
     }

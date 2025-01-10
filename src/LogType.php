@@ -5,29 +5,28 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api;
 
 use JsonException;
-use Vjik\TelegramBot\Api\Client\TelegramResponse;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 /**
  * @psalm-type SendRequestContext = array{
  *     type: LogType::SEND_REQUEST,
  *     payload: string,
- *     request: TelegramRequestInterface,
+ *     method: MethodInterface,
  * }
  *
  * @psalm-type SuccessResultContext = array{
  *     type: LogType::SUCCESS_RESULT,
  *     payload: string,
- *     request: TelegramRequestInterface,
- *     response: TelegramResponse,
+ *     method: MethodInterface,
+ *     response: ApiResponse,
  *     decodedResponse: mixed
  * }
  *
  * @psalm-type FailResultContext = array{
  *     type: LogType::FAIL_RESULT,
  *     payload: string,
- *     request: TelegramRequestInterface,
- *     response: TelegramResponse,
+ *     method: MethodInterface,
+ *     response: ApiResponse,
  *     decodedResponse: mixed
  * }
  *
@@ -46,17 +45,17 @@ final readonly class LogType
     /**
      * @psalm-return SendRequestContext
      */
-    public static function createSendRequestContext(TelegramRequestInterface $request): array
+    public static function createSendRequestContext(MethodInterface $method): array
     {
         try {
-            $payload = json_encode($request->getData(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
+            $payload = json_encode($method->getData(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
         } catch (JsonException) {
             $payload = '%UNABLE_DATA%';
         }
         return [
             'type' => self::SEND_REQUEST,
             'payload' => $payload,
-            'request' => $request,
+            'method' => $method,
         ];
     }
 
@@ -64,8 +63,8 @@ final readonly class LogType
      * @psalm-return SuccessResultContext
      */
     public static function createSuccessResultContext(
-        TelegramRequestInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         mixed $decodedResponse,
     ): array {
         try {
@@ -76,7 +75,7 @@ final readonly class LogType
         return [
             'type' => self::SUCCESS_RESULT,
             'payload' => $payload,
-            'request' => $request,
+            'method' => $method,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
         ];
@@ -86,14 +85,14 @@ final readonly class LogType
      * @psalm-return FailResultContext
      */
     public static function createFailResultContext(
-        TelegramRequestInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         mixed $decodedResponse,
     ): array {
         return [
             'type' => self::FAIL_RESULT,
             'payload' => $response->body,
-            'request' => $request,
+            'method' => $method,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
         ];

@@ -1,5 +1,15 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.6.0 under development
+
+- Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and 
+  "telegram request" to "method". Classes, namespaces, and variables rename accordingly.
+- Chg #132: Remove `TelegramRequest`.
+- Chg #132: Rename `TelegramClientInterface` to `TransportInterface` and change `send()` method signature.
+- Chg #132: Rename `TelegramRequestWithResultPreparingInterface` to `MethodInterface`.
+- Chg #132: Rename `RequestFileCollector` to `FileCollector` and move to root namespace.
+- Chg #132: Rename `TelegramBotApi::send()` method to `call()`.
+
 ## 0.5.0 January 02, 2025
 
 - New #129: Add `verifyUser`, `verifyChat`, `removeUserVerification` and `removeChatVerification` methods.

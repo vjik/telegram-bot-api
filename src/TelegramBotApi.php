@@ -8,7 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use JsonException;
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
@@ -143,9 +143,7 @@ use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
-use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
@@ -214,7 +212,7 @@ final class TelegramBotApi
     private ResultFactory $resultFactory;
 
     public function __construct(
-        private readonly TelegramClientInterface $telegramClient,
+        private readonly TransportInterface $transport,
         private ?LoggerInterface $logger = null,
     ) {
         $this->resultFactory = new ResultFactory();
@@ -234,29 +232,20 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
-     * @psalm-param TRequest $request
-     * @psalm-return (
-     *      TRequest is TelegramRequestWithResultPreparingInterface<TResultDefinition>
-     *      ? (
-     *          TResultDefinition is class-string
-     *          ? TClass
-     *          : (
-     *              TResultDefinition is null
-     *              ? TRawResult
-     *              : TValue
-     *            )
-     *        )
-     *      : TRawResult
-     * )|FailResult
+     * @psalm-param MethodInterface<TResultDefinition> $method
+     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))|FailResult
      */
-    public function send(TelegramRequestInterface $request): mixed
+    public function call(MethodInterface $method): mixed
     {
         $this->logger?->info(
-            'Send ' . $request->getHttpMethod()->value . '-request "' . $request->getApiMethod() . '".',
-            LogType::createSendRequestContext($request),
+            'Send ' . $method->getHttpMethod()->value . '-request "' . $method->getApiMethod() . '".',
+            LogType::createSendRequestContext($method),
         );
-        $response = $this->telegramClient->send($request);
+        $response = $this->transport->send(
+            $method->getApiMethod(),
+            $method->getData(),
+            $method->getHttpMethod(),
+        );
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -294,16 +283,16 @@ final class TelegramBotApi
         }
 
         if ($decodedBody['ok']) {
-            $result = $this->prepareSuccessResult($request, $response, $decodedBody);
+            $result = $this->prepareSuccessResult($method, $response, $decodedBody);
             $this->logger?->info(
-                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned successful result.',
-                LogType::createSuccessResultContext($request, $response, $decodedBody),
+                'On "' . $method->getApiMethod() . '" request Telegram Bot API returned successful result.',
+                LogType::createSuccessResultContext($method, $response, $decodedBody),
             );
         } else {
-            $result = $this->prepareFailResult($request, $response, $decodedBody);
+            $result = $this->prepareFailResult($method, $response, $decodedBody);
             $this->logger?->warning(
-                'On "' . $request->getApiMethod() . '" request Telegram Bot API returned fail result.',
-                LogType::createFailResultContext($request, $response, $decodedBody),
+                'On "' . $method->getApiMethod() . '" request Telegram Bot API returned fail result.',
+                LogType::createFailResultContext($method, $response, $decodedBody),
             );
         }
 
@@ -315,7 +304,7 @@ final class TelegramBotApi
      */
     public function addStickerToSet(int $userId, string $name, InputSticker $sticker): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new AddStickerToSet($userId, $name, $sticker),
         );
     }
@@ -330,7 +319,7 @@ final class TelegramBotApi
         ?string $url = null,
         ?int $cacheTime = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new AnswerCallbackQuery($callbackQueryId, $text, $showAlert, $url, $cacheTime),
         );
     }
@@ -348,7 +337,7 @@ final class TelegramBotApi
         ?string $nextOffset = null,
         ?InlineQueryResultsButton $button = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new AnswerInlineQuery($inlineQueryId, $results, $cacheTime, $isPersonal, $nextOffset, $button),
         );
     }
@@ -361,7 +350,7 @@ final class TelegramBotApi
         bool $ok,
         ?string $errorMessage = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new AnswerPreCheckoutQuery($preCheckoutQueryId, $ok, $errorMessage),
         );
     }
@@ -377,7 +366,7 @@ final class TelegramBotApi
         ?array $shippingOptions = null,
         ?string $errorMessage = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new AnswerShippingQuery($shippingQueryId, $ok, $shippingOptions, $errorMessage),
         );
     }
@@ -387,7 +376,7 @@ final class TelegramBotApi
      */
     public function answerWebAppQuery(string $webAppQueryId, InlineQueryResult $result): FailResult|SentWebAppMessage
     {
-        return $this->send(
+        return $this->call(
             new AnswerWebAppQuery($webAppQueryId, $result),
         );
     }
@@ -397,7 +386,7 @@ final class TelegramBotApi
      */
     public function approveChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new ApproveChatJoinRequest($chatId, $userId),
         );
     }
@@ -411,7 +400,7 @@ final class TelegramBotApi
         ?DateTimeInterface $untilDate = null,
         ?bool $revokeMessages = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new BanChatMember($chatId, $userId, $untilDate, $revokeMessages),
         );
     }
@@ -421,7 +410,7 @@ final class TelegramBotApi
      */
     public function banChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new BanChatSenderChat($chatId, $senderChatId),
         );
     }
@@ -431,7 +420,7 @@ final class TelegramBotApi
      */
     public function close(): FailResult|true
     {
-        return $this->send(new Close());
+        return $this->call(new Close());
     }
 
     /**
@@ -439,7 +428,7 @@ final class TelegramBotApi
      */
     public function closeForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
-        return $this->send(new CloseForumTopic($chatId, $messageThreadId));
+        return $this->call(new CloseForumTopic($chatId, $messageThreadId));
     }
 
     /**
@@ -447,7 +436,7 @@ final class TelegramBotApi
      */
     public function closeGeneralForumTopic(int|string $chatId): FailResult|true
     {
-        return $this->send(new CloseGeneralForumTopic($chatId));
+        return $this->call(new CloseGeneralForumTopic($chatId));
     }
 
     /**
@@ -470,7 +459,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|MessageId {
-        return $this->send(
+        return $this->call(
             new CopyMessage(
                 $chatId,
                 $fromChatId,
@@ -504,7 +493,7 @@ final class TelegramBotApi
         ?bool $protectContent = null,
         ?bool $removeCaption = null,
     ): FailResult|array {
-        return $this->send(
+        return $this->call(
             new CopyMessages(
                 $chatId,
                 $fromChatId,
@@ -527,7 +516,7 @@ final class TelegramBotApi
         ?int $memberLimit = null,
         ?bool $createsJoinRequest = null,
     ): FailResult|ChatInviteLink {
-        return $this->send(
+        return $this->call(
             new CreateChatInviteLink($chatId, $name, $expireDate, $memberLimit, $createsJoinRequest),
         );
     }
@@ -541,7 +530,7 @@ final class TelegramBotApi
         int $subscriptionPrice,
         ?string $name = null,
     ): FailResult|ChatInviteLink {
-        return $this->send(
+        return $this->call(
             new CreateChatSubscriptionInviteLink($chatId, $subscriptionPeriod, $subscriptionPrice, $name),
         );
     }
@@ -555,7 +544,7 @@ final class TelegramBotApi
         ?int $iconColor = null,
         ?string $iconCustomEmojiId = null,
     ): FailResult|ForumTopic {
-        return $this->send(
+        return $this->call(
             new CreateForumTopic($chatId, $name, $iconColor, $iconCustomEmojiId),
         );
     }
@@ -590,7 +579,7 @@ final class TelegramBotApi
         ?int $subscriptionPeriod = null,
         ?string $businessConnectionId = null,
     ): FailResult|string {
-        return $this->send(
+        return $this->call(
             new CreateInvoiceLink(
                 $title,
                 $description,
@@ -631,7 +620,7 @@ final class TelegramBotApi
         ?string $stickerType = null,
         ?bool $needsRepainting = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new CreateNewStickerSet($userId, $name, $title, $stickers, $stickerType, $needsRepainting),
         );
     }
@@ -641,7 +630,7 @@ final class TelegramBotApi
      */
     public function declineChatJoinRequest(int|string $chatId, int $userId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new DeclineChatJoinRequest($chatId, $userId),
         );
     }
@@ -651,7 +640,7 @@ final class TelegramBotApi
      */
     public function deleteChatPhoto(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new DeleteChatPhoto($chatId),
         );
     }
@@ -661,7 +650,7 @@ final class TelegramBotApi
      */
     public function deleteChatStickerSet(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new DeleteChatStickerSet($chatId),
         );
     }
@@ -671,7 +660,7 @@ final class TelegramBotApi
      */
     public function deleteForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
-        return $this->send(new DeleteForumTopic($chatId, $messageThreadId));
+        return $this->call(new DeleteForumTopic($chatId, $messageThreadId));
     }
 
     /**
@@ -679,7 +668,7 @@ final class TelegramBotApi
      */
     public function deleteMessage(int|string $chatId, int $messageId): FailResult|true
     {
-        return $this->send(new DeleteMessage($chatId, $messageId));
+        return $this->call(new DeleteMessage($chatId, $messageId));
     }
 
     /**
@@ -689,7 +678,7 @@ final class TelegramBotApi
      */
     public function deleteMessages(int|string $chatId, array $messageIds): FailResult|true
     {
-        return $this->send(new DeleteMessages($chatId, $messageIds));
+        return $this->call(new DeleteMessages($chatId, $messageIds));
     }
 
     /**
@@ -697,7 +686,7 @@ final class TelegramBotApi
      */
     public function deleteMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|true
     {
-        return $this->send(new DeleteMyCommands($scope, $languageCode));
+        return $this->call(new DeleteMyCommands($scope, $languageCode));
     }
 
     /**
@@ -705,7 +694,7 @@ final class TelegramBotApi
      */
     public function deleteStickerFromSet(string $sticker): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new DeleteStickerFromSet($sticker),
         );
     }
@@ -715,7 +704,7 @@ final class TelegramBotApi
      */
     public function deleteStickerSet(string $name): FailResult|true
     {
-        return $this->send(new DeleteStickerSet($name));
+        return $this->call(new DeleteStickerSet($name));
     }
 
     /**
@@ -729,7 +718,7 @@ final class TelegramBotApi
         ?int $memberLimit = null,
         ?bool $createsJoinRequest = null,
     ): FailResult|ChatInviteLink {
-        return $this->send(
+        return $this->call(
             new EditChatInviteLink($chatId, $inviteLink, $name, $expireDate, $memberLimit, $createsJoinRequest),
         );
     }
@@ -742,7 +731,7 @@ final class TelegramBotApi
         string $inviteLink,
         ?string $name = null,
     ): FailResult|ChatInviteLink {
-        return $this->send(
+        return $this->call(
             new EditChatSubscriptionInviteLink($chatId, $inviteLink, $name),
         );
     }
@@ -756,7 +745,7 @@ final class TelegramBotApi
         ?string $name = null,
         ?string $iconCustomEmojiId = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new EditForumTopic($chatId, $messageThreadId, $name, $iconCustomEmojiId),
         );
     }
@@ -766,7 +755,7 @@ final class TelegramBotApi
      */
     public function editGeneralForumTopic(int|string $chatId, string $name): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new EditGeneralForumTopic($chatId, $name),
         );
     }
@@ -787,7 +776,7 @@ final class TelegramBotApi
         ?bool $showCaptionAboveMedia = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new EditMessageCaption(
                 $businessConnectionId,
                 $chatId,
@@ -818,7 +807,7 @@ final class TelegramBotApi
         ?int $proximityAlertRadius = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new EditMessageLiveLocation(
                 $latitude,
                 $longitude,
@@ -846,7 +835,7 @@ final class TelegramBotApi
         ?string $inlineMessageId = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new EditMessageMedia(
                 $media,
                 $businessConnectionId,
@@ -868,7 +857,7 @@ final class TelegramBotApi
         ?string $inlineMessageId = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new EditMessageReplyMarkup(
                 $businessConnectionId,
                 $chatId,
@@ -895,7 +884,7 @@ final class TelegramBotApi
         ?LinkPreviewOptions $linkPreviewOptions = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new EditMessageText(
                 $text,
                 $businessConnectionId,
@@ -918,7 +907,7 @@ final class TelegramBotApi
         string $telegramPaymentChargeId,
         bool $isCanceled,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new EditUserStarSubscription(
                 $userId,
                 $telegramPaymentChargeId,
@@ -932,7 +921,7 @@ final class TelegramBotApi
      */
     public function exportChatInviteLink(int|string $chatId): FailResult|string
     {
-        return $this->send(
+        return $this->call(
             new ExportChatInviteLink($chatId),
         );
     }
@@ -948,7 +937,7 @@ final class TelegramBotApi
         ?bool $disableNotification = null,
         ?bool $protectContent = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new ForwardMessage(
                 $chatId,
                 $fromChatId,
@@ -974,7 +963,7 @@ final class TelegramBotApi
         ?bool $disableNotification = null,
         ?bool $protectContent = null,
     ): FailResult|array {
-        return $this->send(
+        return $this->call(
             new ForwardMessages(
                 $chatId,
                 $fromChatId,
@@ -991,7 +980,7 @@ final class TelegramBotApi
      */
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
     {
-        return $this->send(new DeleteWebhook($dropPendingUpdates));
+        return $this->call(new DeleteWebhook($dropPendingUpdates));
     }
 
     /**
@@ -999,7 +988,7 @@ final class TelegramBotApi
      */
     public function getAvailableGifts(): FailResult|Gifts
     {
-        return $this->send(new GetAvailableGifts());
+        return $this->call(new GetAvailableGifts());
     }
 
     /**
@@ -1007,7 +996,7 @@ final class TelegramBotApi
      */
     public function getBusinessConnection(string $businessConnectionId): FailResult|BusinessConnection
     {
-        return $this->send(new GetBusinessConnection($businessConnectionId));
+        return $this->call(new GetBusinessConnection($businessConnectionId));
     }
 
     /**
@@ -1015,7 +1004,7 @@ final class TelegramBotApi
      */
     public function getChat(int|string $chatId): FailResult|ChatFullInfo
     {
-        return $this->send(new GetChat($chatId));
+        return $this->call(new GetChat($chatId));
     }
 
     /**
@@ -1025,7 +1014,7 @@ final class TelegramBotApi
      */
     public function getChatAdministrators(int|string $chatId): FailResult|array
     {
-        return $this->send(new GetChatAdministrators($chatId));
+        return $this->call(new GetChatAdministrators($chatId));
     }
 
     /**
@@ -1033,7 +1022,7 @@ final class TelegramBotApi
      */
     public function getChatMemberCount(int|string $chatId): FailResult|int
     {
-        return $this->send(new GetChatMemberCount($chatId));
+        return $this->call(new GetChatMemberCount($chatId));
     }
 
     /**
@@ -1041,7 +1030,7 @@ final class TelegramBotApi
      */
     public function getChatMember(int|string $chatId, int $userId): FailResult|ChatMember
     {
-        return $this->send(new GetChatMember($chatId, $userId));
+        return $this->call(new GetChatMember($chatId, $userId));
     }
 
     /**
@@ -1049,7 +1038,7 @@ final class TelegramBotApi
      */
     public function getChatMenuButton(?int $chatId = null): FailResult|MenuButton
     {
-        return $this->send(new GetChatMenuButton($chatId));
+        return $this->call(new GetChatMenuButton($chatId));
     }
 
     /**
@@ -1060,7 +1049,7 @@ final class TelegramBotApi
      */
     public function getCustomEmojiStickers(array $customEmojiIds): FailResult|array
     {
-        return $this->send(new GetCustomEmojiStickers($customEmojiIds));
+        return $this->call(new GetCustomEmojiStickers($customEmojiIds));
     }
 
     /**
@@ -1068,7 +1057,7 @@ final class TelegramBotApi
      */
     public function getFile(string $fileId): FailResult|File
     {
-        return $this->send(new GetFile($fileId));
+        return $this->call(new GetFile($fileId));
     }
 
     /**
@@ -1078,7 +1067,7 @@ final class TelegramBotApi
      */
     public function getForumTopicIconStickers(): FailResult|array
     {
-        return $this->send(new GetForumTopicIconStickers());
+        return $this->call(new GetForumTopicIconStickers());
     }
 
     /**
@@ -1092,7 +1081,7 @@ final class TelegramBotApi
         ?int $messageId = null,
         ?string $inlineMessageId = null,
     ): FailResult|array {
-        return $this->send(
+        return $this->call(
             new GetGameHighScores($userId, $chatId, $messageId, $inlineMessageId),
         );
     }
@@ -1102,7 +1091,7 @@ final class TelegramBotApi
      */
     public function getMe(): FailResult|User
     {
-        return $this->send(new GetMe());
+        return $this->call(new GetMe());
     }
 
     /**
@@ -1110,7 +1099,7 @@ final class TelegramBotApi
      */
     public function getMyCommands(?BotCommandScope $scope = null, ?string $languageCode = null): FailResult|array
     {
-        return $this->send(new GetMyCommands($scope, $languageCode));
+        return $this->call(new GetMyCommands($scope, $languageCode));
     }
 
     /**
@@ -1118,7 +1107,7 @@ final class TelegramBotApi
      */
     public function getMyDefaultAdministratorRights(?bool $forChannels = null): FailResult|ChatAdministratorRights
     {
-        return $this->send(new GetMyDefaultAdministratorRights($forChannels));
+        return $this->call(new GetMyDefaultAdministratorRights($forChannels));
     }
 
     /**
@@ -1126,7 +1115,7 @@ final class TelegramBotApi
      */
     public function getMyDescription(?string $languageCode = null): FailResult|BotDescription
     {
-        return $this->send(new GetMyDescription($languageCode));
+        return $this->call(new GetMyDescription($languageCode));
     }
 
     /**
@@ -1134,7 +1123,7 @@ final class TelegramBotApi
      */
     public function getMyName(?string $languageCode = null): FailResult|BotName
     {
-        return $this->send(new GetMyName($languageCode));
+        return $this->call(new GetMyName($languageCode));
     }
 
     /**
@@ -1142,7 +1131,7 @@ final class TelegramBotApi
      */
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
-        return $this->send(new GetMyShortDescription($languageCode));
+        return $this->call(new GetMyShortDescription($languageCode));
     }
 
     /**
@@ -1150,7 +1139,7 @@ final class TelegramBotApi
      */
     public function getStarTransactions(?int $offset = null, ?int $limit = null): FailResult|StarTransactions
     {
-        return $this->send(
+        return $this->call(
             new GetStarTransactions($offset, $limit),
         );
     }
@@ -1160,7 +1149,7 @@ final class TelegramBotApi
      */
     public function getStickerSet(string $name): FailResult|StickerSet
     {
-        return $this->send(
+        return $this->call(
             new GetStickerSet($name),
         );
     }
@@ -1177,7 +1166,7 @@ final class TelegramBotApi
         ?int $timeout = null,
         ?array $allowedUpdates = null,
     ): FailResult|array {
-        return $this->send(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
+        return $this->call(new GetUpdates($offset, $limit, $timeout, $allowedUpdates));
     }
 
     /**
@@ -1185,7 +1174,7 @@ final class TelegramBotApi
      */
     public function getUserChatBoosts(int|string $chatId, int $userId): FailResult|UserChatBoosts
     {
-        return $this->send(
+        return $this->call(
             new GetUserChatBoosts($chatId, $userId),
         );
     }
@@ -1198,7 +1187,7 @@ final class TelegramBotApi
         ?int $offset = null,
         ?int $limit = null,
     ): FailResult|UserProfilePhotos {
-        return $this->send(
+        return $this->call(
             new GetUserProfilePhotos($userId, $offset, $limit),
         );
     }
@@ -1208,7 +1197,7 @@ final class TelegramBotApi
      */
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
-        return $this->send(new GetWebhookInfo());
+        return $this->call(new GetWebhookInfo());
     }
 
     /**
@@ -1216,7 +1205,7 @@ final class TelegramBotApi
      */
     public function hideGeneralForumTopic(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new HideGeneralForumTopic($chatId),
         );
     }
@@ -1226,7 +1215,7 @@ final class TelegramBotApi
      */
     public function leaveChat(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new LeaveChat($chatId),
         );
     }
@@ -1236,7 +1225,7 @@ final class TelegramBotApi
      */
     public function logOut(): FailResult|true
     {
-        return $this->send(new LogOut());
+        return $this->call(new LogOut());
     }
 
     /**
@@ -1247,7 +1236,7 @@ final class TelegramBotApi
         int $messageId,
         ?bool $disableNotification = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new PinChatMessage($chatId, $messageId, $disableNotification),
         );
     }
@@ -1274,7 +1263,7 @@ final class TelegramBotApi
         ?bool $canPinMessages = null,
         ?bool $canManageTopics = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new PromoteChatMember(
                 $chatId,
                 $userId,
@@ -1302,7 +1291,7 @@ final class TelegramBotApi
      */
     public function refundStarPayment(int $userId, string $telegramPaymentChargeId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new RefundStarPayment($userId, $telegramPaymentChargeId),
         );
     }
@@ -1312,7 +1301,7 @@ final class TelegramBotApi
      */
     public function removeChatVerification(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new RemoveChatVerification($chatId),
         );
     }
@@ -1322,7 +1311,7 @@ final class TelegramBotApi
      */
     public function removeUserVerification(int $userId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new RemoveUserVerification($userId),
         );
     }
@@ -1332,7 +1321,7 @@ final class TelegramBotApi
      */
     public function reopenForumTopic(int|string $chatId, int $messageThreadId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new ReopenForumTopic($chatId, $messageThreadId),
         );
     }
@@ -1342,7 +1331,7 @@ final class TelegramBotApi
      */
     public function reopenGeneralForumTopic(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new ReopenGeneralForumTopic($chatId),
         );
     }
@@ -1356,7 +1345,7 @@ final class TelegramBotApi
         string $oldSticker,
         InputSticker $sticker,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new ReplaceStickerInSet($userId, $name, $oldSticker, $sticker),
         );
     }
@@ -1371,7 +1360,7 @@ final class TelegramBotApi
         ?bool $useIndependentChatPermissions = null,
         ?DateTimeImmutable $untilDate = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new RestrictChatMember($chatId, $userId, $permissions, $useIndependentChatPermissions, $untilDate),
         );
     }
@@ -1381,7 +1370,7 @@ final class TelegramBotApi
      */
     public function revokeChatInviteLink(int|string $chatId, string $inviteLink): FailResult|ChatInviteLink
     {
-        return $this->send(
+        return $this->call(
             new RevokeChatInviteLink($chatId, $inviteLink),
         );
     }
@@ -1397,7 +1386,7 @@ final class TelegramBotApi
         ?bool $allowGroupChats = null,
         ?bool $allowChannelChats = null,
     ): FailResult|PreparedInlineMessage {
-        return $this->send(
+        return $this->call(
             new SavePreparedInlineMessage(
                 $userId,
                 $result,
@@ -1435,7 +1424,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendAnimation(
                 $chatId,
                 $animation,
@@ -1484,7 +1473,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendAudio(
                 $chatId,
                 $audio,
@@ -1516,7 +1505,7 @@ final class TelegramBotApi
         ?string $businessConnectionId = null,
         ?int $messageThreadId = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SendChatAction(
                 $chatId,
                 $action,
@@ -1544,7 +1533,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendContact(
                 $chatId,
                 $phoneNumber,
@@ -1578,7 +1567,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendDice(
                 $chatId,
                 $businessConnectionId,
@@ -1616,7 +1605,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendDocument(
                 $chatId,
                 $document,
@@ -1652,7 +1641,7 @@ final class TelegramBotApi
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendGame(
                 $chatId,
                 $gameShortName,
@@ -1681,7 +1670,7 @@ final class TelegramBotApi
         ?array $textEntities = null,
         ?bool $payForUpgrade = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SendGift(
                 $userId,
                 $giftId,
@@ -1730,7 +1719,7 @@ final class TelegramBotApi
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendInvoice(
                 $chatId,
                 $title,
@@ -1785,7 +1774,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendLocation(
                 $chatId,
                 $latitude,
@@ -1823,7 +1812,7 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|array {
-        return $this->send(
+        return $this->call(
             new SendMediaGroup(
                 $chatId,
                 $media,
@@ -1858,7 +1847,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendMessage(
                 $chatId,
                 $text,
@@ -1899,7 +1888,7 @@ final class TelegramBotApi
         ?string $payload = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendPaidMedia(
                 $chatId,
                 $starCount,
@@ -1941,7 +1930,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendPhoto(
                 $chatId,
                 $photo,
@@ -1994,7 +1983,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendPoll(
                 $chatId,
                 $question,
@@ -2039,7 +2028,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendSticker(
                 $chatId,
                 $sticker,
@@ -2078,7 +2067,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendVenue(
                 $chatId,
                 $latitude,
@@ -2128,7 +2117,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendVideo(
                 $chatId,
                 $video,
@@ -2172,7 +2161,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendVideoNote(
                 $chatId,
                 $videoNote,
@@ -2212,7 +2201,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
     ): FailResult|Message {
-        return $this->send(
+        return $this->call(
             new SendVoice(
                 $chatId,
                 $voice,
@@ -2240,7 +2229,7 @@ final class TelegramBotApi
         int $userId,
         string $customTitle,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetChatAdministratorCustomTitle($chatId, $userId, $customTitle),
         );
     }
@@ -2250,7 +2239,7 @@ final class TelegramBotApi
      */
     public function setChatDescription(int|string $chatId, ?string $description = null): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new SetChatDescription($chatId, $description),
         );
     }
@@ -2260,7 +2249,7 @@ final class TelegramBotApi
      */
     public function setChatMenuButton(?int $chatId = null, ?MenuButton $menuButton = null): FailResult|true
     {
-        return $this->send(new SetChatMenuButton($chatId, $menuButton));
+        return $this->call(new SetChatMenuButton($chatId, $menuButton));
     }
 
     /**
@@ -2271,7 +2260,7 @@ final class TelegramBotApi
         ChatPermissions $permissions,
         ?bool $useIndependentChatPermissions = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetChatPermissions($chatId, $permissions, $useIndependentChatPermissions),
         );
     }
@@ -2281,7 +2270,7 @@ final class TelegramBotApi
      */
     public function setChatPhoto(int|string $chatId, InputFile $photo): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new SetChatPhoto($chatId, $photo),
         );
     }
@@ -2291,7 +2280,7 @@ final class TelegramBotApi
      */
     public function setChatStickerSet(int|string $chatId, string $stickerSetName): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new SetChatStickerSet($chatId, $stickerSetName),
         );
     }
@@ -2301,7 +2290,7 @@ final class TelegramBotApi
      */
     public function setChatTitle(int|string $chatId, string $title): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new SetChatTitle($chatId, $title),
         );
     }
@@ -2311,7 +2300,7 @@ final class TelegramBotApi
      */
     public function setCustomEmojiStickerSetThumbnail(string $name, ?string $customEmojiId = null): FailResult|true
     {
-        return $this->send(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
+        return $this->call(new SetCustomEmojiStickerSetThumbnail($name, $customEmojiId));
     }
 
     /**
@@ -2326,7 +2315,7 @@ final class TelegramBotApi
         ?int $messageId = null,
         ?string $inlineMessageId = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new SetGameScore(
                 $userId,
                 $score,
@@ -2350,7 +2339,7 @@ final class TelegramBotApi
         ?array $reaction = null,
         ?bool $isBig = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetMessageReaction($chatId, $messageId, $reaction, $isBig),
         );
     }
@@ -2365,7 +2354,7 @@ final class TelegramBotApi
         ?BotCommandScope $scope = null,
         ?string $languageCode = null,
     ): FailResult|true {
-        return $this->send(new SetMyCommands($commands, $scope, $languageCode));
+        return $this->call(new SetMyCommands($commands, $scope, $languageCode));
     }
 
     /**
@@ -2375,7 +2364,7 @@ final class TelegramBotApi
         ?ChatAdministratorRights $rights = null,
         ?bool $forChannels = null,
     ): FailResult|true {
-        return $this->send(new SetMyDefaultAdministratorRights($rights, $forChannels));
+        return $this->call(new SetMyDefaultAdministratorRights($rights, $forChannels));
     }
 
     /**
@@ -2383,7 +2372,7 @@ final class TelegramBotApi
      */
     public function setMyDescription(?string $description = null, ?string $languageCode = null): FailResult|true
     {
-        return $this->send(new SetMyDescription($description, $languageCode));
+        return $this->call(new SetMyDescription($description, $languageCode));
     }
 
     /**
@@ -2391,7 +2380,7 @@ final class TelegramBotApi
      */
     public function setMyName(?string $name = null, ?string $languageCode = null): FailResult|true
     {
-        return $this->send(new SetMyName($name, $languageCode));
+        return $this->call(new SetMyName($name, $languageCode));
     }
 
     /**
@@ -2401,7 +2390,7 @@ final class TelegramBotApi
         ?string $shortDescription = null,
         ?string $languageCode = null,
     ): FailResult|true {
-        return $this->send(new SetMyShortDescription($shortDescription, $languageCode));
+        return $this->call(new SetMyShortDescription($shortDescription, $languageCode));
     }
 
     /**
@@ -2411,7 +2400,7 @@ final class TelegramBotApi
      */
     public function setPassportDataErrors(int $userId, array $errors): FailResult|true
     {
-        return $this->send(new SetPassportDataErrors($userId, $errors));
+        return $this->call(new SetPassportDataErrors($userId, $errors));
     }
 
     /**
@@ -2421,7 +2410,7 @@ final class TelegramBotApi
      */
     public function setStickerEmojiList(string $sticker, array $emojiList): FailResult|true
     {
-        return $this->send(new SetStickerEmojiList($sticker, $emojiList));
+        return $this->call(new SetStickerEmojiList($sticker, $emojiList));
     }
 
     /**
@@ -2431,7 +2420,7 @@ final class TelegramBotApi
      */
     public function setStickerKeywords(string $sticker, ?array $keywords = null): FailResult|true
     {
-        return $this->send(new SetStickerKeywords($sticker, $keywords));
+        return $this->call(new SetStickerKeywords($sticker, $keywords));
     }
 
     /**
@@ -2439,7 +2428,7 @@ final class TelegramBotApi
      */
     public function setStickerMaskPosition(string $sticker, ?MaskPosition $maskPosition = null): FailResult|true
     {
-        return $this->send(new SetStickerMaskPosition($sticker, $maskPosition));
+        return $this->call(new SetStickerMaskPosition($sticker, $maskPosition));
     }
 
     /**
@@ -2447,7 +2436,7 @@ final class TelegramBotApi
      */
     public function setStickerPositionInSet(string $sticker, int $position): FailResult|true
     {
-        return $this->send(new SetStickerPositionInSet($sticker, $position));
+        return $this->call(new SetStickerPositionInSet($sticker, $position));
     }
 
     /**
@@ -2459,7 +2448,7 @@ final class TelegramBotApi
         string $format,
         InputFile|string|null $thumbnail = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetStickerSetThumbnail(
                 $name,
                 $userId,
@@ -2474,7 +2463,7 @@ final class TelegramBotApi
      */
     public function setStickerSetTitle(string $name, string $title): FailResult|true
     {
-        return $this->send(new SetStickerSetTitle($name, $title));
+        return $this->call(new SetStickerSetTitle($name, $title));
     }
 
     /**
@@ -2485,7 +2474,7 @@ final class TelegramBotApi
         ?string $emojiStatusCustomEmojiId = null,
         ?DateTimeImmutable $emojiStatusExpirationDate = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetUserEmojiStatus(
                 $userId,
                 $emojiStatusCustomEmojiId,
@@ -2505,7 +2494,7 @@ final class TelegramBotApi
         ?bool $dropPendingUpdates = null,
         ?string $secretToken = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new SetWebhook($url, $ipAddress, $maxConnections, $allowUpdates, $dropPendingUpdates, $secretToken),
         );
     }
@@ -2520,7 +2509,7 @@ final class TelegramBotApi
         ?string $inlineMessageId = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Message|true {
-        return $this->send(
+        return $this->call(
             new StopMessageLiveLocation(
                 $businessConnectionId,
                 $chatId,
@@ -2540,7 +2529,7 @@ final class TelegramBotApi
         ?string $businessConnectionId = null,
         ?InlineKeyboardMarkup $replyMarkup = null,
     ): FailResult|Poll {
-        return $this->send(
+        return $this->call(
             new StopPoll(
                 $chatId,
                 $messageId,
@@ -2558,7 +2547,7 @@ final class TelegramBotApi
         int $userId,
         ?bool $onlyIfBanned = null,
     ): FailResult|true {
-        return $this->send(
+        return $this->call(
             new UnbanChatMember($chatId, $userId, $onlyIfBanned),
         );
     }
@@ -2568,7 +2557,7 @@ final class TelegramBotApi
      */
     public function unbanChatSenderChat(int|string $chatId, int $senderChatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnbanChatSenderChat($chatId, $senderChatId),
         );
     }
@@ -2578,7 +2567,7 @@ final class TelegramBotApi
      */
     public function unhideGeneralForumTopic(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnhideGeneralForumTopic($chatId),
         );
     }
@@ -2588,7 +2577,7 @@ final class TelegramBotApi
      */
     public function unpinChatMessage(int|string $chatId, ?int $messageId = null): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnpinChatMessage($chatId, $messageId),
         );
     }
@@ -2598,7 +2587,7 @@ final class TelegramBotApi
      */
     public function unpinAllChatMessages(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnpinAllChatMessages($chatId),
         );
     }
@@ -2608,7 +2597,7 @@ final class TelegramBotApi
      */
     public function unpinAllForumTopicMessages(int|string $chatId, int $messageThreadId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnpinAllForumTopicMessages($chatId, $messageThreadId),
         );
     }
@@ -2618,7 +2607,7 @@ final class TelegramBotApi
      */
     public function unpinAllGeneralForumTopicMessages(int|string $chatId): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new UnpinAllGeneralForumTopicMessages($chatId),
         );
     }
@@ -2628,7 +2617,7 @@ final class TelegramBotApi
      */
     public function uploadStickerFile(int $userId, InputFile $sticker, string $stickerFormat): FailResult|File
     {
-        return $this->send(
+        return $this->call(
             new UploadStickerFile($userId, $sticker, $stickerFormat),
         );
     }
@@ -2638,7 +2627,7 @@ final class TelegramBotApi
      */
     public function verifyChat(int|string $chatId, ?string $customDescription = null): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new VerifyChat($chatId, $customDescription),
         );
     }
@@ -2648,7 +2637,7 @@ final class TelegramBotApi
      */
     public function verifyUser(int $userId, ?string $customDescription = null): FailResult|true
     {
-        return $this->send(
+        return $this->call(
             new VerifyUser($userId, $customDescription),
         );
     }
@@ -2658,26 +2647,14 @@ final class TelegramBotApi
      * @psalm-template TValue as mixed
      * @psalm-template TRawResult as mixed
      * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TRequest as TelegramRequestInterface|TelegramRequestWithResultPreparingInterface<TResultDefinition>
-     * @psalm-param TRequest $request
+     * @psalm-template TMethod as MethodInterface<TResultDefinition>
+     * @psalm-param TMethod $method
      * @psalm-param array{result?:TRawResult, ...} $decodedBody
-     * @psalm-return (
-     *      TRequest is TelegramRequestWithResultPreparingInterface
-     *      ? (
-     *          TResultDefinition is class-string
-     *          ? TClass
-     *          : (
-     *              TResultDefinition is null
-     *              ? TRawResult
-     *              : TValue
-     *            )
-     *        )
-     *      : TRawResult
-     * )
+     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))
      */
     private function prepareSuccessResult(
-        TelegramRequestInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         array $decodedBody,
     ): mixed {
         if (!array_key_exists('result', $decodedBody)) {
@@ -2690,11 +2667,11 @@ final class TelegramBotApi
             );
         }
 
-        if (!$request instanceof TelegramRequestWithResultPreparingInterface) {
+        if (!$method instanceof MethodInterface) {
             return $decodedBody['result'];
         }
 
-        $resultType = $request->getResultType();
+        $resultType = $method->getResultType();
         if ($resultType === null) {
             return $decodedBody['result'];
         }
@@ -2711,12 +2688,12 @@ final class TelegramBotApi
     }
 
     private function prepareFailResult(
-        TelegramRequestInterface $request,
-        TelegramResponse $response,
+        MethodInterface $method,
+        ApiResponse $response,
         array $decodedBody,
     ): FailResult {
         return new FailResult(
-            $request,
+            $method,
             $response,
             (isset($decodedBody['description']) && is_string($decodedBody['description']))
                 ? $decodedBody['description']

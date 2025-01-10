@@ -10,16 +10,16 @@ Pass logger to `TelegramBotApi` constructor:
 
 ```php
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Client\TelegramClientInterface;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**
- * @var TelegramClientInterface $telegramClient
+ * @var TransportInterface $transport
  * @var LoggerInterface $logger
  */
 
 // API
-$api = new TelegramBotApi($telegramClient, $logger);
+$api = new TelegramBotApi($transport, $logger);
 ```
 
 You can use logger on create `Update` object also:
@@ -49,7 +49,7 @@ To logger passed 4 types of messages.
 [
     'type' => LogType::SEND_REQUEST,
     'payload' => $payload, // Request data as JSON encoded string
-    'request' => $request, // `TelegramRequestInterface` implementation
+    'method' => $method, // `MethodInterface` implementation
 ]
 ```
 
@@ -59,8 +59,8 @@ To logger passed 4 types of messages.
 [
     'type' => LogType::SUCCESS_RESULT,
     'payload' => $payload, // Response body as JSON encoded string
-    'request' => $request, // `TelegramRequestInterface` implementation
-    'response' => $response, // `TelegramResponse` object
+    'method' => $method, // `MethodInterface` implementation
+    'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 
 ]
 ```
@@ -71,8 +71,8 @@ To logger passed 4 types of messages.
 [
     'type' => LogType::FAIL_RESULT,
     'payload' => $payload, // Response body as JSON encoded string
-    'request' => $request, // `TelegramRequestInterface` implementation
-    'response' => $response, // `TelegramResponse` object
+    'method' => $method, // `MethodInterface` implementation
+    'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 
 ]
 ```

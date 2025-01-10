@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectOrTrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\FileCollector;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputMedia;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -15,9 +15,9 @@ use Vjik\TelegramBot\Api\Type\Message;
 /**
  * @see https://core.telegram.org/bots/api#editmessagemedia
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<ObjectOrTrueValue<Message>>
+ * @template-implements MethodInterface<ObjectOrTrueValue<Message>>
  */
-final readonly class EditMessageMedia implements TelegramRequestWithResultPreparingInterface
+final readonly class EditMessageMedia implements MethodInterface
 {
     public function __construct(
         private InputMedia $media,
@@ -40,7 +40,7 @@ final readonly class EditMessageMedia implements TelegramRequestWithResultPrepar
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $media = $this->media->toRequestArray($fileCollector);
 
         return array_filter(

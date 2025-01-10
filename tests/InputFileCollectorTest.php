@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Request;
+namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
+use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
-final class RequestFileCollectorTest extends TestCase
+final class InputFileCollectorTest extends TestCase
 {
     public function testBase(): void
     {
         $file1 = new InputFile((new StreamFactory())->createStream());
         $file2 = new InputFile((new StreamFactory())->createStream());
 
-        $collector = new RequestFileCollector();
+        $collector = new FileCollector();
         $collector->add($file1);
         $collector->add($file2);
 
@@ -33,7 +33,7 @@ final class RequestFileCollectorTest extends TestCase
         $file1 = new InputFile((new StreamFactory())->createStream());
         $file2 = new InputFile((new StreamFactory())->createStream());
 
-        $collector = new RequestFileCollector('test', 23);
+        $collector = new FileCollector('test', 23);
         $collector->add($file1);
         $collector->add($file2);
 

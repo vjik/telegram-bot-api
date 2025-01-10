@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -59,7 +59,7 @@ final class StopPollTest extends TestCase
             'is_anonymous' => false,
             'type' => 'regular',
             'allows_multiple_answers' => true,
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('12', $preparedResult->id);
     }

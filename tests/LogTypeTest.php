@@ -7,18 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests;
 use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Client\TelegramResponse;
+use Vjik\TelegramBot\Api\CustomMethod;
+use Vjik\TelegramBot\Api\MethodInterface;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\LogType;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\TelegramRequestInterface;
-use Vjik\TelegramBot\Api\Tests\Support\StubTelegramRequest;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 final class LogTypeTest extends TestCase
 {
     public static function dataCreateSendRequestContext(): Generator
     {
-        $request = new StubTelegramRequest(
-            HttpMethod::POST,
+        $method = new CustomMethod(
             'getMe',
             ['param1' => 'Привет'],
         );
@@ -26,13 +25,12 @@ final class LogTypeTest extends TestCase
             [
                 'type' => LogType::SEND_REQUEST,
                 'payload' => '{"param1":"Привет"}',
-                'request' => $request,
+                'method' => $method,
             ],
-            $request,
+            $method,
         ];
 
-        $request = new StubTelegramRequest(
-            HttpMethod::POST,
+        $method = new CustomMethod(
             'getMe',
             ['param1' => fopen('php://temp', 'r+')],
         );
@@ -40,49 +38,51 @@ final class LogTypeTest extends TestCase
             [
                 'type' => LogType::SEND_REQUEST,
                 'payload' => '%UNABLE_DATA%',
-                'request' => $request,
+                'method' => $method,
             ],
-            $request,
+            $method,
         ];
     }
 
     #[DataProvider('dataCreateSendRequestContext')]
-    public function testCreateSendRequestContext(array $expected, TelegramRequestInterface $request): void
-    {
+    public function testCreateSendRequestContext(
+        array $expected,
+        MethodInterface $request,
+    ): void {
         $context = LogType::createSendRequestContext($request);
         $this->assertSame($expected, $context);
     }
 
     public static function dataCreateSuccessResultContext(): Generator
     {
-        $request = new StubTelegramRequest();
-        $response = new TelegramResponse(200, '');
+        $method = new CustomMethod('getMe');
+        $response = new ApiResponse(200, '');
         $decodedResponse = ['param1' => 'Привет'];
         yield 'base' => [
             [
                 'type' => LogType::SUCCESS_RESULT,
                 'payload' => '{"param1":"Привет"}',
-                'request' => $request,
+                'method' => $method,
                 'response' => $response,
                 'decodedResponse' => $decodedResponse,
             ],
-            $request,
+            $method,
             $response,
             $decodedResponse,
         ];
 
-        $request = new StubTelegramRequest();
-        $response = new TelegramResponse(200, '{"param1":"Привет"}');
+        $method = new CustomMethod('getMe');
+        $response = new ApiResponse(200, '{"param1":"Привет"}');
         $decodedResponse = fopen('php://temp', 'r+');
         yield 'json-error' => [
             [
                 'type' => LogType::SUCCESS_RESULT,
                 'payload' => '{"param1":"Привет"}',
-                'request' => $request,
+                'method' => $method,
                 'response' => $response,
                 'decodedResponse' => $decodedResponse,
             ],
-            $request,
+            $method,
             $response,
             $decodedResponse,
         ];
@@ -91,8 +91,8 @@ final class LogTypeTest extends TestCase
     #[DataProvider('dataCreateSuccessResultContext')]
     public function testCreateSuccessResultContext(
         array $expected,
-        TelegramRequestInterface $request,
-        TelegramResponse $response,
+        MethodInterface $request,
+        ApiResponse $response,
         mixed $decodedResponse,
     ): void {
         $context = LogType::createSuccessResultContext($request, $response, $decodedResponse);
@@ -101,17 +101,17 @@ final class LogTypeTest extends TestCase
 
     public function testCreateFailResultContext(): void
     {
-        $request = new StubTelegramRequest();
-        $response = new TelegramResponse(200, 'test');
+        $method = new CustomMethod('getMe');
+        $response = new ApiResponse(200, 'test');
         $decodedResponse = ['param1' => 'Привет'];
 
-        $context = LogType::createFailResultContext($request, $response, $decodedResponse);
+        $context = LogType::createFailResultContext($method, $response, $decodedResponse);
 
         $this->assertSame(
             [
                 'type' => LogType::FAIL_RESULT,
                 'payload' => 'test',
-                'request' => $request,
+                'method' => $method,
                 'response' => $response,
                 'decodedResponse' => $decodedResponse,
             ],

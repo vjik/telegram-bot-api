@@ -6,7 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
 final class GetStickerSetTest extends TestCase
@@ -44,7 +44,7 @@ final class GetStickerSetTest extends TestCase
                     'is_video' => false,
                 ],
             ],
-        ])->send($method);
+        ])->call($method);
 
         $this->assertSame('test name', $preparedResult->title);
     }

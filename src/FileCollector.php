@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Request;
+namespace Vjik\TelegramBot\Api;
 
 use Vjik\TelegramBot\Api\Type\InputFile;
 
-final class RequestFileCollector
+final class FileCollector
 {
     private int $counter;
 
@@ -16,7 +16,7 @@ final class RequestFileCollector
     private array $files = [];
 
     public function __construct(
-        private string $prefix = 'file',
+        private readonly string $prefix = 'file',
         int $start = 0,
     ) {
         $this->counter = $start;

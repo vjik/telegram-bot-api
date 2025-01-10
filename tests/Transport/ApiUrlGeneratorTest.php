@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Client;
+namespace Vjik\TelegramBot\Api\Tests\Transport;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Client\ApiUrlGenerator;
+use Vjik\TelegramBot\Api\Transport\ApiUrlGenerator;
 
 final class ApiUrlGeneratorTest extends TestCase
 {

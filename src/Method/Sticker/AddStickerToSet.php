@@ -5,17 +5,17 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Method\Sticker;
 
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
-use Vjik\TelegramBot\Api\Request\HttpMethod;
-use Vjik\TelegramBot\Api\Request\RequestFileCollector;
-use Vjik\TelegramBot\Api\Request\TelegramRequestWithResultPreparingInterface;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\FileCollector;
+use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
 /**
  * @see https://core.telegram.org/bots/api#addstickertoset
  *
- * @template-implements TelegramRequestWithResultPreparingInterface<TrueValue>
+ * @template-implements MethodInterface<TrueValue>
  */
-final readonly class AddStickerToSet implements TelegramRequestWithResultPreparingInterface
+final readonly class AddStickerToSet implements MethodInterface
 {
     public function __construct(
         private int $userId,
@@ -35,7 +35,7 @@ final readonly class AddStickerToSet implements TelegramRequestWithResultPrepari
 
     public function getData(): array
     {
-        $fileCollector = new RequestFileCollector();
+        $fileCollector = new FileCollector();
         $sticker = $this->sticker->toRequestArray($fileCollector);
 
         return [
