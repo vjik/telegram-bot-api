@@ -84,6 +84,14 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(User::class, $result);
         $this->assertSame(1, $result->id);
 
+        $decodedResponse = [
+            'ok' => true,
+            'result' => [
+                'id' => 1,
+                'is_bot' => false,
+                'first_name' => 'Sergei',
+            ],
+        ];
         $this->assertSame(
             [
                 [
@@ -100,17 +108,10 @@ final class TelegramBotApiTest extends TestCase
                     'message' => 'On "getMe" request Telegram Bot API returned successful result.',
                     'context' => [
                         'type' => 2,
-                        'payload' => '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}',
+                        'payload' => $decodedResponse,
                         'method' => $method,
                         'response' => $response,
-                        'decodedResponse' => [
-                            'ok' => true,
-                            'result' => [
-                                'id' => 1,
-                                'is_bot' => false,
-                                'first_name' => 'Sergei',
-                            ],
-                        ],
+                        'decodedResponse' => $decodedResponse,
                     ],
                 ],
             ],

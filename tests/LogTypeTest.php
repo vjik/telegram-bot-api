@@ -61,23 +61,7 @@ final class LogTypeTest extends TestCase
         yield 'base' => [
             [
                 'type' => LogType::SUCCESS_RESULT,
-                'payload' => '{"param1":"Привет"}',
-                'method' => $method,
-                'response' => $response,
-                'decodedResponse' => $decodedResponse,
-            ],
-            $method,
-            $response,
-            $decodedResponse,
-        ];
-
-        $method = new CustomMethod('getMe');
-        $response = new ApiResponse(200, '{"param1":"Привет"}');
-        $decodedResponse = fopen('php://temp', 'r+');
-        yield 'json-error' => [
-            [
-                'type' => LogType::SUCCESS_RESULT,
-                'payload' => '{"param1":"Привет"}',
+                'payload' => $decodedResponse,
                 'method' => $method,
                 'response' => $response,
                 'decodedResponse' => $decodedResponse,
@@ -93,7 +77,7 @@ final class LogTypeTest extends TestCase
         array $expected,
         MethodInterface $request,
         ApiResponse $response,
-        mixed $decodedResponse,
+        array $decodedResponse,
     ): void {
         $context = LogType::createSuccessResultContext($request, $response, $decodedResponse);
         $this->assertSame($expected, $context);

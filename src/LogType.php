@@ -8,14 +8,6 @@ use JsonException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 /**
- * @psalm-type SuccessResultContext = array{
- *     type: LogType::SUCCESS_RESULT,
- *     payload: string,
- *     method: MethodInterface,
- *     response: ApiResponse,
- *     decodedResponse: mixed
- * }
- *
  * @psalm-type FailResultContext = array{
  *     type: LogType::FAIL_RESULT,
  *     payload: string,
@@ -38,10 +30,10 @@ final readonly class LogType
 
     /**
      * @psalm-return array{
-     *      type: LogType::SEND_REQUEST,
-     *      payload: array<string, mixed>,
-     *      method: MethodInterface,
-     *  }
+     *     type: LogType::SEND_REQUEST,
+     *     payload: array<string, mixed>,
+     *     method: MethodInterface,
+     * }
      */
     public static function createSendRequestContext(MethodInterface $method): array
     {
@@ -53,21 +45,22 @@ final readonly class LogType
     }
 
     /**
-     * @psalm-return SuccessResultContext
+     * @psalm-return array{
+     *     type: LogType::SUCCESS_RESULT,
+     *     payload: array,
+     *     method: MethodInterface,
+     *     response: ApiResponse,
+     *     decodedResponse: array
+     * }
      */
     public static function createSuccessResultContext(
         MethodInterface $method,
         ApiResponse $response,
-        mixed $decodedResponse,
+        array $decodedResponse,
     ): array {
-        try {
-            $payload = json_encode($decodedResponse, JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
-        } catch (JsonException) {
-            $payload = $response->body;
-        }
         return [
             'type' => self::SUCCESS_RESULT,
-            'payload' => $payload,
+            'payload' => $decodedResponse,
             'method' => $method,
             'response' => $response,
             'decodedResponse' => $decodedResponse,
