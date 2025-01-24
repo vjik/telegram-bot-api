@@ -48,7 +48,7 @@ To logger passed 4 types of messages.
 ```php
 [
     'type' => LogType::SEND_REQUEST,
-    'payload' => $payload, // Request data as JSON encoded string
+    'payload' => $payload, // Request data as array with string keys
     'method' => $method, // `MethodInterface` implementation
 ]
 ```
@@ -58,7 +58,7 @@ To logger passed 4 types of messages.
 ```php
 [
     'type' => LogType::SUCCESS_RESULT,
-    'payload' => $payload, // Response body as JSON encoded string
+    'payload' => $payload, // Decoded response body as array
     'method' => $method, // `MethodInterface` implementation
     'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 
@@ -70,7 +70,7 @@ To logger passed 4 types of messages.
 ```php
 [
     'type' => LogType::FAIL_RESULT,
-    'payload' => $payload, // Response body as JSON encoded string
+    'payload' => $payload, // Response body as string
     'method' => $method, // `MethodInterface` implementation
     'response' => $response, // `ApiResponse` object
     'decodedResponse' => $decodedResponse, // Decoded response body as array 

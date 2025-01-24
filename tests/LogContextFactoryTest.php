@@ -8,14 +8,14 @@ use Generator;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\CustomMethod;
+use Vjik\TelegramBot\Api\LogContextFactory;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\LogType;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
-final class LogTypeTest extends TestCase
+final class LogContextFactoryTest extends TestCase
 {
-    public static function dataCreateSendRequestContext(): Generator
+    public static function dataSendRequest(): Generator
     {
         $method = new CustomMethod(
             'getMe',
@@ -24,36 +24,37 @@ final class LogTypeTest extends TestCase
         yield 'base' => [
             [
                 'type' => LogType::SEND_REQUEST,
-                'payload' => '{"param1":"Привет"}',
+                'payload' => ['param1' => 'Привет'],
                 'method' => $method,
             ],
             $method,
         ];
 
+        $handle = fopen('php://temp', 'r+');
         $method = new CustomMethod(
             'getMe',
-            ['param1' => fopen('php://temp', 'r+')],
+            ['param1' => $handle],
         );
         yield 'json-error' => [
             [
                 'type' => LogType::SEND_REQUEST,
-                'payload' => '%UNABLE_DATA%',
+                'payload' => ['param1' => $handle],
                 'method' => $method,
             ],
             $method,
         ];
     }
 
-    #[DataProvider('dataCreateSendRequestContext')]
-    public function testCreateSendRequestContext(
+    #[DataProvider('dataSendRequest')]
+    public function testSendRequest(
         array $expected,
         MethodInterface $request,
     ): void {
-        $context = LogType::createSendRequestContext($request);
+        $context = LogContextFactory::sendRequest($request);
         $this->assertSame($expected, $context);
     }
 
-    public static function dataCreateSuccessResultContext(): Generator
+    public static function dataSuccessResult(): Generator
     {
         $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, '');
@@ -61,23 +62,7 @@ final class LogTypeTest extends TestCase
         yield 'base' => [
             [
                 'type' => LogType::SUCCESS_RESULT,
-                'payload' => '{"param1":"Привет"}',
-                'method' => $method,
-                'response' => $response,
-                'decodedResponse' => $decodedResponse,
-            ],
-            $method,
-            $response,
-            $decodedResponse,
-        ];
-
-        $method = new CustomMethod('getMe');
-        $response = new ApiResponse(200, '{"param1":"Привет"}');
-        $decodedResponse = fopen('php://temp', 'r+');
-        yield 'json-error' => [
-            [
-                'type' => LogType::SUCCESS_RESULT,
-                'payload' => '{"param1":"Привет"}',
+                'payload' => $decodedResponse,
                 'method' => $method,
                 'response' => $response,
                 'decodedResponse' => $decodedResponse,
@@ -88,24 +73,24 @@ final class LogTypeTest extends TestCase
         ];
     }
 
-    #[DataProvider('dataCreateSuccessResultContext')]
-    public function testCreateSuccessResultContext(
+    #[DataProvider('dataSuccessResult')]
+    public function testSuccessResult(
         array $expected,
         MethodInterface $request,
         ApiResponse $response,
-        mixed $decodedResponse,
+        array $decodedResponse,
     ): void {
-        $context = LogType::createSuccessResultContext($request, $response, $decodedResponse);
+        $context = LogContextFactory::successResult($request, $response, $decodedResponse);
         $this->assertSame($expected, $context);
     }
 
-    public function testCreateFailResultContext(): void
+    public function testFailResult(): void
     {
         $method = new CustomMethod('getMe');
         $response = new ApiResponse(200, 'test');
         $decodedResponse = ['param1' => 'Привет'];
 
-        $context = LogType::createFailResultContext($method, $response, $decodedResponse);
+        $context = LogContextFactory::failResult($method, $response, $decodedResponse);
 
         $this->assertSame(
             [
@@ -119,9 +104,9 @@ final class LogTypeTest extends TestCase
         );
     }
 
-    public function testCreateParseResultContext(): void
+    public function testParseResult(): void
     {
-        $context = LogType::createParseResultErrorContext('test');
+        $context = LogContextFactory::parseResultError('test');
 
         $this->assertSame(
             [

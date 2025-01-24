@@ -6,7 +6,6 @@ namespace Vjik\TelegramBot\Api\Tests\Transport;
 
 use HttpSoft\Message\Request;
 use HttpSoft\Message\Response;
-use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\Constraint\Callback;
 use PHPUnit\Framework\TestCase;
@@ -14,7 +13,6 @@ use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class PsrTransportTest extends TestCase
