@@ -4,7 +4,6 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api;
 
-use JsonException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 final readonly class LogType
