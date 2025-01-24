@@ -7,12 +7,6 @@ namespace Vjik\TelegramBot\Api;
 use JsonException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
-/**
- * @psalm-type ParseResultErrorContext = array{
- *     type: LogType::PARSE_RESULT_ERROR,
- *     payload: string
- * }
- */
 final readonly class LogType
 {
     public const SEND_REQUEST = 1;
@@ -83,7 +77,10 @@ final readonly class LogType
     }
 
     /**
-     * @psalm-return ParseResultErrorContext
+     * @psalm-return array{
+     *     type: LogType::PARSE_RESULT_ERROR,
+     *     payload: string,
+     * }
      */
     public static function createParseResultErrorContext(string $raw): array
     {
