@@ -7,6 +7,7 @@ namespace Vjik\TelegramBot\Api\Type\Update;
 use JsonException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
+use Vjik\TelegramBot\Api\LogContextFactory;
 use Vjik\TelegramBot\Api\LogType;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
@@ -85,7 +86,7 @@ final class Update
         } catch (JsonException $e) {
             $logger?->error(
                 'Failed to decode JSON for "Update" type.',
-                LogType::createParseResultErrorContext($json),
+                LogContextFactory::parseResultError($json),
             );
             throw new TelegramParseResultException('Failed to decode JSON.', previous: $e);
         }
@@ -96,7 +97,7 @@ final class Update
         } catch (TelegramParseResultException $exception) {
             $logger?->error(
                 'Failed to parse "Update" data. ' . $exception->getMessage(),
-                LogType::createParseResultErrorContext($json),
+                LogContextFactory::parseResultError($json),
             );
             throw $exception;
         }
