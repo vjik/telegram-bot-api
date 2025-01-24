@@ -8,14 +8,6 @@ use JsonException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 /**
- * @psalm-type FailResultContext = array{
- *     type: LogType::FAIL_RESULT,
- *     payload: string,
- *     method: MethodInterface,
- *     response: ApiResponse,
- *     decodedResponse: mixed
- * }
- *
  * @psalm-type ParseResultErrorContext = array{
  *     type: LogType::PARSE_RESULT_ERROR,
  *     payload: string
@@ -50,7 +42,7 @@ final readonly class LogType
      *     payload: array,
      *     method: MethodInterface,
      *     response: ApiResponse,
-     *     decodedResponse: array
+     *     decodedResponse: array,
      * }
      */
     public static function createSuccessResultContext(
@@ -68,12 +60,18 @@ final readonly class LogType
     }
 
     /**
-     * @psalm-return FailResultContext
+     * @psalm-return array{
+     *     type: LogType::FAIL_RESULT,
+     *     payload: string,
+     *     method: MethodInterface,
+     *     response: ApiResponse,
+     *     decodedResponse: array,
+     * }
      */
     public static function createFailResultContext(
         MethodInterface $method,
         ApiResponse $response,
-        mixed $decodedResponse,
+        array $decodedResponse,
     ): array {
         return [
             'type' => self::FAIL_RESULT,
