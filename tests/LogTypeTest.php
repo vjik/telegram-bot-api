@@ -11,7 +11,6 @@ use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\LogType;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 final class LogTypeTest extends TestCase
 {
