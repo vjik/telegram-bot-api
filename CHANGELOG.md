@@ -11,6 +11,7 @@
 - Chg #132: Rename `TelegramBotApi::send()` method to `call()`.
 - Chg #133: Remove JSON encoding of payload in log contexts.
 - Chg #133: Extract log context creating methods to separated internal class.
+- Enh #134: Remove dead code.
 
 ## 0.5.0 January 02, 2025
 

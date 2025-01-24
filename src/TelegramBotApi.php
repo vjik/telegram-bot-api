@@ -2667,10 +2667,6 @@ final class TelegramBotApi
             );
         }
 
-        if (!$method instanceof MethodInterface) {
-            return $decodedBody['result'];
-        }
-
         $resultType = $method->getResultType();
         if ($resultType === null) {
             return $decodedBody['result'];
