@@ -8,12 +8,6 @@ use JsonException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 /**
- * @psalm-type SendRequestContext = array{
- *     type: LogType::SEND_REQUEST,
- *     payload: string,
- *     method: MethodInterface,
- * }
- *
  * @psalm-type SuccessResultContext = array{
  *     type: LogType::SUCCESS_RESULT,
  *     payload: string,
@@ -43,18 +37,17 @@ final readonly class LogType
     public const PARSE_RESULT_ERROR = 4;
 
     /**
-     * @psalm-return SendRequestContext
+     * @psalm-return array{
+     *      type: LogType::SEND_REQUEST,
+     *      payload: array<string, mixed>,
+     *      method: MethodInterface,
+     *  }
      */
     public static function createSendRequestContext(MethodInterface $method): array
     {
-        try {
-            $payload = json_encode($method->getData(), JSON_THROW_ON_ERROR | JSON_UNESCAPED_UNICODE);
-        } catch (JsonException) {
-            $payload = '%UNABLE_DATA%';
-        }
         return [
             'type' => self::SEND_REQUEST,
-            'payload' => $payload,
+            'payload' => $method->getData(),
             'method' => $method,
         ];
     }

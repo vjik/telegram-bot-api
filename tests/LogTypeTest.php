@@ -23,20 +23,21 @@ final class LogTypeTest extends TestCase
         yield 'base' => [
             [
                 'type' => LogType::SEND_REQUEST,
-                'payload' => '{"param1":"Привет"}',
+                'payload' => ['param1' => 'Привет'],
                 'method' => $method,
             ],
             $method,
         ];
 
+        $handle = fopen('php://temp', 'r+');
         $method = new CustomMethod(
             'getMe',
-            ['param1' => fopen('php://temp', 'r+')],
+            ['param1' => $handle],
         );
         yield 'json-error' => [
             [
                 'type' => LogType::SEND_REQUEST,
-                'payload' => '%UNABLE_DATA%',
+                'payload' => ['param1' => $handle],
                 'method' => $method,
             ],
             $method,

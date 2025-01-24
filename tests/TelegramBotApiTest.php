@@ -91,7 +91,7 @@ final class TelegramBotApiTest extends TestCase
                     'message' => 'Send GET-request "getMe".',
                     'context' => [
                         'type' => 1,
-                        'payload' => '[]',
+                        'payload' => [],
                         'method' => $method,
                     ],
                 ],
@@ -160,7 +160,7 @@ final class TelegramBotApiTest extends TestCase
                     'message' => 'Send GET-request "getMe".',
                     'context' => [
                         'type' => 1,
-                        'payload' => '[]',
+                        'payload' => [],
                         'method' => $method,
                     ],
                 ],
@@ -232,7 +232,7 @@ final class TelegramBotApiTest extends TestCase
                     'message' => 'Send GET-request "getMe".',
                     'context' => [
                         'type' => 1,
-                        'payload' => '[]',
+                        'payload' => [],
                         'method' => $method,
                     ],
                 ],
