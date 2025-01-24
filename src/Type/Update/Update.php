@@ -8,7 +8,6 @@ use JsonException;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\LogContextFactory;
-use Vjik\TelegramBot\Api\LogType;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
