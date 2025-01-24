@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.6.0 under development
+## 0.6.0 January 24, 2025
 
 - Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and 
   "telegram request" to "method". Classes, namespaces, and variables rename accordingly.
