@@ -9,6 +9,7 @@
 - Chg #132: Rename `TelegramRequestWithResultPreparingInterface` to `MethodInterface`.
 - Chg #132: Rename `RequestFileCollector` to `FileCollector` and move to root namespace.
 - Chg #132: Rename `TelegramBotApi::send()` method to `call()`.
+- Chg #133: Remove json encoding of payload in log contexts.
 
 ## 0.5.0 January 02, 2025
 
