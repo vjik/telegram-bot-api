@@ -34,7 +34,6 @@
         "php-http/curl-client": "^2.3.3",
         "phpunit/phpunit": "^10.5.41",
         "psr/log": "^3.0.2",
-        "vimeo/psalm": "^5.26.1",
         "yiisoft/test-support": "^3.0.1"
     },
     "suggest": {
