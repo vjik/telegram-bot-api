@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type\Update;
 
 use HttpSoft\Message\StreamTrait;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Message\StreamInterface;
@@ -425,9 +426,11 @@ final class UpdateTest extends TestCase
         );
     }
 
-    public function testFromJsonCreateUpdateError(): void
+    #[TestWith([true])]
+    #[TestWith([false])]
+    public function testFromJsonCreateUpdateError(bool $useLogger): void
     {
-        $logger = new SimpleLogger();
+        $logger = $useLogger ? new SimpleLogger() : null;
 
         $exception = null;
         try {
@@ -437,30 +440,21 @@ final class UpdateTest extends TestCase
 
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
-        $this->assertSame(
-            [
+
+        if ($useLogger) {
+            $this->assertSame(
                 [
-                    'level' => 'error',
-                    'message' => 'Failed to parse "Update" data. Invalid type of value. Expected type is "array", but got "int".',
-                    'context' => [
-                        'type' => 4,
-                        'payload' => '25',
+                    [
+                        'level' => 'error',
+                        'message' => 'Failed to parse "Update" data. Invalid type of value. Expected type is "array", but got "int".',
+                        'context' => [
+                            'type' => 4,
+                            'payload' => '25',
+                        ],
                     ],
                 ],
-            ],
-            $logger->getMessages(),
-        );
-    }
-
-    public function testFromJsonCreateUpdateErrorWithoutLogger(): void
-    {
-        $exception = null;
-        try {
-            Update::fromJson('25');
-        } catch (Throwable $exception) {
+                $logger->getMessages(),
+            );
         }
-
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
     }
 }
