@@ -451,4 +451,16 @@ final class UpdateTest extends TestCase
             $logger->getMessages(),
         );
     }
+
+    public function testFromJsonCreateUpdateErrorWithoutLogger(): void
+    {
+        $exception = null;
+        try {
+            Update::fromJson('25');
+        } catch (Throwable $exception) {
+        }
+
+        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
+        $this->assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
+    }
 }

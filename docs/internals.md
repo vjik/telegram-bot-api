@@ -31,11 +31,10 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 
 ## Mutation testing
 
-The package tests are checked with [Infection](https://infection.github.io/) mutation framework with
-[Infection Static Analysis Plugin](https://github.com/Roave/infection-static-analysis-plugin). To run it:
+The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
 
 ```shell
-./vendor/bin/roave-infection-static-analysis-plugin
+./vendor/bin/infection
 ```
 
 ## Static analysis
