@@ -184,6 +184,18 @@ final class TelegramBotApiTest extends TestCase
         );
     }
 
+    public function testCallFailWithoutLogger(): void
+    {
+        $method = new GetMe();
+        $response = new ApiResponse(200, '{"ok":false,"description":"test error"}');
+        $api = $this->createApi($response);
+
+        $result = $api->call($method);
+
+        $this->assertInstanceOf(FailResult::class, $result);
+        $this->assertSame('test error', $result->description);
+    }
+
     public function testSuccessResponseWithoutResult(): void
     {
         $api = $this->createApi([
