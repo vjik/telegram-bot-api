@@ -188,6 +188,17 @@ final class TelegramBotApiTest extends TestCase
             );
         }
     }
+    public function testCallFailWithInvalidDescription(): void
+    {
+        $method = new GetMe();
+        $response = new ApiResponse(200, '{"ok":false,"description":5}');
+        $api = $this->createApi($response);
+
+        $result = $api->call($method);
+
+        $this->assertInstanceOf(FailResult::class, $result);
+        $this->assertNull($result->description);
+    }
 
     public function testSuccessResponseWithoutResult(): void
     {
