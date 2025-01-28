@@ -5,7 +5,7 @@
 [![Build status](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml/badge.svg)](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml)
 [![Coverage Status](https://coveralls.io/repos/github/vjik/telegram-bot-api/badge.svg)](https://coveralls.io/github/vjik/telegram-bot-api)
 [![Mutation score](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvjik%2Ftelegram-bot-api%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vjik/telegram-bot-api/master)
-[![static analysis](https://github.com/vjik/telegram-bot-api/workflows/static%20analysis/badge.svg)](https://github.com/vjik/telegram-bot-api/actions?query=workflow%3A%22static+analysis%22)
+[![Static analysis](https://github.com/vjik/telegram-bot-api/actions/workflows/static.yml/badge.svg?branch=master)](https://github.com/vjik/telegram-bot-api/actions/workflows/static.yml?query=branch%3Amaster)
 
 The package provides a simple and convenient way to interact with the Telegram Bot API.
 
