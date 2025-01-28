@@ -1,6 +1,6 @@
 {
     "require-dev": {
-        "maglnet/composer-require-checker": "^4.14"
+        "maglnet/composer-require-checker": "^4.15"
     },
     "config": {
         "bump-after-update": "dev"
