@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
+use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Psr\Log\LoggerInterface;
 use Throwable;
@@ -142,9 +143,11 @@ final class TelegramBotApiTest extends TestCase
         );
     }
 
-    public function testCallFail(): void
+    #[TestWith([true])]
+    #[TestWith([false])]
+    public function testCallFail(bool $useLogger): void
     {
-        $logger = new SimpleLogger();
+        $logger = $useLogger ? new SimpleLogger() : null;
         $method = new GetMe();
         $response = new ApiResponse(200, '{"ok":false,"description":"test error"}');
         $api = $this->createApi($response, logger: $logger);
@@ -154,34 +157,47 @@ final class TelegramBotApiTest extends TestCase
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
 
-        $this->assertSame(
-            [
+        if ($useLogger) {
+            $this->assertSame(
                 [
-                    'level' => 'info',
-                    'message' => 'Send GET-request "getMe".',
-                    'context' => [
-                        'type' => 1,
-                        'payload' => [],
-                        'method' => $method,
+                    [
+                        'level' => 'info',
+                        'message' => 'Send GET-request "getMe".',
+                        'context' => [
+                            'type' => 1,
+                            'payload' => [],
+                            'method' => $method,
+                        ],
                     ],
-                ],
-                [
-                    'level' => 'warning',
-                    'message' => 'On "getMe" request Telegram Bot API returned fail result.',
-                    'context' => [
-                        'type' => 3,
-                        'payload' => '{"ok":false,"description":"test error"}',
-                        'method' => $method,
-                        'response' => $response,
-                        'decodedResponse' => [
-                            'ok' => false,
-                            'description' => 'test error',
+                    [
+                        'level' => 'warning',
+                        'message' => 'On "getMe" request Telegram Bot API returned fail result.',
+                        'context' => [
+                            'type' => 3,
+                            'payload' => '{"ok":false,"description":"test error"}',
+                            'method' => $method,
+                            'response' => $response,
+                            'decodedResponse' => [
+                                'ok' => false,
+                                'description' => 'test error',
+                            ],
                         ],
                     ],
                 ],
-            ],
-            $logger->getMessages(),
-        );
+                $logger->getMessages(),
+            );
+        }
+    }
+    public function testCallFailWithInvalidDescription(): void
+    {
+        $method = new GetMe();
+        $response = new ApiResponse(200, '{"ok":false,"description":5}');
+        $api = $this->createApi($response);
+
+        $result = $api->call($method);
+
+        $this->assertInstanceOf(FailResult::class, $result);
+        $this->assertNull($result->description);
     }
 
     public function testSuccessResponseWithoutResult(): void
@@ -212,9 +228,11 @@ final class TelegramBotApiTest extends TestCase
         $this->assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
     }
 
-    public function testResponseWithInvalidResult(): void
+    #[TestWith([true])]
+    #[TestWith([false])]
+    public function testResponseWithInvalidResult(bool $useLogger): void
     {
-        $logger = new SimpleLogger();
+        $logger = $useLogger ? new SimpleLogger() : null;
         $method = new GetMe();
         $api = $this->createApi('{"ok":true,"result":[]}', logger: $logger);
 
@@ -226,28 +244,31 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Not found key "id" in result object.', $exception->getMessage());
-        $this->assertSame(
-            [
+
+        if ($useLogger) {
+            $this->assertSame(
                 [
-                    'level' => 'info',
-                    'message' => 'Send GET-request "getMe".',
-                    'context' => [
-                        'type' => 1,
-                        'payload' => [],
-                        'method' => $method,
+                    [
+                        'level' => 'info',
+                        'message' => 'Send GET-request "getMe".',
+                        'context' => [
+                            'type' => 1,
+                            'payload' => [],
+                            'method' => $method,
+                        ],
+                    ],
+                    [
+                        'level' => 'error',
+                        'message' => 'Failed to parse telegram result. Not found key "id" in result object.',
+                        'context' => [
+                            'type' => 4,
+                            'payload' => '{"ok":true,"result":[]}',
+                        ],
                     ],
                 ],
-                [
-                    'level' => 'error',
-                    'message' => 'Failed to parse telegram result. Not found key "id" in result object.',
-                    'context' => [
-                        'type' => 4,
-                        'payload' => '{"ok":true,"result":[]}',
-                    ],
-                ],
-            ],
-            $logger->getMessages(),
-        );
+                $logger->getMessages(),
+            );
+        }
     }
 
     public function testNotArrayResponse(): void

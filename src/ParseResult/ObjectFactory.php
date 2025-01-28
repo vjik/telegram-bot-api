@@ -110,8 +110,10 @@ final class ObjectFactory
         foreach ($constructorParameters as $parameter) {
             $name = $parameter->getName();
             if (in_array($name, $propertyNames, true)) {
+                /** @psalm-suppress PossiblyNullArgument In this case `preg_replace()` always returns string */
+                $key = strtolower(preg_replace('/[A-Z]/', '_$0', $name));
                 $result[$name] = new Param(
-                    strtolower(preg_replace('/[A-Z]/', '_$0', $name)),
+                    $key,
                     $this->getParamType($parameter),
                     $parameter->isOptional(),
                 );

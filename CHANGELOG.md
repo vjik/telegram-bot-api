@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.6.1 under development
+
+- Enh #136: Minor refactoring of `ObjectFactory` class.
+
 ## 0.6.0 January 24, 2025
 
 - Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and 
