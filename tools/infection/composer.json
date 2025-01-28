@@ -1,0 +1,11 @@
+{
+    "require-dev": {
+        "infection/infection": "^0.27.11"
+    },
+    "config": {
+        "bump-after-update": "dev",
+        "allow-plugins": {
+            "infection/extension-installer": true
+        }
+    }
+}
