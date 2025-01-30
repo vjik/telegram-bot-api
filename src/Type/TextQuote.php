@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#textquote
+ *
+ * @api
  */
 final readonly class TextQuote
 {

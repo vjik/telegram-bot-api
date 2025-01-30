@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MaybeInaccessibleMessageValu
 
 /**
  * @see https://core.telegram.org/bots/api#callbackquery
+ *
+ * @api
  */
 final readonly class CallbackQuery
 {

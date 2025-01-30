@@ -7,6 +7,9 @@ namespace Vjik\TelegramBot\Api;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
+/**
+ * @api
+ */
 final readonly class FailResult
 {
     public function __construct(

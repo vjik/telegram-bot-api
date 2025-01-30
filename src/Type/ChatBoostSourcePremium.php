@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * @see https://core.telegram.org/bots/api#chatboostsourcepremium
+ *
+ * @api
  */
 final readonly class ChatBoostSourcePremium implements ChatBoostSource
 {

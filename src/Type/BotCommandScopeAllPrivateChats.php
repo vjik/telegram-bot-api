@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * @see https://core.telegram.org/bots/api#botcommandscopeallprivatechats
+ *
+ * @api
  */
 final readonly class BotCommandScopeAllPrivateChats implements BotCommandScope
 {

@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * @see https://core.telegram.org/bots/api#loginurl
+ *
+ * @api
  */
 final readonly class LoginUrl
 {

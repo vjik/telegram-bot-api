@@ -15,18 +15,21 @@ use function is_scalar;
 use function is_string;
 use function json_encode;
 
+/**
+ * @api
+ */
 final readonly class PsrTransport implements TransportInterface
 {
     private ApiUrlGenerator $apiUrlGenerator;
 
     public function __construct(
-        private string $token,
+        string $token,
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
-        private string $baseUrl = 'https://api.telegram.org',
+        string $baseUrl = 'https://api.telegram.org',
     ) {
-        $this->apiUrlGenerator = new ApiUrlGenerator($this->token, $this->baseUrl);
+        $this->apiUrlGenerator = new ApiUrlGenerator($token, $baseUrl);
     }
 
     public function send(

@@ -7,6 +7,8 @@ namespace Vjik\TelegramBot\Api\Constant;
 /**
  * @see https://core.telegram.org/bots/api#formatting-options
  * @see https://core.telegram.org/bots/api#messageentity
+ *
+ * @api
  */
 final class MessageEntityType
 {

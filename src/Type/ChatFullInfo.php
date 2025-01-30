@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
  * @see https://core.telegram.org/bots/api#chatfullinfo
+ *
+ * @api
  */
 final readonly class ChatFullInfo
 {

@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api;
 
+/**
+ * @api
+ */
 final readonly class LogType
 {
     public const SEND_REQUEST = 1;

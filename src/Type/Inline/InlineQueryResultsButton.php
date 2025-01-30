@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequeryresultsbutton
+ *
+ * @api
  */
 final readonly class InlineQueryResultsButton
 {

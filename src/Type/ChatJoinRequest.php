@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#chatjoinrequest
+ *
+ * @api
  */
 final readonly class ChatJoinRequest
 {

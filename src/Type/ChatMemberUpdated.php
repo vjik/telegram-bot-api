@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#chatmemberupdated
+ *
+ * @api
  */
 final readonly class ChatMemberUpdated
 {

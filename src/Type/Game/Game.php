@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\PhotoSize;
 
 /**
  * @see https://core.telegram.org/bots/api#game
+ *
+ * @api
  */
 final readonly class Game
 {

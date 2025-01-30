@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Inline;
 
 /**
  * @see https://core.telegram.org/bots/api#inputlocationmessagecontent
+ *
+ * @api
  */
 final readonly class InputLocationMessageContent implements InputMessageContent
 {

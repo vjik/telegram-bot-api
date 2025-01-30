@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\MethodInterface;
  * @see https://core.telegram.org/bots/api#unpinallforumtopicmessages
  *
  * @template-implements MethodInterface<TrueValue>
+ *
+ * @api
  */
 final readonly class UnpinAllForumTopicMessages implements MethodInterface
 {

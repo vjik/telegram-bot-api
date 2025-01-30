@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\PaidMediaValue;
 
 /**
  * @see https://core.telegram.org/bots/api#paidmediainfo
+ *
+ * @api
  */
 final readonly class PaidMediaInfo
 {

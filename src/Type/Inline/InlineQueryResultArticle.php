@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequeryresultarticle
+ *
+ * @api
  */
 final readonly class InlineQueryResultArticle implements InlineQueryResult
 {

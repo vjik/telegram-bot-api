@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://core.telegram.org/bots/api#inputsticker
+ *
+ * @api
  */
 final readonly class InputSticker
 {

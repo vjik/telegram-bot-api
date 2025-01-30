@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#businessintro
+ *
+ * @api
  */
 final readonly class BusinessIntro
 {

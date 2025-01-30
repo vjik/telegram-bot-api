@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\Game\CallbackGame;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinekeyboardbutton
+ *
+ * @api
  */
 final readonly class InlineKeyboardButton
 {

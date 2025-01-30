@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 
 /**
  * @see https://core.telegram.org/bots/api#pollanswer
+ *
+ * @api
  */
 final readonly class PollAnswer
 {

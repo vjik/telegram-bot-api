@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#messageoriginchat
+ *
+ * @api
  */
 final readonly class MessageOriginChat implements MessageOrigin
 {

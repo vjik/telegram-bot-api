@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Constant\Sticker;
 
+/**
+ * @api
+ */
 final class StickerType
 {
     public const REGULAR = 'regular';

@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 /**
  * @template T as class-string|ValueProcessorInterface|null
  * @template-implements MethodInterface<T>
+ *
+ * @api
  */
 final readonly class CustomMethod implements MethodInterface
 {

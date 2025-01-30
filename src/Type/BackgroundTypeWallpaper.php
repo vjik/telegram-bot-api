@@ -4,6 +4,11 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
+/**
+ * @see https://core.telegram.org/bots/api#backgroundtypewallpaper
+ *
+ * @api
+ */
 final readonly class BackgroundTypeWallpaper implements BackgroundType
 {
     public function __construct(

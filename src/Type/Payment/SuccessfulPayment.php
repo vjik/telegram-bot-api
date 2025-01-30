@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#successfulpayment
+ *
+ * @api
  */
 final readonly class SuccessfulPayment
 {

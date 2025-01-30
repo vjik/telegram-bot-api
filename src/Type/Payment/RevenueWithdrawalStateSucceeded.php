@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#revenuewithdrawalstatesucceeded
+ *
+ * @api
  */
 final readonly class RevenueWithdrawalStateSucceeded implements RevenueWithdrawalState
 {

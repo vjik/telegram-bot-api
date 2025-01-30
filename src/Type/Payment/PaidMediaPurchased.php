@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#paidmediapurchased
+ *
+ * @api
  */
 final readonly class PaidMediaPurchased
 {

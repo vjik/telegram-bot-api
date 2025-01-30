@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\MethodInterface;
  * @see https://core.telegram.org/bots/api#unhidegeneralforumtopic
  *
  * @template-implements MethodInterface<TrueValue>
+ *
+ * @api
  */
 final readonly class UnhideGeneralForumTopic implements MethodInterface
 {

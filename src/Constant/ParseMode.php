@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Constant;
 
 /**
  * @see https://core.telegram.org/bots/api#formatting-options
+ *
+ * @api
  */
 final class ParseMode
 {

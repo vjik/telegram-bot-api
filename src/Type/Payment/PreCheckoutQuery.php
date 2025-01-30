@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#precheckoutquery
+ *
+ * @api
  */
 final readonly class PreCheckoutQuery
 {

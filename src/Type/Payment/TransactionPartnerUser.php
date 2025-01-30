@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#transactionpartneruser
+ *
+ * @api
  */
 final readonly class TransactionPartnerUser implements TransactionPartner
 {
