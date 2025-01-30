@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Inline;
 
 /**
  * @see https://core.telegram.org/bots/api#sentwebappmessage
+ *
+ * @api
  */
 final readonly class SentWebAppMessage
 {

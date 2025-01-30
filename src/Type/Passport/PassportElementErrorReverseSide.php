@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Passport;
 
 /**
  * @see https://core.telegram.org/bots/api#passportelementerrorreverseside
+ *
+ * @api
  */
 final readonly class PassportElementErrorReverseSide implements PassportElementError
 {

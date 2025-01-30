@@ -30,6 +30,8 @@ use Vjik\TelegramBot\Api\Type\PollAnswer;
 
 /**
  * @see https://core.telegram.org/bots/api#update
+ *
+ * @api
  */
 final class Update
 {
@@ -91,7 +93,6 @@ final class Update
         }
 
         try {
-            /** @var Update $update */
             $update = (new ResultFactory())->create($decodedJson, self::class);
         } catch (TelegramParseResultException $exception) {
             $logger?->error(

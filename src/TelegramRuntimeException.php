@@ -6,4 +6,7 @@ namespace Vjik\TelegramBot\Api;
 
 use RuntimeException;
 
+/**
+ * @api
+ */
 class TelegramRuntimeException extends RuntimeException {}

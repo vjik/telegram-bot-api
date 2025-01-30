@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#chatinvitelink
+ *
+ * @api
  */
 final readonly class ChatInviteLink
 {

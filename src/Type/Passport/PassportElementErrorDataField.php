@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Passport;
 
 /**
  * @see https://core.telegram.org/bots/api#passportelementerrordatafield
+ *
+ * @api
  */
 final readonly class PassportElementErrorDataField implements PassportElementError
 {

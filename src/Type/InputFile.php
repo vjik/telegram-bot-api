@@ -9,6 +9,8 @@ use RuntimeException;
 
 /**
  * @see https://core.telegram.org/bots/api#sending-files
+ *
+ * @api
  */
 final readonly class InputFile
 {

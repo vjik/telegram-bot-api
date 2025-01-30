@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#gamehighscore
+ *
+ * @api
  */
 final readonly class GameHighScore
 {

@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
 /**
  * @see https://core.telegram.org/bots/api#inputinvoicemessagecontent
+ *
+ * @api
  */
 final readonly class InputInvoiceMessageContent implements InputMessageContent
 {

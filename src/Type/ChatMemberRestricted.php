@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberUntilDateValue;
 
 /**
  * @see https://core.telegram.org/bots/api#chatmemberrestricted
+ *
+ * @api
  */
 final readonly class ChatMemberRestricted implements ChatMember
 {

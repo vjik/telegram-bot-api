@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#shippingquery
+ *
+ * @api
  */
 final readonly class ShippingQuery
 {

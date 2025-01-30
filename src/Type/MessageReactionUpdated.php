@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ReactionTypeValue;
 
 /**
  * @see https://core.telegram.org/bots/api#messagereactionupdated
+ *
+ * @api
  */
 final readonly class MessageReactionUpdated
 {

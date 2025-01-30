@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequeryresultcachedvoice
+ *
+ * @api
  */
 final readonly class InlineQueryResultCachedVoice implements InlineQueryResult
 {

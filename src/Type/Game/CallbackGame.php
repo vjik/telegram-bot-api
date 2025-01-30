@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Game;
 
 /**
  * @see https://core.telegram.org/bots/api#callbackgame
+ *
+ * @api
  */
 final readonly class CallbackGame
 {

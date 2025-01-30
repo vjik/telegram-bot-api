@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 
 /**
  * @see https://core.telegram.org/bots/api#backgroundfillfreeformgradient
+ *
+ * @api
  */
 final readonly class BackgroundFillFreeformGradient implements BackgroundFill
 {

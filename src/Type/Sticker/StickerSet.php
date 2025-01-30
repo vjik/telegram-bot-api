@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\PhotoSize;
 
 /**
  * @see https://core.telegram.org/bots/api#stickerset
+ *
+ * @api
  */
 final readonly class StickerSet
 {

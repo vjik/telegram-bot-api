@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * @see https://core.telegram.org/bots/api#botcommandscopedefault
+ *
+ * @api
  */
 final readonly class BotCommandScopeDefault implements BotCommandScope
 {

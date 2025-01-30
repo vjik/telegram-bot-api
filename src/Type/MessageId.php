@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * https://core.telegram.org/bots/api#messageid
+ *
+ * @api
  */
 final readonly class MessageId
 {

@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\IntegerValue;
 
 /**
  * @see https://core.telegram.org/bots/api#businessmessagesdeleted
+ *
+ * @api
  */
 final readonly class BusinessMessagesDeleted
 {

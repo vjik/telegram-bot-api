@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\StringValue;
 
 /**
  * @see https://core.telegram.org/bots/api#webhookinfo
+ *
+ * @api
  */
 final readonly class WebhookInfo
 {

@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#externalreplyinfo
+ *
+ * @api
  */
 final readonly class ExternalReplyInfo
 {

@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Passport;
 
 /**
  * @see https://core.telegram.org/bots/api#passportelementerrorselfie
+ *
+ * @api
  */
 final readonly class PassportElementErrorSelfie implements PassportElementError
 {

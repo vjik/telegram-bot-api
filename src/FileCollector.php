@@ -6,6 +6,9 @@ namespace Vjik\TelegramBot\Api;
 
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+/**
+ * @api
+ */
 final class FileCollector
 {
     private int $counter;

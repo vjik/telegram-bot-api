@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequery
+ *
+ * @api
  */
 final readonly class InlineQuery
 {

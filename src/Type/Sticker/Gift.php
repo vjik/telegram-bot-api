@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#gift
+ *
+ * @api
  */
 final readonly class Gift
 {

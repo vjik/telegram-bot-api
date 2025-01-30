@@ -207,6 +207,9 @@ use function is_array;
 use function is_bool;
 use function is_string;
 
+/**
+ * @api
+ */
 final class TelegramBotApi
 {
     private ResultFactory $resultFactory;

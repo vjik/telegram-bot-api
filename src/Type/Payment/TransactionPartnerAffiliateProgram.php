@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#transactionpartneraffiliateprogram
+ *
+ * @api
  */
 final readonly class TransactionPartnerAffiliateProgram implements TransactionPartner
 {

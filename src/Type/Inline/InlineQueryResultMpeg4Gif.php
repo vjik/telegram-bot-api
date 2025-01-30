@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequeryresultmpeg4gif
+ *
+ * @api
  */
 final readonly class InlineQueryResultMpeg4Gif implements InlineQueryResult
 {

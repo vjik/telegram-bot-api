@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type;
 
 /**
  * @see https://core.telegram.org/bots/api#keyboardbuttonrequestchat
+ *
+ * @api
  */
 final readonly class KeyboardButtonRequestChat
 {

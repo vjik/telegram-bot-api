@@ -4,6 +4,9 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport;
 
+/**
+ * @api
+ */
 final readonly class ApiResponse
 {
     public function __construct(

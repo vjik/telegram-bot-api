@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Type\Payment;
 
 /**
  * @see https://core.telegram.org/bots/api#transactionpartner
+ *
+ * @api
  */
 interface TransactionPartner
 {

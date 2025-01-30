@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#userchatboosts
+ *
+ * @api
  */
 final readonly class UserChatBoosts
 {

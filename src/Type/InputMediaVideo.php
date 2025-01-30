@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\FileCollector;
 
 /**
  * @see https://core.telegram.org/bots/api#inputmediavideo
+ *
+ * @api
  */
 final readonly class InputMediaVideo implements InputMedia
 {

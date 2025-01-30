@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#preparedinlinemessage
+ *
+ * @api
  */
 final readonly class PreparedInlineMessage
 {

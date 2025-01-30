@@ -16,6 +16,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 /**
  * @see https://core.telegram.org/bots/api#message
+ *
+ * @api
  */
 final readonly class Message
 {

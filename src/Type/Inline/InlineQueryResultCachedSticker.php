@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
 /**
  * @see https://core.telegram.org/bots/api#inlinequeryresultcachedsticker
+ *
+ * @api
  */
 final readonly class InlineQueryResultCachedSticker implements InlineQueryResult
 {

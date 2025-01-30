@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\User;
 
 /**
  * @see https://core.telegram.org/bots/api#affiliateinfo
+ *
+ * @api
  */
 final readonly class AffiliateInfo
 {

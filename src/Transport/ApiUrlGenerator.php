@@ -6,6 +6,8 @@ namespace Vjik\TelegramBot\Api\Transport;
 
 /**
  * @see https://core.telegram.org/bots/api#making-requests
+ *
+ * @api
  */
 final readonly class ApiUrlGenerator
 {

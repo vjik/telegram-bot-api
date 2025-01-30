@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ChatMemberUntilDateValue;
 
 /**
  * @see https://core.telegram.org/bots/api#chatmemberbanned
+ *
+ * @api
  */
 final readonly class ChatMemberBanned implements ChatMember
 {

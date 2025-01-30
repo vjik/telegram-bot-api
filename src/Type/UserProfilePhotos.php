@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfArraysOfObjectsValue;
 
 /**
  * @see https://core.telegram.org/bots/api#userprofilephotos
+ *
+ * @api
  */
 final readonly class UserProfilePhotos
 {

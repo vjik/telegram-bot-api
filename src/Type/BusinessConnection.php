@@ -8,6 +8,8 @@ use DateTimeImmutable;
 
 /**
  * @see https://core.telegram.org/bots/api#businessconnection
+ *
+ * @api
  */
 final readonly class BusinessConnection
 {
