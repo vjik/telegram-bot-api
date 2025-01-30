@@ -102,6 +102,11 @@ final class ObjectFactory
         }
 
         $constructorParameters = $classReflection->getConstructor()?->getParameters();
+
+        /**
+         * @psalm-suppress RiskyTruthyFalsyComparison We check whether constructor exists (not null) and has parameters
+         * (non-empty array). If not - return empty array. If yes - continue.
+         */
         if (empty($constructorParameters)) {
             return [];
         }
