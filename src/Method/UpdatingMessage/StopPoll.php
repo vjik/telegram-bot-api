@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -12,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Poll;
 /**
  * @see https://core.telegram.org/bots/api#stoppoll
  *
- * @template-implements MethodInterface<class-string<Poll>>
+ * @template-implements MethodInterface<Poll>
  */
 final readonly class StopPoll implements MethodInterface
 {
@@ -46,8 +47,8 @@ final readonly class StopPoll implements MethodInterface
         );
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return Poll::class;
+        return new ObjectValue(Poll::class);
     }
 }

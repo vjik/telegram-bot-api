@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\MessageId;
 /**
  * @see https://core.telegram.org/bots/api#copymessages
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<MessageId>>
+ * @template-implements MethodInterface<array<MessageId>>
  */
 final readonly class CopyMessages implements MethodInterface
 {

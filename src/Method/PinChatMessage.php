@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#pinchatmessage
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class PinChatMessage implements MethodInterface
 {

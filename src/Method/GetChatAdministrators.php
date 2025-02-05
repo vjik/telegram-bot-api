@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\ChatMember;
 /**
  * @see https://core.telegram.org/bots/api#getchatadministrators
  *
- * @template-implements MethodInterface<ArrayMap<ChatMember>>
+ * @template-implements MethodInterface<array<ChatMember>>
  */
 final readonly class GetChatAdministrators implements MethodInterface
 {

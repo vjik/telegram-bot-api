@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 /**
  * @see https://core.telegram.org/bots/api#addstickertoset
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class AddStickerToSet implements MethodInterface
 {

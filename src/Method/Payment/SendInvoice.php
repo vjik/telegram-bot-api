@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
@@ -14,7 +15,7 @@ use Vjik\TelegramBot\Api\Type\ReplyParameters;
 /**
  * @see https://core.telegram.org/bots/api#sendinvoice
  *
- * @template-implements MethodInterface<class-string<Message>>
+ * @template-implements MethodInterface<Message>
  */
 final readonly class SendInvoice implements MethodInterface
 {
@@ -105,8 +106,8 @@ final readonly class SendInvoice implements MethodInterface
         );
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return Message::class;
+        return new ObjectValue(Message::class);
     }
 }

@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 /**
  * @see https://core.telegram.org/bots/api#setpassportdataerrors
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetPassportDataErrors implements MethodInterface
 {

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
@@ -11,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 /**
  * @see https://core.telegram.org/bots/api#getmydefaultadministratorrights
  *
- * @template-implements MethodInterface<class-string<ChatAdministratorRights>>
+ * @template-implements MethodInterface<ChatAdministratorRights>
  */
 final readonly class GetMyDefaultAdministratorRights implements MethodInterface
 {
@@ -39,8 +40,8 @@ final readonly class GetMyDefaultAdministratorRights implements MethodInterface
         );
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return ChatAdministratorRights::class;
+        return new ObjectValue(ChatAdministratorRights::class);
     }
 }

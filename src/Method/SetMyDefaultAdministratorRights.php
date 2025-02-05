@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 /**
  * @see https://core.telegram.org/bots/api#setmydefaultadministratorrights
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetMyDefaultAdministratorRights implements MethodInterface
 {

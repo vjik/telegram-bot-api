@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#setmyname
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetMyName implements MethodInterface
 {

@@ -231,12 +231,9 @@ final class TelegramBotApi
     /**
      * @see https://core.telegram.org/bots/api#making-requests
      *
-     * @psalm-template TClass as object
-     * @psalm-template TValue as mixed
-     * @psalm-template TRawResult as mixed
-     * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-param MethodInterface<TResultDefinition> $method
-     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))|FailResult
+     * @psalm-template TValue
+     * @psalm-param MethodInterface<TValue> $method
+     * @psalm-return TValue|FailResult
      */
     public function call(MethodInterface $method): mixed
     {
@@ -272,8 +269,6 @@ final class TelegramBotApi
                 'Expected telegram response as array. Got "' . get_debug_type($decodedBody) . '".',
             );
         }
-
-        /** @psalm-var array{result?:TRawResult, ...} $decodedBody */
 
         if (!isset($decodedBody['ok']) || !is_bool($decodedBody['ok'])) {
             $this->logger?->error(
@@ -2646,14 +2641,9 @@ final class TelegramBotApi
     }
 
     /**
-     * @psalm-template TClass as object
-     * @psalm-template TValue as mixed
-     * @psalm-template TRawResult as mixed
-     * @psalm-template TResultDefinition as class-string<TClass>|ValueProcessorInterface<TValue>|null
-     * @psalm-template TMethod as MethodInterface<TResultDefinition>
-     * @psalm-param TMethod $method
-     * @psalm-param array{result?:TRawResult, ...} $decodedBody
-     * @psalm-return (TResultDefinition is class-string ? TClass : (TResultDefinition is null ? TRawResult : TValue))
+     * @psalm-template TValue
+     * @psalm-param MethodInterface<TValue> $method
+     * @psalm-return TValue
      */
     private function prepareSuccessResult(
         MethodInterface $method,
@@ -2671,9 +2661,6 @@ final class TelegramBotApi
         }
 
         $resultType = $method->getResultType();
-        if ($resultType === null) {
-            return $decodedBody['result'];
-        }
 
         try {
             return $this->resultFactory->create($decodedBody['result'], $resultType);

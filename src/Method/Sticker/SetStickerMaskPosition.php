@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 /**
  * @see https://core.telegram.org/bots/api#setstickermaskposition
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetStickerMaskPosition implements MethodInterface
 {

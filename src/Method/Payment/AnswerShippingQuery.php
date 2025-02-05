@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 /**
  * @see https://core.telegram.org/bots/api#answershippingquery
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class AnswerShippingQuery implements MethodInterface
 {

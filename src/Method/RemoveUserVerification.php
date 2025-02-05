@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#removeuserverification
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class RemoveUserVerification implements MethodInterface
 {

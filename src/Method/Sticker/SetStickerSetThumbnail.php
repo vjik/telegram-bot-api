@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 /**
  * @see https://core.telegram.org/bots/api#setstickersetthumbnail
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetStickerSetThumbnail implements MethodInterface
 {

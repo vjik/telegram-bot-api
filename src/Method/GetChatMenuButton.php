@@ -7,11 +7,12 @@ namespace Vjik\TelegramBot\Api\Method;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MenuButtonValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
+use Vjik\TelegramBot\Api\Type\MenuButton;
 
 /**
  * @see https://core.telegram.org/bots/api#getchatmenubutton
  *
- * @template-implements MethodInterface<MenuButtonValue>
+ * @template-implements MethodInterface<MenuButton>
  */
 final readonly class GetChatMenuButton implements MethodInterface
 {

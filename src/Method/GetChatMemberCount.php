@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#getchatmembercount
  *
- * @template-implements MethodInterface<IntegerValue>
+ * @template-implements MethodInterface<int>
  */
 final readonly class GetChatMemberCount implements MethodInterface
 {

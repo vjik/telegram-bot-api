@@ -8,7 +8,7 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 /**
- * @template T as class-string|ValueProcessorInterface|null
+ * @template TResult
  *
  * @api
  */
@@ -25,9 +25,9 @@ interface MethodInterface
     public function getData(): array;
 
     /**
-     * @psalm-return T
+     * @psalm-return ValueProcessorInterface<TResult>
      */
-    public function getResultType(): string|ValueProcessorInterface|null;
+    public function getResultType(): ValueProcessorInterface;
 
     public function getHttpMethod(): HttpMethod;
 }

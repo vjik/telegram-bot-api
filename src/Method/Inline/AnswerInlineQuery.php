@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 /**
  * @see https://core.telegram.org/bots/api#answerinlinequery
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  *
  * @api
  */

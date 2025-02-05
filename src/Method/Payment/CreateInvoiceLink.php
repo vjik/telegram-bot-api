@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 /**
  * @see https://core.telegram.org/bots/api#createinvoicelink
  *
- * @template-implements MethodInterface<StringValue>
+ * @template-implements MethodInterface<string>
  */
 final readonly class CreateInvoiceLink implements MethodInterface
 {

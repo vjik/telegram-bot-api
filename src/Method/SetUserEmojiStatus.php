@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#setuseremojistatus
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetUserEmojiStatus implements MethodInterface
 {

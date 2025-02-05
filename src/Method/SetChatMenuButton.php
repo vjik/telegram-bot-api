@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\MenuButton;
 /**
  * @see https://core.telegram.org/bots/api#setchatmenubutton
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetChatMenuButton implements MethodInterface
 {

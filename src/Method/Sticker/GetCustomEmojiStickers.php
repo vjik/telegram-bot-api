@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 /**
  * @see https://core.telegram.org/bots/api#getcustomemojistickers
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<Sticker>>
+ * @template-implements MethodInterface<array<Sticker>>
  */
 final readonly class GetCustomEmojiStickers implements MethodInterface
 {
