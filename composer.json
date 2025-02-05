@@ -28,6 +28,7 @@
         "psr/http-message": "^1.1|^2.0"
     },
     "require-dev": {
+        "ext-curl": "*",
         "bamarni/composer-bin-plugin": "^1.8.2",
         "httpsoft/http-message": "^1.1.6",
         "php-http/curl-client": "^2.3.3",
@@ -36,7 +37,8 @@
         "yiisoft/test-support": "^3.0.1"
     },
     "suggest": {
-        "psr/log": "To log requests to Telegram Bot API and response handling errors."
+        "psr/log": "To log requests to Telegram Bot API and response handling errors.",
+        "ext-curl": "To use `CurlTransport`."
     },
     "autoload": {
         "psr-4": {
