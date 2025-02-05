@@ -6,6 +6,7 @@
 - Enh #138: Remove unused private properties in `PsrTransport` class.
 - New #139: Add `RawValue` value processor.
 - Chg #139: Change result of `MethodInterface::getResultType()` to `ValueProcessorInterface`.
+- Enh #140: Extract core code from `TelegramBotApi` to internal `Api` class. 
 
 ## 0.6.0 January 24, 2025
 
