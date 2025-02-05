@@ -90,7 +90,7 @@ final readonly class CurlTransport implements TransportInterface
                     is_resource($value->resource)
                         ? $this->readResource($value->resource)
                         : $this->readStream($value->resource),
-                    $value->filename ?? ''
+                    $value->filename ?? '',
                 );
                 continue;
             }
