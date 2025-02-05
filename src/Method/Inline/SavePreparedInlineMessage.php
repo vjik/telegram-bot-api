@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Inline;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResult;
@@ -12,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 /**
  * @see https://core.telegram.org/bots/api#savepreparedinlinemessage
  *
- * @template-implements MethodInterface<class-string<PreparedInlineMessage>>
+ * @template-implements MethodInterface<PreparedInlineMessage>
  */
 final readonly class SavePreparedInlineMessage implements MethodInterface
 {
@@ -50,8 +51,8 @@ final readonly class SavePreparedInlineMessage implements MethodInterface
         );
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return PreparedInlineMessage::class;
+        return new ObjectValue(PreparedInlineMessage::class);
     }
 }

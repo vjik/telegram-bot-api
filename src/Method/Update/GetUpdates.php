@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 /**
  * @see https://core.telegram.org/bots/api#getupdates
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<Update>>
+ * @template-implements MethodInterface<array<Update>>
  */
 final readonly class GetUpdates implements MethodInterface
 {

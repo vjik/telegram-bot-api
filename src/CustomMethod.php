@@ -4,25 +4,26 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\RawValue;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 
 /**
- * @template T as class-string|ValueProcessorInterface|null
- * @template-implements MethodInterface<T>
+ * @template TResult
+ * @template-implements MethodInterface<TResult>
  *
  * @api
  */
 final readonly class CustomMethod implements MethodInterface
 {
     /**
-     * @psalm-param array<string,mixed> $data
-     * @psalm-param T $resultType
+     * @psalm-param array<string, mixed> $data
+     * @psalm-param ValueProcessorInterface<TResult> $resultType
      */
     public function __construct(
         private string $apiMethod,
         private array $data = [],
-        private string|ValueProcessorInterface|null $resultType = null,
+        private ValueProcessorInterface $resultType = new RawValue(),
         private HttpMethod $httpMethod = HttpMethod::POST,
     ) {}
 
@@ -36,7 +37,7 @@ final readonly class CustomMethod implements MethodInterface
         return $this->data;
     }
 
-    public function getResultType(): string|ValueProcessorInterface|null
+    public function getResultType(): ValueProcessorInterface
     {
         return $this->resultType;
     }

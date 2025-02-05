@@ -11,7 +11,7 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @see https://core.telegram.org/bots/api#exportchatinvitelink
  *
- * @template-implements MethodInterface<StringValue>
+ * @template-implements MethodInterface<string>
  */
 final readonly class ExportChatInviteLink implements MethodInterface
 {

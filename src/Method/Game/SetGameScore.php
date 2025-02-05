@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 /**
  * @see https://core.telegram.org/bots/api#setgamescore
  *
- * @template-implements MethodInterface<ObjectOrTrueValue<Message>>
+ * @template-implements MethodInterface<Message|true>
  */
 final readonly class SetGameScore implements MethodInterface
 {

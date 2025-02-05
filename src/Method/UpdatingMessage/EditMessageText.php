@@ -15,7 +15,7 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 /**
  * @see https://core.telegram.org/bots/api#editmessagetext
  *
- * @template-implements MethodInterface<ObjectOrTrueValue<Message>>
+ * @template-implements MethodInterface<Message|true>
  */
 final readonly class EditMessageText implements MethodInterface
 {

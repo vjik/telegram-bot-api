@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\File;
@@ -11,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\File;
 /**
  * @see https://core.telegram.org/bots/api#getfile
  *
- * @template-implements MethodInterface<class-string<File>>
+ * @template-implements MethodInterface<File>
  */
 final readonly class GetFile implements MethodInterface
 {
@@ -36,8 +37,8 @@ final readonly class GetFile implements MethodInterface
         ];
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return File::class;
+        return new ObjectValue(File::class);
     }
 }

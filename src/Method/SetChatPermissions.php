@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\ChatPermissions;
 /**
  * @see https://core.telegram.org/bots/api#setchatpermissions
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetChatPermissions implements MethodInterface
 {

@@ -10,6 +10,7 @@ use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\LogContextFactory;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\BusinessMessagesDeleted;
 use Vjik\TelegramBot\Api\Type\CallbackQuery;
@@ -93,7 +94,7 @@ final class Update
         }
 
         try {
-            $update = (new ResultFactory())->create($decodedJson, self::class);
+            $update = (new ResultFactory())->create($decodedJson, new ObjectValue(self::class));
         } catch (TelegramParseResultException $exception) {
             $logger?->error(
                 'Failed to parse "Update" data. ' . $exception->getMessage(),

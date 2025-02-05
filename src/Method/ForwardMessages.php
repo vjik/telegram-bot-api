@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\MessageId;
 /**
  * @see https://core.telegram.org/bots/api#forwardmessages
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<MessageId>>
+ * @template-implements MethodInterface<array<MessageId>>
  */
 final readonly class ForwardMessages implements MethodInterface
 {

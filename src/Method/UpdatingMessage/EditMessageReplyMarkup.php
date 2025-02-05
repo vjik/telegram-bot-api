@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 /**
  * @see https://core.telegram.org/bots/api#editmessagereplymarkup
  *
- * @template-implements MethodInterface<ObjectOrTrueValue<Message>>
+ * @template-implements MethodInterface<Message|true>
  */
 final readonly class EditMessageReplyMarkup implements MethodInterface
 {

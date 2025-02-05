@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\BotCommandScope;
 /**
  * @see https://core.telegram.org/bots/api#setmycommands
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetMyCommands implements MethodInterface
 {

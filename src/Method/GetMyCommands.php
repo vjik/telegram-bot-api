@@ -13,7 +13,7 @@ use Vjik\TelegramBot\Api\Type\BotCommandScope;
 /**
  * @see https://core.telegram.org/bots/api#getmycommands
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<BotCommand>>
+ * @template-implements MethodInterface<array<BotCommand>>
  */
 final readonly class GetMyCommands implements MethodInterface
 {

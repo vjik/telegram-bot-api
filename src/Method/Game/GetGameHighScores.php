@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 /**
  * @see https://core.telegram.org/bots/api#getgamehighscores
  *
- * @template-implements MethodInterface<ArrayOfObjectsValue<GameHighScore>>
+ * @template-implements MethodInterface<array<GameHighScore>>
  */
 final readonly class GetGameHighScores implements MethodInterface
 {

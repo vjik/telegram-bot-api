@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
@@ -11,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\BotShortDescription;
 /**
  * @see https://core.telegram.org/bots/api#getmyshortdescription
  *
- * @template-implements MethodInterface<class-string<BotShortDescription>>
+ * @template-implements MethodInterface<BotShortDescription>
  */
 final readonly class GetMyShortDescription implements MethodInterface
 {
@@ -39,8 +40,8 @@ final readonly class GetMyShortDescription implements MethodInterface
         );
     }
 
-    public function getResultType(): string
+    public function getResultType(): ObjectValue
     {
-        return BotShortDescription::class;
+        return new ObjectValue(BotShortDescription::class);
     }
 }

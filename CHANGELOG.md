@@ -1,9 +1,11 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.6.1 under development
+## 0.7.0 under development
 
 - Enh #136: Minor refactoring of `ObjectFactory` class.
 - Enh #138: Remove unused private properties in `PsrTransport` class.
+- New #139: Add `RawValue` value processor.
+- Chg #139: Change result of `MethodInterface::getResultType()` to `ValueProcessorInterface`.
 
 ## 0.6.0 January 24, 2025
 

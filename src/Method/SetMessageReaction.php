@@ -12,7 +12,7 @@ use Vjik\TelegramBot\Api\Type\ReactionType;
 /**
  * @see https://core.telegram.org/bots/api#setmessagereaction
  *
- * @template-implements MethodInterface<TrueValue>
+ * @template-implements MethodInterface<true>
  */
 final readonly class SetMessageReaction implements MethodInterface
 {
