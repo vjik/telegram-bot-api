@@ -142,7 +142,6 @@ use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
-use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ValueProcessorInterface;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
