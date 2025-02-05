@@ -6,9 +6,7 @@ namespace Vjik\TelegramBot\Api;
 
 use DateTimeImmutable;
 use DateTimeInterface;
-use JsonException;
 use Psr\Log\LoggerInterface;
-use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
@@ -140,8 +138,6 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
-use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
-use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -185,7 +181,6 @@ use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
-use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
@@ -200,11 +195,6 @@ use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
 use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
-
-use function array_key_exists;
-use function is_array;
-use function is_bool;
-use function is_string;
 
 /**
  * @api
