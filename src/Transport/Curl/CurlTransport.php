@@ -6,7 +6,6 @@ namespace Vjik\TelegramBot\Api\Transport\Curl;
 
 use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
-use RuntimeException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Transport\ApiUrlGenerator;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
