@@ -11,6 +11,8 @@ use function curl_init;
 
 final class CurlMock implements CurlInterface
 {
+    private ?array $options = null;
+
     public function __construct(
         private ?string $execResult = null,
         private array $getinfoResult = [],
@@ -38,5 +40,11 @@ final class CurlMock implements CurlInterface
 
     public function setopt_array(CurlHandle $handle, array $options): void
     {
+        $this->options = $options;
+    }
+
+    public function getOptions(): ?array
+    {
+        return $this->options;
     }
 }
