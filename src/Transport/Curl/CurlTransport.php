@@ -2,19 +2,17 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Transport;
+namespace Vjik\TelegramBot\Api\Transport\Curl;
 
 use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
 use RuntimeException;
+use Vjik\TelegramBot\Api\Transport\ApiResponse;
+use Vjik\TelegramBot\Api\Transport\ApiUrlGenerator;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
-use function curl_close;
-use function curl_errno;
-use function curl_error;
-use function curl_exec;
-use function curl_getinfo;
-use function curl_init;
 use function is_int;
 use function is_resource;
 use function is_scalar;
@@ -30,6 +28,7 @@ final readonly class CurlTransport implements TransportInterface
     public function __construct(
         string $token,
         string $baseUrl = 'https://api.telegram.org',
+        private CurlInterface $curl = new Curl(),
     ) {
         $this->apiUrlGenerator = new ApiUrlGenerator($token, $baseUrl);
     }
@@ -45,29 +44,22 @@ final readonly class CurlTransport implements TransportInterface
         };
         $options[CURLOPT_RETURNTRANSFER] = true;
 
-        $curl = curl_init();
-        if ($curl === false) {
-            throw new RuntimeException('Failed to initialize CURL.');
-        }
+        $curl = $this->curl->init();
 
         try {
-            curl_setopt_array($curl, $options);
+            $this->curl->setopt_array($curl, $options);
 
-            /** @var string|false $body */
-            $body = curl_exec($curl);
-            if ($body === false) {
-                throw new RuntimeException(
-                    'CURL error: ' . curl_error($curl),
-                    curl_errno($curl),
-                );
-            }
+            /**
+             * @var string $body `curl_exec` returns string because `CURLOPT_RETURNTRANSFER` is set to `true`.
+             */
+            $body = $this->curl->exec($curl);
 
-            $statusCode = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+            $statusCode = $this->curl->getinfo($curl, CURLINFO_HTTP_CODE);
             if (!is_int($statusCode)) {
                 $statusCode = 0;
             }
         } finally {
-            curl_close($curl);
+            $this->curl->close($curl);
         }
 
         return new ApiResponse($statusCode, $body);
