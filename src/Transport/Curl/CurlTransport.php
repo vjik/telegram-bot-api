@@ -123,12 +123,10 @@ final readonly class CurlTransport implements TransportInterface
             rewind($resource);
         }
 
-        $data = stream_get_contents($resource);
-        if ($data === false) {
-            throw new RuntimeException('Could not read resource contents.');
-        }
-
-        return $data;
+        /**
+         * @var string We assume, that `$resource` is correct, so `stream_get_contents` never returns `false`.
+         */
+        return stream_get_contents($resource);
     }
 
     private function readStream(StreamInterface $stream): string

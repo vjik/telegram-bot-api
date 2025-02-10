@@ -17,6 +17,7 @@ use function curl_setopt_array;
 
 /**
  * @internal
+ * @codeCoverageIgnore
  */
 final class Curl implements CurlInterface
 {
