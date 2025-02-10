@@ -149,13 +149,14 @@ final class TelegramBotApiTest extends TestCase
     {
         $logger = $useLogger ? new SimpleLogger() : null;
         $method = new GetMe();
-        $response = new ApiResponse(200, '{"ok":false,"description":"test error"}');
+        $response = new ApiResponse(200, '{"ok":false,"description":"test error","error_code":400}');
         $api = $this->createApi($response, logger: $logger);
 
         $result = $api->call($method);
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertSame('test error', $result->description);
+        $this->assertSame(400, $result->errorCode);
 
         if ($useLogger) {
             $this->assertSame(
@@ -174,12 +175,13 @@ final class TelegramBotApiTest extends TestCase
                         'message' => 'On "getMe" request Telegram Bot API returned fail result.',
                         'context' => [
                             'type' => 3,
-                            'payload' => '{"ok":false,"description":"test error"}',
+                            'payload' => '{"ok":false,"description":"test error","error_code":400}',
                             'method' => $method,
                             'response' => $response,
                             'decodedResponse' => [
                                 'ok' => false,
                                 'description' => 'test error',
+                                'error_code' => 400,
                             ],
                         ],
                     ],
@@ -188,6 +190,7 @@ final class TelegramBotApiTest extends TestCase
             );
         }
     }
+
     public function testCallFailWithInvalidDescription(): void
     {
         $method = new GetMe();
@@ -198,6 +201,18 @@ final class TelegramBotApiTest extends TestCase
 
         $this->assertInstanceOf(FailResult::class, $result);
         $this->assertNull($result->description);
+    }
+
+    public function testCallFailWithInvalidErrorCode(): void
+    {
+        $method = new GetMe();
+        $response = new ApiResponse(200, '{"ok":false,"error_code":"2"}');
+        $api = $this->createApi($response);
+
+        $result = $api->call($method);
+
+        $this->assertInstanceOf(FailResult::class, $result);
+        $this->assertNull($result->errorCode);
     }
 
     public function testSuccessResponseWithoutResult(): void
