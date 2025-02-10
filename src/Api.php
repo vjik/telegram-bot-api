@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Type\ResponseParameters;
 use function array_key_exists;
 use function is_array;
 use function is_bool;
+use function is_int;
 use function is_string;
 use function json_decode;
 
@@ -139,6 +140,11 @@ final readonly class Api
         ApiResponse $response,
         array $decodedBody,
     ): FailResult {
+        $errorCode = $decodedBody['error_code'] ?? null;
+        if (!is_int($errorCode)) {
+            $errorCode = null;
+        }
+
         return new FailResult(
             $method,
             $response,
@@ -146,7 +152,7 @@ final readonly class Api
                 ? $decodedBody['description']
                 : null,
             ResponseParameters::fromDecodedBody($decodedBody),
-            $decodedBody['error_code'] ?? null,
+            $errorCode,
         );
     }
 }
