@@ -55,7 +55,7 @@ final class InputFileTest extends TestCase
             static function (int $code, string $message) use (&$errorMessage): bool {
                 $errorMessage = $message;
                 return true;
-            }
+            },
         );
 
         $exception = null;

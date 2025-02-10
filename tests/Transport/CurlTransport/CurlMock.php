@@ -14,12 +14,9 @@ final class CurlMock implements CurlInterface
     public function __construct(
         private ?string $execResult = null,
         private array $getinfoResult = [],
-    ) {
-    }
+    ) {}
 
-    public function close(CurlHandle $handle): void
-    {
-    }
+    public function close(CurlHandle $handle): void {}
 
     public function exec(CurlHandle $handle): ?string
     {
@@ -36,7 +33,5 @@ final class CurlMock implements CurlInterface
         return curl_init();
     }
 
-    public function setopt_array(CurlHandle $handle, array $options): void
-    {
-    }
+    public function setopt_array(CurlHandle $handle, array $options): void {}
 }
