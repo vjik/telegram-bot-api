@@ -1,11 +1,11 @@
-# phpstorm
+# PhpStorm
 .idea
 
-# composer
+# Composer
 /vendor
 /composer.lock
 
-# PhpUnit
+# PHPUnit
 /phpunit.phar
 /phpunit.xml
 /.phpunit.cache
