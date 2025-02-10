@@ -43,7 +43,7 @@ final class CurlTransportTest extends TestCase
                 CURLOPT_URL => 'https://api.telegram.org/bottest-token/getMe?key=value&array=%5B1%2C%22test%22%5D',
                 CURLOPT_RETURNTRANSFER => true,
             ],
-            $curl->getOptions()
+            $curl->getOptions(),
         );
     }
 
@@ -66,7 +66,7 @@ final class CurlTransportTest extends TestCase
                 CURLOPT_POSTFIELDS => [],
                 CURLOPT_RETURNTRANSFER => true,
             ],
-            $curl->getOptions()
+            $curl->getOptions(),
         );
     }
 
@@ -95,7 +95,7 @@ final class CurlTransportTest extends TestCase
                 ],
                 CURLOPT_RETURNTRANSFER => true,
             ],
-            $curl->getOptions()
+            $curl->getOptions(),
         );
     }
 
@@ -144,7 +144,7 @@ final class CurlTransportTest extends TestCase
                     'photo.png',
                 ),
             ],
-            $options[CURLOPT_POSTFIELDS] ?? null
+            $options[CURLOPT_POSTFIELDS] ?? null,
         );
     }
 
@@ -171,7 +171,7 @@ final class CurlTransportTest extends TestCase
                 'photo1' => new CURLStringFile('test1', ''),
                 'photo2' => new CURLStringFile('test2', 'test.jpg'),
             ],
-            $curl->getOptions()[CURLOPT_POSTFIELDS] ?? null
+            $curl->getOptions()[CURLOPT_POSTFIELDS] ?? null,
         );
     }
 }
