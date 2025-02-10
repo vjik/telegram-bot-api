@@ -5,8 +5,10 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
+use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
+use Throwable;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 final class InputFileTest extends TestCase
@@ -45,10 +47,27 @@ final class InputFileTest extends TestCase
         $this->assertSame('test.php', $file->filename);
     }
 
+    #[WithoutErrorHandler]
     public function testFromLocalNotExistsFile(): void
     {
-        $this->expectException(RuntimeException::class);
-        $this->expectExceptionMessage('Unable to open file "not-exists".');
-        @InputFile::fromLocalFile('not-exists');
+        $errorMessage = null;
+        set_error_handler(
+            static function (int $code, string $message) use (&$errorMessage): bool {
+                $errorMessage = $message;
+                return true;
+            }
+        );
+
+        $exception = null;
+        try {
+            InputFile::fromLocalFile('not-exists');
+        } catch (Throwable $exception) {
+        }
+
+        restore_error_handler();
+
+        $this->assertSame('fopen(not-exists): Failed to open stream: No such file or directory', $errorMessage);
+        $this->assertInstanceOf(RuntimeException::class, $exception);
+        $this->assertSame('Unable to open file "not-exists".', $exception->getMessage());
     }
 }
