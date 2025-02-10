@@ -17,6 +17,6 @@ final readonly class FailResult
         public ApiResponse $response,
         public ?string $description = null,
         public ?ResponseParameters $parameters = null,
-        public mixed $errorCode = null,
+        public ?int $errorCode = null,
     ) {}
 }
