@@ -140,11 +140,6 @@ final readonly class Api
         ApiResponse $response,
         array $decodedBody,
     ): FailResult {
-        $errorCode = $decodedBody['error_code'] ?? null;
-        if (!is_int($errorCode)) {
-            $errorCode = null;
-        }
-
         return new FailResult(
             $method,
             $response,
@@ -152,7 +147,9 @@ final readonly class Api
                 ? $decodedBody['description']
                 : null,
             ResponseParameters::fromDecodedBody($decodedBody),
-            $errorCode,
+            (isset($decodedBody['error_code']) && is_int($decodedBody['error_code']))
+                ? $decodedBody['error_code']
+                : null,
         );
     }
 }
