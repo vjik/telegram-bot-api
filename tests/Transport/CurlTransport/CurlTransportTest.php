@@ -196,6 +196,28 @@ final class CurlTransportTest extends TestCase
         );
     }
 
+    public function testSeekableResource(): void
+    {
+        $curl = new CurlMock();
+        $transport = new CurlTransport('test-token', curl: $curl);
+
+        $resource = fopen(__DIR__ . '/photo.png', 'r');
+        stream_get_contents($resource);
+        $transport->send('sendPhoto', [
+            'photo' => new InputFile($resource),
+        ]);
+
+        assertEquals(
+            [
+                'photo' => new CURLStringFile(
+                    file_get_contents(__DIR__ . '/photo.png'),
+                    '',
+                ),
+            ],
+            $curl->getOptions()[CURLOPT_POSTFIELDS] ?? null,
+        );
+    }
+
     public function testCloseOnException(): void
     {
         $curl = new CurlMock(new RuntimeException());
