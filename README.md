@@ -30,8 +30,8 @@ that requires an implementation of the `TransportInterface`.
 
 The package provides two transport out of the box:
 
-- `CurlTransport` that requires PHP [cURL](https://www.php.net/manual/book.curl.php) extension;
-- `PsrTransport` based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
+- [`CurlTransport`](docs/transport.md#curl) that requires PHP [cURL](https://www.php.net/manual/book.curl.php) extension;
+- [`PsrTransport`](docs/transport.md#psr) based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
 
 Since the cURL extension is included in most PHP installations, `CurlTransport` is often the easiest choice.
 
@@ -79,6 +79,7 @@ $updates = $api->getUpdates();
 
 ## Documentation
 
+- [Transport](docs/transport.md)
 - [Logging](docs/logging.md)
 - [Webhook handling](docs/webhook-handling.md)
 - [Custom requests](docs/custom-requests.md)
