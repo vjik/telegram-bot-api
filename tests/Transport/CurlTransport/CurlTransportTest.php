@@ -7,7 +7,9 @@ namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
 use CURLStringFile;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use stdClass;
+use Throwable;
 use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -173,5 +175,18 @@ final class CurlTransportTest extends TestCase
             ],
             $curl->getOptions()[CURLOPT_POSTFIELDS] ?? null,
         );
+    }
+
+    public function testCloseOnException(): void
+    {
+        $curl = new CurlMock(new RuntimeException());
+        $transport = new CurlTransport('test-token', curl: $curl);
+
+        try {
+            $transport->send('getMe');
+        } catch (Throwable) {
+        }
+
+        assertSame(1, $curl->getCountCallOfClose());
     }
 }

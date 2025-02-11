@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
 
 use CurlHandle;
+use Throwable;
 use Vjik\TelegramBot\Api\Transport\Curl\CurlInterface;
 
 use function curl_init;
@@ -12,16 +13,24 @@ use function curl_init;
 final class CurlMock implements CurlInterface
 {
     private ?array $options = null;
+    private int $countCallOfClose = 0;
 
     public function __construct(
-        private ?string $execResult = null,
-        private array $getinfoResult = [],
+        private readonly string|Throwable $execResult = '',
+        private readonly array $getinfoResult = [],
     ) {}
 
-    public function close(CurlHandle $handle): void {}
-
-    public function exec(CurlHandle $handle): ?string
+    public function close(CurlHandle $handle): void
     {
+        $this->countCallOfClose++;
+    }
+
+    public function exec(CurlHandle $handle): string
+    {
+        if ($this->execResult instanceof Throwable) {
+            throw $this->execResult;
+        }
+
         return $this->execResult;
     }
 
@@ -43,5 +52,10 @@ final class CurlMock implements CurlInterface
     public function getOptions(): ?array
     {
         return $this->options;
+    }
+
+    public function getCountCallOfClose(): int
+    {
+        return $this->countCallOfClose;
     }
 }
