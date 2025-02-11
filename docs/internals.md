@@ -34,7 +34,7 @@ The package is tested with [PHPUnit](https://phpunit.de/). To run tests:
 The package tests are checked with [Infection](https://infection.github.io/) mutation framework. To run it:
 
 ```shell
-./vendor/bin/infection
+composer infection
 ```
 
 ## Static analysis
