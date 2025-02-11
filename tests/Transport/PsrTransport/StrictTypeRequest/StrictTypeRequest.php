@@ -27,7 +27,7 @@ final class StrictTypeRequest implements RequestInterface
         string $method = 'GET',
         UriInterface|string $uri = '',
         array $headers = [],
-        $body = null,
+        mixed $body = null,
         string $protocol = '1.1',
     ) {
         $this->init($method, $uri, $headers, $body, $protocol);

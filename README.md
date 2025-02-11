@@ -26,46 +26,30 @@ composer require vjik/telegram-bot-api
 ## General usage
 
 To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class 
-that requires an instance of the `TransportInterface` implementation. Out of the box, the package provides
-`PsrTransport` based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
+that requires an implementation of the `TransportInterface`.
 
-For example, you can use the [php-http/curl-client](https://github.com/php-http/curl-client) and [httpsoft/http-message](https://github.com/httpsoft/http-message):
+The package provides two transport out of the box:
 
-```shell
-composer require php-http/curl-client httpsoft/http-message
-```
+- [`CurlTransport`](docs/transport.md#curl) that requires PHP [cURL](https://www.php.net/manual/book.curl.php) extension;
+- [`PsrTransport`](docs/transport.md#psr) based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
 
-In this case, a `TelegramBotApi` instance can be created as follows:
+Since the cURL extension is included in most PHP installations, `CurlTransport` is often the easiest choice.
 
 ```php
-use Http\Client\Curl\Client;
-use HttpSoft\Message\RequestFactory;
-use HttpSoft\Message\ResponseFactory;
-use HttpSoft\Message\StreamFactory;
-use Vjik\TelegramBot\Api\Transport\PsrTransport;
+use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 use Vjik\TelegramBot\Api\TelegramBotApi;
-
-// Telegram bot authentication token
-$token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
-
-// Dependencies
-$streamFactory = new StreamFactory();
-$responseFactory = new ResponseFactory();
-$requestFactory = new RequestFactory();
-$client = new Client($responseFactory, $streamFactory);
 
 // API
 $api = new TelegramBotApi(
-    new PsrTransport(
-        $token,
-        $client,
-        $requestFactory,
-        $streamFactory,
-    ),
+    new CurlTransport(
+        // Telegram bot authentication token
+        '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw'
+    )
 );
 ```
 
-Now you can use the `$api` instance to interact with the Telegram Bot API. Method names are the same as in the [Telegram Bot API documentation](https://core.telegram.org/bots/api). For example:
+Now you can use the `$api` instance to interact with the Telegram Bot API. Method names are the same as in 
+the [Telegram Bot API documentation](https://core.telegram.org/bots/api). For example:
 
 ```php
 use Vjik\TelegramBot\Api\Type\InputFile
@@ -95,6 +79,7 @@ $updates = $api->getUpdates();
 
 ## Documentation
 
+- [Transport](docs/transport.md)
 - [Logging](docs/logging.md)
 - [Webhook handling](docs/webhook-handling.md)
 - [Custom requests](docs/custom-requests.md)

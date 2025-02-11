@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.7.1 under development
+
+- New #142: Add `CurlTransport`.
+
 ## 0.7.0 February 10, 2025
 
 - New #139: Add `RawValue` value processor.
