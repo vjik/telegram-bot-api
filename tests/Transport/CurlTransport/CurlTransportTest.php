@@ -177,6 +177,25 @@ final class CurlTransportTest extends TestCase
         );
     }
 
+    public function testSeekableStream(): void
+    {
+        $curl = new CurlMock();
+        $transport = new CurlTransport('test-token', curl: $curl);
+
+        $stream = (new StreamFactory())->createStream('test1');
+        $stream->getContents();
+        $transport->send('sendPhoto', [
+            'photo' => new InputFile($stream),
+        ]);
+
+        assertEquals(
+            [
+                'photo' => new CURLStringFile('test1', ''),
+            ],
+            $curl->getOptions()[CURLOPT_POSTFIELDS] ?? null,
+        );
+    }
+
     public function testCloseOnException(): void
     {
         $curl = new CurlMock(new RuntimeException());
