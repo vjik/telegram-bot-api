@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
-use PHPUnit\Framework\Attributes\WithoutErrorHandler;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
@@ -47,7 +46,6 @@ final class InputFileTest extends TestCase
         $this->assertSame('test.php', $file->filename);
     }
 
-    #[WithoutErrorHandler]
     public function testFromLocalNotExistsFile(): void
     {
         $errorMessage = null;
