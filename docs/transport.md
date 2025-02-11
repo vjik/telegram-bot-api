@@ -4,7 +4,7 @@
 
 ## cURL
 
-The `CurlTransport` class is a transport implementation for making requests to the Telegram Bot API using the cURL extension in PHP. This transport is often the easiest choice since the cURL extension is included in most PHP installations.
+The `CurlTransport` class is a transport implementation for making requests to the Telegram Bot API using the [cURL](https://www.php.net/manual/book.curl.php) extension in PHP. This transport is often the easiest choice since the cURL extension is included in most PHP installations.
 
 General usage:
 
