@@ -30,13 +30,14 @@ final class SendGiftTest extends TestCase
     public function testFull(): void
     {
         $entity = new MessageEntity('bold', 0, 5);
-        $method = new SendGift(9, 'gift-id', 'hello', 'MarkdownV2', [$entity], true);
+        $method = new SendGift(9, 'gift-id', 'hello', 'MarkdownV2', [$entity], true, 95);
 
         $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
         $this->assertSame('sendGift', $method->getApiMethod());
         $this->assertSame(
             [
                 'user_id' => 9,
+                'chat_id' => 95,
                 'gift_id' => 'gift-id',
                 'pay_for_upgrade' => true,
                 'text' => 'hello',

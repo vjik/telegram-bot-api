@@ -1599,6 +1599,7 @@ final class TelegramBotApi
         ?string $textParseMode = null,
         ?array $textEntities = null,
         ?bool $payForUpgrade = null,
+        int|string|null $chatId = null,
     ): FailResult|true {
         return $this->call(
             new SendGift(
@@ -1608,6 +1609,7 @@ final class TelegramBotApi
                 $textParseMode,
                 $textEntities,
                 $payForUpgrade,
+                $chatId,
             ),
         );
     }

@@ -26,6 +26,7 @@ final readonly class SendGift implements MethodInterface
         private ?string $textParseMode = null,
         private ?array $textEntities = null,
         private ?bool $payForUpgrade = null,
+        private int|string|null $chatId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -43,6 +44,7 @@ final readonly class SendGift implements MethodInterface
         return array_filter(
             [
                 'user_id' => $this->userId,
+                'chat_id' => $this->chatId,
                 'gift_id' => $this->giftId,
                 'pay_for_upgrade' => $this->payForUpgrade,
                 'text' => $this->text,
