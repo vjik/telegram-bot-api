@@ -7,6 +7,7 @@
 - New #144: Add `canSendGift` field to `ChatFullInfo` type.
 - New #144: Add `TransactionPartnerChat` type.
 - New #144: Add `cover` and `startTimestamp` fields to `Video` type.
+- New #144: Add `cover` and `startTimestamp` parameters to `SendVideo` method.
 
 ## 0.7.0 February 10, 2025
 

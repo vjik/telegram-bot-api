@@ -2048,6 +2048,8 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
+        string|InputFile|null $cover = null,
+        ?int $startTimestamp = null,
     ): FailResult|Message {
         return $this->call(
             new SendVideo(
@@ -2071,6 +2073,8 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+                $cover,
+                $startTimestamp,
             ),
         );
     }

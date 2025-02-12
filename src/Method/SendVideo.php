@@ -47,6 +47,8 @@ final readonly class SendVideo implements MethodInterface
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
+        private string|InputFile|null $cover = null,
+        private ?int $startTimestamp = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -71,6 +73,8 @@ final readonly class SendVideo implements MethodInterface
                 'width' => $this->width,
                 'height' => $this->height,
                 'thumbnail' => $this->thumbnail,
+                'cover' => $this->cover,
+                'start_timestamp' => $this->startTimestamp,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(
