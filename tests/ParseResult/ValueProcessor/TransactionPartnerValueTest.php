@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TransactionPartnerValue;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerAffiliateProgram;
+use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerChat;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
@@ -55,6 +56,16 @@ final class TransactionPartnerValueTest extends TestCase
                         'id' => 12,
                         'is_bot' => false,
                         'first_name' => 'John',
+                    ],
+                ],
+            ],
+            [
+                TransactionPartnerChat::class,
+                [
+                    'type' => 'chat',
+                    'chat' => [
+                        'id' => 12,
+                        'type' => 'private',
                     ],
                 ],
             ],
