@@ -49,6 +49,7 @@ final class CopyMessageTest extends TestCase
             $replyParameters,
             $replyMarkup,
             true,
+            17,
         );
 
         $this->assertSame(
@@ -57,6 +58,7 @@ final class CopyMessageTest extends TestCase
                 'message_thread_id' => 4,
                 'from_chat_id' => 2,
                 'message_id' => 3,
+                'video_start_timestamp' => 17,
                 'caption' => 'test',
                 'parse_mode' => 'MarkdownV2',
                 'caption_entities' => [$messageEntity->toRequestArray()],

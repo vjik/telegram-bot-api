@@ -68,6 +68,7 @@ final class ChatFullInfoTest extends TestCase
         $this->assertNull($info->linkedChatId);
         $this->assertNull($info->location);
         $this->assertNull($info->canSendPaidMedia);
+        $this->assertNull($info->canSendGift);
     }
 
     public function testFromTelegramResult(): void
@@ -141,6 +142,7 @@ final class ChatFullInfoTest extends TestCase
             'permissions' => [
                 'can_send_messages' => true,
             ],
+            'can_send_gift' => true,
             'slow_mode_delay' => 5,
             'unrestrict_boost_count' => 10,
             'message_auto_delete_time' => 111,
@@ -232,5 +234,6 @@ final class ChatFullInfoTest extends TestCase
         $this->assertSame(55.7558, $info->location->location->latitude);
 
         $this->assertTrue($info->canSendPaidMedia);
+        $this->assertTrue($info->canSendGift);
     }
 }

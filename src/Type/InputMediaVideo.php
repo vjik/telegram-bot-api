@@ -28,6 +28,8 @@ final readonly class InputMediaVideo implements InputMedia
         public ?int $duration = null,
         public ?bool $supportsStreaming = null,
         public ?bool $hasSpoiler = null,
+        public string|InputFile|null $cover = null,
+        public ?int $startTimestamp = null,
     ) {}
 
     public function getType(): string
@@ -44,9 +46,13 @@ final readonly class InputMediaVideo implements InputMedia
             $thumbnail = $this->thumbnail instanceof InputFile
                 ? 'attach://' . $fileCollector->add($this->thumbnail)
                 : $this->thumbnail;
+            $cover = $this->cover instanceof InputFile
+                ? 'attach://' . $fileCollector->add($this->cover)
+                : $this->cover;
         } else {
             $media = $this->media;
             $thumbnail = $this->thumbnail;
+            $cover = $this->cover;
         }
 
         return array_filter(
@@ -54,6 +60,8 @@ final readonly class InputMediaVideo implements InputMedia
                 'type' => $this->getType(),
                 'media' => $media,
                 'thumbnail' => $thumbnail,
+                'cover' => $cover,
+                'start_timestamp' => $this->startTimestamp,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(

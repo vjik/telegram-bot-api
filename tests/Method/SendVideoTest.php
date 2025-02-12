@@ -59,6 +59,8 @@ final class SendVideoTest extends TestCase
             $replyParameters,
             $replyMarkup,
             true,
+            'attach://file1',
+            17,
         );
 
         $this->assertSame(
@@ -71,6 +73,8 @@ final class SendVideoTest extends TestCase
                 'width' => 300,
                 'height' => 200,
                 'thumbnail' => $thumbnail,
+                'cover' => 'attach://file1',
+                'start_timestamp' => 17,
                 'caption' => 'Caption',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],

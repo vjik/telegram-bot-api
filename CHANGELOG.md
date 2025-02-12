@@ -1,8 +1,14 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.7.1 under development
+## 0.7.1 February 12, 2025
 
 - New #142: Add `CurlTransport`.
+- New #144: Add `chatId` parameter to `SendGift` method.
+- New #144: Add `canSendGift` field to `ChatFullInfo` type.
+- New #144: Add `TransactionPartnerChat` type.
+- New #144: Add `cover` and `startTimestamp` fields to `Video`, `InputMediaVideo` and `InputPaidMediaVideo` types.
+- New #144: Add `cover` and `startTimestamp` parameters to `SendVideo` method.
+- New #144: Add `videoStartTimestamp` parameter to `ForwardMessage` and `CopyMessage` methods.
 
 ## 0.7.0 February 10, 2025
 

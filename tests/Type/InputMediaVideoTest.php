@@ -41,6 +41,7 @@ final class InputMediaVideoTest extends TestCase
     {
         $media = new InputFile((new StreamFactory())->createStream());
         $thumbnail = new InputFile((new StreamFactory())->createStream());
+        $cover = new InputFile((new StreamFactory())->createStream());
         $entity = new MessageEntity('bold', 0, 4);
         $inputMedia = new InputMediaVideo(
             $media,
@@ -54,6 +55,8 @@ final class InputMediaVideoTest extends TestCase
             500,
             true,
             false,
+            $cover,
+            17,
         );
 
         $this->assertSame('video', $inputMedia->getType());
@@ -62,6 +65,8 @@ final class InputMediaVideoTest extends TestCase
                 'type' => 'video',
                 'media' => $media,
                 'thumbnail' => $thumbnail,
+                'cover' => $cover,
+                'start_timestamp' => 17,
                 'caption' => 'Hello',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],
@@ -81,6 +86,8 @@ final class InputMediaVideoTest extends TestCase
                 'type' => 'video',
                 'media' => 'attach://file0',
                 'thumbnail' => 'attach://file1',
+                'cover' => 'attach://file2',
+                'start_timestamp' => 17,
                 'caption' => 'Hello',
                 'parse_mode' => 'HTML',
                 'caption_entities' => [$entity->toRequestArray()],
@@ -97,6 +104,7 @@ final class InputMediaVideoTest extends TestCase
             [
                 'file0' => $media,
                 'file1' => $thumbnail,
+                'file2' => $cover,
             ],
             $fileCollector->get(),
         );

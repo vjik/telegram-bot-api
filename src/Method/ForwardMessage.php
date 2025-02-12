@@ -23,6 +23,7 @@ final readonly class ForwardMessage implements MethodInterface
         private ?int $messageThreadId = null,
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
+        private ?int $videoStartTimestamp = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -42,6 +43,7 @@ final readonly class ForwardMessage implements MethodInterface
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
                 'from_chat_id' => $this->fromChatId,
+                'video_start_timestamp' => $this->videoStartTimestamp,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'message_id' => $this->messageId,

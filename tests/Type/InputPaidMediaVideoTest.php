@@ -40,6 +40,7 @@ final class InputPaidMediaVideoTest extends TestCase
     {
         $media = new InputFile((new StreamFactory())->createStream());
         $thumbnail = new InputFile((new StreamFactory())->createStream());
+        $cover = new InputFile((new StreamFactory())->createStream());
         $inputMedia = new InputPaidMediaVideo(
             $media,
             $thumbnail,
@@ -47,6 +48,8 @@ final class InputPaidMediaVideoTest extends TestCase
             320,
             500,
             true,
+            $cover,
+            17,
         );
 
         $this->assertSame('video', $inputMedia->getType());
@@ -55,6 +58,8 @@ final class InputPaidMediaVideoTest extends TestCase
                 'type' => 'video',
                 'media' => $media,
                 'thumbnail' => $thumbnail,
+                'cover' => $cover,
+                'start_timestamp' => 17,
                 'width' => 240,
                 'height' => 320,
                 'duration' => 500,
@@ -69,6 +74,8 @@ final class InputPaidMediaVideoTest extends TestCase
                 'type' => 'video',
                 'media' => 'attach://file0',
                 'thumbnail' => 'attach://file1',
+                'cover' => 'attach://file2',
+                'start_timestamp' => 17,
                 'width' => 240,
                 'height' => 320,
                 'duration' => 500,
@@ -80,6 +87,7 @@ final class InputPaidMediaVideoTest extends TestCase
             [
                 'file0' => $media,
                 'file1' => $thumbnail,
+                'file2' => $cover,
             ],
             $fileCollector->get(),
         );

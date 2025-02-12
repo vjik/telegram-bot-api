@@ -39,6 +39,7 @@ final readonly class CopyMessage implements MethodInterface
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $videoStartTimestamp = null,
     ) {}
 
 
@@ -60,6 +61,7 @@ final readonly class CopyMessage implements MethodInterface
                 'message_thread_id' => $this->messageThreadId,
                 'from_chat_id' => $this->fromChatId,
                 'message_id' => $this->messageId,
+                'video_start_timestamp' => $this->videoStartTimestamp,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(

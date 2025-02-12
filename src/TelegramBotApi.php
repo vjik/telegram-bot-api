@@ -388,6 +388,7 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
+        ?int $videoStartTimestamp = null,
     ): FailResult|MessageId {
         return $this->call(
             new CopyMessage(
@@ -404,6 +405,7 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+                $videoStartTimestamp,
             ),
         );
     }
@@ -866,6 +868,7 @@ final class TelegramBotApi
         ?int $messageThreadId = null,
         ?bool $disableNotification = null,
         ?bool $protectContent = null,
+        ?int $videoStartTimestamp = null,
     ): FailResult|Message {
         return $this->call(
             new ForwardMessage(
@@ -875,6 +878,7 @@ final class TelegramBotApi
                 $messageThreadId,
                 $disableNotification,
                 $protectContent,
+                $videoStartTimestamp,
             ),
         );
     }
@@ -1599,6 +1603,7 @@ final class TelegramBotApi
         ?string $textParseMode = null,
         ?array $textEntities = null,
         ?bool $payForUpgrade = null,
+        int|string|null $chatId = null,
     ): FailResult|true {
         return $this->call(
             new SendGift(
@@ -1608,6 +1613,7 @@ final class TelegramBotApi
                 $textParseMode,
                 $textEntities,
                 $payForUpgrade,
+                $chatId,
             ),
         );
     }
@@ -2046,6 +2052,8 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
+        string|InputFile|null $cover = null,
+        ?int $startTimestamp = null,
     ): FailResult|Message {
         return $this->call(
             new SendVideo(
@@ -2069,6 +2077,8 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+                $cover,
+                $startTimestamp,
             ),
         );
     }
