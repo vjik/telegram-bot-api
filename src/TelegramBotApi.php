@@ -388,6 +388,7 @@ final class TelegramBotApi
         ?ReplyParameters $replyParameters = null,
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
+        ?int $videoStartTimestamp = null,
     ): FailResult|MessageId {
         return $this->call(
             new CopyMessage(
@@ -404,6 +405,7 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+                $videoStartTimestamp,
             ),
         );
     }
