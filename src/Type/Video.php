@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type;
 
+use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ArrayOfObjectsValue;
+
 /**
  * @see https://core.telegram.org/bots/api#video
  *
@@ -11,6 +13,9 @@ namespace Vjik\TelegramBot\Api\Type;
  */
 final readonly class Video
 {
+    /**
+     * @param PhotoSize[]|null $cover
+     */
     public function __construct(
         public string $fileId,
         public string $fileUniqueId,
@@ -21,5 +26,8 @@ final readonly class Video
         public ?string $fileName = null,
         public ?string $mimeType = null,
         public ?int $fileSize = null,
+        #[ArrayOfObjectsValue(PhotoSize::class)]
+        public ?array $cover = null,
+        public ?int $startTimestamp = null,
     ) {}
 }
