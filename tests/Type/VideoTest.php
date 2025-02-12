@@ -53,7 +53,7 @@ final class VideoTest extends TestCase
                     'file_unique_id' => 'file_unique_id',
                     'width' => 150,
                     'height' => 150,
-                ]
+                ],
             ],
             'start_timestamp' => 17,
             'file_name' => 'face.png',
