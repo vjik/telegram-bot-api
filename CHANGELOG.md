@@ -8,6 +8,7 @@
 - New #144: Add `TransactionPartnerChat` type.
 - New #144: Add `cover` and `startTimestamp` fields to `Video`, `InputMediaVideo` and `InputPaidMediaVideo` types.
 - New #144: Add `cover` and `startTimestamp` parameters to `SendVideo` method.
+- New #144: Add `videoStartTimestamp` parameter to `ForwardMessage` method.
 
 ## 0.7.0 February 10, 2025
 

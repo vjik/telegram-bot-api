@@ -36,6 +36,7 @@ final class ForwardMessageTest extends TestCase
             4,
             true,
             false,
+            17,
         );
 
         $this->assertSame(
@@ -43,6 +44,7 @@ final class ForwardMessageTest extends TestCase
                 'chat_id' => 1,
                 'message_thread_id' => 4,
                 'from_chat_id' => 2,
+                'video_start_timestamp' => 17,
                 'disable_notification' => true,
                 'protect_content' => false,
                 'message_id' => 3,

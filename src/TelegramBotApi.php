@@ -866,6 +866,7 @@ final class TelegramBotApi
         ?int $messageThreadId = null,
         ?bool $disableNotification = null,
         ?bool $protectContent = null,
+        ?int $videoStartTimestamp = null,
     ): FailResult|Message {
         return $this->call(
             new ForwardMessage(
@@ -875,6 +876,7 @@ final class TelegramBotApi
                 $messageThreadId,
                 $disableNotification,
                 $protectContent,
+                $videoStartTimestamp,
             ),
         );
     }
