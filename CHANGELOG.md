@@ -4,6 +4,7 @@
 
 - New #142: Add `CurlTransport`.
 - New #144: Add `chatId` parameter to `SendGift` method.
+- New #144: Add `canSendGift` field to `ChatFullInfo` type.
 
 ## 0.7.0 February 10, 2025
 
