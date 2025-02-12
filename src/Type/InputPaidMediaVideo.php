@@ -20,6 +20,8 @@ final readonly class InputPaidMediaVideo implements InputPaidMedia
         public ?int $height = null,
         public ?int $duration = null,
         public ?bool $supportsStreaming = null,
+        public string|InputFile|null $cover = null,
+        public ?int $startTimestamp = null,
     ) {}
 
     public function getType(): string
@@ -36,9 +38,13 @@ final readonly class InputPaidMediaVideo implements InputPaidMedia
             $thumbnail = $this->thumbnail instanceof InputFile
                 ? 'attach://' . $fileCollector->add($this->thumbnail)
                 : $this->thumbnail;
+            $cover = $this->cover instanceof InputFile
+                ? 'attach://' . $fileCollector->add($this->cover)
+                : $this->cover;
         } else {
             $media = $this->media;
             $thumbnail = $this->thumbnail;
+            $cover = $this->cover;
         }
 
         return array_filter(
@@ -46,6 +52,8 @@ final readonly class InputPaidMediaVideo implements InputPaidMedia
                 'type' => $this->getType(),
                 'media' => $media,
                 'thumbnail' => $thumbnail,
+                'cover' => $cover,
+                'start_timestamp' => $this->startTimestamp,
                 'width' => $this->width,
                 'height' => $this->height,
                 'duration' => $this->duration,
