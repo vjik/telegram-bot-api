@@ -24,8 +24,7 @@ final readonly class PsrTransport implements TransportInterface
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
-    ) {
-    }
+    ) {}
 
     public function send(
         string $urlPath,

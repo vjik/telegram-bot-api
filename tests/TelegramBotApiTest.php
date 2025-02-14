@@ -193,7 +193,7 @@ final class TelegramBotApiTest extends TestCase
     {
         $method = new GetMe();
         $api = TestHelper::createSuccessStubApi(
-            new ApiResponse(200, '{"ok":false,"description":5}')
+            new ApiResponse(200, '{"ok":false,"description":5}'),
         );
 
         $result = $api->call($method);
@@ -206,7 +206,7 @@ final class TelegramBotApiTest extends TestCase
     {
         $method = new GetMe();
         $api = TestHelper::createSuccessStubApi(
-            new ApiResponse(200, '{"ok":false,"error_code":"2"}')
+            new ApiResponse(200, '{"ok":false,"error_code":"2"}'),
         );
 
         $result = $api->call($method);
@@ -291,7 +291,7 @@ final class TelegramBotApiTest extends TestCase
     public function testNotArrayResponse(): void
     {
         $api = TestHelper::createSuccessStubApi(
-            new ApiResponse(200, '"hello"')
+            new ApiResponse(200, '"hello"'),
         );
 
         $exception = null;
@@ -306,7 +306,7 @@ final class TelegramBotApiTest extends TestCase
     public function testResponseWithNotBooleanOk(): void
     {
         $api = TestHelper::createSuccessStubApi(
-            new ApiResponse(200, json_encode(['ok' => 'true']))
+            new ApiResponse(200, json_encode(['ok' => 'true'])),
         );
 
         $exception = null;

@@ -23,8 +23,7 @@ final readonly class CurlTransport implements TransportInterface
 {
     public function __construct(
         private CurlInterface $curl = new Curl(),
-    ) {
-    }
+    ) {}
 
     /**
      * @psalm-param array<string, mixed> $data
