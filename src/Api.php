@@ -9,6 +9,7 @@ use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
+use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
@@ -25,10 +26,14 @@ use function json_decode;
 final readonly class Api
 {
     private ResultFactory $resultFactory;
+    private TransportInterface $transport;
 
     public function __construct(
-        private TransportInterface $transport,
+        private string $token,
+        private string $baseUrl,
+        ?TransportInterface $transport,
     ) {
+        $this->transport = $transport ?? new CurlTransport();
         $this->resultFactory = new ResultFactory();
     }
 
@@ -45,8 +50,9 @@ final readonly class Api
             'Send ' . $method->getHttpMethod()->value . '-request "' . $method->getApiMethod() . '".',
             LogContextFactory::sendRequest($method),
         );
+
         $response = $this->transport->send(
-            $method->getApiMethod(),
+            $this->makeUrlPath($method->getApiMethod()),
             $method->getData(),
             $method->getHttpMethod(),
         );
@@ -99,6 +105,11 @@ final readonly class Api
         }
 
         return $result;
+    }
+
+    private function makeUrlPath(string $apiMethod): string
+    {
+        return $this->baseUrl . '/bot' . $this->token . '/' . $apiMethod;
     }
 
     /**

@@ -204,10 +204,12 @@ final class TelegramBotApi
     private Api $api;
 
     public function __construct(
-        TransportInterface $transport,
+        string $token,
+        string $baseUrl = 'https://api.telegram.org',
+        ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
-        $this->api = new Api($transport);
+        $this->api = new Api($token, $baseUrl, $transport);
     }
 
     public function withLogger(?LoggerInterface $logger): self

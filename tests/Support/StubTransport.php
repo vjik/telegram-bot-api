@@ -8,14 +8,14 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
-final class StubTransport implements TransportInterface
+final readonly class StubTransport implements TransportInterface
 {
     public function __construct(
         private ?ApiResponse $response = null,
     ) {}
 
     public function send(
-        string $apiMethod,
+        string $urlPath,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
     ): ApiResponse {

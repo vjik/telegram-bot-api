@@ -7,9 +7,9 @@ namespace Vjik\TelegramBot\Api\Tests;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
-use Psr\Log\LoggerInterface;
 use Throwable;
 use Vjik\TelegramBot\Api\CustomMethod;
+use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
@@ -56,10 +56,11 @@ final class TelegramBotApiTest extends TestCase
         $logger2 = new SimpleLogger();
 
         $api1 = new TelegramBotApi(
-            new StubTransport(
+            'stub-token',
+            transport: new StubTransport(
                 new ApiResponse(200, '[]'),
             ),
-            $logger1,
+            logger: $logger1,
         );
         $api2 = $api1->withLogger($logger2);
 
@@ -78,7 +79,7 @@ final class TelegramBotApiTest extends TestCase
         $logger = new SimpleLogger();
         $method = new GetMe();
         $response = new ApiResponse(200, '{"ok":true,"result":{"id":1,"is_bot":false,"first_name":"Sergei"}}');
-        $api = $this->createApi($response, logger: $logger);
+        $api = TestHelper::createSuccessStubApi($response, logger: $logger);
 
         $result = $api->call($method);
 
@@ -122,13 +123,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCallSimpleMethod(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 1,
-                'is_bot' => false,
-                'first_name' => 'Sergei',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'id' => 1,
+            'is_bot' => false,
+            'first_name' => 'Sergei',
         ]);
 
         $result = $api->call(new CustomMethod('getMe'));
@@ -150,7 +148,7 @@ final class TelegramBotApiTest extends TestCase
         $logger = $useLogger ? new SimpleLogger() : null;
         $method = new GetMe();
         $response = new ApiResponse(200, '{"ok":false,"description":"test error","error_code":400}');
-        $api = $this->createApi($response, logger: $logger);
+        $api = TestHelper::createSuccessStubApi($response, logger: $logger);
 
         $result = $api->call($method);
 
@@ -194,8 +192,9 @@ final class TelegramBotApiTest extends TestCase
     public function testCallFailWithInvalidDescription(): void
     {
         $method = new GetMe();
-        $response = new ApiResponse(200, '{"ok":false,"description":5}');
-        $api = $this->createApi($response);
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, '{"ok":false,"description":5}')
+        );
 
         $result = $api->call($method);
 
@@ -206,8 +205,9 @@ final class TelegramBotApiTest extends TestCase
     public function testCallFailWithInvalidErrorCode(): void
     {
         $method = new GetMe();
-        $response = new ApiResponse(200, '{"ok":false,"error_code":"2"}');
-        $api = $this->createApi($response);
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, '{"ok":false,"error_code":"2"}')
+        );
 
         $result = $api->call($method);
 
@@ -217,9 +217,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSuccessResponseWithoutResult(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, json_encode(['ok' => true])),
+        );
 
         $exception = null;
         try {
@@ -232,7 +232,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testResponseWithInvalidJson(): void
     {
-        $api = $this->createApi('g {12}');
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, 'g {12}'),
+        );
 
         $exception = null;
         try {
@@ -249,7 +251,7 @@ final class TelegramBotApiTest extends TestCase
     {
         $logger = $useLogger ? new SimpleLogger() : null;
         $method = new GetMe();
-        $api = $this->createApi('{"ok":true,"result":[]}', logger: $logger);
+        $api = TestHelper::createSuccessStubApi([], logger: $logger);
 
         $exception = null;
         try {
@@ -288,7 +290,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testNotArrayResponse(): void
     {
-        $api = $this->createApi('"hello"');
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, '"hello"')
+        );
 
         $exception = null;
         try {
@@ -301,9 +305,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testResponseWithNotBooleanOk(): void
     {
-        $api = $this->createApi([
-            'ok' => 'true',
-        ]);
+        $api = TestHelper::createSuccessStubApi(
+            new ApiResponse(200, json_encode(['ok' => 'true']))
+        );
 
         $exception = null;
         try {
@@ -316,10 +320,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAddStickerToSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->addStickerToSet(
             1,
@@ -332,10 +333,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAnswerCallbackQuery(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->answerCallbackQuery('id');
 
@@ -344,10 +342,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAnswerInlineQuery(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->answerInlineQuery('id', []);
 
@@ -356,10 +351,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAnswerPreCheckoutQuery(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->answerPreCheckoutQuery('id', true);
 
@@ -368,10 +360,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAnswerShippingQuery(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->answerShippingQuery('id', true);
 
@@ -380,11 +369,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testAnswerWebAppQuery(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'inline_message_id' => 'idMessage',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'inline_message_id' => 'idMessage',
         ]);
 
         $result = $api->answerWebAppQuery('id', new InlineQueryResultContact('1', '+79001234567', 'Vjik'));
@@ -395,10 +381,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testApproveChatJoinRequest(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->approveChatJoinRequest(1, 2);
 
@@ -407,10 +390,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testBanChatMember(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->banChatMember(1, 2);
 
@@ -419,10 +399,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testBanChatSenderChat(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->banChatSenderChat(1, 2);
 
@@ -431,10 +408,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testClose(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->close();
 
@@ -443,10 +417,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCloseForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->closeForumTopic(1, 2);
 
@@ -455,10 +426,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCloseGeneralForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->closeGeneralForumTopic(1);
 
@@ -467,12 +435,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCopyMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-            ],
-        ]);
+        $api = TestHelper::createSuccessStubApi(['message_id' => 7]);
 
         $result = $api->copyMessage(100, 200, 1);
 
@@ -482,16 +445,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCopyMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'message_id' => 7,
-                ],
-                [
-                    'message_id' => 8,
-                ],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            ['message_id' => 7],
+            ['message_id' => 8],
         ]);
 
         $result = $api->copyMessages(100, 200, [1, 2]);
@@ -506,19 +462,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCreateChatInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'invite_link' => 'https//t.me/+example',
-                'creator' => [
-                    'id' => 1,
-                    'is_bot' => true,
-                    'first_name' => 'testBot',
-                ],
-                'creates_join_request' => true,
-                'is_primary' => true,
-                'is_revoked' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'invite_link' => 'https//t.me/+example',
+            'creator' => [
+                'id' => 1,
+                'is_bot' => true,
+                'first_name' => 'testBot',
             ],
+            'creates_join_request' => true,
+            'is_primary' => true,
+            'is_revoked' => false,
         ]);
 
         $result = $api->createChatInviteLink(1);
@@ -529,19 +482,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCreateChatSubscriptionInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'invite_link' => 'https//t.me/+example',
-                'creator' => [
-                    'id' => 1,
-                    'is_bot' => true,
-                    'first_name' => 'testBot',
-                ],
-                'creates_join_request' => true,
-                'is_primary' => true,
-                'is_revoked' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'invite_link' => 'https//t.me/+example',
+            'creator' => [
+                'id' => 1,
+                'is_bot' => true,
+                'first_name' => 'testBot',
             ],
+            'creates_join_request' => true,
+            'is_primary' => true,
+            'is_revoked' => false,
         ]);
 
         $result = $api->createChatSubscriptionInviteLink(10, 20, 30);
@@ -552,14 +502,11 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCreateForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_thread_id' => 19,
-                'name' => 'test',
-                'icon_color' => 0x00FF00,
-                'icon_custom_emoji_id' => '2351346235143',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_thread_id' => 19,
+            'name' => 'test',
+            'icon_color' => 0x00FF00,
+            'icon_custom_emoji_id' => '2351346235143',
         ]);
 
         $result = $api->createForumTopic(1, 'test');
@@ -570,10 +517,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCreateInvoiceLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => 'https://example.com/invoice',
-        ]);
+        $api = TestHelper::createSuccessStubApi('https://example.com/invoice');
 
         $result = $api->createInvoiceLink(
             'The title',
@@ -588,10 +532,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testCreateNewStickerSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->createNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
 
@@ -600,10 +541,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeclineChatJoinRequest(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->declineChatJoinRequest(1, 2);
 
@@ -612,10 +550,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteChatPhoto(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteChatPhoto(1);
 
@@ -624,10 +559,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteChatStickerSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteChatStickerSet(1);
 
@@ -636,10 +568,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteForumTopic(1, 2);
 
@@ -648,10 +577,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteMessage(1, 2);
 
@@ -660,10 +586,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteMessages(1, []);
 
@@ -672,10 +595,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteMyCommands(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteMyCommands();
 
@@ -684,10 +604,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteStickerFromSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteStickerFromSet('sid');
 
@@ -696,10 +613,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteStickerSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteStickerSet('test_by_bot');
 
@@ -708,19 +622,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditChatInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'invite_link' => 'https//t.me/+example',
-                'creator' => [
-                    'id' => 23,
-                    'is_bot' => true,
-                    'first_name' => 'testBot',
-                ],
-                'creates_join_request' => true,
-                'is_primary' => true,
-                'is_revoked' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'invite_link' => 'https//t.me/+example',
+            'creator' => [
+                'id' => 23,
+                'is_bot' => true,
+                'first_name' => 'testBot',
             ],
+            'creates_join_request' => true,
+            'is_primary' => true,
+            'is_revoked' => false,
         ]);
 
         $result = $api->editChatInviteLink(1, 'https//t.me/+example');
@@ -731,19 +642,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditChatSubscriptionInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'invite_link' => 'https//t.me/+example',
-                'creator' => [
-                    'id' => 23,
-                    'is_bot' => true,
-                    'first_name' => 'testBot',
-                ],
-                'creates_join_request' => true,
-                'is_primary' => true,
-                'is_revoked' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'invite_link' => 'https//t.me/+example',
+            'creator' => [
+                'id' => 23,
+                'is_bot' => true,
+                'first_name' => 'testBot',
             ],
+            'creates_join_request' => true,
+            'is_primary' => true,
+            'is_revoked' => false,
         ]);
 
         $result = $api->editChatSubscriptionInviteLink(1, 'https//t.me/+example');
@@ -754,10 +662,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editForumTopic(1, 2);
 
@@ -766,10 +671,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditGeneralForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editGeneralForumTopic(1, 'test');
 
@@ -778,10 +680,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditMessageCaption(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editMessageCaption();
 
@@ -790,10 +689,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditMessageLiveLocation(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editMessageLiveLocation(51.660781, 39.200296);
 
@@ -802,10 +698,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditMessageMedia(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editMessageMedia(
             new InputMediaPhoto('https://example.com/photo.jpg'),
@@ -816,10 +709,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditMessageReplyMarkup(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editMessageReplyMarkup();
 
@@ -828,10 +718,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditMessageText(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editMessageText('test');
 
@@ -840,10 +727,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testEditUserStarSubscription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->editUserStarSubscription(7, 'id', false);
 
@@ -852,10 +736,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testExportChatInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => 'https//t.me/+example',
-        ]);
+        $api = TestHelper::createSuccessStubApi('https//t.me/+example');
 
         $result = $api->exportChatInviteLink(1);
 
@@ -864,15 +745,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testForwardMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -884,15 +762,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testForwardMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'message_id' => 7,
-                ],
-                [
-                    'message_id' => 8,
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'message_id' => 7,
+            ],
+            [
+                'message_id' => 8,
             ],
         ]);
 
@@ -908,10 +783,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testDeleteWebhook(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->deleteWebhook();
 
@@ -920,11 +792,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetAvailableGifts(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'gifts' => [],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'gifts' => [],
         ]);
 
         $result = $api->getAvailableGifts();
@@ -934,20 +803,17 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetBusinessConnection(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 'id1',
-                'user' => [
-                    'id' => 123,
-                    'is_bot' => false,
-                    'first_name' => 'Sergei',
-                ],
-                'user_chat_id' => 23,
-                'date' => 1717517779,
-                'can_reply' => true,
-                'is_enabled' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'id' => 'id1',
+            'user' => [
+                'id' => 123,
+                'is_bot' => false,
+                'first_name' => 'Sergei',
             ],
+            'user_chat_id' => 23,
+            'date' => 1717517779,
+            'can_reply' => true,
+            'is_enabled' => false,
         ]);
 
         $result = $api->getBusinessConnection('b1');
@@ -958,14 +824,11 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetChat(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 23,
-                'type' => 'private',
-                'accent_color_id' => 0x123456,
-                'max_reaction_count' => 5,
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'id' => 23,
+            'type' => 'private',
+            'accent_color_id' => 0x123456,
+            'max_reaction_count' => 5,
         ]);
 
         $result = $api->getChat(23);
@@ -976,13 +839,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetChatAdministrators(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'status' => 'member',
-                    'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'status' => 'member',
+                'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
             ],
         ]);
 
@@ -996,10 +856,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetChatMemberCount(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => 33,
-        ]);
+        $api = TestHelper::createSuccessStubApi(33);
 
         $result = $api->getChatMemberCount(1);
 
@@ -1008,12 +865,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetChatMember(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'status' => 'member',
-                'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'status' => 'member',
+            'user' => ['id' => 23, 'is_bot' => false, 'first_name' => 'Mike'],
         ]);
 
         $result = $api->getChatMember(1, 2);
@@ -1024,11 +878,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetChatMenuButton(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'type' => 'default',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'type' => 'default',
         ]);
 
         $result = $api->getChatMenuButton();
@@ -1038,14 +889,11 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetFile(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'file_id' => 'f1',
-                'file_unique_id' => 'fullX1',
-                'file_size' => 123,
-                'file_path' => 'path/to/file',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'file_id' => 'f1',
+            'file_unique_id' => 'fullX1',
+            'file_size' => 123,
+            'file_path' => 'path/to/file',
         ]);
 
         $result = $api->getFile('f1');
@@ -1056,18 +904,15 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetForumTopicIconStickers(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'file_id' => 'x1',
-                    'file_unique_id' => 'fullX1',
-                    'type' => 'regular',
-                    'width' => 100,
-                    'height' => 120,
-                    'is_animated' => false,
-                    'is_video' => true,
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'file_id' => 'x1',
+                'file_unique_id' => 'fullX1',
+                'type' => 'regular',
+                'width' => 100,
+                'height' => 120,
+                'is_animated' => false,
+                'is_video' => true,
             ],
         ]);
 
@@ -1081,18 +926,15 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetGameHighScores(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'position' => 2,
-                    'user' => [
-                        'id' => 1,
-                        'is_bot' => false,
-                        'first_name' => 'test',
-                    ],
-                    'score' => 300,
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'position' => 2,
+                'user' => [
+                    'id' => 1,
+                    'is_bot' => false,
+                    'first_name' => 'test',
                 ],
+                'score' => 300,
             ],
         ]);
 
@@ -1106,18 +948,15 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetCustomEmojiStickers(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'file_id' => 'x1',
-                    'file_unique_id' => 'fullX1',
-                    'type' => 'regular',
-                    'width' => 100,
-                    'height' => 120,
-                    'is_animated' => false,
-                    'is_video' => true,
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'file_id' => 'x1',
+                'file_unique_id' => 'fullX1',
+                'type' => 'regular',
+                'width' => 100,
+                'height' => 120,
+                'is_animated' => false,
+                'is_video' => true,
             ],
         ]);
 
@@ -1131,13 +970,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMe(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 1,
-                'is_bot' => false,
-                'first_name' => 'Sergei',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'id' => 1,
+            'is_bot' => false,
+            'first_name' => 'Sergei',
         ]);
 
         $result = $api->getMe();
@@ -1148,13 +984,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMyCommands(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'command' => 'start',
-                    'description' => 'Start command',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'command' => 'start',
+                'description' => 'Start command',
             ],
         ]);
 
@@ -1168,25 +1001,22 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMyDefaultAdministratorRights(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'is_anonymous' => true,
-                'can_manage_chat' => false,
-                'can_delete_messages' => true,
-                'can_manage_video_chats' => true,
-                'can_restrict_members' => false,
-                'can_promote_members' => true,
-                'can_change_info' => true,
-                'can_invite_users' => true,
-                'can_post_stories' => true,
-                'can_edit_stories' => true,
-                'can_delete_stories' => false,
-                'can_post_messages' => true,
-                'can_edit_messages' => true,
-                'can_pin_messages' => false,
-                'can_manage_topics' => true,
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'is_anonymous' => true,
+            'can_manage_chat' => false,
+            'can_delete_messages' => true,
+            'can_manage_video_chats' => true,
+            'can_restrict_members' => false,
+            'can_promote_members' => true,
+            'can_change_info' => true,
+            'can_invite_users' => true,
+            'can_post_stories' => true,
+            'can_edit_stories' => true,
+            'can_delete_stories' => false,
+            'can_post_messages' => true,
+            'can_edit_messages' => true,
+            'can_pin_messages' => false,
+            'can_manage_topics' => true,
         ]);
 
         $result = $api->getMyDefaultAdministratorRights();
@@ -1210,11 +1040,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMyDescription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'description' => 'test',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'description' => 'test',
         ]);
 
         $result = $api->getMyDescription();
@@ -1225,11 +1052,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMyName(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'name' => 'test',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'name' => 'test',
         ]);
 
         $result = $api->getMyName();
@@ -1240,11 +1064,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetMyShortDescription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'short_description' => 'test',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'short_description' => 'test',
         ]);
 
         $result = $api->getMyShortDescription();
@@ -1255,11 +1076,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetStarTransactions(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'transactions' => [],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'transactions' => [],
         ]);
 
         $result = $api->getStarTransactions();
@@ -1269,22 +1087,19 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetStickerSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'name' => 'test_by_bot',
-                'title' => 'test name',
-                'sticker_type' => 'regular',
-                'stickers' => [
-                    [
-                        'file_id' => 'fid1',
-                        'file_unique_id' => 'fuid1',
-                        'type' => 'regular',
-                        'width' => 200,
-                        'height' => 300,
-                        'is_animated' => false,
-                        'is_video' => false,
-                    ],
+        $api = TestHelper::createSuccessStubApi([
+            'name' => 'test_by_bot',
+            'title' => 'test name',
+            'sticker_type' => 'regular',
+            'stickers' => [
+                [
+                    'file_id' => 'fid1',
+                    'file_unique_id' => 'fuid1',
+                    'type' => 'regular',
+                    'width' => 200,
+                    'height' => 300,
+                    'is_animated' => false,
+                    'is_video' => false,
                 ],
             ],
         ]);
@@ -1296,12 +1111,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetUpdates(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                ['update_id' => 1],
-                ['update_id' => 2],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            ['update_id' => 1],
+            ['update_id' => 2],
         ]);
 
         $result = $api->getUpdates();
@@ -1316,11 +1128,8 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetUserChatBoosts(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'boosts' => [],
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'boosts' => [],
         ]);
 
         $result = $api->getUserChatBoosts(1, 2);
@@ -1330,19 +1139,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetUserProfilePhotos(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'total_count' => 1,
-                'photos' => [
+        $api = TestHelper::createSuccessStubApi([
+            'total_count' => 1,
+            'photos' => [
+                [
                     [
-                        [
-                            'file_id' => 'f1',
-                            'file_unique_id' => 'fullX1',
-                            'file_size' => 123,
-                            'width' => 100,
-                            'height' => 200,
-                        ],
+                        'file_id' => 'f1',
+                        'file_unique_id' => 'fullX1',
+                        'file_size' => 123,
+                        'width' => 100,
+                        'height' => 200,
                     ],
                 ],
             ],
@@ -1355,13 +1161,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testGetWebhookInfo(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'url' => 'https://example.com/',
-                'has_custom_certificate' => true,
-                'pending_update_count' => 12,
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'url' => 'https://example.com/',
+            'has_custom_certificate' => true,
+            'pending_update_count' => 12,
         ]);
 
         $result = $api->getWebhookInfo();
@@ -1372,10 +1175,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testHideGeneralForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->hideGeneralForumTopic(1);
 
@@ -1384,10 +1184,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testLeaveChat(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->leaveChat(1);
 
@@ -1396,10 +1193,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testLogOut(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->logOut();
 
@@ -1408,10 +1202,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testPinChatMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->pinChatMessage(1, 2);
 
@@ -1420,10 +1211,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testPromoteChatMember(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->promoteChatMember(1, 2);
 
@@ -1432,10 +1220,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testRefundStarPayment(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->refundStarPayment(1, 'test');
 
@@ -1444,10 +1229,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testRemoveChatVerification(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->removeChatVerification(1);
 
@@ -1456,10 +1238,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testRemoveUserVerification(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->removeUserVerification(1);
 
@@ -1468,10 +1247,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testReopenForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->reopenForumTopic(1, 2);
 
@@ -1480,10 +1256,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testReopenGeneralForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->reopenGeneralForumTopic(1);
 
@@ -1492,10 +1265,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testReplaceStickerInSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->replaceStickerInSet(
             1,
@@ -1509,10 +1279,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testRestrictChatMember(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->restrictChatMember(1, 2, new ChatPermissions());
 
@@ -1521,19 +1288,16 @@ final class TelegramBotApiTest extends TestCase
 
     public function testRevokeChatInviteLink(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'invite_link' => 'https//t.me/+example',
-                'creator' => [
-                    'id' => 23,
-                    'is_bot' => true,
-                    'first_name' => 'testBot',
-                ],
-                'creates_join_request' => true,
-                'is_primary' => true,
-                'is_revoked' => false,
+        $api = TestHelper::createSuccessStubApi([
+            'invite_link' => 'https//t.me/+example',
+            'creator' => [
+                'id' => 23,
+                'is_bot' => true,
+                'first_name' => 'testBot',
             ],
+            'creates_join_request' => true,
+            'is_primary' => true,
+            'is_revoked' => false,
         ]);
 
         $result = $api->revokeChatInviteLink(1, 'https//t.me/+example');
@@ -1544,12 +1308,9 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSavePreparedInlineMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => 'test-id',
-                'expiration_date' => 1620000000,
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'id' => 'test-id',
+            'expiration_date' => 1620000000,
         ]);
 
         $result = $api->savePreparedInlineMessage(12, new InlineQueryResultGame('test', 'Hello'));
@@ -1560,15 +1321,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendAnimation(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1580,15 +1338,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendAudio(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1600,10 +1355,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendChatAction(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->sendChatAction(12, 'typing');
 
@@ -1612,15 +1364,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendContact(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1632,15 +1381,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendDice(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1652,15 +1398,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendDocument(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1672,15 +1415,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendGame(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1692,10 +1432,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendGift(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->sendGift(12, 'gid');
 
@@ -1704,15 +1441,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendInvoice(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1731,15 +1465,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendLocation(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1751,16 +1482,13 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendMediaGroup(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                [
-                    'message_id' => 7,
-                    'date' => 1620000000,
-                    'chat' => [
-                        'id' => 1,
-                        'type' => 'private',
-                    ],
+        $api = TestHelper::createSuccessStubApi([
+            [
+                'message_id' => 7,
+                'date' => 1620000000,
+                'chat' => [
+                    'id' => 1,
+                    'type' => 'private',
                 ],
             ],
         ]);
@@ -1775,15 +1503,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1795,15 +1520,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendPaidMedia(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1815,15 +1537,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendPhoto(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1835,15 +1554,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendPoll(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1855,15 +1571,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendSticker(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1875,15 +1588,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendVenue(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1895,15 +1605,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendVideo(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1916,15 +1623,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendVideoNote(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1936,15 +1640,12 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSendVoice(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'message_id' => 7,
-                'date' => 1620000000,
-                'chat' => [
-                    'id' => 1,
-                    'type' => 'private',
-                ],
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
             ],
         ]);
 
@@ -1956,10 +1657,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatAdministratorCustomTitle(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatAdministratorCustomTitle(1, 2, 'test');
 
@@ -1968,10 +1666,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatPermissions(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatPermissions(1, new ChatPermissions());
 
@@ -1980,10 +1675,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatDescription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatDescription(12);
 
@@ -1992,10 +1684,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatMenuButton(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatMenuButton();
 
@@ -2004,10 +1693,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatPhoto(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatPhoto(12, new InputFile((new StreamFactory())->createStream()));
 
@@ -2016,10 +1702,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatStickerSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatStickerSet(1, 'animals_by_bot');
 
@@ -2028,10 +1711,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetChatTitle(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setChatTitle(12, 'test');
 
@@ -2040,10 +1720,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetCustomEmojiStickerSetThumbnail(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setCustomEmojiStickerSetThumbnail('animals_by_my_bor');
 
@@ -2052,10 +1729,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetGameScore(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setGameScore(1, 2);
 
@@ -2064,10 +1738,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMessageReaction(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMessageReaction(12, 270);
 
@@ -2076,10 +1747,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMyCommands(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMyCommands([
             new BotCommand('test', 'Test description'),
@@ -2090,10 +1758,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMyDefaultAdministratorRights(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMyDefaultAdministratorRights();
 
@@ -2102,10 +1767,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMyDescription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMyDescription();
 
@@ -2114,10 +1776,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMyName(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMyName();
 
@@ -2126,10 +1785,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetMyShortDescription(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setMyShortDescription();
 
@@ -2138,10 +1794,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetPassportDataErrors(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setPassportDataErrors(1, []);
 
@@ -2150,10 +1803,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerEmojiList(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerEmojiList('sid', ['😎']);
 
@@ -2162,10 +1812,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerKeywords(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerKeywords('sid');
 
@@ -2174,10 +1821,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerMaskPosition(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerMaskPosition('sid');
 
@@ -2186,10 +1830,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerPositionInSet(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerPositionInSet('sid', 2);
 
@@ -2198,10 +1839,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerSetThumbnail(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerSetThumbnail('animals_by_boy', 123, 'static');
 
@@ -2210,10 +1848,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetStickerSetTitle(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setStickerSetTitle('name_by_bot', 'New Title');
 
@@ -2222,10 +1857,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetUserEmojiStatus(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setUserEmojiStatus(19);
 
@@ -2234,10 +1866,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testSetWebhook(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setWebhook('https://example.com/webhook');
 
@@ -2246,10 +1875,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testStopMessageLiveLocation(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->stopMessageLiveLocation();
 
@@ -2258,20 +1884,17 @@ final class TelegramBotApiTest extends TestCase
 
     public function testStopPoll(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'id' => '12',
-                'question' => 'Why?',
-                'options' => [
-                    ['text' => 'One', 'voter_count' => 12],
-                ],
-                'total_voter_count' => 42,
-                'is_closed' => true,
-                'is_anonymous' => false,
-                'type' => 'regular',
-                'allows_multiple_answers' => true,
+        $api = TestHelper::createSuccessStubApi([
+            'id' => '12',
+            'question' => 'Why?',
+            'options' => [
+                ['text' => 'One', 'voter_count' => 12],
             ],
+            'total_voter_count' => 42,
+            'is_closed' => true,
+            'is_anonymous' => false,
+            'type' => 'regular',
+            'allows_multiple_answers' => true,
         ]);
 
         $result = $api->stopPoll(1, 2);
@@ -2281,10 +1904,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnbanChatMember(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unbanChatMember(1, 2);
 
@@ -2293,10 +1913,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnbanChatSenderChat(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unbanChatSenderChat(1, 2);
 
@@ -2305,10 +1922,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnhideGeneralForumTopic(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unhideGeneralForumTopic(1);
 
@@ -2317,10 +1931,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnpinAllChatMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unpinAllChatMessages(2);
 
@@ -2329,10 +1940,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnpinChatMessage(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unpinChatMessage(2);
 
@@ -2341,10 +1949,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnpinAllForumTopicMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unpinAllForumTopicMessages(1, 2);
 
@@ -2353,10 +1958,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUnpinAllGeneralForumTopicMessages(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unpinAllGeneralForumTopicMessages(2);
 
@@ -2365,14 +1967,11 @@ final class TelegramBotApiTest extends TestCase
 
     public function testUploadStickerFile(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => [
-                'file_id' => 'f1',
-                'file_unique_id' => 'fullX1',
-                'file_size' => 123,
-                'file_path' => 'path/to/file',
-            ],
+        $api = TestHelper::createSuccessStubApi([
+            'file_id' => 'f1',
+            'file_unique_id' => 'fullX1',
+            'file_size' => 123,
+            'file_path' => 'path/to/file',
         ]);
 
         $result = $api->uploadStickerFile(1, new InputFile((new StreamFactory())->createStream()), 'static');
@@ -2383,10 +1982,7 @@ final class TelegramBotApiTest extends TestCase
 
     public function testVerifyChat(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->verifyChat(1);
 
@@ -2395,31 +1991,10 @@ final class TelegramBotApiTest extends TestCase
 
     public function testVerifyUser(): void
     {
-        $api = $this->createApi([
-            'ok' => true,
-            'result' => true,
-        ]);
+        $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->verifyUser(1);
 
         $this->assertTrue($result);
-    }
-
-    private function createApi(
-        array|string|ApiResponse $response,
-        int $statusCode = 200,
-        ?LoggerInterface $logger = null,
-    ): TelegramBotApi {
-        return new TelegramBotApi(
-            new StubTransport(
-                $response instanceof ApiResponse
-                    ? $response
-                    : new ApiResponse(
-                        $statusCode,
-                        is_array($response) ? json_encode($response) : $response,
-                    ),
-            ),
-            $logger,
-        );
     }
 }
