@@ -26,14 +26,12 @@ use function json_decode;
 final readonly class Api
 {
     private ResultFactory $resultFactory;
-    private TransportInterface $transport;
 
     public function __construct(
         private string $token,
         private string $baseUrl,
-        ?TransportInterface $transport,
+        private TransportInterface $transport,
     ) {
-        $this->transport = $transport ?? new CurlTransport();
         $this->resultFactory = new ResultFactory();
     }
 

@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api;
 
 use DateTimeImmutable;
 use DateTimeInterface;
+use LogicException;
 use Psr\Log\LoggerInterface;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
@@ -138,6 +139,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
+use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -196,6 +198,8 @@ use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
+use function extension_loaded;
+
 /**
  * @api
  */
@@ -209,6 +213,15 @@ final class TelegramBotApi
         ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
+        if ($transport === null) {
+            if (extension_loaded('curl')) {
+                $transport = new CurlTransport();
+            } else {
+                throw new LogicException(
+                    'Failed to initialize the default transport (cURL required). Provide a transport manually.',
+                );
+            }
+        }
         $this->api = new Api($token, $baseUrl, $transport);
     }
 
