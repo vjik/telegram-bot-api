@@ -38,6 +38,14 @@ $api = new TelegramBotApi(
 );
 ```
 
+`TelegramBotApi` constructor parameters:
+
+- `$token` — Telegram bot authentication token;
+- `$baseUrl` — the base URL for Telegram Bot API requests (default `https://api.telegram.org`).
+- `$transport` — the [transport](docs/transport.md) to make requests to Telegram Bot API (cURL will be used by default).
+- `$logger` — the [PSR-3](https://www.php-fig.org/psr/psr-3/) compatible logger to log requests to Telegram Bot API and
+  response handling errors. See [logging](docs/logging.md) for more information.
+
 Now you can use the `$api` instance to interact with the Telegram Bot API. Method names are the same as in 
 the [Telegram Bot API documentation](https://core.telegram.org/bots/api). For example:
 
