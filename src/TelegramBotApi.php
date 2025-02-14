@@ -214,13 +214,11 @@ final class TelegramBotApi
         private ?LoggerInterface $logger = null,
     ) {
         if ($transport === null) {
-            if (extension_loaded('curl')) {
-                $transport = new CurlTransport();
-            } else {
-                throw new LogicException(
+            $transport = extension_loaded('curl')
+                ? new CurlTransport()
+                : throw new LogicException(
                     'Failed to initialize the default transport (cURL required). Provide a transport manually.',
                 );
-            }
         }
         $this->api = new Api($token, $baseUrl, $transport);
     }
