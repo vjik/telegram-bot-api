@@ -22,7 +22,6 @@ final class StrictTypeRequestTest extends TestCase
         $client->method('sendRequest')->willReturn($httpResponse);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             new StrictTypeRequestFactory(),
             $streamFactory,

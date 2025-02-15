@@ -8,17 +8,25 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
-final class StubTransport implements TransportInterface
+final class TransportMock implements TransportInterface
 {
+    private ?string $urlPath = null;
+
     public function __construct(
-        private ?ApiResponse $response = null,
+        private readonly ?ApiResponse $response = null,
     ) {}
 
     public function send(
-        string $apiMethod,
+        string $urlPath,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
     ): ApiResponse {
-        return $this->response ?? new ApiResponse(200, '');
+        $this->urlPath = $urlPath;
+        return $this->response ?? new ApiResponse(200, '{"ok":true,"result":true}');
+    }
+
+    public function urlPath(): ?string
+    {
+        return $this->urlPath;
     }
 }

@@ -1,10 +1,15 @@
 # Transport
 
-`TelegramBotApi` requires a transport implementation to make requests to the Telegram Bot API. Out of the box, available two transport implementations: cURL and PSR.
+By default `TelegramBotApi` uses cURL to make requests to the Telegram Bot API. But you can use any other
+transport implementation that implements the `Vjik\TelegramBot\Api\Transport\TransportInterface` interface.
+
+Out of the box, available two transport implementations: cURL and PSR.
 
 ## cURL
 
-The `CurlTransport` class is a transport implementation for making requests to the Telegram Bot API using the [cURL](https://www.php.net/manual/book.curl.php) extension in PHP. This transport is often the easiest choice since the cURL extension is included in most PHP installations.
+The `CurlTransport` class is a transport implementation for making requests to the Telegram Bot API using 
+the [cURL](https://www.php.net/manual/book.curl.php) extension in PHP. This transport is often the easiest choice 
+since the cURL extension is included in most PHP installations.
 
 General usage:
 
@@ -12,18 +17,13 @@ General usage:
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 
-$transport = new CurlTransport(
-    // Telegram bot authentication token
-    '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw'
-);
+// Telegram bot authentication token
+$token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
 
-$api = new TelegramBotApi($transport);
+$transport = new CurlTransport();
+
+$api = new TelegramBotApi($token, transport: $transport);
 ```
-
-Constructor parameters:
-
-- `$token` — Telegram bot authentication token;
-- `$baseUrl` — the base URL for Telegram Bot API requests (default `https://api.telegram.org`).
 
 ## PSR
 
@@ -50,21 +50,21 @@ $responseFactory = new ResponseFactory();
 $requestFactory = new RequestFactory();
 $client = new Client($responseFactory, $streamFactory);
 
+// Telegram bot authentication token
+$token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
+
 $transport = new PsrTransport(
-    $token,
     $client,
     $requestFactory,
     $streamFactory,
 );
 
-$api = new TelegramBotApi($transport);
+$api = new TelegramBotApi($token, transport: $transport);
 ```
 
 Constructor parameters:
 
-- `$token` — Telegram bot authentication token;
 - `$client` — PSR-18 HTTP client;
 - `$requestFactory` — PSR-17 HTTP request factory;
 - `$streamFactory` — PSR-17 HTTP stream factory;
-- `$baseUrl` — the base URL for Telegram Bot API requests (default `https://api.telegram.org`).
 

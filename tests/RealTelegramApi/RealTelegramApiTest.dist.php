@@ -4,12 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\RealTelegramApi;
 
-use Http\Client\Curl\Client;
-use HttpSoft\Message\RequestFactory;
-use HttpSoft\Message\ResponseFactory;
-use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 /**
@@ -30,17 +25,6 @@ final class RealTelegramApiTest extends TestCase
 
     private function createApi(): TelegramBotApi
     {
-        $streamFactory = new StreamFactory();
-        return new TelegramBotApi(
-            new PsrTransport(
-                self::TOKEN,
-                new Client(
-                    new ResponseFactory(),
-                    $streamFactory,
-                ),
-                new RequestFactory(),
-                $streamFactory,
-            ),
-        );
+        return new TelegramBotApi(self::TOKEN);
     }
 }

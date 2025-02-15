@@ -26,10 +26,10 @@ final class CurlTransportTest extends TestCase
             execResult: '{"ok":true,"result":[]}',
             getinfoResult: [CURLINFO_HTTP_CODE => 200],
         );
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
         $response = $transport->send(
-            'getMe',
+            '//url/getMe',
             [
                 'key' => 'value',
                 'array' => [1, 'test'],
@@ -42,7 +42,7 @@ final class CurlTransportTest extends TestCase
         assertSame(
             [
                 CURLOPT_HTTPGET => true,
-                CURLOPT_URL => 'https://api.telegram.org/bottest-token/getMe?key=value&array=%5B1%2C%22test%22%5D',
+                CURLOPT_URL => '//url/getMe?key=value&array=%5B1%2C%22test%22%5D',
                 CURLOPT_RETURNTRANSFER => true,
             ],
             $curl->getOptions(),
@@ -55,16 +55,16 @@ final class CurlTransportTest extends TestCase
             execResult: '{"ok":true,"result":[]}',
             getinfoResult: [CURLINFO_HTTP_CODE => 200],
         );
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
-        $response = $transport->send('logOut');
+        $response = $transport->send('//url/logOut');
 
         assertSame(200, $response->statusCode);
         assertSame('{"ok":true,"result":[]}', $response->body);
         assertSame(
             [
                 CURLOPT_POST => true,
-                CURLOPT_URL => 'https://api.telegram.org/bottest-token/logOut',
+                CURLOPT_URL => '//url/logOut',
                 CURLOPT_POSTFIELDS => [],
                 CURLOPT_RETURNTRANSFER => true,
             ],
@@ -78,9 +78,9 @@ final class CurlTransportTest extends TestCase
             execResult: '{"ok":true,"result":[]}',
             getinfoResult: [CURLINFO_HTTP_CODE => 200],
         );
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
-        $transport->send('setChatTitle', [
+        $transport->send('//url/setChatTitle', [
             'chat_id' => 123,
             'title' => 'test',
             'object' => new stdClass(),
@@ -89,7 +89,7 @@ final class CurlTransportTest extends TestCase
         assertSame(
             [
                 CURLOPT_POST => true,
-                CURLOPT_URL => 'https://api.telegram.org/bottest-token/setChatTitle',
+                CURLOPT_URL => '//url/setChatTitle',
                 CURLOPT_POSTFIELDS => [
                     'chat_id' => 123,
                     'title' => 'test',
@@ -104,8 +104,7 @@ final class CurlTransportTest extends TestCase
     public function testWithoutCode(): void
     {
         $transport = new CurlTransport(
-            'test-token',
-            curl: new CurlMock(
+            new CurlMock(
                 execResult: '{"ok":true,"result":[]}',
             ),
         );
@@ -121,9 +120,9 @@ final class CurlTransportTest extends TestCase
             execResult: '{"ok":true,"result":[]}',
             getinfoResult: [CURLINFO_HTTP_CODE => 200],
         );
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
-        $response = $transport->send('sendPhoto', [
+        $response = $transport->send('//url/sendPhoto', [
             'photo1' => InputFile::fromLocalFile(__DIR__ . '/photo.png'),
             'photo2' => InputFile::fromLocalFile(__DIR__ . '/photo.png', 'photo.png'),
         ]);
@@ -134,7 +133,7 @@ final class CurlTransportTest extends TestCase
         $options = $curl->getOptions();
         assertSame([CURLOPT_POST, CURLOPT_URL, CURLOPT_POSTFIELDS, CURLOPT_RETURNTRANSFER], array_keys($options));
         assertTrue($options[CURLOPT_POST] ?? null);
-        assertSame('https://api.telegram.org/bottest-token/sendPhoto', $options[CURLOPT_URL] ?? null);
+        assertSame('//url/sendPhoto', $options[CURLOPT_URL] ?? null);
         assertEquals(
             [
                 'photo1' => new CURLStringFile(
@@ -156,7 +155,7 @@ final class CurlTransportTest extends TestCase
             execResult: '{"ok":true,"result":[]}',
             getinfoResult: [CURLINFO_HTTP_CODE => 200],
         );
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
         $transport->send('sendPhoto', [
             'photo1' => new InputFile(
@@ -180,7 +179,7 @@ final class CurlTransportTest extends TestCase
     public function testSeekableStream(): void
     {
         $curl = new CurlMock();
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
         $stream = (new StreamFactory())->createStream('test1');
         $stream->getContents();
@@ -199,7 +198,7 @@ final class CurlTransportTest extends TestCase
     public function testSeekableResource(): void
     {
         $curl = new CurlMock();
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
         $resource = fopen(__DIR__ . '/photo.png', 'r');
         stream_get_contents($resource);
@@ -221,7 +220,7 @@ final class CurlTransportTest extends TestCase
     public function testCloseOnException(): void
     {
         $curl = new CurlMock(new RuntimeException());
-        $transport = new CurlTransport('test-token', curl: $curl);
+        $transport = new CurlTransport($curl);
 
         try {
             $transport->send('getMe');

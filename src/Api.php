@@ -27,6 +27,8 @@ final readonly class Api
     private ResultFactory $resultFactory;
 
     public function __construct(
+        private string $token,
+        private string $baseUrl,
         private TransportInterface $transport,
     ) {
         $this->resultFactory = new ResultFactory();
@@ -45,8 +47,9 @@ final readonly class Api
             'Send ' . $method->getHttpMethod()->value . '-request "' . $method->getApiMethod() . '".',
             LogContextFactory::sendRequest($method),
         );
+
         $response = $this->transport->send(
-            $method->getApiMethod(),
+            $this->makeUrlPath($method->getApiMethod()),
             $method->getData(),
             $method->getHttpMethod(),
         );
@@ -99,6 +102,11 @@ final readonly class Api
         }
 
         return $result;
+    }
+
+    private function makeUrlPath(string $apiMethod): string
+    {
+        return $this->baseUrl . '/bot' . $this->token . '/' . $apiMethod;
     }
 
     /**

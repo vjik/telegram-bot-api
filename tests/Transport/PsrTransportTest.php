@@ -32,18 +32,17 @@ final class PsrTransportTest extends TestCase
         $requestFactory
             ->expects($this->once())
             ->method('createRequest')
-            ->with('GET', 'https://api.telegram.org/bot04062024/getMe?key=value&array=%5B1%2C%22test%22%5D')
+            ->with('GET', '//url/getMe?key=value&array=%5B1%2C%22test%22%5D')
             ->willReturn($httpRequest);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             $requestFactory,
             new StreamFactory(),
         );
 
         $response = $transport->send(
-            'getMe',
+            '//url/getMe',
             [
                 'key' => 'value',
                 'array' => [1, 'test'],
@@ -69,17 +68,16 @@ final class PsrTransportTest extends TestCase
         $requestFactory
             ->expects($this->once())
             ->method('createRequest')
-            ->with('POST', 'https://api.telegram.org/bot04062024/logOut')
+            ->with('POST', '//url/logOut')
             ->willReturn($httpRequest);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $transport->send('logOut');
+        $response = $transport->send('//url/logOut');
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -113,17 +111,16 @@ final class PsrTransportTest extends TestCase
         $requestFactory
             ->expects($this->once())
             ->method('createRequest')
-            ->with('POST', 'https://api.telegram.org/bot04062024/sendMessage')
+            ->with('POST', '//url/sendMessage')
             ->willReturn($httpRequest);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             $requestFactory,
             new StreamFactory(),
         );
 
-        $response = $transport->send('sendMessage', ['chat_id' => 123, 'text' => 'test']);
+        $response = $transport->send('//url/sendMessage', ['chat_id' => 123, 'text' => 'test']);
 
         $this->assertSame(201, $response->statusCode);
     }
@@ -180,18 +177,17 @@ final class PsrTransportTest extends TestCase
         $requestFactory
             ->expects($this->once())
             ->method('createRequest')
-            ->with('POST', 'https://api.telegram.org/bot04062024/sendPhoto')
+            ->with('POST', '//url/sendPhoto')
             ->willReturn($httpRequest);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             $requestFactory,
             new StreamFactory(),
         );
 
         $response = $transport->send(
-            'sendPhoto',
+            '//url/sendPhoto',
             [
                 'chat_id' => 123,
                 'caption' => 'hello',
@@ -218,7 +214,6 @@ final class PsrTransportTest extends TestCase
         $httpRequestFactory = $this->createMock(RequestFactoryInterface::class);
 
         $transport = new PsrTransport(
-            '04062024',
             $client,
             $httpRequestFactory,
             $streamFactory,

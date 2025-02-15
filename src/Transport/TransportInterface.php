@@ -13,7 +13,7 @@ interface TransportInterface
      * @psalm-param array<string, mixed> $data
      */
     public function send(
-        string $apiMethod,
+        string $urlPath,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
     ): ApiResponse;

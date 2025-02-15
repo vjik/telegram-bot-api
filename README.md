@@ -25,28 +25,25 @@ composer require vjik/telegram-bot-api
 
 ## General usage
 
-To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class 
-that requires an implementation of the `TransportInterface`.
-
-The package provides two transport out of the box:
-
-- [`CurlTransport`](docs/transport.md#curl) that requires PHP [cURL](https://www.php.net/manual/book.curl.php) extension;
-- [`PsrTransport`](docs/transport.md#psr) based on the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
-
-Since the cURL extension is included in most PHP installations, `CurlTransport` is often the easiest choice.
+To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class.
 
 ```php
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 // API
 $api = new TelegramBotApi(
-    new CurlTransport(
-        // Telegram bot authentication token
-        '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw'
-    )
+    // Telegram bot authentication token
+    '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw',
 );
 ```
+
+`TelegramBotApi` constructor parameters:
+
+- `$token` (required) — Telegram bot authentication token;
+- `$baseUrl` — the base URL for Telegram Bot API requests (default `https://api.telegram.org`).
+- `$transport` — the [transport](docs/transport.md) to make requests to Telegram Bot API (cURL will be used by default).
+- `$logger` — the [PSR-3](https://www.php-fig.org/psr/psr-3/) compatible logger to log requests to Telegram Bot API and
+  response handling errors. See [logging](docs/logging.md) for more information.
 
 Now you can use the `$api` instance to interact with the Telegram Bot API. Method names are the same as in 
 the [Telegram Bot API documentation](https://core.telegram.org/bots/api). For example:
@@ -70,7 +67,8 @@ $api->sendPhoto(
 );
 ```
 
-The result will be either a `FailResult` instance (occuring on an error) or an object of the corresponding type (occuring on success). For example:
+The result will be either a `FailResult` instance (occuring on an error) or an object of the corresponding type 
+(occuring on success). For example:
 
 ```php
 // Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects

@@ -20,27 +20,21 @@ use function json_encode;
  */
 final readonly class PsrTransport implements TransportInterface
 {
-    private ApiUrlGenerator $apiUrlGenerator;
-
     public function __construct(
-        string $token,
         private ClientInterface $client,
         private RequestFactoryInterface $requestFactory,
         private StreamFactoryInterface $streamFactory,
-        string $baseUrl = 'https://api.telegram.org',
-    ) {
-        $this->apiUrlGenerator = new ApiUrlGenerator($token, $baseUrl);
-    }
+    ) {}
 
     public function send(
-        string $apiMethod,
+        string $urlPath,
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
     ): ApiResponse {
         $response = $this->client->sendRequest(
             match ($httpMethod) {
-                HttpMethod::GET => $this->createGetRequest($apiMethod, $data),
-                HttpMethod::POST => $this->createPostRequest($apiMethod, $data),
+                HttpMethod::GET => $this->createGetRequest($urlPath, $data),
+                HttpMethod::POST => $this->createPostRequest($urlPath, $data),
             },
         );
 
@@ -58,12 +52,9 @@ final readonly class PsrTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createPostRequest(string $apiMethod, array $data): RequestInterface
+    private function createPostRequest(string $urlPath, array $data): RequestInterface
     {
-        $request = $this->requestFactory->createRequest(
-            'POST',
-            $this->apiUrlGenerator->generate($apiMethod),
-        );
+        $request = $this->requestFactory->createRequest('POST', $urlPath);
 
         $files = [];
         foreach ($data as $key => $value) {
@@ -108,16 +99,18 @@ final readonly class PsrTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createGetRequest(string $apiMethod, array $data): RequestInterface
+    private function createGetRequest(string $urlPath, array $data): RequestInterface
     {
         $queryParameters = [];
         foreach ($data as $key => $value) {
             $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
         }
 
-        return $this->requestFactory->createRequest(
-            'GET',
-            $this->apiUrlGenerator->generate($apiMethod, $queryParameters),
-        );
+        $url = $urlPath;
+        if (!empty($queryParameters)) {
+            $url .= '?' . http_build_query($queryParameters);
+        }
+
+        return $this->requestFactory->createRequest('GET', $url);
     }
 }

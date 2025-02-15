@@ -1,5 +1,13 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.8.0 under development
+
+- Chg #145: Remove `ApiUrlGenerator`.
+- Chg #145: Move `$token` and `$baseUrl` parameters from transport classes (`CurlTransport`, `PsrTransport`) to
+  `TelegramBotApi`. 
+- Chg #145: Change `$apiMethod` parameter to `$urlPath` in `TransportInterface::send()` method.
+- Enh #145: Make `$transport` in `TelegramBotApi` optional (cURL transport will be used by default).
+
 ## 0.7.1 February 12, 2025
 
 - New #142: Add `CurlTransport`.

@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api\Transport\Curl;
 use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
-use Vjik\TelegramBot\Api\Transport\ApiUrlGenerator;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -22,24 +21,18 @@ use function json_encode;
  */
 final readonly class CurlTransport implements TransportInterface
 {
-    private ApiUrlGenerator $apiUrlGenerator;
-
     public function __construct(
-        string $token,
-        string $baseUrl = 'https://api.telegram.org',
         private CurlInterface $curl = new Curl(),
-    ) {
-        $this->apiUrlGenerator = new ApiUrlGenerator($token, $baseUrl);
-    }
+    ) {}
 
     /**
      * @psalm-param array<string, mixed> $data
      */
-    public function send(string $apiMethod, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse
+    public function send(string $urlPath, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse
     {
         $options = match ($httpMethod) {
-            HttpMethod::GET => $this->createGetOptions($apiMethod, $data),
-            HttpMethod::POST => $this->createPostOptions($apiMethod, $data),
+            HttpMethod::GET => $this->createGetOptions($urlPath, $data),
+            HttpMethod::POST => $this->createPostOptions($urlPath, $data),
         };
         $options[CURLOPT_RETURNTRANSFER] = true;
 
@@ -67,7 +60,7 @@ final readonly class CurlTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createPostOptions(string $apiMethod, array $data): array
+    private function createPostOptions(string $urlPath, array $data): array
     {
         $postFields = [];
         foreach ($data as $key => $value) {
@@ -91,7 +84,7 @@ final readonly class CurlTransport implements TransportInterface
 
         return [
             CURLOPT_POST => true,
-            CURLOPT_URL => $this->apiUrlGenerator->generate($apiMethod),
+            CURLOPT_URL => $urlPath,
             CURLOPT_POSTFIELDS => $postFields,
         ];
     }
@@ -99,16 +92,21 @@ final readonly class CurlTransport implements TransportInterface
     /**
      * @psalm-param array<string, mixed> $data
      */
-    private function createGetOptions(string $apiMethod, array $data): array
+    private function createGetOptions(string $urlPath, array $data): array
     {
         $queryParameters = [];
         foreach ($data as $key => $value) {
             $queryParameters[$key] = is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR);
         }
 
+        $url = $urlPath;
+        if (!empty($queryParameters)) {
+            $url .= '?' . http_build_query($queryParameters);
+        }
+
         return [
             CURLOPT_HTTPGET => true,
-            CURLOPT_URL => $this->apiUrlGenerator->generate($apiMethod, $queryParameters),
+            CURLOPT_URL => $url,
         ];
     }
 
