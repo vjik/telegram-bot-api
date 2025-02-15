@@ -4,12 +4,11 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\RealTelegramApi;
 
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
-/**
- * @group realApi
- */
+#[Group('realApi')]
 final class RealTelegramApiTest extends TestCase
 {
     private const TOKEN = 'telegram-api-token';
