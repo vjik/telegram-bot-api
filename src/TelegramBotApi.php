@@ -206,12 +206,12 @@ use function extension_loaded;
  */
 final class TelegramBotApi
 {
-    private Api $api;
+    private readonly Api $api;
 
     public function __construct(
         #[SensitiveParameter]
-        string $token,
-        string $baseUrl = 'https://api.telegram.org',
+        private readonly string $token,
+        private readonly string $baseUrl = 'https://api.telegram.org',
         ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
@@ -244,6 +244,33 @@ final class TelegramBotApi
     public function call(MethodInterface $method): mixed
     {
         return $this->api->call($method, $this->logger);
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#file
+     * @see https://core.telegram.org/bots/api#getfile
+     *
+     * @psalm-template TValue as string|File
+     * @psalm-param TValue $file
+     * @psalm-return (TValue is File ? (string|null) : string)
+     */
+    public function makeFileUrl(string|File $file): ?string
+    {
+        if ($file instanceof File) {
+            $path = $file->filePath;
+            if ($path === null) {
+                return null;
+            }
+        } else {
+            $path = $file;
+        }
+
+        /**
+         * @var string $path
+         * @see https://github.com/vimeo/psalm/issues/11285
+         */
+
+        return $this->baseUrl . '/file/bot' . $this->token . '/' . $path;
     }
 
     /**
