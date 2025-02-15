@@ -537,6 +537,7 @@ final class TelegramBotApi
         string $payload,
         string $currency,
         array $prices,
+        #[\SensitiveParameter]
         ?string $providerToken = null,
         ?int $maxTipAmount = null,
         ?array $suggestedTipAmounts = null,
@@ -554,8 +555,7 @@ final class TelegramBotApi
         ?bool $isFlexible = null,
         ?int $subscriptionPeriod = null,
         ?string $businessConnectionId = null,
-    ): FailResult|string
-    {
+    ): FailResult|string {
         return $this->call(
             new CreateInvoiceLink(
                 $title,
