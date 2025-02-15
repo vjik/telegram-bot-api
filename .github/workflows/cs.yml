@@ -5,13 +5,12 @@ on: [ pull_request ]
 jobs:
   php-cs-fixer:
     runs-on: ubuntu-latest
-    permissions:
-      contents: write
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
