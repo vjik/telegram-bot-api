@@ -15,7 +15,7 @@ use Vjik\TelegramBot\Api\FailResult;
 use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
-use Vjik\TelegramBot\Api\Tests\Support\StubTransport;
+use Vjik\TelegramBot\Api\Tests\Support\TransportMock;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
@@ -57,7 +57,7 @@ final class TelegramBotApiTest extends TestCase
 
         $api1 = new TelegramBotApi(
             'stub-token',
-            transport: new StubTransport(
+            transport: new TransportMock(
                 new ApiResponse(200, '[]'),
             ),
             logger: $logger1,
@@ -316,6 +316,16 @@ final class TelegramBotApiTest extends TestCase
         }
         $this->assertInstanceOf(TelegramParseResultException::class, $exception);
         $this->assertSame('Incorrect "ok" field in response. Status code: 200.', $exception->getMessage());
+    }
+
+    public function testMakeUrlPath(): void
+    {
+        $transport = new TransportMock();
+        $api = new TelegramBotApi('stub-token', transport: $transport);
+
+        $api->logout();
+
+        $this->assertSame('https://api.telegram.org/botstub-token/logOut', $transport->urlPath());
     }
 
     public function testAddStickerToSet(): void

@@ -22,7 +22,7 @@ final readonly class TestHelper
             );
         return new TelegramBotApi(
             'stub-token',
-            transport: new StubTransport($response),
+            transport: new TransportMock($response),
             logger: $logger,
         );
     }
