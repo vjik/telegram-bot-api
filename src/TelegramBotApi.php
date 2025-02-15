@@ -1676,6 +1676,7 @@ final class TelegramBotApi
         string $currency,
         array $prices,
         ?int $messageThreadId = null,
+        #[SensitiveParameter]
         ?string $providerToken = null,
         ?int $maxTipAmount = null,
         ?array $suggestedTipAmounts = null,
@@ -2476,6 +2477,7 @@ final class TelegramBotApi
         ?int $maxConnections = null,
         ?array $allowUpdates = null,
         ?bool $dropPendingUpdates = null,
+        #[SensitiveParameter]
         ?string $secretToken = null,
     ): FailResult|true {
         return $this->call(
