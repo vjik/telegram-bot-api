@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -326,6 +327,23 @@ final class TelegramBotApiTest extends TestCase
         $api->logout();
 
         $this->assertSame('https://api.telegram.org/botstub-token/logOut', $transport->urlPath());
+    }
+
+    public static function dataMakeFileUrl(): iterable
+    {
+        yield [null, new File('id', 'uid')];
+        yield ['https://api.telegram.org/file/bot123/hello.png', new File('id', 'uid', filePath: 'hello.png')];
+        yield ['https://api.telegram.org/file/bot123/face.jpg', 'face.jpg'];
+    }
+
+    #[DataProvider('dataMakeFileUrl')]
+    public function testMakeFileUrl(?string $expected, string|File $file): void
+    {
+        $api = new TelegramBotApi('123', transport: new TransportMock());
+
+        $url = $api->makeFileUrl($file);
+
+        self::assertSame($expected, $url);
     }
 
     public function testAddStickerToSet(): void
