@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.8.1 under development
+
+- Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
+
 ## 0.8.0 February 15, 2025
 
 - New #148: Add `TelegramBotApi::makeFileUrl()` method.

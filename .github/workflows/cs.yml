@@ -1,6 +1,6 @@
 name: cs fixer
 
-on: [ pull_request ]
+on: [ pull_request_target ]
 
 jobs:
   php-cs-fixer:
@@ -12,6 +12,7 @@ jobs:
         uses: actions/checkout@v4
         with:
           ref: ${{ github.head_ref }}
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
 
       - name: Install PHP
         uses: shivammathur/setup-php@v2
@@ -26,8 +27,12 @@ jobs:
       - name: Run PHP CS Fixer
         run: composer cs-fix
 
+      - name: Run Rector
+        run: composer rector
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Apply PHP CS Fixer changes (CI)"
+          commit_message: "Apply PHP CS Fixer and Rector changes (CI)"
           file_pattern: '*.php'
+          disable_globbing: true
