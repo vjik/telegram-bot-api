@@ -554,7 +554,8 @@ final class TelegramBotApi
         ?bool $isFlexible = null,
         ?int $subscriptionPeriod = null,
         ?string $businessConnectionId = null,
-    ): FailResult|string {
+    ): FailResult|string
+    {
         return $this->call(
             new CreateInvoiceLink(
                 $title,
