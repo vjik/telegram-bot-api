@@ -7,6 +7,7 @@
   `TelegramBotApi`. 
 - Chg #145: Change `$apiMethod` parameter to `$urlPath` in `TransportInterface::send()` method.
 - Enh #145: Make `$transport` in `TelegramBotApi` optional (cURL transport will be used by default).
+- Enh #147: Use `SensitiveParameter` attribute to mark sensitive parameters.
 
 ## 0.7.1 February 12, 2025
 

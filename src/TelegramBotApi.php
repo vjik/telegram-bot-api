@@ -8,6 +8,7 @@ use DateTimeImmutable;
 use DateTimeInterface;
 use LogicException;
 use Psr\Log\LoggerInterface;
+use SensitiveParameter;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
@@ -208,6 +209,7 @@ final class TelegramBotApi
     private Api $api;
 
     public function __construct(
+        #[SensitiveParameter]
         string $token,
         string $baseUrl = 'https://api.telegram.org',
         ?TransportInterface $transport = null,

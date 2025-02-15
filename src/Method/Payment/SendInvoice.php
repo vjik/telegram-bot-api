@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Payment;
 
+use SensitiveParameter;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
@@ -31,6 +32,7 @@ final readonly class SendInvoice implements MethodInterface
         private string $currency,
         private array $prices,
         private ?int $messageThreadId = null,
+        #[SensitiveParameter]
         private ?string $providerToken = null,
         private ?int $maxTipAmount = null,
         private ?array $suggestedTipAmounts = null,

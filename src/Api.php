@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api;
 
 use JsonException;
 use Psr\Log\LoggerInterface;
+use SensitiveParameter;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
@@ -27,6 +28,7 @@ final readonly class Api
     private ResultFactory $resultFactory;
 
     public function __construct(
+        #[SensitiveParameter]
         private string $token,
         private string $baseUrl,
         private TransportInterface $transport,
