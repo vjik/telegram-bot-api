@@ -28,7 +28,6 @@ composer require vjik/telegram-bot-api
 To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class.
 
 ```php
-
 use Vjik\TelegramBot\Api\TelegramBotApi;
 
 // API
