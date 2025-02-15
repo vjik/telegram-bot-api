@@ -26,8 +26,11 @@ jobs:
       - name: Run PHP CS Fixer
         run: composer cs-fix
 
+      - name: Run Rector
+        run: composer rector
+
       - name: Commit changes
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "Apply PHP CS Fixer changes (CI)"
+          commit_message: "Apply PHP CS Fixer and Rector changes (CI)"
           file_pattern: '*.php'

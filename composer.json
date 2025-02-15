@@ -51,7 +51,8 @@
         }
     },
     "scripts": {
-        "cs-fix": "php-cs-fixer fix && rector",
+        "cs-fix": "php-cs-fixer",
+        "rector": "rector",
         "infection": "infection --only-covered"
     },
     "extra": {
