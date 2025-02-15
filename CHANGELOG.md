@@ -2,6 +2,7 @@
 
 ## 0.8.0 under development
 
+- New #148: Add `TelegramBotApi::makeFileUrl()` method.
 - Chg #145: Remove `ApiUrlGenerator`.
 - Chg #145: Move `$token` and `$baseUrl` parameters from transport classes (`CurlTransport`, `PsrTransport`) to
   `TelegramBotApi`. 
