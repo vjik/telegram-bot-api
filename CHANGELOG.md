@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.8.0 under development
+## 0.8.0 February 15, 2025
 
 - New #148: Add `TelegramBotApi::makeFileUrl()` method.
 - Chg #145: Remove `ApiUrlGenerator`.
