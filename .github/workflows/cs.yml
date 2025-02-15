@@ -1,6 +1,6 @@
 name: cs fixer
 
-on: [ pull_request ]
+on: [ pull_request_target ]
 
 jobs:
   php-cs-fixer:

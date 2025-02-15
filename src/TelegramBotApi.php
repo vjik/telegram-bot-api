@@ -537,7 +537,7 @@ final class TelegramBotApi
         string $payload,
         string $currency,
         array $prices,
-        #[\SensitiveParameter]
+        #[SensitiveParameter]
         ?string $providerToken = null,
         ?int $maxTipAmount = null,
         ?array $suggestedTipAmounts = null,
