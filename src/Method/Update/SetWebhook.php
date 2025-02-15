@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Method\Update;
 
+use SensitiveParameter;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
@@ -21,6 +22,7 @@ final readonly class SetWebhook implements MethodInterface
         private ?int $maxConnections = null,
         private ?array $allowUpdates = null,
         private ?bool $dropPendingUpdates = null,
+        #[SensitiveParameter]
         private ?string $secretToken = null,
     ) {}
 

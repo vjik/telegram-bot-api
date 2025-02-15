@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Inline;
 
+use SensitiveParameter;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
 /**
@@ -23,6 +24,7 @@ final readonly class InputInvoiceMessageContent implements InputMessageContent
         public string $payload,
         public string $currency,
         public array $prices,
+        #[SensitiveParameter]
         public ?string $providerToken = null,
         public ?int $maxTipAmount = null,
         public ?array $suggestedTipAmounts = null,
