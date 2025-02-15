@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Type\Sticker;
+namespace Vjik\TelegramBot\Api\Tests\Type\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
+
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
 
 final class GiftsTest extends TestCase
 {
@@ -14,7 +17,7 @@ final class GiftsTest extends TestCase
     {
         $object = new Gifts([]);
 
-        $this->assertSame([], $object->gifts);
+        assertSame([], $object->gifts);
     }
 
     public function testFromTelegramResult(): void
@@ -50,8 +53,8 @@ final class GiftsTest extends TestCase
             ],
         ], null, Gifts::class);
 
-        $this->assertCount(2, $object->gifts);
-        $this->assertSame('test-id1', $object->gifts[0]->id);
-        $this->assertSame('test-id2', $object->gifts[1]->id);
+        assertCount(2, $object->gifts);
+        assertSame('test-id1', $object->gifts[0]->id);
+        assertSame('test-id2', $object->gifts[1]->id);
     }
 }

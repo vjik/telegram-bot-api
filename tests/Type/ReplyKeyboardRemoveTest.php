@@ -7,15 +7,19 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ReplyKeyboardRemoveTest extends TestCase
 {
     public function testBase(): void
     {
         $replyKeyboardRemove = new ReplyKeyboardRemove();
 
-        $this->assertNull($replyKeyboardRemove->selective);
+        assertNull($replyKeyboardRemove->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'remove_keyboard' => true,
             ],
@@ -27,9 +31,9 @@ final class ReplyKeyboardRemoveTest extends TestCase
     {
         $replyKeyboardRemove = new ReplyKeyboardRemove(true);
 
-        $this->assertTrue($replyKeyboardRemove->selective);
+        assertTrue($replyKeyboardRemove->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'remove_keyboard' => true,
                 'selective' => true,

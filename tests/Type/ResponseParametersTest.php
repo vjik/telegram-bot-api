@@ -7,14 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ResponseParametersTest extends TestCase
 {
     public function testBase(): void
     {
         $parameters = new ResponseParameters();
 
-        $this->assertNull($parameters->migrateToChatId);
-        $this->assertNull($parameters->retryAfter);
+        assertNull($parameters->migrateToChatId);
+        assertNull($parameters->retryAfter);
     }
 
     public function testFromDecodedBody()
@@ -26,19 +29,19 @@ final class ResponseParametersTest extends TestCase
             ],
         ]);
 
-        $this->assertSame(42, $parameters->migrateToChatId);
-        $this->assertSame(43, $parameters->retryAfter);
+        assertSame(42, $parameters->migrateToChatId);
+        assertSame(43, $parameters->retryAfter);
     }
 
     public function testFromDecodedBodyWithoutParameters(): void
     {
         $parameters = ResponseParameters::fromDecodedBody(['type' => 'parameters']);
-        $this->assertNull($parameters);
+        assertNull($parameters);
     }
 
     public function testFromDecodedBodyWithNonArrayParameters(): void
     {
         $parameters = ResponseParameters::fromDecodedBody(['parameters' => 42]);
-        $this->assertNull($parameters);
+        assertNull($parameters);
     }
 }

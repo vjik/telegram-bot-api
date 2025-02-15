@@ -9,6 +9,12 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatInviteLinkTest extends TestCase
 {
     public function testBase(): void
@@ -16,17 +22,17 @@ final class ChatInviteLinkTest extends TestCase
         $user = new User(1, false, 'Mike');
         $chatInviteLink = new ChatInviteLink('https://t.me/joinchat/x1', $user, true, false, false);
 
-        $this->assertSame('https://t.me/joinchat/x1', $chatInviteLink->inviteLink);
-        $this->assertSame($user, $chatInviteLink->creator);
-        $this->assertTrue($chatInviteLink->createsJoinRequest);
-        $this->assertFalse($chatInviteLink->isPrimary);
-        $this->assertFalse($chatInviteLink->isRevoked);
-        $this->assertNull($chatInviteLink->name);
-        $this->assertNull($chatInviteLink->expireDate);
-        $this->assertNull($chatInviteLink->memberLimit);
-        $this->assertNull($chatInviteLink->pendingJoinRequestCount);
-        $this->assertNull($chatInviteLink->subscriptionPeriod);
-        $this->assertNull($chatInviteLink->subscriptionPrice);
+        assertSame('https://t.me/joinchat/x1', $chatInviteLink->inviteLink);
+        assertSame($user, $chatInviteLink->creator);
+        assertTrue($chatInviteLink->createsJoinRequest);
+        assertFalse($chatInviteLink->isPrimary);
+        assertFalse($chatInviteLink->isRevoked);
+        assertNull($chatInviteLink->name);
+        assertNull($chatInviteLink->expireDate);
+        assertNull($chatInviteLink->memberLimit);
+        assertNull($chatInviteLink->pendingJoinRequestCount);
+        assertNull($chatInviteLink->subscriptionPeriod);
+        assertNull($chatInviteLink->subscriptionPrice);
     }
 
     public function testFromTelegramResult(): void
@@ -51,16 +57,16 @@ final class ChatInviteLinkTest extends TestCase
 
         $chatInviteLink = (new ObjectFactory())->create($result, null, ChatInviteLink::class);
 
-        $this->assertSame('https://t.me/joinchat/x1', $chatInviteLink->inviteLink);
-        $this->assertInstanceOf(User::class, $chatInviteLink->creator);
-        $this->assertTrue($chatInviteLink->createsJoinRequest);
-        $this->assertFalse($chatInviteLink->isPrimary);
-        $this->assertFalse($chatInviteLink->isRevoked);
-        $this->assertSame('Test', $chatInviteLink->name);
-        $this->assertSame(1631840400, $chatInviteLink->expireDate?->getTimestamp());
-        $this->assertSame(100, $chatInviteLink->memberLimit);
-        $this->assertSame(10, $chatInviteLink->pendingJoinRequestCount);
-        $this->assertSame(20, $chatInviteLink->subscriptionPeriod);
-        $this->assertSame(30, $chatInviteLink->subscriptionPrice);
+        assertSame('https://t.me/joinchat/x1', $chatInviteLink->inviteLink);
+        assertInstanceOf(User::class, $chatInviteLink->creator);
+        assertTrue($chatInviteLink->createsJoinRequest);
+        assertFalse($chatInviteLink->isPrimary);
+        assertFalse($chatInviteLink->isRevoked);
+        assertSame('Test', $chatInviteLink->name);
+        assertSame(1631840400, $chatInviteLink->expireDate?->getTimestamp());
+        assertSame(100, $chatInviteLink->memberLimit);
+        assertSame(10, $chatInviteLink->pendingJoinRequestCount);
+        assertSame(20, $chatInviteLink->subscriptionPeriod);
+        assertSame(30, $chatInviteLink->subscriptionPrice);
     }
 }

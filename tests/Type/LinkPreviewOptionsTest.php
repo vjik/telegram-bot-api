@@ -8,32 +8,37 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class LinkPreviewOptionsTest extends TestCase
 {
     public function testBase(): void
     {
         $options = new LinkPreviewOptions();
 
-        $this->assertNull($options->isDisabled);
-        $this->assertNull($options->url);
-        $this->assertNull($options->preferSmallMedia);
-        $this->assertNull($options->preferLargeMedia);
-        $this->assertNull($options->showAboveText);
+        assertNull($options->isDisabled);
+        assertNull($options->url);
+        assertNull($options->preferSmallMedia);
+        assertNull($options->preferLargeMedia);
+        assertNull($options->showAboveText);
 
-        $this->assertSame([], $options->toRequestArray());
+        assertSame([], $options->toRequestArray());
     }
 
     public function testFilled(): void
     {
         $options = new LinkPreviewOptions(true, 'https://example.com/', true, false, true);
 
-        $this->assertTrue($options->isDisabled);
-        $this->assertSame('https://example.com/', $options->url);
-        $this->assertTrue($options->preferSmallMedia);
-        $this->assertFalse($options->preferLargeMedia);
-        $this->assertTrue($options->showAboveText);
+        assertTrue($options->isDisabled);
+        assertSame('https://example.com/', $options->url);
+        assertTrue($options->preferSmallMedia);
+        assertFalse($options->preferLargeMedia);
+        assertTrue($options->showAboveText);
 
-        $this->assertSame(
+        assertSame(
             [
                 'is_disabled' => true,
                 'url' => 'https://example.com/',
@@ -55,10 +60,10 @@ final class LinkPreviewOptionsTest extends TestCase
             'show_above_text' => true,
         ], null, LinkPreviewOptions::class);
 
-        $this->assertTrue($options->isDisabled);
-        $this->assertSame('https://example.com/', $options->url);
-        $this->assertTrue($options->preferSmallMedia);
-        $this->assertFalse($options->preferLargeMedia);
-        $this->assertTrue($options->showAboveText);
+        assertTrue($options->isDisabled);
+        assertSame('https://example.com/', $options->url);
+        assertTrue($options->preferSmallMedia);
+        assertFalse($options->preferLargeMedia);
+        assertTrue($options->showAboveText);
     }
 }

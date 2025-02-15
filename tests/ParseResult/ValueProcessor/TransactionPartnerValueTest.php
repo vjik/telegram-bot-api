@@ -17,6 +17,8 @@ use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramApi;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerUser;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class TransactionPartnerValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -86,7 +88,7 @@ final class TransactionPartnerValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

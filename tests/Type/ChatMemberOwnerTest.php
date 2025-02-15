@@ -9,6 +9,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberOwner;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatMemberOwnerTest extends TestCase
 {
     public function testBase(): void
@@ -16,11 +20,11 @@ final class ChatMemberOwnerTest extends TestCase
         $user = new User(123, false, 'John');
         $member = new ChatMemberOwner($user, true);
 
-        $this->assertSame('creator', $member->getStatus());
-        $this->assertSame($user, $member->getUser());
-        $this->assertSame($user, $member->user);
-        $this->assertTrue($member->isAnonymous);
-        $this->assertNull($member->customTitle);
+        assertSame('creator', $member->getStatus());
+        assertSame($user, $member->getUser());
+        assertSame($user, $member->user);
+        assertTrue($member->isAnonymous);
+        assertNull($member->customTitle);
     }
 
     public function testFromTelegramResult(): void
@@ -35,8 +39,8 @@ final class ChatMemberOwnerTest extends TestCase
             'custom_title' => 'Custom title',
         ], null, ChatMemberOwner::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertTrue($member->isAnonymous);
-        $this->assertSame('Custom title', $member->customTitle);
+        assertSame(123, $member->user->id);
+        assertTrue($member->isAnonymous);
+        assertSame('Custom title', $member->customTitle);
     }
 }

@@ -10,6 +10,11 @@ use Vjik\TelegramBot\Api\Type\BackgroundFillSolid;
 use Vjik\TelegramBot\Api\Type\BackgroundTypePattern;
 use Vjik\TelegramBot\Api\Type\Document;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class BackgroundTypePatternTest extends TestCase
 {
     public function testBase(): void
@@ -18,12 +23,12 @@ final class BackgroundTypePatternTest extends TestCase
         $fill = new BackgroundFillSolid(0x000000);
         $type = new BackgroundTypePattern($document, $fill, 5);
 
-        $this->assertSame('pattern', $type->getType());
-        $this->assertSame($document, $type->document);
-        $this->assertSame($fill, $type->fill);
-        $this->assertSame(5, $type->intensity);
-        $this->assertNull($type->isInverted);
-        $this->assertNull($type->isMoving);
+        assertSame('pattern', $type->getType());
+        assertSame($document, $type->document);
+        assertSame($fill, $type->fill);
+        assertSame(5, $type->intensity);
+        assertNull($type->isInverted);
+        assertNull($type->isMoving);
     }
 
     public function testFromTelegramResult(): void
@@ -43,17 +48,17 @@ final class BackgroundTypePatternTest extends TestCase
             'is_moving' => true,
         ], null, BackgroundTypePattern::class);
 
-        $this->assertSame('pattern', $type->getType());
+        assertSame('pattern', $type->getType());
 
-        $this->assertInstanceOf(Document::class, $type->document);
-        $this->assertSame('f123', $type->document->fileId);
-        $this->assertSame('full123', $type->document->fileUniqueId);
+        assertInstanceOf(Document::class, $type->document);
+        assertSame('f123', $type->document->fileId);
+        assertSame('full123', $type->document->fileUniqueId);
 
-        $this->assertInstanceOf(BackgroundFillSolid::class, $type->fill);
-        $this->assertSame(0x000000, $type->fill->color);
+        assertInstanceOf(BackgroundFillSolid::class, $type->fill);
+        assertSame(0x000000, $type->fill->color);
 
-        $this->assertSame(5, $type->intensity);
-        $this->assertTrue($type->isInverted);
-        $this->assertTrue($type->isMoving);
+        assertSame(5, $type->intensity);
+        assertTrue($type->isInverted);
+        assertTrue($type->isMoving);
     }
 }

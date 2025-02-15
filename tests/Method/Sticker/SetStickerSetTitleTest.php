@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetTitle;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetStickerSetTitleTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetStickerSetTitle('animals_by_bot', 'The Animal');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setStickerSetTitle', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setStickerSetTitle', $method->getApiMethod());
+        assertSame(
             [
                 'name' => 'animals_by_bot',
                 'title' => 'The Animal',
@@ -32,6 +35,6 @@ final class SetStickerSetTitleTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

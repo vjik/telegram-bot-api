@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GameHighScoreTest extends TestCase
 {
     public function testBase(): void
@@ -16,9 +18,9 @@ final class GameHighScoreTest extends TestCase
         $user = new User(1, false, 'test');
         $type = new GameHighScore(2, $user, 300);
 
-        $this->assertSame(2, $type->position);
-        $this->assertSame($user, $type->user);
-        $this->assertSame(300, $type->score);
+        assertSame(2, $type->position);
+        assertSame($user, $type->user);
+        assertSame(300, $type->score);
     }
 
     public function testFromTelegramResult(): void
@@ -33,8 +35,8 @@ final class GameHighScoreTest extends TestCase
             'score' => 300,
         ], null, GameHighScore::class);
 
-        $this->assertSame(2, $type->position);
-        $this->assertSame(1, $type->user->id);
-        $this->assertSame(300, $type->score);
+        assertSame(2, $type->position);
+        assertSame(1, $type->user->id);
+        assertSame(300, $type->score);
     }
 }

@@ -7,18 +7,21 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Inline\InputContactMessageContent;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class InputContactMessageContentTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new InputContactMessageContent('+70001234567', 'John');
 
-        $this->assertSame('+70001234567', $type->phoneNumber);
-        $this->assertSame('John', $type->firstName);
-        $this->assertNull($type->lastName);
-        $this->assertNull($type->vcard);
+        assertSame('+70001234567', $type->phoneNumber);
+        assertSame('John', $type->firstName);
+        assertNull($type->lastName);
+        assertNull($type->vcard);
 
-        $this->assertSame(
+        assertSame(
             [
                 'phone_number' => '+70001234567',
                 'first_name' => 'John',
@@ -31,12 +34,12 @@ final class InputContactMessageContentTest extends TestCase
     {
         $type = new InputContactMessageContent('+70001234567', 'John', 'Doe', 'vcard!');
 
-        $this->assertSame('+70001234567', $type->phoneNumber);
-        $this->assertSame('John', $type->firstName);
-        $this->assertSame('Doe', $type->lastName);
-        $this->assertSame('vcard!', $type->vcard);
+        assertSame('+70001234567', $type->phoneNumber);
+        assertSame('John', $type->firstName);
+        assertSame('Doe', $type->lastName);
+        assertSame('vcard!', $type->vcard);
 
-        $this->assertSame(
+        assertSame(
             [
                 'phone_number' => '+70001234567',
                 'first_name' => 'John',

@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\InaccessibleMessage;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InaccessibleMessageTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +18,8 @@ final class InaccessibleMessageTest extends TestCase
         $chat = new Chat(1, 'private');
         $inaccessibleMessage = new InaccessibleMessage($chat, 23);
 
-        $this->assertSame($chat, $inaccessibleMessage->chat);
-        $this->assertSame(23, $inaccessibleMessage->messageId);
+        assertSame($chat, $inaccessibleMessage->chat);
+        assertSame(23, $inaccessibleMessage->messageId);
     }
 
     public function testFromTelegramResult(): void
@@ -30,7 +32,7 @@ final class InaccessibleMessageTest extends TestCase
             'message_id' => 23,
         ], null, InaccessibleMessage::class);
 
-        $this->assertSame(1, $inaccessibleMessage->chat->id);
-        $this->assertSame(23, $inaccessibleMessage->messageId);
+        assertSame(1, $inaccessibleMessage->chat->id);
+        assertSame(23, $inaccessibleMessage->messageId);
     }
 }

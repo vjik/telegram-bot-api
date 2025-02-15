@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetStickerMaskPositionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetStickerMaskPosition('sid');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setStickerMaskPosition', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setStickerMaskPosition', $method->getApiMethod());
+        assertSame(
             [
                 'sticker' => 'sid',
             ],
@@ -31,9 +34,9 @@ final class SetStickerMaskPositionTest extends TestCase
         $maskPosition = new MaskPosition('forehead', 0.5, 0.5, 45);
         $method = new SetStickerMaskPosition('sid', $maskPosition);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setStickerMaskPosition', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setStickerMaskPosition', $method->getApiMethod());
+        assertSame(
             [
                 'sticker' => 'sid',
                 'mask_position' => $maskPosition->toRequestArray(),
@@ -48,6 +51,6 @@ final class SetStickerMaskPositionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

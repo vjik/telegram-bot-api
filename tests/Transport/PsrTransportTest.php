@@ -15,6 +15,10 @@ use Vjik\TelegramBot\Api\Transport\PsrTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertStringContainsStringIgnoringLineEndings;
+
 final class PsrTransportTest extends TestCase
 {
     public function testGet(): void
@@ -50,7 +54,7 @@ final class PsrTransportTest extends TestCase
             HttpMethod::GET,
         );
 
-        $this->assertSame(201, $response->statusCode);
+        assertSame(201, $response->statusCode);
     }
 
     public function testPost(): void
@@ -79,7 +83,7 @@ final class PsrTransportTest extends TestCase
 
         $response = $transport->send('//url/logOut');
 
-        $this->assertSame(201, $response->statusCode);
+        assertSame(201, $response->statusCode);
     }
 
     public function testPostWithData(): void
@@ -92,16 +96,16 @@ final class PsrTransportTest extends TestCase
             ->method('sendRequest')
             ->with(
                 new Callback(function ($request): bool {
-                    $this->assertInstanceOf(Request::class, $request);
+                    assertInstanceOf(Request::class, $request);
                     /** @var Request $request */
-                    $this->assertSame(
+                    assertSame(
                         [
                             'Content-Length' => ['29'],
                             'Content-Type' => ['application/json; charset=utf-8'],
                         ],
                         $request->getHeaders(),
                     );
-                    $this->assertSame('{"chat_id":123,"text":"test"}', $request->getBody()->getContents());
+                    assertSame('{"chat_id":123,"text":"test"}', $request->getBody()->getContents());
                     return true;
                 }),
             )
@@ -122,7 +126,7 @@ final class PsrTransportTest extends TestCase
 
         $response = $transport->send('//url/sendMessage', ['chat_id' => 123, 'text' => 'test']);
 
-        $this->assertSame(201, $response->statusCode);
+        assertSame(201, $response->statusCode);
     }
 
     public function testPostWithDataAndFiles(): void
@@ -135,13 +139,13 @@ final class PsrTransportTest extends TestCase
             ->method('sendRequest')
             ->with(
                 new Callback(function ($request): bool {
-                    $this->assertInstanceOf(Request::class, $request);
+                    assertInstanceOf(Request::class, $request);
                     /** @var Request $request */
                     $requestHeaders = $request->getHeaders();
-                    $this->assertSame(['Content-Length', 'Content-Type'], array_keys($requestHeaders));
-                    $this->assertSame($requestHeaders['Content-Length'], ['332']);
-                    $this->assertSame([0], array_keys($requestHeaders['Content-Type']));
-                    $this->assertSame(
+                    assertSame(['Content-Length', 'Content-Type'], array_keys($requestHeaders));
+                    assertSame($requestHeaders['Content-Length'], ['332']);
+                    assertSame([0], array_keys($requestHeaders['Content-Type']));
+                    assertSame(
                         1,
                         preg_match(
                             '~multipart/form-data; boundary=([\da-f]+.[\da-f]+); charset=utf-8~',
@@ -149,7 +153,7 @@ final class PsrTransportTest extends TestCase
                             $matches,
                         ),
                     );
-                    $this->assertStringContainsStringIgnoringLineEndings(
+                    assertStringContainsStringIgnoringLineEndings(
                         <<<TEXT
                             --$matches[1]
                             Content-Disposition: form-data; name="chat_id"
@@ -198,7 +202,7 @@ final class PsrTransportTest extends TestCase
             ],
         );
 
-        $this->assertSame(201, $response->statusCode);
+        assertSame(201, $response->statusCode);
     }
 
     public function testRewind(): void
@@ -221,7 +225,7 @@ final class PsrTransportTest extends TestCase
 
         $response = $transport->send('getMe');
 
-        $this->assertSame(201, $response->statusCode);
-        $this->assertSame('hello', $response->body);
+        assertSame(201, $response->statusCode);
+        assertSame('hello', $response->body);
     }
 }

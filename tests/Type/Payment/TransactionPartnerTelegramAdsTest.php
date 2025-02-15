@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Type\Payment;
+namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramAds;
+
+use function PHPUnit\Framework\assertSame;
 
 final class TransactionPartnerTelegramAdsTest extends TestCase
 {
@@ -15,7 +17,7 @@ final class TransactionPartnerTelegramAdsTest extends TestCase
     {
         $object = new TransactionPartnerTelegramAds();
 
-        $this->assertSame('telegram_ads', $object->getType());
+        assertSame('telegram_ads', $object->getType());
     }
 
     public function testFromTelegramResult(): void
@@ -24,7 +26,7 @@ final class TransactionPartnerTelegramAdsTest extends TestCase
             'type' => 'telegram_ads',
         ], null, TransactionPartnerTelegramAds::class);
 
-        $this->assertSame('telegram_ads', $object->getType());
+        assertSame('telegram_ads', $object->getType());
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

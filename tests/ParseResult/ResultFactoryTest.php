@@ -16,6 +16,9 @@ use Vjik\TelegramBot\Api\Tests\Support\Color;
 use Vjik\TelegramBot\Api\Type\BotName;
 use Vjik\TelegramBot\Api\Type\ChatLocation;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class ResultFactoryTest extends TestCase
 {
     public function testUnsupportedPhpType(): void
@@ -66,9 +69,9 @@ final class ResultFactoryTest extends TestCase
             $factory->create($data, new ObjectValue(ChatLocation::class));
         } catch (Throwable $exception) {
         }
-        $this->assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
-        $this->assertSame(0, $exception->getCode());
-        $this->assertSame(
+        assertInstanceOf(InvalidTypeOfValueInResultException::class, $exception);
+        assertSame(0, $exception->getCode());
+        assertSame(
             'Invalid type of value for key "latitude". Expected type is "float", but got "string".',
             $exception->getMessage(),
         );

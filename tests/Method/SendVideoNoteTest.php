@@ -13,15 +13,17 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendVideoNoteTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendVideoNote(12, 'https://example.com/wow.mp4');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendVideoNote', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendVideoNote', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'video_note' => 'https://example.com/wow.mp4',
@@ -52,7 +54,7 @@ final class SendVideoNoteTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -85,6 +87,6 @@ final class SendVideoNoteTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

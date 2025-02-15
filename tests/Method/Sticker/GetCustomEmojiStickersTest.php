@@ -10,15 +10,20 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertSame;
+
 final class GetCustomEmojiStickersTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetCustomEmojiStickers(['id1']);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getCustomEmojiStickers', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getCustomEmojiStickers', $method->getApiMethod());
+        assertSame(
             [
                 'custom_emoji_ids' => ['id1'],
             ],
@@ -42,9 +47,9 @@ final class GetCustomEmojiStickersTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertIsArray($preparedResult);
-        $this->assertCount(1, $preparedResult);
-        $this->assertInstanceOf(Sticker::class, $preparedResult[0]);
-        $this->assertSame('x1', $preparedResult[0]->fileId);
+        assertIsArray($preparedResult);
+        assertCount(1, $preparedResult);
+        assertInstanceOf(Sticker::class, $preparedResult[0]);
+        assertSame('x1', $preparedResult[0]->fileId);
     }
 }

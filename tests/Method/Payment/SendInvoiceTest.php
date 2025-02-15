@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendInvoiceTest extends TestCase
 {
     public function testBase(): void
@@ -27,9 +29,9 @@ final class SendInvoiceTest extends TestCase
             [$price],
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendInvoice', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendInvoice', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'title' => 'The title',
@@ -79,9 +81,9 @@ final class SendInvoiceTest extends TestCase
             true,
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendInvoice', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendInvoice', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 99,
@@ -137,6 +139,6 @@ final class SendInvoiceTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

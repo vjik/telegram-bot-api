@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Type\MessageReactionCountUpdated;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class MessageReactionCountUpdatedTest extends TestCase
 {
     public function testBase(): void
@@ -21,10 +24,10 @@ final class MessageReactionCountUpdatedTest extends TestCase
         $date = new DateTimeImmutable();
         $messageReactionCountUpdated = new MessageReactionCountUpdated($chat, 99, $date, [$reactionCount]);
 
-        $this->assertSame($chat, $messageReactionCountUpdated->chat);
-        $this->assertSame(99, $messageReactionCountUpdated->messageId);
-        $this->assertSame($date, $messageReactionCountUpdated->date);
-        $this->assertSame([$reactionCount], $messageReactionCountUpdated->reactions);
+        assertSame($chat, $messageReactionCountUpdated->chat);
+        assertSame(99, $messageReactionCountUpdated->messageId);
+        assertSame($date, $messageReactionCountUpdated->date);
+        assertSame([$reactionCount], $messageReactionCountUpdated->reactions);
     }
 
     public function testFromTelegramResult(): void
@@ -47,11 +50,11 @@ final class MessageReactionCountUpdatedTest extends TestCase
             ],
         ], null, MessageReactionCountUpdated::class);
 
-        $this->assertSame(1, $messageReactionCountUpdated->chat->id);
-        $this->assertSame(99, $messageReactionCountUpdated->messageId);
-        $this->assertSame(1623150080, $messageReactionCountUpdated->date->getTimestamp());
+        assertSame(1, $messageReactionCountUpdated->chat->id);
+        assertSame(99, $messageReactionCountUpdated->messageId);
+        assertSame(1623150080, $messageReactionCountUpdated->date->getTimestamp());
 
-        $this->assertCount(1, $messageReactionCountUpdated->reactions);
-        $this->assertSame('🤯', $messageReactionCountUpdated->reactions[0]->type->emoji);
+        assertCount(1, $messageReactionCountUpdated->reactions);
+        assertSame('🤯', $messageReactionCountUpdated->reactions[0]->type->emoji);
     }
 }

@@ -8,16 +8,18 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BotCommandTest extends TestCase
 {
     public function testBase(): void
     {
         $botCommand = new BotCommand('start', 'Start command');
 
-        $this->assertSame('start', $botCommand->command);
-        $this->assertSame('Start command', $botCommand->description);
+        assertSame('start', $botCommand->command);
+        assertSame('Start command', $botCommand->description);
 
-        $this->assertSame(
+        assertSame(
             [
                 'command' => 'start',
                 'description' => 'Start command',
@@ -33,7 +35,7 @@ final class BotCommandTest extends TestCase
             'description' => 'Start command',
         ], null, BotCommand::class);
 
-        $this->assertSame('start', $botCommand->command);
-        $this->assertSame('Start command', $botCommand->description);
+        assertSame('start', $botCommand->command);
+        assertSame('Start command', $botCommand->description);
     }
 }

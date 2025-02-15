@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CreateInvoiceLinkTest extends TestCase
 {
     public function testBase(): void
@@ -23,9 +25,9 @@ final class CreateInvoiceLinkTest extends TestCase
             [$price],
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createInvoiceLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createInvoiceLink', $method->getApiMethod());
+        assertSame(
             [
                 'title' => 'The title',
                 'description' => 'The description',
@@ -65,9 +67,9 @@ final class CreateInvoiceLinkTest extends TestCase
             'buid1',
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createInvoiceLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createInvoiceLink', $method->getApiMethod());
+        assertSame(
             [
                 'business_connection_id' => 'buid1',
                 'title' => 'The title',
@@ -108,6 +110,6 @@ final class CreateInvoiceLinkTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi('https://example.com/invoice')->call($method);
 
-        $this->assertSame('https://example.com/invoice', $preparedResult);
+        assertSame('https://example.com/invoice', $preparedResult);
     }
 }

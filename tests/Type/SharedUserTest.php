@@ -8,17 +8,21 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SharedUser;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class SharedUserTest extends TestCase
 {
     public function testBase(): void
     {
         $sharedUser = new SharedUser(23);
 
-        $this->assertSame(23, $sharedUser->userId);
-        $this->assertNull($sharedUser->firstName);
-        $this->assertNull($sharedUser->lastName);
-        $this->assertNull($sharedUser->username);
-        $this->assertNull($sharedUser->photo);
+        assertSame(23, $sharedUser->userId);
+        assertNull($sharedUser->firstName);
+        assertNull($sharedUser->lastName);
+        assertNull($sharedUser->username);
+        assertNull($sharedUser->photo);
     }
 
     public function testFromTelegramResult(): void
@@ -38,12 +42,12 @@ final class SharedUserTest extends TestCase
             ],
         ], null, SharedUser::class);
 
-        $this->assertSame(23, $sharedUser->userId);
-        $this->assertSame('John', $sharedUser->firstName);
-        $this->assertSame('Doe', $sharedUser->lastName);
-        $this->assertSame('bat', $sharedUser->username);
+        assertSame(23, $sharedUser->userId);
+        assertSame('John', $sharedUser->firstName);
+        assertSame('Doe', $sharedUser->lastName);
+        assertSame('bat', $sharedUser->username);
 
-        $this->assertCount(1, $sharedUser->photo);
-        $this->assertSame('file_id-124', $sharedUser->photo[0]->fileId);
+        assertCount(1, $sharedUser->photo);
+        assertSame('file_id-124', $sharedUser->photo[0]->fileId);
     }
 }

@@ -11,15 +11,17 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
+use function PHPUnit\Framework\assertSame;
+
 final class StopPollTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new StopPoll(1, 2);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('stopPoll', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('stopPoll', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_id' => 2,
@@ -33,7 +35,7 @@ final class StopPollTest extends TestCase
         $replyMarkup = new InlineKeyboardMarkup([[new InlineKeyboardButton('hello')]]);
         $method = new StopPoll(1, 2, 'bid', $replyMarkup);
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bid',
                 'chat_id' => 1,
@@ -61,6 +63,6 @@ final class StopPollTest extends TestCase
             'allows_multiple_answers' => true,
         ])->call($method);
 
-        $this->assertSame('12', $preparedResult->id);
+        assertSame('12', $preparedResult->id);
     }
 }

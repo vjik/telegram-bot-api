@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertSame;
+
 final class InputStickerTest extends TestCase
 {
     public function testBase(): void
@@ -22,7 +25,7 @@ final class InputStickerTest extends TestCase
             ['👍', '👎'],
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'sticker' => 'https://example.com/emoji.png',
                 'format' => 'static',
@@ -32,7 +35,7 @@ final class InputStickerTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'sticker' => 'https://example.com/emoji.png',
                 'format' => 'static',
@@ -40,7 +43,7 @@ final class InputStickerTest extends TestCase
             ],
             $inputSticker->toRequestArray($fileCollector),
         );
-        $this->assertEmpty($fileCollector->get());
+        assertEmpty($fileCollector->get());
     }
 
     public function testFull(): void
@@ -55,7 +58,7 @@ final class InputStickerTest extends TestCase
             ['test'],
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'sticker' => $file,
                 'format' => 'static',
@@ -67,7 +70,7 @@ final class InputStickerTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'sticker' => 'attach://file0',
                 'format' => 'static',
@@ -77,7 +80,7 @@ final class InputStickerTest extends TestCase
             ],
             $inputSticker->toRequestArray($fileCollector),
         );
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $file,
             ],

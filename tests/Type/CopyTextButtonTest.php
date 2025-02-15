@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\CopyTextButton;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CopyTextButtonTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new CopyTextButton('test');
 
-        $this->assertSame('test', $type->text);
-        $this->assertSame(
+        assertSame('test', $type->text);
+        assertSame(
             [
                 'text' => 'test',
             ],
@@ -33,6 +35,6 @@ final class CopyTextButtonTest extends TestCase
             CopyTextButton::class,
         );
 
-        $this->assertSame('test', $type->text);
+        assertSame('test', $type->text);
     }
 }

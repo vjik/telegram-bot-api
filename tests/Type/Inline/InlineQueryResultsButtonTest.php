@@ -8,13 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InlineQueryResultsButtonTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new InlineQueryResultsButton('test');
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
             ],
@@ -27,7 +29,7 @@ final class InlineQueryResultsButtonTest extends TestCase
         $webApp = new WebAppInfo('https://example.com');
         $type = new InlineQueryResultsButton('test', $webApp, 'start');
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
                 'web_app' => $webApp->toRequestArray(),

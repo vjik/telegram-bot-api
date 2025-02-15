@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\Type\CallbackQuery;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class CallbackQueryTest extends TestCase
 {
     public function testBase(): void
@@ -21,13 +25,13 @@ final class CallbackQueryTest extends TestCase
             'cid1',
         );
 
-        $this->assertSame('id1', $callbackQuery->id);
-        $this->assertSame($user, $callbackQuery->from);
-        $this->assertSame('cid1', $callbackQuery->chatInstance);
-        $this->assertNull($callbackQuery->message);
-        $this->assertNull($callbackQuery->inlineMessageId);
-        $this->assertNull($callbackQuery->data);
-        $this->assertNull($callbackQuery->gameShortName);
+        assertSame('id1', $callbackQuery->id);
+        assertSame($user, $callbackQuery->from);
+        assertSame('cid1', $callbackQuery->chatInstance);
+        assertNull($callbackQuery->message);
+        assertNull($callbackQuery->inlineMessageId);
+        assertNull($callbackQuery->data);
+        assertNull($callbackQuery->gameShortName);
     }
 
     public function testFromTelegramResult(): void
@@ -54,16 +58,16 @@ final class CallbackQueryTest extends TestCase
             'game_short_name' => 'game1',
         ], null, CallbackQuery::class);
 
-        $this->assertSame('id1', $callbackQuery->id);
-        $this->assertSame(1, $callbackQuery->from->id);
-        $this->assertSame('cid1', $callbackQuery->chatInstance);
+        assertSame('id1', $callbackQuery->id);
+        assertSame(1, $callbackQuery->from->id);
+        assertSame('cid1', $callbackQuery->chatInstance);
 
-        $this->assertInstanceOf(Message::class, $callbackQuery->message);
-        $this->assertSame(99, $callbackQuery->message->messageId);
-        $this->assertSame('hello', $callbackQuery->message->text);
+        assertInstanceOf(Message::class, $callbackQuery->message);
+        assertSame(99, $callbackQuery->message->messageId);
+        assertSame('hello', $callbackQuery->message->text);
 
-        $this->assertSame('m12', $callbackQuery->inlineMessageId);
-        $this->assertSame('data1', $callbackQuery->data);
-        $this->assertSame('game1', $callbackQuery->gameShortName);
+        assertSame('m12', $callbackQuery->inlineMessageId);
+        assertSame('data1', $callbackQuery->data);
+        assertSame('game1', $callbackQuery->gameShortName);
     }
 }

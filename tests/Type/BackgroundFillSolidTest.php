@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillSolid;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BackgroundFillSolidTest extends TestCase
 {
     public function testBase(): void
     {
         $fill = new BackgroundFillSolid(0x000000);
 
-        $this->assertSame('solid', $fill->getType());
-        $this->assertSame(0x000000, $fill->color);
+        assertSame('solid', $fill->getType());
+        assertSame(0x000000, $fill->color);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class BackgroundFillSolidTest extends TestCase
             'color' => 0x000000,
         ], null, BackgroundFillSolid::class);
 
-        $this->assertSame('solid', $fill->getType());
-        $this->assertSame(0x000000, $fill->color);
+        assertSame('solid', $fill->getType());
+        assertSame(0x000000, $fill->color);
     }
 }

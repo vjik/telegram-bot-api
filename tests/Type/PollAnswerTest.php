@@ -8,16 +8,19 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PollAnswer;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class PollAnswerTest extends TestCase
 {
     public function testBase(): void
     {
         $answer = new PollAnswer('sadg', [2, 4]);
 
-        $this->assertSame('sadg', $answer->pollId);
-        $this->assertSame([2, 4], $answer->optionIds);
-        $this->assertNull($answer->voterChat);
-        $this->assertNull($answer->user);
+        assertSame('sadg', $answer->pollId);
+        assertSame([2, 4], $answer->optionIds);
+        assertNull($answer->voterChat);
+        assertNull($answer->user);
     }
 
     public function testFromTelegramResult(): void
@@ -36,9 +39,9 @@ final class PollAnswerTest extends TestCase
             ],
         ], null, PollAnswer::class);
 
-        $this->assertSame('sadg', $answer->pollId);
-        $this->assertSame([2, 4], $answer->optionIds);
-        $this->assertSame(42, $answer->voterChat?->id);
-        $this->assertSame(43, $answer->user?->id);
+        assertSame('sadg', $answer->pollId);
+        assertSame([2, 4], $answer->optionIds);
+        assertSame(42, $answer->voterChat?->id);
+        assertSame(43, $answer->user?->id);
     }
 }

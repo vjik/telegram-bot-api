@@ -18,57 +18,64 @@ use Vjik\TelegramBot\Api\Type\ChatPhoto;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatFullInfoTest extends TestCase
 {
     public function testBase(): void
     {
         $info = new ChatFullInfo(23, 'private', 0x123456, 5);
 
-        $this->assertSame(23, $info->id);
-        $this->assertSame('private', $info->type);
-        $this->assertSame(0x123456, $info->accentColorId);
-        $this->assertSame(5, $info->maxReactionCount);
-        $this->assertNull($info->title);
-        $this->assertNull($info->username);
-        $this->assertNull($info->firstName);
-        $this->assertNull($info->lastName);
-        $this->assertNull($info->isForum);
-        $this->assertNull($info->photo);
-        $this->assertNull($info->activeUsernames);
-        $this->assertNull($info->birthdate);
-        $this->assertNull($info->businessIntro);
-        $this->assertNull($info->businessLocation);
-        $this->assertNull($info->businessOpeningHours);
-        $this->assertNull($info->personalChat);
-        $this->assertNull($info->availableReactions);
-        $this->assertNull($info->backgroundCustomEmojiId);
-        $this->assertNull($info->profileAccentColorId);
-        $this->assertNull($info->profileBackgroundCustomEmojiId);
-        $this->assertNull($info->emojiStatusCustomEmojiId);
-        $this->assertNull($info->emojiStatusExpirationDate);
-        $this->assertNull($info->bio);
-        $this->assertNull($info->hasPrivateForwards);
-        $this->assertNull($info->hasRestrictedVoiceAndVideoMessages);
-        $this->assertNull($info->joinToSendMessages);
-        $this->assertNull($info->joinByRequest);
-        $this->assertNull($info->description);
-        $this->assertNull($info->inviteLink);
-        $this->assertNull($info->pinnedMessage);
-        $this->assertNull($info->permissions);
-        $this->assertNull($info->slowModeDelay);
-        $this->assertNull($info->unrestrictBoostCount);
-        $this->assertNull($info->messageAutoDeleteTime);
-        $this->assertNull($info->hasAggressiveAntiSpamEnabled);
-        $this->assertNull($info->hasHiddenMembers);
-        $this->assertNull($info->hasProtectedContent);
-        $this->assertNull($info->hasVisibleHistory);
-        $this->assertNull($info->stickerSetName);
-        $this->assertNull($info->canSetStickerSet);
-        $this->assertNull($info->customEmojiStickerSetName);
-        $this->assertNull($info->linkedChatId);
-        $this->assertNull($info->location);
-        $this->assertNull($info->canSendPaidMedia);
-        $this->assertNull($info->canSendGift);
+        assertSame(23, $info->id);
+        assertSame('private', $info->type);
+        assertSame(0x123456, $info->accentColorId);
+        assertSame(5, $info->maxReactionCount);
+        assertNull($info->title);
+        assertNull($info->username);
+        assertNull($info->firstName);
+        assertNull($info->lastName);
+        assertNull($info->isForum);
+        assertNull($info->photo);
+        assertNull($info->activeUsernames);
+        assertNull($info->birthdate);
+        assertNull($info->businessIntro);
+        assertNull($info->businessLocation);
+        assertNull($info->businessOpeningHours);
+        assertNull($info->personalChat);
+        assertNull($info->availableReactions);
+        assertNull($info->backgroundCustomEmojiId);
+        assertNull($info->profileAccentColorId);
+        assertNull($info->profileBackgroundCustomEmojiId);
+        assertNull($info->emojiStatusCustomEmojiId);
+        assertNull($info->emojiStatusExpirationDate);
+        assertNull($info->bio);
+        assertNull($info->hasPrivateForwards);
+        assertNull($info->hasRestrictedVoiceAndVideoMessages);
+        assertNull($info->joinToSendMessages);
+        assertNull($info->joinByRequest);
+        assertNull($info->description);
+        assertNull($info->inviteLink);
+        assertNull($info->pinnedMessage);
+        assertNull($info->permissions);
+        assertNull($info->slowModeDelay);
+        assertNull($info->unrestrictBoostCount);
+        assertNull($info->messageAutoDeleteTime);
+        assertNull($info->hasAggressiveAntiSpamEnabled);
+        assertNull($info->hasHiddenMembers);
+        assertNull($info->hasProtectedContent);
+        assertNull($info->hasVisibleHistory);
+        assertNull($info->stickerSetName);
+        assertNull($info->canSetStickerSet);
+        assertNull($info->customEmojiStickerSetName);
+        assertNull($info->linkedChatId);
+        assertNull($info->location);
+        assertNull($info->canSendPaidMedia);
+        assertNull($info->canSendGift);
     }
 
     public function testFromTelegramResult(): void
@@ -164,76 +171,76 @@ final class ChatFullInfoTest extends TestCase
             'can_send_paid_media' => true,
         ], null, ChatFullInfo::class);
 
-        $this->assertSame(23, $info->id);
-        $this->assertSame('private', $info->type);
-        $this->assertSame(0x123456, $info->accentColorId);
-        $this->assertSame(5, $info->maxReactionCount);
-        $this->assertSame('Title', $info->title);
-        $this->assertSame('Bat', $info->username);
-        $this->assertSame('Bruce', $info->firstName);
-        $this->assertSame('Willy', $info->lastName);
-        $this->assertTrue($info->isForum);
+        assertSame(23, $info->id);
+        assertSame('private', $info->type);
+        assertSame(0x123456, $info->accentColorId);
+        assertSame(5, $info->maxReactionCount);
+        assertSame('Title', $info->title);
+        assertSame('Bat', $info->username);
+        assertSame('Bruce', $info->firstName);
+        assertSame('Willy', $info->lastName);
+        assertTrue($info->isForum);
 
-        $this->assertInstanceOf(ChatPhoto::class, $info->photo);
-        $this->assertSame('123', $info->photo->smallFileId);
+        assertInstanceOf(ChatPhoto::class, $info->photo);
+        assertSame('123', $info->photo->smallFileId);
 
-        $this->assertSame(['aka1', 'aka2'], $info->activeUsernames);
+        assertSame(['aka1', 'aka2'], $info->activeUsernames);
 
-        $this->assertInstanceOf(Birthdate::class, $info->birthdate);
-        $this->assertSame(1, $info->birthdate->day);
+        assertInstanceOf(Birthdate::class, $info->birthdate);
+        assertSame(1, $info->birthdate->day);
 
-        $this->assertInstanceOf(BusinessIntro::class, $info->businessIntro);
-        $this->assertSame('My Business', $info->businessIntro->title);
+        assertInstanceOf(BusinessIntro::class, $info->businessIntro);
+        assertSame('My Business', $info->businessIntro->title);
 
-        $this->assertInstanceOf(BusinessLocation::class, $info->businessLocation);
-        $this->assertSame('My Address', $info->businessLocation->address);
+        assertInstanceOf(BusinessLocation::class, $info->businessLocation);
+        assertSame('My Address', $info->businessLocation->address);
 
-        $this->assertInstanceOf(BusinessOpeningHours::class, $info->businessOpeningHours);
-        $this->assertSame('Europe/Moscow', $info->businessOpeningHours->timeZoneName);
+        assertInstanceOf(BusinessOpeningHours::class, $info->businessOpeningHours);
+        assertSame('Europe/Moscow', $info->businessOpeningHours->timeZoneName);
 
-        $this->assertInstanceOf(Chat::class, $info->personalChat);
-        $this->assertSame(42, $info->personalChat->id);
+        assertInstanceOf(Chat::class, $info->personalChat);
+        assertSame(42, $info->personalChat->id);
 
-        $this->assertIsArray($info->availableReactions);
-        $this->assertCount(1, $info->availableReactions);
-        $this->assertInstanceOf(ReactionTypeCustomEmoji::class, $info->availableReactions[0]);
-        $this->assertSame('=)', $info->availableReactions[0]->customEmojiId);
+        assertIsArray($info->availableReactions);
+        assertCount(1, $info->availableReactions);
+        assertInstanceOf(ReactionTypeCustomEmoji::class, $info->availableReactions[0]);
+        assertSame('=)', $info->availableReactions[0]->customEmojiId);
 
-        $this->assertSame('bge1', $info->backgroundCustomEmojiId);
-        $this->assertSame(0x654321, $info->profileAccentColorId);
-        $this->assertSame('bge2', $info->profileBackgroundCustomEmojiId);
-        $this->assertSame('bge3', $info->emojiStatusCustomEmojiId);
-        $this->assertSame(1717501903, $info->emojiStatusExpirationDate?->getTimestamp());
-        $this->assertSame('My Bio', $info->bio);
-        $this->assertTrue($info->hasPrivateForwards);
-        $this->assertTrue($info->hasRestrictedVoiceAndVideoMessages);
-        $this->assertTrue($info->joinToSendMessages);
-        $this->assertTrue($info->joinByRequest);
-        $this->assertSame('My Description', $info->description);
-        $this->assertSame('https://t.me/joinchat/123', $info->inviteLink);
+        assertSame('bge1', $info->backgroundCustomEmojiId);
+        assertSame(0x654321, $info->profileAccentColorId);
+        assertSame('bge2', $info->profileBackgroundCustomEmojiId);
+        assertSame('bge3', $info->emojiStatusCustomEmojiId);
+        assertSame(1717501903, $info->emojiStatusExpirationDate?->getTimestamp());
+        assertSame('My Bio', $info->bio);
+        assertTrue($info->hasPrivateForwards);
+        assertTrue($info->hasRestrictedVoiceAndVideoMessages);
+        assertTrue($info->joinToSendMessages);
+        assertTrue($info->joinByRequest);
+        assertSame('My Description', $info->description);
+        assertSame('https://t.me/joinchat/123', $info->inviteLink);
 
-        $this->assertInstanceOf(Message::class, $info->pinnedMessage);
-        $this->assertSame(123, $info->pinnedMessage->messageId);
+        assertInstanceOf(Message::class, $info->pinnedMessage);
+        assertSame(123, $info->pinnedMessage->messageId);
 
-        $this->assertInstanceOf(ChatPermissions::class, $info->permissions);
-        $this->assertTrue($info->permissions->canSendMessages);
+        assertInstanceOf(ChatPermissions::class, $info->permissions);
+        assertTrue($info->permissions->canSendMessages);
 
-        $this->assertSame(5, $info->slowModeDelay);
-        $this->assertSame(10, $info->unrestrictBoostCount);
-        $this->assertSame(111, $info->messageAutoDeleteTime);
-        $this->assertTrue($info->hasAggressiveAntiSpamEnabled);
-        $this->assertTrue($info->hasHiddenMembers);
-        $this->assertTrue($info->hasProtectedContent);
-        $this->assertTrue($info->hasVisibleHistory);
-        $this->assertSame('MyStickerSet', $info->stickerSetName);
-        $this->assertTrue($info->canSetStickerSet);
-        $this->assertSame('MyCustomEmojiStickerSet', $info->customEmojiStickerSetName);
-        $this->assertSame(42, $info->linkedChatId);
+        assertSame(5, $info->slowModeDelay);
+        assertSame(10, $info->unrestrictBoostCount);
+        assertSame(111, $info->messageAutoDeleteTime);
+        assertTrue($info->hasAggressiveAntiSpamEnabled);
+        assertTrue($info->hasHiddenMembers);
+        assertTrue($info->hasProtectedContent);
+        assertTrue($info->hasVisibleHistory);
+        assertSame('MyStickerSet', $info->stickerSetName);
+        assertTrue($info->canSetStickerSet);
+        assertSame('MyCustomEmojiStickerSet', $info->customEmojiStickerSetName);
+        assertSame(42, $info->linkedChatId);
 
-        $this->assertInstanceOf(ChatLocation::class, $info->location);
-        $this->assertSame(55.7558, $info->location->location->latitude);
+        assertInstanceOf(ChatLocation::class, $info->location);
+        assertSame(55.7558, $info->location->location->latitude);
 
-        $this->assertTrue($info->canSendPaidMedia);
-        $this->assertTrue($info->canSendGift);
+        assertTrue($info->canSendPaidMedia);
+        assertTrue($info->canSendGift);
     }
 }

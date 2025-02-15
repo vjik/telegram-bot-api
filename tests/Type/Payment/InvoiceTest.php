@@ -8,17 +8,19 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\Invoice;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InvoiceTest extends TestCase
 {
     public function testBase(): void
     {
         $invoice = new Invoice('product', 'desc', 'hi', 'RUB', 200);
 
-        $this->assertSame('product', $invoice->title);
-        $this->assertSame('desc', $invoice->description);
-        $this->assertSame('hi', $invoice->startParameter);
-        $this->assertSame('RUB', $invoice->currency);
-        $this->assertSame(200, $invoice->totalAmount);
+        assertSame('product', $invoice->title);
+        assertSame('desc', $invoice->description);
+        assertSame('hi', $invoice->startParameter);
+        assertSame('RUB', $invoice->currency);
+        assertSame(200, $invoice->totalAmount);
     }
 
     public function testFromTelegramResult(): void
@@ -31,10 +33,10 @@ final class InvoiceTest extends TestCase
             'total_amount' => 200,
         ], null, Invoice::class);
 
-        $this->assertSame('product', $invoice->title);
-        $this->assertSame('desc', $invoice->description);
-        $this->assertSame('hi', $invoice->startParameter);
-        $this->assertSame('RUB', $invoice->currency);
-        $this->assertSame(200, $invoice->totalAmount);
+        assertSame('product', $invoice->title);
+        assertSame('desc', $invoice->description);
+        assertSame('hi', $invoice->startParameter);
+        assertSame('RUB', $invoice->currency);
+        assertSame(200, $invoice->totalAmount);
     }
 }

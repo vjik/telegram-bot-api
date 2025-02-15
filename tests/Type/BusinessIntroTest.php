@@ -9,15 +9,19 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessIntro;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class BusinessIntroTest extends TestCase
 {
     public function testBase(): void
     {
         $businessIntro = new BusinessIntro();
 
-        $this->assertNull($businessIntro->title);
-        $this->assertNull($businessIntro->message);
-        $this->assertNull($businessIntro->sticker);
+        assertNull($businessIntro->title);
+        assertNull($businessIntro->message);
+        assertNull($businessIntro->sticker);
     }
 
     public function testFromTelegramResult(): void
@@ -36,10 +40,10 @@ final class BusinessIntroTest extends TestCase
             ],
         ], null, BusinessIntro::class);
 
-        $this->assertSame('title1', $businessIntro->title);
-        $this->assertSame('message1', $businessIntro->message);
+        assertSame('title1', $businessIntro->title);
+        assertSame('message1', $businessIntro->message);
 
-        $this->assertInstanceOf(Sticker::class, $businessIntro->sticker);
-        $this->assertSame('file_id1', $businessIntro->sticker->fileId);
+        assertInstanceOf(Sticker::class, $businessIntro->sticker);
+        assertSame('file_id1', $businessIntro->sticker->fileId);
     }
 }

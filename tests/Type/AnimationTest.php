@@ -9,21 +9,26 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Animation;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class AnimationTest extends TestCase
 {
     public function testBase(): void
     {
         $animation = new Animation('fileId', 'fileUniqueId', 100, 200, 48);
 
-        $this->assertSame('fileId', $animation->fileId);
-        $this->assertSame('fileUniqueId', $animation->fileUniqueId);
-        $this->assertSame(100, $animation->width);
-        $this->assertSame(200, $animation->height);
-        $this->assertSame(48, $animation->duration);
-        $this->assertNull($animation->thumbnail);
-        $this->assertNull($animation->fileName);
-        $this->assertNull($animation->mimeType);
-        $this->assertNull($animation->fileSize);
+        assertSame('fileId', $animation->fileId);
+        assertSame('fileUniqueId', $animation->fileUniqueId);
+        assertSame(100, $animation->width);
+        assertSame(200, $animation->height);
+        assertSame(48, $animation->duration);
+        assertNull($animation->thumbnail);
+        assertNull($animation->fileName);
+        assertNull($animation->mimeType);
+        assertNull($animation->fileSize);
     }
 
     public function testFromTelegramResult(): void
@@ -45,15 +50,15 @@ final class AnimationTest extends TestCase
             'file_size' => 512,
         ], null, Animation::class);
 
-        $this->assertInstanceOf(Animation::class, $animation);
-        $this->assertSame('fileId', $animation->fileId);
-        $this->assertSame('fileUniqueId', $animation->fileUniqueId);
-        $this->assertSame(100, $animation->width);
-        $this->assertSame(200, $animation->height);
-        $this->assertSame(48, $animation->duration);
-        $this->assertEquals(new PhotoSize('thumbFileId', 'thumbFileUniqueId', 50, 72), $animation->thumbnail);
-        $this->assertSame('face.gif', $animation->fileName);
-        $this->assertSame('image/gif', $animation->mimeType);
-        $this->assertSame(512, $animation->fileSize);
+        assertInstanceOf(Animation::class, $animation);
+        assertSame('fileId', $animation->fileId);
+        assertSame('fileUniqueId', $animation->fileUniqueId);
+        assertSame(100, $animation->width);
+        assertSame(200, $animation->height);
+        assertSame(48, $animation->duration);
+        assertEquals(new PhotoSize('thumbFileId', 'thumbFileUniqueId', 50, 72), $animation->thumbnail);
+        assertSame('face.gif', $animation->fileName);
+        assertSame('image/gif', $animation->mimeType);
+        assertSame(512, $animation->fileSize);
     }
 }

@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillFreeformGradient;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BackgroundFillFreeformGradientTest extends TestCase
 {
     public function testBase(): void
     {
         $fill = new BackgroundFillFreeformGradient([0x000000, 0xFFFFFF]);
 
-        $this->assertSame('freeform_gradient', $fill->getType());
-        $this->assertSame([0x000000, 0xFFFFFF], $fill->colors);
+        assertSame('freeform_gradient', $fill->getType());
+        assertSame([0x000000, 0xFFFFFF], $fill->colors);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class BackgroundFillFreeformGradientTest extends TestCase
             'colors' => [0x000000, 0xFFFFFF],
         ], null, BackgroundFillFreeformGradient::class);
 
-        $this->assertSame('freeform_gradient', $fill->getType());
-        $this->assertSame([0x000000, 0xFFFFFF], $fill->colors);
+        assertSame('freeform_gradient', $fill->getType());
+        assertSame([0x000000, 0xFFFFFF], $fill->colors);
     }
 }

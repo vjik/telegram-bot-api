@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type\Payment;
+namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerAffiliateProgram;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class TransactionPartnerAffiliateProgramTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new TransactionPartnerAffiliateProgram(200);
 
-        $this->assertSame('affiliate_program', $object->getType());
-        $this->assertSame(200, $object->commissionPerMille);
-        $this->assertNull($object->sponsorUser);
+        assertSame('affiliate_program', $object->getType());
+        assertSame(200, $object->commissionPerMille);
+        assertNull($object->sponsorUser);
     }
 
     public function testFull(): void
@@ -29,9 +32,9 @@ final class TransactionPartnerAffiliateProgramTest extends TestCase
             $user,
         );
 
-        $this->assertSame('affiliate_program', $object->getType());
-        $this->assertSame(200, $object->commissionPerMille);
-        $this->assertSame($user, $object->sponsorUser);
+        assertSame('affiliate_program', $object->getType());
+        assertSame(200, $object->commissionPerMille);
+        assertSame($user, $object->sponsorUser);
     }
 
     public function testFromTelegramResult(): void
@@ -50,9 +53,9 @@ final class TransactionPartnerAffiliateProgramTest extends TestCase
             TransactionPartnerAffiliateProgram::class,
         );
 
-        $this->assertSame('affiliate_program', $object->getType());
-        $this->assertSame(203, $object->commissionPerMille);
-        $this->assertSame(123, $object->sponsorUser->id);
+        assertSame('affiliate_program', $object->getType());
+        assertSame(203, $object->commissionPerMille);
+        assertSame(123, $object->sponsorUser->id);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

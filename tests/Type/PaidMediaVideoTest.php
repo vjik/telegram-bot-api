@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Type;
+namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaVideo;
 use Vjik\TelegramBot\Api\Type\Video;
+
+use function PHPUnit\Framework\assertSame;
 
 final class PaidMediaVideoTest extends TestCase
 {
@@ -16,8 +18,8 @@ final class PaidMediaVideoTest extends TestCase
         $video = new Video('fileId', 'fileUniqueId', 100, 200, 12);
         $type = new PaidMediaVideo($video);
 
-        $this->assertSame('video', $type->getType());
-        $this->assertSame($video, $type->video);
+        assertSame('video', $type->getType());
+        assertSame($video, $type->video);
     }
 
     public function testFromTelegramResult(): void
@@ -33,11 +35,11 @@ final class PaidMediaVideoTest extends TestCase
             ],
         ], null, PaidMediaVideo::class);
 
-        $this->assertSame('video', $type->getType());
-        $this->assertSame('f12', $type->video->fileId);
-        $this->assertSame('fu12', $type->video->fileUniqueId);
-        $this->assertSame(100, $type->video->width);
-        $this->assertSame(200, $type->video->height);
-        $this->assertSame(23, $type->video->duration);
+        assertSame('video', $type->getType());
+        assertSame('f12', $type->video->fileId);
+        assertSame('fu12', $type->video->fileUniqueId);
+        assertSame(100, $type->video->width);
+        assertSame(200, $type->video->height);
+        assertSame(23, $type->video->duration);
     }
 }

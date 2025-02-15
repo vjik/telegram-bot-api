@@ -14,15 +14,17 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendDocumentTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendDocument(12, 'https://example.com/file.doc');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendDocument', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendDocument', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'document' => 'https://example.com/file.doc',
@@ -56,7 +58,7 @@ final class SendDocumentTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -91,6 +93,6 @@ final class SendDocumentTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

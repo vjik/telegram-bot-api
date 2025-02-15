@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateFailed;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStatePending;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateSucceeded;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class RevenueWithdrawalStateValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -49,7 +51,7 @@ final class RevenueWithdrawalStateValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

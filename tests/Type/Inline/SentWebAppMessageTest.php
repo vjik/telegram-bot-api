@@ -8,13 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SentWebAppMessageTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new SentWebAppMessage('id1');
 
-        $this->assertSame('id1', $type->inlineMessageId);
+        assertSame('id1', $type->inlineMessageId);
     }
 
     public function testFromTelegramResult(): void
@@ -23,6 +25,6 @@ final class SentWebAppMessageTest extends TestCase
             'inline_message_id' => 'id1',
         ], null, SentWebAppMessage::class);
 
-        $this->assertSame('id1', $type->inlineMessageId);
+        assertSame('id1', $type->inlineMessageId);
     }
 }

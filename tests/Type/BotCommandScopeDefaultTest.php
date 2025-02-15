@@ -7,15 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeDefault;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BotCommandScopeDefaultTest extends TestCase
 {
     public function testBase(): void
     {
         $scope = new BotCommandScopeDefault();
 
-        $this->assertSame('default', $scope->getType());
+        assertSame('default', $scope->getType());
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'default',
             ],

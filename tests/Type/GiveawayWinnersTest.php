@@ -11,6 +11,11 @@ use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\GiveawayWinners;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class GiveawayWinnersTest extends TestCase
 {
     public function testBase(): void
@@ -20,18 +25,18 @@ final class GiveawayWinnersTest extends TestCase
         $user = new User(1, false, 'first_name');
         $giveawayWinners = new GiveawayWinners($chat, 2, $date, 5, [$user]);
 
-        $this->assertSame($chat, $giveawayWinners->chat);
-        $this->assertSame(2, $giveawayWinners->giveawayMessageId);
-        $this->assertSame($date, $giveawayWinners->winnersSelectionDate);
-        $this->assertSame(5, $giveawayWinners->winnerCount);
-        $this->assertSame([$user], $giveawayWinners->winners);
-        $this->assertNull($giveawayWinners->additionalChatCount);
-        $this->assertNull($giveawayWinners->premiumSubscriptionMonthCount);
-        $this->assertNull($giveawayWinners->unclaimedPrizeCount);
-        $this->assertNull($giveawayWinners->onlyNewMembers);
-        $this->assertNull($giveawayWinners->wasRefunded);
-        $this->assertNull($giveawayWinners->prizeDescription);
-        $this->assertNull($giveawayWinners->prizeStarCount);
+        assertSame($chat, $giveawayWinners->chat);
+        assertSame(2, $giveawayWinners->giveawayMessageId);
+        assertSame($date, $giveawayWinners->winnersSelectionDate);
+        assertSame(5, $giveawayWinners->winnerCount);
+        assertSame([$user], $giveawayWinners->winners);
+        assertNull($giveawayWinners->additionalChatCount);
+        assertNull($giveawayWinners->premiumSubscriptionMonthCount);
+        assertNull($giveawayWinners->unclaimedPrizeCount);
+        assertNull($giveawayWinners->onlyNewMembers);
+        assertNull($giveawayWinners->wasRefunded);
+        assertNull($giveawayWinners->prizeDescription);
+        assertNull($giveawayWinners->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
@@ -51,20 +56,20 @@ final class GiveawayWinnersTest extends TestCase
             'prize_description' => 'Desc',
         ], null, GiveawayWinners::class);
 
-        $this->assertSame(1, $giveawayWinners->chat->id);
-        $this->assertSame(2, $giveawayWinners->giveawayMessageId);
-        $this->assertSame(124125122, $giveawayWinners->winnersSelectionDate->getTimestamp());
-        $this->assertSame(5, $giveawayWinners->winnerCount);
+        assertSame(1, $giveawayWinners->chat->id);
+        assertSame(2, $giveawayWinners->giveawayMessageId);
+        assertSame(124125122, $giveawayWinners->winnersSelectionDate->getTimestamp());
+        assertSame(5, $giveawayWinners->winnerCount);
 
-        $this->assertCount(1, $giveawayWinners->winners);
-        $this->assertSame(33, $giveawayWinners->winners[0]->id);
+        assertCount(1, $giveawayWinners->winners);
+        assertSame(33, $giveawayWinners->winners[0]->id);
 
-        $this->assertSame(12, $giveawayWinners->additionalChatCount);
-        $this->assertSame(7, $giveawayWinners->premiumSubscriptionMonthCount);
-        $this->assertSame(3, $giveawayWinners->unclaimedPrizeCount);
-        $this->assertTrue($giveawayWinners->onlyNewMembers);
-        $this->assertTrue($giveawayWinners->wasRefunded);
-        $this->assertSame('Desc', $giveawayWinners->prizeDescription);
-        $this->assertSame(99, $giveawayWinners->prizeStarCount);
+        assertSame(12, $giveawayWinners->additionalChatCount);
+        assertSame(7, $giveawayWinners->premiumSubscriptionMonthCount);
+        assertSame(3, $giveawayWinners->unclaimedPrizeCount);
+        assertTrue($giveawayWinners->onlyNewMembers);
+        assertTrue($giveawayWinners->wasRefunded);
+        assertSame('Desc', $giveawayWinners->prizeDescription);
+        assertSame(99, $giveawayWinners->prizeStarCount);
     }
 }

@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetWebhookInfoTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetWebhookInfo();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getWebhookInfo', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getWebhookInfo', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -30,6 +32,6 @@ final class GetWebhookInfoTest extends TestCase
             'pending_update_count' => 12,
         ])->call($method);
 
-        $this->assertSame('https://example.com/', $preparedResult->url);
+        assertSame('https://example.com/', $preparedResult->url);
     }
 }

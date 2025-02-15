@@ -8,18 +8,22 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\LoginUrl;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class LoginUrlTest extends TestCase
 {
     public function testBase(): void
     {
         $loginUrl = new LoginUrl('https://example.com/');
 
-        $this->assertSame('https://example.com/', $loginUrl->url);
-        $this->assertNull($loginUrl->forwardText);
-        $this->assertNull($loginUrl->botUsername);
-        $this->assertNull($loginUrl->requestWriteAccess);
+        assertSame('https://example.com/', $loginUrl->url);
+        assertNull($loginUrl->forwardText);
+        assertNull($loginUrl->botUsername);
+        assertNull($loginUrl->requestWriteAccess);
 
-        $this->assertSame(
+        assertSame(
             [
                 'url' => 'https://example.com/',
             ],
@@ -31,12 +35,12 @@ final class LoginUrlTest extends TestCase
     {
         $loginUrl = new LoginUrl('https://example.com/', 'ft', 'bun', false);
 
-        $this->assertSame('https://example.com/', $loginUrl->url);
-        $this->assertSame('ft', $loginUrl->forwardText);
-        $this->assertSame('bun', $loginUrl->botUsername);
-        $this->assertFalse($loginUrl->requestWriteAccess);
+        assertSame('https://example.com/', $loginUrl->url);
+        assertSame('ft', $loginUrl->forwardText);
+        assertSame('bun', $loginUrl->botUsername);
+        assertFalse($loginUrl->requestWriteAccess);
 
-        $this->assertSame(
+        assertSame(
             [
                 'url' => 'https://example.com/',
                 'forward_text' => 'ft',
@@ -56,9 +60,9 @@ final class LoginUrlTest extends TestCase
             'request_write_access' => false,
         ], null, LoginUrl::class);
 
-        $this->assertSame('https://example.com/', $loginUrl->url);
-        $this->assertSame('ft', $loginUrl->forwardText);
-        $this->assertSame('bun', $loginUrl->botUsername);
-        $this->assertFalse($loginUrl->requestWriteAccess);
+        assertSame('https://example.com/', $loginUrl->url);
+        assertSame('ft', $loginUrl->forwardText);
+        assertSame('bun', $loginUrl->botUsername);
+        assertFalse($loginUrl->requestWriteAccess);
     }
 }

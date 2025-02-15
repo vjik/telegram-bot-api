@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class UserChatBoostsTest extends TestCase
 {
     public function testBase(): void
@@ -24,7 +27,7 @@ final class UserChatBoostsTest extends TestCase
         );
         $type = new UserChatBoosts([$chatBoost]);
 
-        $this->assertSame([$chatBoost], $type->boosts);
+        assertSame([$chatBoost], $type->boosts);
     }
 
     public function testFromTelegramResult(): void
@@ -47,7 +50,7 @@ final class UserChatBoostsTest extends TestCase
             ],
         ], null, UserChatBoosts::class);
 
-        $this->assertCount(1, $type->boosts);
-        $this->assertSame('b1', $type->boosts[0]->boostId);
+        assertCount(1, $type->boosts);
+        assertSame('b1', $type->boosts[0]->boostId);
     }
 }

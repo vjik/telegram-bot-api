@@ -10,6 +10,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementErrorSelfie;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetPassportDataErrorsTest extends TestCase
 {
     public function testBase(): void
@@ -17,9 +20,9 @@ final class SetPassportDataErrorsTest extends TestCase
         $error = new PassportElementErrorSelfie('driver_license', 'qwerty', 'Test message');
         $method = new SetPassportDataErrors(1, [$error]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setPassportDataErrors', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setPassportDataErrors', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'errors' => [$error->toRequestArray()],
@@ -34,6 +37,6 @@ final class SetPassportDataErrorsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

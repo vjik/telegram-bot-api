@@ -8,14 +8,17 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class UserProfilePhotosTest extends TestCase
 {
     public function testBase(): void
     {
         $userProfilePhotos = new UserProfilePhotos(5, []);
 
-        $this->assertSame(5, $userProfilePhotos->totalCount);
-        $this->assertSame([], $userProfilePhotos->photos);
+        assertSame(5, $userProfilePhotos->totalCount);
+        assertSame([], $userProfilePhotos->photos);
     }
 
     public function testFromTelegramResult(): void
@@ -42,21 +45,21 @@ final class UserProfilePhotosTest extends TestCase
             ],
         ], null, UserProfilePhotos::class);
 
-        $this->assertSame(1, $userProfilePhotos->totalCount);
+        assertSame(1, $userProfilePhotos->totalCount);
 
-        $this->assertCount(1, $userProfilePhotos->photos);
-        $this->assertCount(2, $userProfilePhotos->photos[0]);
+        assertCount(1, $userProfilePhotos->photos);
+        assertCount(2, $userProfilePhotos->photos[0]);
 
-        $this->assertSame('file_id_1', $userProfilePhotos->photos[0][0]->fileId);
-        $this->assertSame('file_unique_id_1', $userProfilePhotos->photos[0][0]->fileUniqueId);
-        $this->assertSame(100, $userProfilePhotos->photos[0][0]->width);
-        $this->assertSame(200, $userProfilePhotos->photos[0][0]->height);
-        $this->assertSame(300, $userProfilePhotos->photos[0][0]->fileSize);
+        assertSame('file_id_1', $userProfilePhotos->photos[0][0]->fileId);
+        assertSame('file_unique_id_1', $userProfilePhotos->photos[0][0]->fileUniqueId);
+        assertSame(100, $userProfilePhotos->photos[0][0]->width);
+        assertSame(200, $userProfilePhotos->photos[0][0]->height);
+        assertSame(300, $userProfilePhotos->photos[0][0]->fileSize);
 
-        $this->assertSame('file_id_2', $userProfilePhotos->photos[0][1]->fileId);
-        $this->assertSame('file_unique_id_2', $userProfilePhotos->photos[0][1]->fileUniqueId);
-        $this->assertSame(400, $userProfilePhotos->photos[0][1]->width);
-        $this->assertSame(500, $userProfilePhotos->photos[0][1]->height);
-        $this->assertSame(600, $userProfilePhotos->photos[0][1]->fileSize);
+        assertSame('file_id_2', $userProfilePhotos->photos[0][1]->fileId);
+        assertSame('file_unique_id_2', $userProfilePhotos->photos[0][1]->fileUniqueId);
+        assertSame(400, $userProfilePhotos->photos[0][1]->width);
+        assertSame(500, $userProfilePhotos->photos[0][1]->height);
+        assertSame(600, $userProfilePhotos->photos[0][1]->fileSize);
     }
 }

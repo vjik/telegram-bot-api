@@ -7,14 +7,16 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementErrorTranslationFiles;
 
+use function PHPUnit\Framework\assertSame;
+
 final class PassportElementErrorTranslationFilesTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new PassportElementErrorTranslationFiles('rental_agreement', ['qwerty'], 'Test message');
 
-        $this->assertSame('translation_files', $type->getSource());
-        $this->assertSame(
+        assertSame('translation_files', $type->getSource());
+        assertSame(
             [
                 'source' => 'translation_files',
                 'type' => 'rental_agreement',

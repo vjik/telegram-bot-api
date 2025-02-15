@@ -10,6 +10,11 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberRestricted;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatMemberRestrictedTest extends TestCase
 {
     public function testBase(): void
@@ -35,25 +40,25 @@ final class ChatMemberRestrictedTest extends TestCase
             false,
         );
 
-        $this->assertSame('restricted', $member->getStatus());
-        $this->assertSame($user, $member->getUser());
-        $this->assertSame($user, $member->user);
-        $this->assertTrue($member->isMember);
-        $this->assertFalse($member->canSendMessages);
-        $this->assertTrue($member->canSendAudios);
-        $this->assertFalse($member->canSendDocuments);
-        $this->assertFalse($member->canSendPhotos);
-        $this->assertTrue($member->canSendVideos);
-        $this->assertTrue($member->canSendVideoNotes);
-        $this->assertTrue($member->canSendVoiceNotes);
-        $this->assertTrue($member->canSendPolls);
-        $this->assertTrue($member->canSendOtherMessages);
-        $this->assertTrue($member->canAddWebPagePreviews);
-        $this->assertTrue($member->canChangeInfo);
-        $this->assertTrue($member->canInviteUsers);
-        $this->assertTrue($member->canPinMessages);
-        $this->assertTrue($member->canManageTopics);
-        $this->assertFalse($member->untilDate);
+        assertSame('restricted', $member->getStatus());
+        assertSame($user, $member->getUser());
+        assertSame($user, $member->user);
+        assertTrue($member->isMember);
+        assertFalse($member->canSendMessages);
+        assertTrue($member->canSendAudios);
+        assertFalse($member->canSendDocuments);
+        assertFalse($member->canSendPhotos);
+        assertTrue($member->canSendVideos);
+        assertTrue($member->canSendVideoNotes);
+        assertTrue($member->canSendVoiceNotes);
+        assertTrue($member->canSendPolls);
+        assertTrue($member->canSendOtherMessages);
+        assertTrue($member->canAddWebPagePreviews);
+        assertTrue($member->canChangeInfo);
+        assertTrue($member->canInviteUsers);
+        assertTrue($member->canPinMessages);
+        assertTrue($member->canManageTopics);
+        assertFalse($member->untilDate);
     }
 
     public function testFromTelegramResult(): void
@@ -82,23 +87,23 @@ final class ChatMemberRestrictedTest extends TestCase
             'until_date' => 123456779,
         ], null, ChatMemberRestricted::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertTrue($member->isMember);
-        $this->assertFalse($member->canSendMessages);
-        $this->assertTrue($member->canSendAudios);
-        $this->assertFalse($member->canSendDocuments);
-        $this->assertFalse($member->canSendPhotos);
-        $this->assertFalse($member->canSendVideos);
-        $this->assertTrue($member->canSendVideoNotes);
-        $this->assertTrue($member->canSendVoiceNotes);
-        $this->assertTrue($member->canSendPolls);
-        $this->assertTrue($member->canSendOtherMessages);
-        $this->assertTrue($member->canAddWebPagePreviews);
-        $this->assertTrue($member->canChangeInfo);
-        $this->assertTrue($member->canInviteUsers);
-        $this->assertTrue($member->canPinMessages);
-        $this->assertTrue($member->canManageTopics);
-        $this->assertEquals(new DateTimeImmutable('@123456779'), $member->untilDate);
+        assertSame(123, $member->user->id);
+        assertTrue($member->isMember);
+        assertFalse($member->canSendMessages);
+        assertTrue($member->canSendAudios);
+        assertFalse($member->canSendDocuments);
+        assertFalse($member->canSendPhotos);
+        assertFalse($member->canSendVideos);
+        assertTrue($member->canSendVideoNotes);
+        assertTrue($member->canSendVoiceNotes);
+        assertTrue($member->canSendPolls);
+        assertTrue($member->canSendOtherMessages);
+        assertTrue($member->canAddWebPagePreviews);
+        assertTrue($member->canChangeInfo);
+        assertTrue($member->canInviteUsers);
+        assertTrue($member->canPinMessages);
+        assertTrue($member->canManageTopics);
+        assertEquals(new DateTimeImmutable('@123456779'), $member->untilDate);
     }
 
     public function testFromTelegramResultWithZeroUntilDate(): void
@@ -127,22 +132,22 @@ final class ChatMemberRestrictedTest extends TestCase
             'until_date' => 0,
         ], null, ChatMemberRestricted::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertTrue($member->isMember);
-        $this->assertFalse($member->canSendMessages);
-        $this->assertTrue($member->canSendAudios);
-        $this->assertFalse($member->canSendDocuments);
-        $this->assertFalse($member->canSendPhotos);
-        $this->assertFalse($member->canSendVideos);
-        $this->assertTrue($member->canSendVideoNotes);
-        $this->assertTrue($member->canSendVoiceNotes);
-        $this->assertTrue($member->canSendPolls);
-        $this->assertTrue($member->canSendOtherMessages);
-        $this->assertTrue($member->canAddWebPagePreviews);
-        $this->assertTrue($member->canChangeInfo);
-        $this->assertTrue($member->canInviteUsers);
-        $this->assertTrue($member->canPinMessages);
-        $this->assertTrue($member->canManageTopics);
-        $this->assertFalse($member->untilDate);
+        assertSame(123, $member->user->id);
+        assertTrue($member->isMember);
+        assertFalse($member->canSendMessages);
+        assertTrue($member->canSendAudios);
+        assertFalse($member->canSendDocuments);
+        assertFalse($member->canSendPhotos);
+        assertFalse($member->canSendVideos);
+        assertTrue($member->canSendVideoNotes);
+        assertTrue($member->canSendVoiceNotes);
+        assertTrue($member->canSendPolls);
+        assertTrue($member->canSendOtherMessages);
+        assertTrue($member->canAddWebPagePreviews);
+        assertTrue($member->canChangeInfo);
+        assertTrue($member->canInviteUsers);
+        assertTrue($member->canPinMessages);
+        assertTrue($member->canManageTopics);
+        assertFalse($member->untilDate);
     }
 }

@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\Sticker\GetStickerSet;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetStickerSetTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetStickerSet('test_by_bot');
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getStickerSet', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getStickerSet', $method->getApiMethod());
+        assertSame(
             [
                 'name' => 'test_by_bot',
             ],
@@ -46,6 +48,6 @@ final class GetStickerSetTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame('test name', $preparedResult->title);
+        assertSame('test name', $preparedResult->title);
     }
 }

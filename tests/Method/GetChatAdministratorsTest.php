@@ -10,15 +10,19 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class GetChatAdministratorsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetChatAdministrators(1);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getChatAdministrators', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getChatAdministrators', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
             ],
@@ -37,8 +41,8 @@ final class GetChatAdministratorsTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertCount(1, $preparedResult);
-        $this->assertInstanceOf(ChatMemberMember::class, $preparedResult[0]);
-        $this->assertSame(23, $preparedResult[0]->user->id);
+        assertCount(1, $preparedResult);
+        assertInstanceOf(ChatMemberMember::class, $preparedResult[0]);
+        assertSame(23, $preparedResult[0]->user->id);
     }
 }

@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertSame;
+
 final class UploadStickerFileTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +20,9 @@ final class UploadStickerFileTest extends TestCase
         $file = new InputFile((new StreamFactory())->createStream());
         $method = new UploadStickerFile(1, $file, 'static');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('uploadStickerFile', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('uploadStickerFile', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'sticker' => $file,
@@ -41,6 +43,6 @@ final class UploadStickerFileTest extends TestCase
             'file_path' => 'path/to/file',
         ])->call($method);
 
-        $this->assertSame('f1', $preparedResult->fileId);
+        assertSame('f1', $preparedResult->fileId);
     }
 }

@@ -11,14 +11,17 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaDocument;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertSame;
+
 final class InputMediaDocumentTest extends TestCase
 {
     public function testBase(): void
     {
         $inputMedia = new InputMediaDocument('https://example.com/start.doc');
 
-        $this->assertSame('document', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('document', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'document',
                 'media' => 'https://example.com/start.doc',
@@ -27,14 +30,14 @@ final class InputMediaDocumentTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'document',
                 'media' => 'https://example.com/start.doc',
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertEmpty($fileCollector->get());
+        assertEmpty($fileCollector->get());
     }
 
     public function testFull(): void
@@ -51,8 +54,8 @@ final class InputMediaDocumentTest extends TestCase
             false,
         );
 
-        $this->assertSame('document', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('document', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'document',
                 'media' => $media,
@@ -66,7 +69,7 @@ final class InputMediaDocumentTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'document',
                 'media' => 'attach://file0',
@@ -78,7 +81,7 @@ final class InputMediaDocumentTest extends TestCase
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $media,
                 'file1' => $thumbnail,

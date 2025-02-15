@@ -8,15 +8,17 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
+use function PHPUnit\Framework\assertSame;
+
 final class WebAppInfoTest extends TestCase
 {
     public function testBase(): void
     {
         $webAppInfo = new WebAppInfo('https://example.com');
 
-        $this->assertSame('https://example.com', $webAppInfo->url);
+        assertSame('https://example.com', $webAppInfo->url);
 
-        $this->assertSame(
+        assertSame(
             [
                 'url' => 'https://example.com',
             ],
@@ -30,6 +32,6 @@ final class WebAppInfoTest extends TestCase
             'url' => 'https://example.com',
         ], null, WebAppInfo::class);
 
-        $this->assertSame('https://example.com', $webAppInfo->url);
+        assertSame('https://example.com', $webAppInfo->url);
     }
 }

@@ -8,17 +8,20 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Contact;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ContactTest extends TestCase
 {
     public function testBase(): void
     {
         $contact = new Contact('+3123456', 'Mike');
 
-        $this->assertSame('+3123456', $contact->phoneNumber);
-        $this->assertSame('Mike', $contact->firstName);
-        $this->assertNull($contact->lastName);
-        $this->assertNull($contact->userId);
-        $this->assertNull($contact->vcard);
+        assertSame('+3123456', $contact->phoneNumber);
+        assertSame('Mike', $contact->firstName);
+        assertNull($contact->lastName);
+        assertNull($contact->userId);
+        assertNull($contact->vcard);
     }
 
     public function testFromTelegramResult(): void
@@ -31,10 +34,10 @@ final class ContactTest extends TestCase
             'vcard' => 'vcard',
         ], null, Contact::class);
 
-        $this->assertSame('+3123456', $contact->phoneNumber);
-        $this->assertSame('Mike', $contact->firstName);
-        $this->assertSame('Smith', $contact->lastName);
-        $this->assertSame(123, $contact->userId);
-        $this->assertSame('vcard', $contact->vcard);
+        assertSame('+3123456', $contact->phoneNumber);
+        assertSame('Mike', $contact->firstName);
+        assertSame('Smith', $contact->lastName);
+        assertSame(123, $contact->userId);
+        assertSame('vcard', $contact->vcard);
     }
 }

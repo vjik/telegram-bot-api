@@ -8,18 +8,21 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\VideoNote;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class VideoNoteTest extends TestCase
 {
     public function testBase(): void
     {
         $videoNote = new VideoNote('f1', 'fu1', 200, 32);
 
-        $this->assertSame('f1', $videoNote->fileId);
-        $this->assertSame('fu1', $videoNote->fileUniqueId);
-        $this->assertSame(200, $videoNote->length);
-        $this->assertSame(32, $videoNote->duration);
-        $this->assertNull($videoNote->thumbnail);
-        $this->assertNull($videoNote->fileSize);
+        assertSame('f1', $videoNote->fileId);
+        assertSame('fu1', $videoNote->fileUniqueId);
+        assertSame(200, $videoNote->length);
+        assertSame(32, $videoNote->duration);
+        assertNull($videoNote->thumbnail);
+        assertNull($videoNote->fileSize);
     }
 
     public function testFromTelegramResult(): void
@@ -38,11 +41,11 @@ final class VideoNoteTest extends TestCase
             'file_size' => 100,
         ], null, VideoNote::class);
 
-        $this->assertSame('f1', $videoNote->fileId);
-        $this->assertSame('fu1', $videoNote->fileUniqueId);
-        $this->assertSame(200, $videoNote->length);
-        $this->assertSame(32, $videoNote->duration);
-        $this->assertSame('f2', $videoNote->thumbnail?->fileId);
-        $this->assertSame(100, $videoNote->fileSize);
+        assertSame('f1', $videoNote->fileId);
+        assertSame('fu1', $videoNote->fileUniqueId);
+        assertSame(200, $videoNote->length);
+        assertSame(32, $videoNote->duration);
+        assertSame('f2', $videoNote->thumbnail?->fileId);
+        assertSame(100, $videoNote->fileSize);
     }
 }

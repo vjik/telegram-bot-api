@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MenuButtonWebApp;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
+use function PHPUnit\Framework\assertSame;
+
 final class MenuButtonWebAppTest extends TestCase
 {
     public function testBase(): void
@@ -16,11 +18,11 @@ final class MenuButtonWebAppTest extends TestCase
         $webApp = new WebAppInfo('https://example.com/');
         $button = new MenuButtonWebApp('test', $webApp);
 
-        $this->assertSame('web_app', $button->getType());
-        $this->assertSame('test', $button->text);
-        $this->assertSame($webApp, $button->webApp);
+        assertSame('web_app', $button->getType());
+        assertSame('test', $button->text);
+        assertSame($webApp, $button->webApp);
 
-        $this->assertSame([
+        assertSame([
             'type' => 'web_app',
             'text' => 'test',
             'web_app' => $webApp->toRequestArray(),
@@ -37,8 +39,8 @@ final class MenuButtonWebAppTest extends TestCase
             ],
         ], null, MenuButtonWebApp::class);
 
-        $this->assertSame('web_app', $button->getType());
-        $this->assertSame('test', $button->text);
-        $this->assertSame('https://example.com', $button->webApp->url);
+        assertSame('web_app', $button->getType());
+        assertSame('test', $button->text);
+        assertSame('https://example.com', $button->webApp->url);
     }
 }

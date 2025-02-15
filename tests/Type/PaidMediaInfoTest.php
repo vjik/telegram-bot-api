@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Type;
+namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaInfo;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
+
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertSame;
 
 final class PaidMediaInfoTest extends TestCase
 {
@@ -16,8 +19,8 @@ final class PaidMediaInfoTest extends TestCase
         $photo = new PaidMediaPhoto([]);
         $type = new PaidMediaInfo(1, [$photo]);
 
-        $this->assertSame(1, $type->starCount);
-        $this->assertSame([$photo], $type->paidMedia);
+        assertSame(1, $type->starCount);
+        assertSame([$photo], $type->paidMedia);
     }
 
     public function testFromTelegramResult(): void
@@ -32,7 +35,7 @@ final class PaidMediaInfoTest extends TestCase
             ],
         ], null, PaidMediaInfo::class);
 
-        $this->assertSame(1, $type->starCount);
-        $this->assertEquals([new PaidMediaPhoto([])], $type->paidMedia);
+        assertSame(1, $type->starCount);
+        assertEquals([new PaidMediaPhoto([])], $type->paidMedia);
     }
 }

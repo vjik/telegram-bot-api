@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Type\Inline\InputContactMessageContent;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InlineQueryResultCachedStickerTest extends TestCase
 {
     public function testBase(): void
@@ -19,8 +21,8 @@ final class InlineQueryResultCachedStickerTest extends TestCase
             'sticker_id1',
         );
 
-        $this->assertSame('sticker', $type->getType());
-        $this->assertSame(
+        assertSame('sticker', $type->getType());
+        assertSame(
             [
                 'type' => 'sticker',
                 'id' => 'id1',
@@ -41,8 +43,8 @@ final class InlineQueryResultCachedStickerTest extends TestCase
             $inputMessageContent,
         );
 
-        $this->assertSame('sticker', $type->getType());
-        $this->assertSame(
+        assertSame('sticker', $type->getType());
+        assertSame(
             [
                 'type' => 'sticker',
                 'id' => 'id1',

@@ -9,6 +9,11 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberAdministrator;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatMemberAdministratorTest extends TestCase
 {
     public function testBase(): void
@@ -30,26 +35,26 @@ final class ChatMemberAdministratorTest extends TestCase
             true,
         );
 
-        $this->assertSame('administrator', $member->getStatus());
-        $this->assertSame($user, $member->getUser());
-        $this->assertSame($user, $member->user);
-        $this->assertTrue($member->canBeEdited);
-        $this->assertFalse($member->isAnonymous);
-        $this->assertFalse($member->canManageChat);
-        $this->assertTrue($member->canDeleteMessages);
-        $this->assertTrue($member->canManageVideoChats);
-        $this->assertTrue($member->canRestrictMembers);
-        $this->assertTrue($member->canPromoteMembers);
-        $this->assertTrue($member->canChangeInfo);
-        $this->assertFalse($member->canInviteUsers);
-        $this->assertTrue($member->canPostStories);
-        $this->assertTrue($member->canEditStories);
-        $this->assertTrue($member->canDeleteStories);
-        $this->assertNull($member->canPostMessages);
-        $this->assertNull($member->canEditMessages);
-        $this->assertNull($member->canPinMessages);
-        $this->assertNull($member->canManageTopics);
-        $this->assertNull($member->customTitle);
+        assertSame('administrator', $member->getStatus());
+        assertSame($user, $member->getUser());
+        assertSame($user, $member->user);
+        assertTrue($member->canBeEdited);
+        assertFalse($member->isAnonymous);
+        assertFalse($member->canManageChat);
+        assertTrue($member->canDeleteMessages);
+        assertTrue($member->canManageVideoChats);
+        assertTrue($member->canRestrictMembers);
+        assertTrue($member->canPromoteMembers);
+        assertTrue($member->canChangeInfo);
+        assertFalse($member->canInviteUsers);
+        assertTrue($member->canPostStories);
+        assertTrue($member->canEditStories);
+        assertTrue($member->canDeleteStories);
+        assertNull($member->canPostMessages);
+        assertNull($member->canEditMessages);
+        assertNull($member->canPinMessages);
+        assertNull($member->canManageTopics);
+        assertNull($member->customTitle);
     }
 
     public function testFromTelegramResult(): void
@@ -79,23 +84,23 @@ final class ChatMemberAdministratorTest extends TestCase
             'custom_title' => 'Custom title',
         ], null, ChatMemberAdministrator::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertTrue($member->canBeEdited);
-        $this->assertFalse($member->isAnonymous);
-        $this->assertFalse($member->canManageChat);
-        $this->assertTrue($member->canDeleteMessages);
-        $this->assertTrue($member->canManageVideoChats);
-        $this->assertTrue($member->canRestrictMembers);
-        $this->assertTrue($member->canPromoteMembers);
-        $this->assertTrue($member->canChangeInfo);
-        $this->assertFalse($member->canInviteUsers);
-        $this->assertTrue($member->canPostStories);
-        $this->assertTrue($member->canEditStories);
-        $this->assertTrue($member->canDeleteStories);
-        $this->assertTrue($member->canPostMessages);
-        $this->assertFalse($member->canEditMessages);
-        $this->assertTrue($member->canPinMessages);
-        $this->assertFalse($member->canManageTopics);
-        $this->assertSame('Custom title', $member->customTitle);
+        assertSame(123, $member->user->id);
+        assertTrue($member->canBeEdited);
+        assertFalse($member->isAnonymous);
+        assertFalse($member->canManageChat);
+        assertTrue($member->canDeleteMessages);
+        assertTrue($member->canManageVideoChats);
+        assertTrue($member->canRestrictMembers);
+        assertTrue($member->canPromoteMembers);
+        assertTrue($member->canChangeInfo);
+        assertFalse($member->canInviteUsers);
+        assertTrue($member->canPostStories);
+        assertTrue($member->canEditStories);
+        assertTrue($member->canDeleteStories);
+        assertTrue($member->canPostMessages);
+        assertFalse($member->canEditMessages);
+        assertTrue($member->canPinMessages);
+        assertFalse($member->canManageTopics);
+        assertSame('Custom title', $member->customTitle);
     }
 }

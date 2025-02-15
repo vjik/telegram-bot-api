@@ -9,6 +9,11 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundTypeWallpaper;
 use Vjik\TelegramBot\Api\Type\Document;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class BackgroundTypeWallpaperTest extends TestCase
 {
     public function testBase(): void
@@ -16,11 +21,11 @@ final class BackgroundTypeWallpaperTest extends TestCase
         $document = new Document('f123', 'full123');
         $type = new BackgroundTypeWallpaper($document, 7);
 
-        $this->assertSame('wallpaper', $type->getType());
-        $this->assertSame($document, $type->document);
-        $this->assertSame(7, $type->darkThemeDimming);
-        $this->assertNull($type->isBlurred);
-        $this->assertNull($type->isMoving);
+        assertSame('wallpaper', $type->getType());
+        assertSame($document, $type->document);
+        assertSame(7, $type->darkThemeDimming);
+        assertNull($type->isBlurred);
+        assertNull($type->isMoving);
     }
 
     public function testFromTelegramResult(): void
@@ -36,14 +41,14 @@ final class BackgroundTypeWallpaperTest extends TestCase
             'is_moving' => true,
         ], null, BackgroundTypeWallpaper::class);
 
-        $this->assertSame('wallpaper', $type->getType());
+        assertSame('wallpaper', $type->getType());
 
-        $this->assertInstanceOf(Document::class, $type->document);
-        $this->assertSame('f123', $type->document->fileId);
-        $this->assertSame('full123', $type->document->fileUniqueId);
+        assertInstanceOf(Document::class, $type->document);
+        assertSame('f123', $type->document->fileId);
+        assertSame('full123', $type->document->fileUniqueId);
 
-        $this->assertSame(7, $type->darkThemeDimming);
-        $this->assertTrue($type->isBlurred);
-        $this->assertTrue($type->isMoving);
+        assertSame(7, $type->darkThemeDimming);
+        assertTrue($type->isBlurred);
+        assertTrue($type->isMoving);
     }
 }

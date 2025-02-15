@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Sticker\Gift;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class GiftTest extends TestCase
 {
     public function testBase(): void
@@ -28,11 +31,11 @@ final class GiftTest extends TestCase
             12,
         );
 
-        $this->assertSame('test-id', $object->id);
-        $this->assertSame($sticker, $object->sticker);
-        $this->assertSame(12, $object->starCount);
-        $this->assertNull($object->totalCount);
-        $this->assertNull($object->remainingCount);
+        assertSame('test-id', $object->id);
+        assertSame($sticker, $object->sticker);
+        assertSame(12, $object->starCount);
+        assertNull($object->totalCount);
+        assertNull($object->remainingCount);
     }
 
     public function testFromTelegramResult(): void
@@ -54,11 +57,11 @@ final class GiftTest extends TestCase
             'remaining_count' => 30,
         ], null, Gift::class);
 
-        $this->assertSame('test-id', $object->id);
-        $this->assertSame('x1', $object->sticker->fileId);
-        $this->assertSame(11, $object->starCount);
-        $this->assertSame(53, $object->upgradeStarCount);
-        $this->assertSame(200, $object->totalCount);
-        $this->assertSame(30, $object->remainingCount);
+        assertSame('test-id', $object->id);
+        assertSame('x1', $object->sticker->fileId);
+        assertSame(11, $object->starCount);
+        assertSame(53, $object->upgradeStarCount);
+        assertSame(200, $object->totalCount);
+        assertSame(30, $object->remainingCount);
     }
 }

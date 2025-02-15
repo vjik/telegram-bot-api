@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundTypeChatTheme;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BackgroundTypeChatThemeTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new BackgroundTypeChatTheme('dark');
 
-        $this->assertSame('chat_theme', $type->getType());
-        $this->assertSame('dark', $type->themeName);
+        assertSame('chat_theme', $type->getType());
+        assertSame('dark', $type->themeName);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class BackgroundTypeChatThemeTest extends TestCase
             'theme_name' => 'dark',
         ], null, BackgroundTypeChatTheme::class);
 
-        $this->assertSame('chat_theme', $type->getType());
-        $this->assertSame('dark', $type->themeName);
+        assertSame('chat_theme', $type->getType());
+        assertSame('dark', $type->themeName);
     }
 }

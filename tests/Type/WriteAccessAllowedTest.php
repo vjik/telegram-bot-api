@@ -8,15 +8,20 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\WriteAccessAllowed;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class WriteAccessAllowedTest extends TestCase
 {
     public function testBase(): void
     {
         $writeAccessAllowed = new WriteAccessAllowed();
 
-        $this->assertNull($writeAccessAllowed->fromRequest);
-        $this->assertNull($writeAccessAllowed->webAppName);
-        $this->assertNull($writeAccessAllowed->fromAttachmentMenu);
+        assertNull($writeAccessAllowed->fromRequest);
+        assertNull($writeAccessAllowed->webAppName);
+        assertNull($writeAccessAllowed->fromAttachmentMenu);
     }
 
     public function testFromTelegramResult(): void
@@ -27,8 +32,8 @@ final class WriteAccessAllowedTest extends TestCase
             'from_attachment_menu' => false,
         ], null, WriteAccessAllowed::class);
 
-        $this->assertTrue($writeAccessAllowed->fromRequest);
-        $this->assertSame('test', $writeAccessAllowed->webAppName);
-        $this->assertFalse($writeAccessAllowed->fromAttachmentMenu);
+        assertTrue($writeAccessAllowed->fromRequest);
+        assertSame('test', $writeAccessAllowed->webAppName);
+        assertFalse($writeAccessAllowed->fromAttachmentMenu);
     }
 }

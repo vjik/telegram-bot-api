@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
 
+use function PHPUnit\Framework\assertSame;
+
 final class AnswerWebAppQueryTest extends TestCase
 {
     public function testBase(): void
@@ -17,9 +19,9 @@ final class AnswerWebAppQueryTest extends TestCase
         $result = new InlineQueryResultContact('1', '+79001234567', 'Vjik');
         $method = new AnswerWebAppQuery('id7', $result);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerWebAppQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerWebAppQuery', $method->getApiMethod());
+        assertSame(
             [
                 'web_app_query_id' => 'id7',
                 'result' => $result->toRequestArray(),
@@ -36,6 +38,6 @@ final class AnswerWebAppQueryTest extends TestCase
             'inline_message_id' => 'idMessage',
         ])->call($method);
 
-        $this->assertSame('idMessage', $preparedResult->inlineMessageId);
+        assertSame('idMessage', $preparedResult->inlineMessageId);
     }
 }

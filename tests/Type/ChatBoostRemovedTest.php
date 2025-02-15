@@ -12,6 +12,11 @@ use Vjik\TelegramBot\Api\Type\ChatBoostRemoved;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class ChatBoostRemovedTest extends TestCase
 {
     public function testBase(): void
@@ -21,10 +26,10 @@ final class ChatBoostRemovedTest extends TestCase
         $source = new ChatBoostSourcePremium(new User(1, false, 'Sergei'));
         $chatBoostRemoved = new ChatBoostRemoved($chat, 'b1', $removeDate, $source);
 
-        $this->assertSame($chat, $chatBoostRemoved->chat);
-        $this->assertSame('b1', $chatBoostRemoved->boostId);
-        $this->assertSame($removeDate, $chatBoostRemoved->removeDate);
-        $this->assertSame($source, $chatBoostRemoved->source);
+        assertSame($chat, $chatBoostRemoved->chat);
+        assertSame('b1', $chatBoostRemoved->boostId);
+        assertSame($removeDate, $chatBoostRemoved->removeDate);
+        assertSame($source, $chatBoostRemoved->source);
     }
 
     public function testFromTelegramResult(): void
@@ -46,15 +51,15 @@ final class ChatBoostRemovedTest extends TestCase
             ],
         ], null, ChatBoostRemoved::class);
 
-        $this->assertSame(1, $chatBoostRemoved->chat->id);
-        $this->assertSame('private', $chatBoostRemoved->chat->type);
+        assertSame(1, $chatBoostRemoved->chat->id);
+        assertSame('private', $chatBoostRemoved->chat->type);
 
-        $this->assertSame('b1', $chatBoostRemoved->boostId);
-        $this->assertEquals(new DateTimeImmutable('@1619040000'), $chatBoostRemoved->removeDate);
+        assertSame('b1', $chatBoostRemoved->boostId);
+        assertEquals(new DateTimeImmutable('@1619040000'), $chatBoostRemoved->removeDate);
 
-        $this->assertInstanceOf(ChatBoostSourcePremium::class, $chatBoostRemoved->source);
-        $this->assertSame(1, $chatBoostRemoved->source->user->id);
-        $this->assertFalse($chatBoostRemoved->source->user->isBot);
-        $this->assertSame('Sergei', $chatBoostRemoved->source->user->firstName);
+        assertInstanceOf(ChatBoostSourcePremium::class, $chatBoostRemoved->source);
+        assertSame(1, $chatBoostRemoved->source->user->id);
+        assertFalse($chatBoostRemoved->source->user->isBot);
+        assertSame('Sergei', $chatBoostRemoved->source->user->firstName);
     }
 }

@@ -7,15 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
+use function PHPUnit\Framework\assertSame;
+
 final class LabeledPriceTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new LabeledPrice('Red good', 10);
 
-        $this->assertSame('Red good', $type->label);
-        $this->assertSame(10, $type->amount);
-        $this->assertSame(
+        assertSame('Red good', $type->label);
+        assertSame(10, $type->amount);
+        assertSame(
             [
                 'label' => 'Red good',
                 'amount' => 10,

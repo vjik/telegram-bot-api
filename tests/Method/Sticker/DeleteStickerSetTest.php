@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\Sticker\DeleteStickerSet;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class DeleteStickerSetTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new DeleteStickerSet('test_by_bot');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteStickerSet', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteStickerSet', $method->getApiMethod());
+        assertSame(
             [
                 'name' => 'test_by_bot',
             ],
@@ -31,6 +34,6 @@ final class DeleteStickerSetTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

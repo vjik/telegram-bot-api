@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetChatTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetChat(99);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getChat', $method->getApiMethod());
-        $this->assertSame(['chat_id' => 99], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getChat', $method->getApiMethod());
+        assertSame(['chat_id' => 99], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -31,6 +33,6 @@ final class GetChatTest extends TestCase
             'max_reaction_count' => 5,
         ])->call($method);
 
-        $this->assertSame(23, $preparedResult->id);
+        assertSame(23, $preparedResult->id);
     }
 }

@@ -9,6 +9,12 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Poll;
 use Vjik\TelegramBot\Api\Type\PollOption;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class PollTest extends TestCase
 {
     public function testBase(): void
@@ -25,19 +31,19 @@ final class PollTest extends TestCase
             true,
         );
 
-        $this->assertSame('12', $poll->id);
-        $this->assertSame('Why?', $poll->question);
-        $this->assertSame([$option], $poll->options);
-        $this->assertSame(42, $poll->totalVoterCount);
-        $this->assertTrue($poll->isClosed);
-        $this->assertFalse($poll->isAnonymous);
-        $this->assertSame('regular', $poll->type);
-        $this->assertTrue($poll->allowsMultipleAnswers);
-        $this->assertNull($poll->correctOptionId);
-        $this->assertNull($poll->explanation);
-        $this->assertNull($poll->explanationEntities);
-        $this->assertNull($poll->openPeriod);
-        $this->assertNull($poll->closeDate);
+        assertSame('12', $poll->id);
+        assertSame('Why?', $poll->question);
+        assertSame([$option], $poll->options);
+        assertSame(42, $poll->totalVoterCount);
+        assertTrue($poll->isClosed);
+        assertFalse($poll->isAnonymous);
+        assertSame('regular', $poll->type);
+        assertTrue($poll->allowsMultipleAnswers);
+        assertNull($poll->correctOptionId);
+        assertNull($poll->explanation);
+        assertNull($poll->explanationEntities);
+        assertNull($poll->openPeriod);
+        assertNull($poll->closeDate);
     }
 
     public function testFromTelegramResult(): void
@@ -73,28 +79,28 @@ final class PollTest extends TestCase
             'close_date' => 456,
         ], null, Poll::class);
 
-        $this->assertSame('12', $poll->id);
-        $this->assertSame('Why?', $poll->question);
+        assertSame('12', $poll->id);
+        assertSame('Why?', $poll->question);
 
-        $this->assertCount(1, $poll->options);
-        $this->assertSame('One', $poll->options[0]->text);
+        assertCount(1, $poll->options);
+        assertSame('One', $poll->options[0]->text);
 
-        $this->assertSame(42, $poll->totalVoterCount);
-        $this->assertTrue($poll->isClosed);
-        $this->assertFalse($poll->isAnonymous);
-        $this->assertSame('regular', $poll->type);
-        $this->assertTrue($poll->allowsMultipleAnswers);
+        assertSame(42, $poll->totalVoterCount);
+        assertTrue($poll->isClosed);
+        assertFalse($poll->isAnonymous);
+        assertSame('regular', $poll->type);
+        assertTrue($poll->allowsMultipleAnswers);
 
-        $this->assertCount(1, $poll->questionEntities);
-        $this->assertSame(35, $poll->questionEntities[0]->length);
+        assertCount(1, $poll->questionEntities);
+        assertSame(35, $poll->questionEntities[0]->length);
 
-        $this->assertSame(23, $poll->correctOptionId);
-        $this->assertSame('Because', $poll->explanation);
+        assertSame(23, $poll->correctOptionId);
+        assertSame('Because', $poll->explanation);
 
-        $this->assertCount(1, $poll->explanationEntities);
-        $this->assertSame(31, $poll->explanationEntities[0]->length);
+        assertCount(1, $poll->explanationEntities);
+        assertSame(31, $poll->explanationEntities[0]->length);
 
-        $this->assertSame(123, $poll->openPeriod);
-        $this->assertSame(456, $poll->closeDate);
+        assertSame(123, $poll->openPeriod);
+        assertSame(456, $poll->closeDate);
     }
 }

@@ -14,6 +14,8 @@ use Vjik\TelegramBot\Api\Type\InputPollOption;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendPollTest extends TestCase
 {
     public function testBase(): void
@@ -22,9 +24,9 @@ final class SendPollTest extends TestCase
         $option2 = new InputPollOption('Bad');
         $method = new SendPoll(12, 'How are you?', [$option1, $option2]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendPoll', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendPoll', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'question' => 'How are you?',
@@ -72,9 +74,9 @@ final class SendPollTest extends TestCase
             true,
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendPoll', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendPoll', $method->getApiMethod());
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -120,6 +122,6 @@ final class SendPollTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

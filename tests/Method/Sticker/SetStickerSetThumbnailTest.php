@@ -11,15 +11,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetStickerSetThumbnailTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetStickerSetThumbnail('animals_by_my_bot', 123, 'static');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setStickerSetThumbnail', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setStickerSetThumbnail', $method->getApiMethod());
+        assertSame(
             [
                 'name' => 'animals_by_my_bot',
                 'user_id' => 123,
@@ -34,9 +37,9 @@ final class SetStickerSetThumbnailTest extends TestCase
         $file = new InputFile((new StreamFactory())->createStream());
         $method = new SetStickerSetThumbnail('animals_by_my_bot', 123, 'static', $file);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setStickerSetThumbnail', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setStickerSetThumbnail', $method->getApiMethod());
+        assertSame(
             [
                 'name' => 'animals_by_my_bot',
                 'user_id' => 123,
@@ -53,6 +56,6 @@ final class SetStickerSetThumbnailTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

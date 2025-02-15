@@ -8,16 +8,18 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatPhoto;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ChatPhotoTest extends TestCase
 {
     public function testBase(): void
     {
         $chatPhoto = new ChatPhoto('a', 'b', 'c', 'd');
 
-        $this->assertSame('a', $chatPhoto->smallFileId);
-        $this->assertSame('b', $chatPhoto->smallFileUniqueId);
-        $this->assertSame('c', $chatPhoto->bigFileId);
-        $this->assertSame('d', $chatPhoto->bigFileUniqueId);
+        assertSame('a', $chatPhoto->smallFileId);
+        assertSame('b', $chatPhoto->smallFileUniqueId);
+        assertSame('c', $chatPhoto->bigFileId);
+        assertSame('d', $chatPhoto->bigFileUniqueId);
     }
 
     public function testFromTelegramResult(): void
@@ -29,9 +31,9 @@ final class ChatPhotoTest extends TestCase
             'big_file_unique_id' => 'd',
         ], null, ChatPhoto::class);
 
-        $this->assertSame('a', $chatPhoto->smallFileId);
-        $this->assertSame('b', $chatPhoto->smallFileUniqueId);
-        $this->assertSame('c', $chatPhoto->bigFileId);
-        $this->assertSame('d', $chatPhoto->bigFileUniqueId);
+        assertSame('a', $chatPhoto->smallFileId);
+        assertSame('b', $chatPhoto->smallFileUniqueId);
+        assertSame('c', $chatPhoto->bigFileId);
+        assertSame('d', $chatPhoto->bigFileUniqueId);
     }
 }

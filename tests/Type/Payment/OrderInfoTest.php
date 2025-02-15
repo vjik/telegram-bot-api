@@ -9,16 +9,20 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingAddress;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class OrderInfoTest extends TestCase
 {
     public function testOrderInfo(): void
     {
         $orderInfo = new OrderInfo();
 
-        $this->assertNull($orderInfo->name);
-        $this->assertNull($orderInfo->phoneNumber);
-        $this->assertNull($orderInfo->email);
-        $this->assertNull($orderInfo->shippingAddress);
+        assertNull($orderInfo->name);
+        assertNull($orderInfo->phoneNumber);
+        assertNull($orderInfo->email);
+        assertNull($orderInfo->shippingAddress);
     }
 
     public function testFromTelegramResult(): void
@@ -37,16 +41,16 @@ final class OrderInfoTest extends TestCase
             ],
         ], null, OrderInfo::class);
 
-        $this->assertSame('name', $orderInfo->name);
-        $this->assertSame('phone_number', $orderInfo->phoneNumber);
-        $this->assertSame('email', $orderInfo->email);
+        assertSame('name', $orderInfo->name);
+        assertSame('phone_number', $orderInfo->phoneNumber);
+        assertSame('email', $orderInfo->email);
 
-        $this->assertInstanceOf(ShippingAddress::class, $orderInfo->shippingAddress);
-        $this->assertSame('country_code', $orderInfo->shippingAddress->countryCode);
-        $this->assertSame('state', $orderInfo->shippingAddress->state);
-        $this->assertSame('city', $orderInfo->shippingAddress->city);
-        $this->assertSame('street_line1', $orderInfo->shippingAddress->streetLine1);
-        $this->assertSame('street_line2', $orderInfo->shippingAddress->streetLine2);
-        $this->assertSame('post_code', $orderInfo->shippingAddress->postCode);
+        assertInstanceOf(ShippingAddress::class, $orderInfo->shippingAddress);
+        assertSame('country_code', $orderInfo->shippingAddress->countryCode);
+        assertSame('state', $orderInfo->shippingAddress->state);
+        assertSame('city', $orderInfo->shippingAddress->city);
+        assertSame('street_line1', $orderInfo->shippingAddress->streetLine1);
+        assertSame('street_line2', $orderInfo->shippingAddress->streetLine2);
+        assertSame('post_code', $orderInfo->shippingAddress->postCode);
     }
 }

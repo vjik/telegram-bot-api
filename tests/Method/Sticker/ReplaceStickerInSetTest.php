@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ReplaceStickerInSetTest extends TestCase
 {
     public function testBase(): void
@@ -20,9 +23,9 @@ final class ReplaceStickerInSetTest extends TestCase
         $inputSticker = new InputSticker($file, 'static', ['😀']);
         $method = new ReplaceStickerInSet(1, 'test', 'oldid', $inputSticker);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('replaceStickerInSet', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('replaceStickerInSet', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'name' => 'test',
@@ -49,6 +52,6 @@ final class ReplaceStickerInSetTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

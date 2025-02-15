@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MessageOriginHiddenUser;
 
+use function PHPUnit\Framework\assertSame;
+
 final class MessageOriginHiddenUserTest extends TestCase
 {
     public function testBase(): void
@@ -16,10 +18,10 @@ final class MessageOriginHiddenUserTest extends TestCase
         $date = new DateTimeImmutable();
         $origin = new MessageOriginHiddenUser($date, 'Mike');
 
-        $this->assertSame('hidden_user', $origin->getType());
-        $this->assertSame($date, $origin->getDate());
-        $this->assertSame($date, $origin->date);
-        $this->assertSame('Mike', $origin->senderUserName);
+        assertSame('hidden_user', $origin->getType());
+        assertSame($date, $origin->getDate());
+        assertSame($date, $origin->date);
+        assertSame('Mike', $origin->senderUserName);
     }
 
     public function testFromTelegramResult(): void
@@ -30,9 +32,9 @@ final class MessageOriginHiddenUserTest extends TestCase
             'sender_user_name' => 'Mike',
         ], null, MessageOriginHiddenUser::class);
 
-        $this->assertSame('hidden_user', $origin->getType());
-        $this->assertSame(12412512, $origin->getDate()->getTimestamp());
-        $this->assertSame(12412512, $origin->date->getTimestamp());
-        $this->assertSame('Mike', $origin->senderUserName);
+        assertSame('hidden_user', $origin->getType());
+        assertSame(12412512, $origin->getDate()->getTimestamp());
+        assertSame(12412512, $origin->date->getTimestamp());
+        assertSame('Mike', $origin->senderUserName);
     }
 }

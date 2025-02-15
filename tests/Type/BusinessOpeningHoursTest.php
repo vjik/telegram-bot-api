@@ -9,6 +9,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHours;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class BusinessOpeningHoursTest extends TestCase
 {
     public function testBase(): void
@@ -19,8 +23,8 @@ final class BusinessOpeningHoursTest extends TestCase
             [$interval],
         );
 
-        $this->assertSame('Europe/Moscow', $businessOpeningHours->timeZoneName);
-        $this->assertSame([$interval], $businessOpeningHours->openingHours);
+        assertSame('Europe/Moscow', $businessOpeningHours->timeZoneName);
+        assertSame([$interval], $businessOpeningHours->openingHours);
     }
 
     public function testFromTelegramResult(): void
@@ -35,11 +39,11 @@ final class BusinessOpeningHoursTest extends TestCase
             ],
         ], null, BusinessOpeningHours::class);
 
-        $this->assertSame('Europe/Moscow', $businessOpeningHours->timeZoneName);
+        assertSame('Europe/Moscow', $businessOpeningHours->timeZoneName);
 
-        $this->assertCount(1, $businessOpeningHours->openingHours);
-        $this->assertInstanceOf(BusinessOpeningHoursInterval::class, $businessOpeningHours->openingHours[0]);
-        $this->assertSame(10, $businessOpeningHours->openingHours[0]->openingMinute);
-        $this->assertSame(100, $businessOpeningHours->openingHours[0]->closingMinute);
+        assertCount(1, $businessOpeningHours->openingHours);
+        assertInstanceOf(BusinessOpeningHoursInterval::class, $businessOpeningHours->openingHours[0]);
+        assertSame(10, $businessOpeningHours->openingHours[0]->openingMinute);
+        assertSame(100, $businessOpeningHours->openingHours[0]->closingMinute);
     }
 }

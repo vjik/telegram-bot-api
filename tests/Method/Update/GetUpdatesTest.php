@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class GetUpdatesTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetUpdates();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getUpdates', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getUpdates', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
@@ -29,7 +32,7 @@ final class GetUpdatesTest extends TestCase
             ['u1', 'u2'],
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'offset' => 20,
                 'limit' => 10,
@@ -49,8 +52,8 @@ final class GetUpdatesTest extends TestCase
             ['update_id' => 2],
         ])->call($method);
 
-        $this->assertCount(2, $preparedResult);
-        $this->assertSame(1, $preparedResult[0]->updateId);
-        $this->assertSame(2, $preparedResult[1]->updateId);
+        assertCount(2, $preparedResult);
+        assertSame(1, $preparedResult[0]->updateId);
+        assertSame(2, $preparedResult[1]->updateId);
     }
 }

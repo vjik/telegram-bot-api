@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
 use Vjik\TelegramBot\Api\Type\PaidMediaVideo;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class PaidMediaValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -58,7 +60,7 @@ final class PaidMediaValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

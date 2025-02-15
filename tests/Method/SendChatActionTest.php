@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\SendChatAction;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SendChatActionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendChatAction(12, 'typing');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendChatAction', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendChatAction', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'action' => 'typing',
@@ -30,7 +33,7 @@ final class SendChatActionTest extends TestCase
     {
         $method = new SendChatAction(12, 'testing', 'bcid', 23);
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid',
                 'chat_id' => 12,
@@ -47,6 +50,6 @@ final class SendChatActionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

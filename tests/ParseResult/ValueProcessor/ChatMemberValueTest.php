@@ -16,6 +16,8 @@ use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatMemberOwner;
 use Vjik\TelegramBot\Api\Type\ChatMemberRestricted;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class ChatMemberValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -128,7 +130,7 @@ final class ChatMemberValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

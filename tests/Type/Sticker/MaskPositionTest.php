@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 
+use function PHPUnit\Framework\assertSame;
+
 final class MaskPositionTest extends TestCase
 {
     public function testMaskPosition(): void
@@ -19,11 +21,11 @@ final class MaskPositionTest extends TestCase
             0.7,
         );
 
-        $this->assertSame('forehead', $maskPosition->point);
-        $this->assertSame(0.5, $maskPosition->xShift);
-        $this->assertSame(0.6, $maskPosition->yShift);
-        $this->assertSame(0.7, $maskPosition->scale);
-        $this->assertSame(
+        assertSame('forehead', $maskPosition->point);
+        assertSame(0.5, $maskPosition->xShift);
+        assertSame(0.6, $maskPosition->yShift);
+        assertSame(0.7, $maskPosition->scale);
+        assertSame(
             [
                 'point' => 'forehead',
                 'x_shift' => 0.5,
@@ -43,9 +45,9 @@ final class MaskPositionTest extends TestCase
             'scale' => 0.7,
         ], null, MaskPosition::class);
 
-        $this->assertSame('forehead', $maskPosition->point);
-        $this->assertSame(0.5, $maskPosition->xShift);
-        $this->assertSame(0.6, $maskPosition->yShift);
-        $this->assertSame(0.7, $maskPosition->scale);
+        assertSame('forehead', $maskPosition->point);
+        assertSame(0.5, $maskPosition->xShift);
+        assertSame(0.6, $maskPosition->yShift);
+        assertSame(0.7, $maskPosition->scale);
     }
 }

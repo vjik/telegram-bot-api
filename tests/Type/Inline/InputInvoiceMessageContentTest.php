@@ -8,6 +8,11 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Inline\InputInvoiceMessageContent;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class InputInvoiceMessageContentTest extends TestCase
 {
     public function testBase(): void
@@ -21,28 +26,28 @@ final class InputInvoiceMessageContentTest extends TestCase
             [$price],
         );
 
-        $this->assertSame('Title', $type->title);
-        $this->assertSame('Description', $type->description);
-        $this->assertSame('Payload', $type->payload);
-        $this->assertSame('XTR', $type->currency);
-        $this->assertSame([$price], $type->prices);
-        $this->assertNull($type->providerToken);
-        $this->assertNull($type->maxTipAmount);
-        $this->assertNull($type->suggestedTipAmounts);
-        $this->assertNull($type->providerData);
-        $this->assertNull($type->photoUrl);
-        $this->assertNull($type->photoSize);
-        $this->assertNull($type->photoWidth);
-        $this->assertNull($type->photoHeight);
-        $this->assertNull($type->needName);
-        $this->assertNull($type->needPhoneNumber);
-        $this->assertNull($type->needEmail);
-        $this->assertNull($type->needShippingAddress);
-        $this->assertNull($type->sendPhoneNumberToProvider);
-        $this->assertNull($type->sendEmailToProvider);
-        $this->assertNull($type->isFlexible);
+        assertSame('Title', $type->title);
+        assertSame('Description', $type->description);
+        assertSame('Payload', $type->payload);
+        assertSame('XTR', $type->currency);
+        assertSame([$price], $type->prices);
+        assertNull($type->providerToken);
+        assertNull($type->maxTipAmount);
+        assertNull($type->suggestedTipAmounts);
+        assertNull($type->providerData);
+        assertNull($type->photoUrl);
+        assertNull($type->photoSize);
+        assertNull($type->photoWidth);
+        assertNull($type->photoHeight);
+        assertNull($type->needName);
+        assertNull($type->needPhoneNumber);
+        assertNull($type->needEmail);
+        assertNull($type->needShippingAddress);
+        assertNull($type->sendPhoneNumberToProvider);
+        assertNull($type->sendEmailToProvider);
+        assertNull($type->isFlexible);
 
-        $this->assertSame(
+        assertSame(
             [
                 'title' => 'Title',
                 'description' => 'Description',
@@ -80,28 +85,28 @@ final class InputInvoiceMessageContentTest extends TestCase
             false,
         );
 
-        $this->assertSame('Title', $type->title);
-        $this->assertSame('Description', $type->description);
-        $this->assertSame('Payload', $type->payload);
-        $this->assertSame('XTR', $type->currency);
-        $this->assertSame([$price], $type->prices);
-        $this->assertSame('ProviderToken', $type->providerToken);
-        $this->assertSame(100, $type->maxTipAmount);
-        $this->assertSame([10, 20, 30], $type->suggestedTipAmounts);
-        $this->assertSame('ProviderData', $type->providerData);
-        $this->assertSame('https://example.com/photo.png', $type->photoUrl);
-        $this->assertSame(205654, $type->photoSize);
-        $this->assertSame(1024, $type->photoWidth);
-        $this->assertSame(768, $type->photoHeight);
-        $this->assertTrue($type->needName);
-        $this->assertFalse($type->needPhoneNumber);
-        $this->assertTrue($type->needEmail);
-        $this->assertTrue($type->needShippingAddress);
-        $this->assertTrue($type->sendPhoneNumberToProvider);
-        $this->assertTrue($type->sendEmailToProvider);
-        $this->assertFalse($type->isFlexible);
+        assertSame('Title', $type->title);
+        assertSame('Description', $type->description);
+        assertSame('Payload', $type->payload);
+        assertSame('XTR', $type->currency);
+        assertSame([$price], $type->prices);
+        assertSame('ProviderToken', $type->providerToken);
+        assertSame(100, $type->maxTipAmount);
+        assertSame([10, 20, 30], $type->suggestedTipAmounts);
+        assertSame('ProviderData', $type->providerData);
+        assertSame('https://example.com/photo.png', $type->photoUrl);
+        assertSame(205654, $type->photoSize);
+        assertSame(1024, $type->photoWidth);
+        assertSame(768, $type->photoHeight);
+        assertTrue($type->needName);
+        assertFalse($type->needPhoneNumber);
+        assertTrue($type->needEmail);
+        assertTrue($type->needShippingAddress);
+        assertTrue($type->sendPhoneNumberToProvider);
+        assertTrue($type->sendEmailToProvider);
+        assertFalse($type->isFlexible);
 
-        $this->assertSame(
+        assertSame(
             [
                 'title' => 'Title',
                 'description' => 'Description',

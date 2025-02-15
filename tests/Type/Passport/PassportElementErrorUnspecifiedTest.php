@@ -7,14 +7,16 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementErrorUnspecified;
 
+use function PHPUnit\Framework\assertSame;
+
 final class PassportElementErrorUnspecifiedTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new PassportElementErrorUnspecified('driver_license', 'qwerty', 'Test message');
 
-        $this->assertSame('unspecified', $type->getSource());
-        $this->assertSame(
+        assertSame('unspecified', $type->getSource());
+        assertSame(
             [
                 'source' => 'unspecified',
                 'type' => 'driver_license',

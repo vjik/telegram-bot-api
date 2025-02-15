@@ -9,6 +9,9 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertSame;
+
 final class PassportFileTest extends TestCase
 {
     public function testBase(): void
@@ -16,10 +19,10 @@ final class PassportFileTest extends TestCase
         $date = new DateTimeImmutable();
         $passportFile = new PassportFile('1', '2', 3, $date);
 
-        $this->assertSame('1', $passportFile->fileId);
-        $this->assertSame('2', $passportFile->fileUniqueId);
-        $this->assertSame(3, $passportFile->fileSize);
-        $this->assertSame($date, $passportFile->fileDate);
+        assertSame('1', $passportFile->fileId);
+        assertSame('2', $passportFile->fileUniqueId);
+        assertSame(3, $passportFile->fileSize);
+        assertSame($date, $passportFile->fileDate);
     }
 
     public function testFromTelegramResult(): void
@@ -31,9 +34,9 @@ final class PassportFileTest extends TestCase
             'file_date' => 1717512173,
         ], null, PassportFile::class);
 
-        $this->assertSame('1', $passportFile->fileId);
-        $this->assertSame('2', $passportFile->fileUniqueId);
-        $this->assertSame(3, $passportFile->fileSize);
-        $this->assertEquals(new DateTimeImmutable('@1717512173'), $passportFile->fileDate);
+        assertSame('1', $passportFile->fileId);
+        assertSame('2', $passportFile->fileUniqueId);
+        assertSame(3, $passportFile->fileSize);
+        assertEquals(new DateTimeImmutable('@1717512173'), $passportFile->fileDate);
     }
 }

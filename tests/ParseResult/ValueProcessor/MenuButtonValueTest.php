@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Type\MenuButtonCommands;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\MenuButtonWebApp;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class MenuButtonValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -51,7 +53,7 @@ final class MenuButtonValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

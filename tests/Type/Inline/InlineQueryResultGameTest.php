@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InlineQueryResultGameTest extends TestCase
 {
     public function testBase(): void
@@ -18,8 +20,8 @@ final class InlineQueryResultGameTest extends TestCase
             'the game',
         );
 
-        $this->assertSame('game', $type->getType());
-        $this->assertSame(
+        assertSame('game', $type->getType());
+        assertSame(
             [
                 'type' => 'game',
                 'id' => 'id1',
@@ -38,8 +40,8 @@ final class InlineQueryResultGameTest extends TestCase
             $replyMarkup,
         );
 
-        $this->assertSame('game', $type->getType());
-        $this->assertSame(
+        assertSame('game', $type->getType());
+        assertSame(
             [
                 'type' => 'game',
                 'id' => 'id1',

@@ -8,16 +8,19 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class StickerSetTest extends TestCase
 {
     public function testBase(): void
     {
         $set = new StickerSet('test_by_bot', 'test', 'regular', []);
 
-        $this->assertSame('test_by_bot', $set->name);
-        $this->assertSame('test', $set->title);
-        $this->assertSame('regular', $set->stickerType);
-        $this->assertSame([], $set->stickers);
+        assertSame('test_by_bot', $set->name);
+        assertSame('test', $set->title);
+        assertSame('regular', $set->stickerType);
+        assertSame([], $set->stickers);
     }
 
     public function testFromTelegramResult(): void
@@ -45,11 +48,11 @@ final class StickerSetTest extends TestCase
             ],
         ], null, StickerSet::class);
 
-        $this->assertSame('test_by_bot', $set->name);
-        $this->assertSame('test', $set->title);
-        $this->assertSame('regular', $set->stickerType);
-        $this->assertCount(1, $set->stickers);
-        $this->assertSame('fid1', $set->stickers[0]->fileId);
-        $this->assertSame('tf1', $set->thumbnail->fileId);
+        assertSame('test_by_bot', $set->name);
+        assertSame('test', $set->title);
+        assertSame('regular', $set->stickerType);
+        assertCount(1, $set->stickers);
+        assertSame('fid1', $set->stickers[0]->fileId);
+        assertSame('tf1', $set->thumbnail->fileId);
     }
 }

@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SendGiftTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendGift(7, 'gid');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendGift', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendGift', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 7,
                 'gift_id' => 'gid',
@@ -32,9 +35,9 @@ final class SendGiftTest extends TestCase
         $entity = new MessageEntity('bold', 0, 5);
         $method = new SendGift(9, 'gift-id', 'hello', 'MarkdownV2', [$entity], true, 95);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendGift', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendGift', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 9,
                 'chat_id' => 95,
@@ -54,6 +57,6 @@ final class SendGiftTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

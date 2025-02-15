@@ -9,6 +9,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Audio;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class AudioTest extends TestCase
 {
     public function testAudio(): void
@@ -19,15 +23,15 @@ final class AudioTest extends TestCase
             123,
         );
 
-        $this->assertSame('id12', $audio->fileId);
-        $this->assertSame('full12', $audio->fileUniqueId);
-        $this->assertSame(123, $audio->duration);
-        $this->assertNull($audio->performer);
-        $this->assertNull($audio->title);
-        $this->assertNull($audio->fileName);
-        $this->assertNull($audio->mimeType);
-        $this->assertNull($audio->fileSize);
-        $this->assertNull($audio->thumbnail);
+        assertSame('id12', $audio->fileId);
+        assertSame('full12', $audio->fileUniqueId);
+        assertSame(123, $audio->duration);
+        assertNull($audio->performer);
+        assertNull($audio->title);
+        assertNull($audio->fileName);
+        assertNull($audio->mimeType);
+        assertNull($audio->fileSize);
+        assertNull($audio->thumbnail);
     }
 
     public function testFromTelegramResult(): void
@@ -49,16 +53,16 @@ final class AudioTest extends TestCase
             ],
         ], null, Audio::class);
 
-        $this->assertSame('id12', $audio->fileId);
-        $this->assertSame('full12', $audio->fileUniqueId);
-        $this->assertSame(123, $audio->duration);
-        $this->assertSame('performer12', $audio->performer);
-        $this->assertSame('Hello', $audio->title);
-        $this->assertSame('hello.mp3', $audio->fileName);
-        $this->assertSame('audio/mpeg', $audio->mimeType);
-        $this->assertSame(12345, $audio->fileSize);
+        assertSame('id12', $audio->fileId);
+        assertSame('full12', $audio->fileUniqueId);
+        assertSame(123, $audio->duration);
+        assertSame('performer12', $audio->performer);
+        assertSame('Hello', $audio->title);
+        assertSame('hello.mp3', $audio->fileName);
+        assertSame('audio/mpeg', $audio->mimeType);
+        assertSame(12345, $audio->fileSize);
 
-        $this->assertInstanceOf(PhotoSize::class, $audio->thumbnail);
-        $this->assertSame('id34', $audio->thumbnail->fileId);
+        assertInstanceOf(PhotoSize::class, $audio->thumbnail);
+        assertSame('id34', $audio->thumbnail->fileId);
     }
 }

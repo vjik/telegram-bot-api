@@ -11,6 +11,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class RestrictChatMemberTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +21,9 @@ final class RestrictChatMemberTest extends TestCase
         $permissions = new ChatPermissions();
         $method = new RestrictChatMember(1, 2, $permissions);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('restrictChatMember', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('restrictChatMember', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'user_id' => 2,
@@ -36,7 +39,7 @@ final class RestrictChatMemberTest extends TestCase
         $date = new DateTimeImmutable();
         $method = new RestrictChatMember(1, 2, $permissions, true, $date);
 
-        $this->assertSame(
+        assertSame(
             [
                 'chat_id' => 1,
                 'user_id' => 2,
@@ -54,6 +57,6 @@ final class RestrictChatMemberTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

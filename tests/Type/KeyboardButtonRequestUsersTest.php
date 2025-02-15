@@ -7,21 +7,26 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\KeyboardButtonRequestUsers;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class KeyboardButtonRequestUsersTest extends TestCase
 {
     public function testBase(): void
     {
         $keyboardButtonRequestUsers = new KeyboardButtonRequestUsers(1);
 
-        $this->assertSame(1, $keyboardButtonRequestUsers->requestId);
-        $this->assertNull($keyboardButtonRequestUsers->userIsBot);
-        $this->assertNull($keyboardButtonRequestUsers->userIsPremium);
-        $this->assertNull($keyboardButtonRequestUsers->maxQuantity);
-        $this->assertNull($keyboardButtonRequestUsers->requestName);
-        $this->assertNull($keyboardButtonRequestUsers->requestUsername);
-        $this->assertNull($keyboardButtonRequestUsers->requestPhoto);
+        assertSame(1, $keyboardButtonRequestUsers->requestId);
+        assertNull($keyboardButtonRequestUsers->userIsBot);
+        assertNull($keyboardButtonRequestUsers->userIsPremium);
+        assertNull($keyboardButtonRequestUsers->maxQuantity);
+        assertNull($keyboardButtonRequestUsers->requestName);
+        assertNull($keyboardButtonRequestUsers->requestUsername);
+        assertNull($keyboardButtonRequestUsers->requestPhoto);
 
-        $this->assertSame(
+        assertSame(
             [
                 'request_id' => 1,
             ],
@@ -41,15 +46,15 @@ final class KeyboardButtonRequestUsersTest extends TestCase
             false,
         );
 
-        $this->assertSame(1, $keyboardButtonRequestUsers->requestId);
-        $this->assertTrue($keyboardButtonRequestUsers->userIsBot);
-        $this->assertFalse($keyboardButtonRequestUsers->userIsPremium);
-        $this->assertSame(5, $keyboardButtonRequestUsers->maxQuantity);
-        $this->assertTrue($keyboardButtonRequestUsers->requestName);
-        $this->assertTrue($keyboardButtonRequestUsers->requestUsername);
-        $this->assertFalse($keyboardButtonRequestUsers->requestPhoto);
+        assertSame(1, $keyboardButtonRequestUsers->requestId);
+        assertTrue($keyboardButtonRequestUsers->userIsBot);
+        assertFalse($keyboardButtonRequestUsers->userIsPremium);
+        assertSame(5, $keyboardButtonRequestUsers->maxQuantity);
+        assertTrue($keyboardButtonRequestUsers->requestName);
+        assertTrue($keyboardButtonRequestUsers->requestUsername);
+        assertFalse($keyboardButtonRequestUsers->requestPhoto);
 
-        $this->assertSame(
+        assertSame(
             [
                 'request_id' => 1,
                 'user_is_bot' => true,

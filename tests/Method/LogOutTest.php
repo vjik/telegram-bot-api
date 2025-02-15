@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\LogOut;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class LogOutTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new LogOut();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('logOut', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
-        $this->assertTrue(TestHelper::createSuccessStubApi(true)->call($method));
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('logOut', $method->getApiMethod());
+        assertSame([], $method->getData());
+        assertTrue(TestHelper::createSuccessStubApi(true)->call($method));
     }
 }

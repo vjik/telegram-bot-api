@@ -8,16 +8,18 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillGradient;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BackgroundFillGradientTest extends TestCase
 {
     public function testBase(): void
     {
         $fill = new BackgroundFillGradient(0x000000, 0xFFFFFF, 17);
 
-        $this->assertSame('gradient', $fill->getType());
-        $this->assertSame(0x000000, $fill->topColor);
-        $this->assertSame(0xFFFFFF, $fill->bottomColor);
-        $this->assertSame(17, $fill->rotationAngle);
+        assertSame('gradient', $fill->getType());
+        assertSame(0x000000, $fill->topColor);
+        assertSame(0xFFFFFF, $fill->bottomColor);
+        assertSame(17, $fill->rotationAngle);
     }
 
     public function testFromTelegramResult(): void
@@ -29,9 +31,9 @@ final class BackgroundFillGradientTest extends TestCase
             'rotation_angle' => 17,
         ], null, BackgroundFillGradient::class);
 
-        $this->assertSame('gradient', $fill->getType());
-        $this->assertSame(0x000000, $fill->topColor);
-        $this->assertSame(0xFFFFFF, $fill->bottomColor);
-        $this->assertSame(17, $fill->rotationAngle);
+        assertSame('gradient', $fill->getType());
+        assertSame(0x000000, $fill->topColor);
+        assertSame(0xFFFFFF, $fill->bottomColor);
+        assertSame(17, $fill->rotationAngle);
     }
 }

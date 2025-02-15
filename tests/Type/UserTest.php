@@ -8,25 +8,29 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class UserTest extends TestCase
 {
     public function testBase(): void
     {
         $user = new User(1, false, 'Sergei');
 
-        $this->assertSame(1, $user->id);
-        $this->assertSame(false, $user->isBot);
-        $this->assertSame('Sergei', $user->firstName);
-        $this->assertNull($user->lastName);
-        $this->assertNull($user->username);
-        $this->assertNull($user->languageCode);
-        $this->assertNull($user->isPremium);
-        $this->assertNull($user->addedToAttachmentMenu);
-        $this->assertNull($user->canJoinGroups);
-        $this->assertNull($user->canReadAllGroupMessages);
-        $this->assertNull($user->supportsInlineQueries);
-        $this->assertNull($user->canConnectToBusiness);
-        $this->assertNull($user->hasMainWebApp);
+        assertSame(1, $user->id);
+        assertSame(false, $user->isBot);
+        assertSame('Sergei', $user->firstName);
+        assertNull($user->lastName);
+        assertNull($user->username);
+        assertNull($user->languageCode);
+        assertNull($user->isPremium);
+        assertNull($user->addedToAttachmentMenu);
+        assertNull($user->canJoinGroups);
+        assertNull($user->canReadAllGroupMessages);
+        assertNull($user->supportsInlineQueries);
+        assertNull($user->canConnectToBusiness);
+        assertNull($user->hasMainWebApp);
     }
 
     public function testToRequestArray(): void
@@ -47,7 +51,7 @@ final class UserTest extends TestCase
             false,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'id' => 1,
                 'is_bot' => false,
@@ -85,19 +89,19 @@ final class UserTest extends TestCase
             'has_main_web_app' => false,
         ], null, User::class);
 
-        $this->assertInstanceOf(User::class, $user);
-        $this->assertSame(1, $user->id);
-        $this->assertSame(false, $user->isBot);
-        $this->assertSame('Sergei', $user->firstName);
-        $this->assertSame('Ivanov', $user->lastName);
-        $this->assertSame('sergei_ivanov', $user->username);
-        $this->assertSame('ru-RU', $user->languageCode);
-        $this->assertSame(true, $user->isPremium);
-        $this->assertSame(true, $user->addedToAttachmentMenu);
-        $this->assertSame(true, $user->canJoinGroups);
-        $this->assertSame(true, $user->canReadAllGroupMessages);
-        $this->assertSame(true, $user->supportsInlineQueries);
-        $this->assertSame(true, $user->canConnectToBusiness);
-        $this->assertSame(false, $user->hasMainWebApp);
+        assertInstanceOf(User::class, $user);
+        assertSame(1, $user->id);
+        assertSame(false, $user->isBot);
+        assertSame('Sergei', $user->firstName);
+        assertSame('Ivanov', $user->lastName);
+        assertSame('sergei_ivanov', $user->username);
+        assertSame('ru-RU', $user->languageCode);
+        assertSame(true, $user->isPremium);
+        assertSame(true, $user->addedToAttachmentMenu);
+        assertSame(true, $user->canJoinGroups);
+        assertSame(true, $user->canReadAllGroupMessages);
+        assertSame(true, $user->supportsInlineQueries);
+        assertSame(true, $user->canConnectToBusiness);
+        assertSame(false, $user->hasMainWebApp);
     }
 }

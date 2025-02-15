@@ -8,6 +8,11 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\KeyboardButton;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ReplyKeyboardMarkupTest extends TestCase
 {
     public function testBase(): void
@@ -15,14 +20,14 @@ final class ReplyKeyboardMarkupTest extends TestCase
         $button = new KeyboardButton('text');
         $markup = new ReplyKeyboardMarkup([[$button]]);
 
-        $this->assertSame([[$button]], $markup->keyboard);
-        $this->assertNull($markup->isPersistent);
-        $this->assertNull($markup->resizeKeyboard);
-        $this->assertNull($markup->oneTimeKeyboard);
-        $this->assertNull($markup->inputFieldPlaceholder);
-        $this->assertNull($markup->selective);
+        assertSame([[$button]], $markup->keyboard);
+        assertNull($markup->isPersistent);
+        assertNull($markup->resizeKeyboard);
+        assertNull($markup->oneTimeKeyboard);
+        assertNull($markup->inputFieldPlaceholder);
+        assertNull($markup->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'keyboard' => [[['text' => 'text']]],
             ],
@@ -35,14 +40,14 @@ final class ReplyKeyboardMarkupTest extends TestCase
         $button = new KeyboardButton('text');
         $markup = new ReplyKeyboardMarkup([[$button]], true, false, true, 'test', true);
 
-        $this->assertSame([[$button]], $markup->keyboard);
-        $this->assertTrue($markup->isPersistent);
-        $this->assertFalse($markup->resizeKeyboard);
-        $this->assertTrue($markup->oneTimeKeyboard);
-        $this->assertSame('test', $markup->inputFieldPlaceholder);
-        $this->assertTrue($markup->selective);
+        assertSame([[$button]], $markup->keyboard);
+        assertTrue($markup->isPersistent);
+        assertFalse($markup->resizeKeyboard);
+        assertTrue($markup->oneTimeKeyboard);
+        assertSame('test', $markup->inputFieldPlaceholder);
+        assertTrue($markup->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'keyboard' => [[['text' => 'text']]],
                 'is_persistent' => true,

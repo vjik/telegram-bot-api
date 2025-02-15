@@ -10,6 +10,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class AnswerShippingQueryTest extends TestCase
 {
     public function testBase(): void
@@ -19,9 +22,9 @@ final class AnswerShippingQueryTest extends TestCase
             true,
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerShippingQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerShippingQuery', $method->getApiMethod());
+        assertSame(
             [
                 'shipping_query_id' => 'qid',
                 'ok' => true,
@@ -40,9 +43,9 @@ final class AnswerShippingQueryTest extends TestCase
             'error message',
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerShippingQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerShippingQuery', $method->getApiMethod());
+        assertSame(
             [
                 'shipping_query_id' => 'qid',
                 'ok' => true,
@@ -62,6 +65,6 @@ final class AnswerShippingQueryTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

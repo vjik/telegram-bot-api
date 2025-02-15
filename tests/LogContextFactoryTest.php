@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\LogType;
 
+use function PHPUnit\Framework\assertSame;
+
 final class LogContextFactoryTest extends TestCase
 {
     public static function dataSendRequest(): Generator
@@ -51,7 +53,7 @@ final class LogContextFactoryTest extends TestCase
         MethodInterface $request,
     ): void {
         $context = LogContextFactory::sendRequest($request);
-        $this->assertSame($expected, $context);
+        assertSame($expected, $context);
     }
 
     public static function dataSuccessResult(): Generator
@@ -81,7 +83,7 @@ final class LogContextFactoryTest extends TestCase
         array $decodedResponse,
     ): void {
         $context = LogContextFactory::successResult($request, $response, $decodedResponse);
-        $this->assertSame($expected, $context);
+        assertSame($expected, $context);
     }
 
     public function testFailResult(): void
@@ -92,7 +94,7 @@ final class LogContextFactoryTest extends TestCase
 
         $context = LogContextFactory::failResult($method, $response, $decodedResponse);
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => LogType::FAIL_RESULT,
                 'payload' => 'test',
@@ -108,7 +110,7 @@ final class LogContextFactoryTest extends TestCase
     {
         $context = LogContextFactory::parseResultError('test');
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => LogType::PARSE_RESULT_ERROR,
                 'payload' => 'test',

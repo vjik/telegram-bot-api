@@ -10,6 +10,11 @@ use Vjik\TelegramBot\Api\Type\Animation;
 use Vjik\TelegramBot\Api\Type\Game\Game;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertSame;
+
 final class GameTest extends TestCase
 {
     public function testBase(): void
@@ -22,14 +27,14 @@ final class GameTest extends TestCase
             ],
         );
 
-        $this->assertSame('My Game', $game->title);
-        $this->assertSame('The best game.', $game->description);
+        assertSame('My Game', $game->title);
+        assertSame('The best game.', $game->description);
 
-        $this->assertCount(1, $game->photo);
-        $this->assertSame('id1', $game->photo[0]->fileId);
-        $this->assertSame('unique-id1', $game->photo[0]->fileUniqueId);
-        $this->assertSame(100, $game->photo[0]->width);
-        $this->assertSame(200, $game->photo[0]->height);
+        assertCount(1, $game->photo);
+        assertSame('id1', $game->photo[0]->fileId);
+        assertSame('unique-id1', $game->photo[0]->fileUniqueId);
+        assertSame(100, $game->photo[0]->width);
+        assertSame(200, $game->photo[0]->height);
     }
 
     public function testFromTelegramResult(): void
@@ -62,28 +67,28 @@ final class GameTest extends TestCase
             ],
         ], null, Game::class);
 
-        $this->assertSame('My Game', $game->title);
-        $this->assertSame('The best game.', $game->description);
+        assertSame('My Game', $game->title);
+        assertSame('The best game.', $game->description);
 
-        $this->assertCount(1, $game->photo);
-        $this->assertSame('id1', $game->photo[0]->fileId);
-        $this->assertSame('unique-id1', $game->photo[0]->fileUniqueId);
-        $this->assertSame(100, $game->photo[0]->width);
-        $this->assertSame(200, $game->photo[0]->height);
+        assertCount(1, $game->photo);
+        assertSame('id1', $game->photo[0]->fileId);
+        assertSame('unique-id1', $game->photo[0]->fileUniqueId);
+        assertSame(100, $game->photo[0]->width);
+        assertSame(200, $game->photo[0]->height);
 
-        $this->assertSame('test text', $game->text);
+        assertSame('test text', $game->text);
 
-        $this->assertIsArray($game->textEntities);
-        $this->assertCount(1, $game->textEntities);
-        $this->assertSame('bold', $game->textEntities[0]->type);
-        $this->assertSame(0, $game->textEntities[0]->offset);
-        $this->assertSame(4, $game->textEntities[0]->length);
+        assertIsArray($game->textEntities);
+        assertCount(1, $game->textEntities);
+        assertSame('bold', $game->textEntities[0]->type);
+        assertSame(0, $game->textEntities[0]->offset);
+        assertSame(4, $game->textEntities[0]->length);
 
-        $this->assertInstanceOf(Animation::class, $game->animation);
-        $this->assertSame('id2', $game->animation->fileId);
-        $this->assertSame('unique-id2', $game->animation->fileUniqueId);
-        $this->assertSame(300, $game->animation->width);
-        $this->assertSame(400, $game->animation->height);
-        $this->assertSame(12, $game->animation->duration);
+        assertInstanceOf(Animation::class, $game->animation);
+        assertSame('id2', $game->animation->fileId);
+        assertSame('unique-id2', $game->animation->fileUniqueId);
+        assertSame(300, $game->animation->width);
+        assertSame(400, $game->animation->height);
+        assertSame(12, $game->animation->duration);
     }
 }

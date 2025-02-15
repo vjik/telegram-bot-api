@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 
+use function PHPUnit\Framework\assertSame;
+
 final class PreparedInlineMessageTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +18,8 @@ final class PreparedInlineMessageTest extends TestCase
         $date = new DateTimeImmutable();
         $type = new PreparedInlineMessage('id1', $date);
 
-        $this->assertSame('id1', $type->id);
-        $this->assertSame($date, $type->expirationDate);
+        assertSame('id1', $type->id);
+        assertSame($date, $type->expirationDate);
     }
 
     public function testFromTelegramResult(): void
@@ -27,7 +29,7 @@ final class PreparedInlineMessageTest extends TestCase
             'expiration_date' => 1731917185,
         ], null, PreparedInlineMessage::class);
 
-        $this->assertSame('id1', $type->id);
-        $this->assertSame(1731917185, $type->expirationDate->getTimestamp());
+        assertSame('id1', $type->id);
+        assertSame(1731917185, $type->expirationDate->getTimestamp());
     }
 }

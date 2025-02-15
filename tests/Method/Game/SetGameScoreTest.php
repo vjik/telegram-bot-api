@@ -10,15 +10,19 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Message;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetGameScoreTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetGameScore(1, 2);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setGameScore', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setGameScore', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'score' => 2,
@@ -39,7 +43,7 @@ final class SetGameScoreTest extends TestCase
             'id1',
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'user_id' => 1,
                 'score' => 2,
@@ -58,7 +62,7 @@ final class SetGameScoreTest extends TestCase
         $method = new SetGameScore(1, 2);
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
@@ -68,7 +72,7 @@ final class SetGameScoreTest extends TestCase
                 'type' => 'private',
             ],
         ])->call($method);
-        $this->assertInstanceOf(Message::class, $preparedResult);
-        $this->assertSame(7, $preparedResult->messageId);
+        assertInstanceOf(Message::class, $preparedResult);
+        assertSame(7, $preparedResult->messageId);
     }
 }

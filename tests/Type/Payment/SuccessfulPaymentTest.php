@@ -9,6 +9,11 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\SuccessfulPayment;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SuccessfulPaymentTest extends TestCase
 {
     public function testSuccessfulPayment(): void
@@ -21,16 +26,16 @@ final class SuccessfulPaymentTest extends TestCase
             'ppc_id',
         );
 
-        $this->assertSame('RUB', $type->currency);
-        $this->assertSame(200, $type->totalAmount);
-        $this->assertSame('pl12', $type->invoicePayload);
-        $this->assertSame('tpc_id', $type->telegramPaymentChargeId);
-        $this->assertSame('ppc_id', $type->providerPaymentChargeId);
-        $this->assertNull($type->shippingOptionId);
-        $this->assertNull($type->orderInfo);
-        $this->assertNull($type->subscriptionExpirationDate);
-        $this->assertNull($type->isRecurring);
-        $this->assertNull($type->isFirstRecurring);
+        assertSame('RUB', $type->currency);
+        assertSame(200, $type->totalAmount);
+        assertSame('pl12', $type->invoicePayload);
+        assertSame('tpc_id', $type->telegramPaymentChargeId);
+        assertSame('ppc_id', $type->providerPaymentChargeId);
+        assertNull($type->shippingOptionId);
+        assertNull($type->orderInfo);
+        assertNull($type->subscriptionExpirationDate);
+        assertNull($type->isRecurring);
+        assertNull($type->isFirstRecurring);
     }
 
     public function testFromTelegramResult(): void
@@ -50,18 +55,18 @@ final class SuccessfulPaymentTest extends TestCase
             ],
         ], null, SuccessfulPayment::class);
 
-        $this->assertSame('RUB', $type->currency);
-        $this->assertSame(900, $type->totalAmount);
-        $this->assertSame('pl12', $type->invoicePayload);
-        $this->assertSame('tpcId', $type->telegramPaymentChargeId);
-        $this->assertSame('ppcId', $type->providerPaymentChargeId);
-        $this->assertSame('soId', $type->shippingOptionId);
+        assertSame('RUB', $type->currency);
+        assertSame(900, $type->totalAmount);
+        assertSame('pl12', $type->invoicePayload);
+        assertSame('tpcId', $type->telegramPaymentChargeId);
+        assertSame('ppcId', $type->providerPaymentChargeId);
+        assertSame('soId', $type->shippingOptionId);
 
-        $this->assertInstanceOf(OrderInfo::class, $type->orderInfo);
-        $this->assertSame('OrderName', $type->orderInfo->name);
+        assertInstanceOf(OrderInfo::class, $type->orderInfo);
+        assertSame('OrderName', $type->orderInfo->name);
 
-        $this->assertSame(1731915609, $type->subscriptionExpirationDate?->getTimestamp());
-        $this->assertTrue($type->isRecurring);
-        $this->assertTrue($type->isFirstRecurring);
+        assertSame(1731915609, $type->subscriptionExpirationDate?->getTimestamp());
+        assertTrue($type->isRecurring);
+        assertTrue($type->isFirstRecurring);
     }
 }

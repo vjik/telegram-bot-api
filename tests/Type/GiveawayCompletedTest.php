@@ -9,15 +9,20 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\GiveawayCompleted;
 use Vjik\TelegramBot\Api\Type\Message;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class GiveawayCompletedTest extends TestCase
 {
     public function testBase(): void
     {
         $giveawayCompleted = new GiveawayCompleted(3);
 
-        $this->assertSame(3, $giveawayCompleted->winnerCount);
-        $this->assertNull($giveawayCompleted->unclaimedPrizeCount);
-        $this->assertNull($giveawayCompleted->giveawayMessage);
+        assertSame(3, $giveawayCompleted->winnerCount);
+        assertNull($giveawayCompleted->unclaimedPrizeCount);
+        assertNull($giveawayCompleted->giveawayMessage);
     }
 
     public function testFromTelegramResult(): void
@@ -40,11 +45,11 @@ final class GiveawayCompletedTest extends TestCase
             GiveawayCompleted::class,
         );
 
-        $this->assertSame(3, $giveawayCompleted->winnerCount);
-        $this->assertSame(2, $giveawayCompleted->unclaimedPrizeCount);
+        assertSame(3, $giveawayCompleted->winnerCount);
+        assertSame(2, $giveawayCompleted->unclaimedPrizeCount);
 
-        $this->assertInstanceOf(Message::class, $giveawayCompleted->giveawayMessage);
-        $this->assertSame(123, $giveawayCompleted->giveawayMessage->messageId);
-        $this->assertTrue($giveawayCompleted->isStarGiveaway);
+        assertInstanceOf(Message::class, $giveawayCompleted->giveawayMessage);
+        assertSame(123, $giveawayCompleted->giveawayMessage->messageId);
+        assertTrue($giveawayCompleted->isStarGiveaway);
     }
 }

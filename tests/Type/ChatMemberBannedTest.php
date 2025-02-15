@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberBanned;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertSame;
+
 final class ChatMemberBannedTest extends TestCase
 {
     public function testBase(): void
@@ -17,10 +21,10 @@ final class ChatMemberBannedTest extends TestCase
         $user = new User(123, false, 'John');
         $member = new ChatMemberBanned($user, false);
 
-        $this->assertSame('kicked', $member->getStatus());
-        $this->assertSame($user, $member->getUser());
-        $this->assertSame($user, $member->user);
-        $this->assertFalse($member->untilDate);
+        assertSame('kicked', $member->getStatus());
+        assertSame($user, $member->getUser());
+        assertSame($user, $member->user);
+        assertFalse($member->untilDate);
     }
 
     public function testFromTelegramResult(): void
@@ -34,8 +38,8 @@ final class ChatMemberBannedTest extends TestCase
             'until_date' => 123456779,
         ], null, ChatMemberBanned::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertEquals(new DateTimeImmutable('@123456779'), $member->untilDate);
+        assertSame(123, $member->user->id);
+        assertEquals(new DateTimeImmutable('@123456779'), $member->untilDate);
     }
 
     public function testFromTelegramResultWithZeroUntilDate(): void
@@ -49,7 +53,7 @@ final class ChatMemberBannedTest extends TestCase
             'until_date' => 0,
         ], null, ChatMemberBanned::class);
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertFalse($member->untilDate);
+        assertSame(123, $member->user->id);
+        assertFalse($member->untilDate);
     }
 }

@@ -8,18 +8,20 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingAddress;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ShippingAddressTest extends TestCase
 {
     public function testBase(): void
     {
         $shippingAddress = new ShippingAddress('ru', 'the-state', 'the-city', 'the-street1', 'the-street2', '111');
 
-        $this->assertSame('ru', $shippingAddress->countryCode);
-        $this->assertSame('the-state', $shippingAddress->state);
-        $this->assertSame('the-city', $shippingAddress->city);
-        $this->assertSame('the-street1', $shippingAddress->streetLine1);
-        $this->assertSame('the-street2', $shippingAddress->streetLine2);
-        $this->assertSame('111', $shippingAddress->postCode);
+        assertSame('ru', $shippingAddress->countryCode);
+        assertSame('the-state', $shippingAddress->state);
+        assertSame('the-city', $shippingAddress->city);
+        assertSame('the-street1', $shippingAddress->streetLine1);
+        assertSame('the-street2', $shippingAddress->streetLine2);
+        assertSame('111', $shippingAddress->postCode);
     }
 
     public function testFromTelegramResult(): void
@@ -33,11 +35,11 @@ final class ShippingAddressTest extends TestCase
             'post_code' => '213',
         ], null, ShippingAddress::class);
 
-        $this->assertSame('ru', $shippingAddress->countryCode);
-        $this->assertSame('state', $shippingAddress->state);
-        $this->assertSame('city', $shippingAddress->city);
-        $this->assertSame('street1', $shippingAddress->streetLine1);
-        $this->assertSame('street2', $shippingAddress->streetLine2);
-        $this->assertSame('213', $shippingAddress->postCode);
+        assertSame('ru', $shippingAddress->countryCode);
+        assertSame('state', $shippingAddress->state);
+        assertSame('city', $shippingAddress->city);
+        assertSame('street1', $shippingAddress->streetLine1);
+        assertSame('street2', $shippingAddress->streetLine2);
+        assertSame('213', $shippingAddress->postCode);
     }
 }

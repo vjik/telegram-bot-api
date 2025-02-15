@@ -8,13 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BotShortDescription;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BotShortDescriptionTest extends TestCase
 {
     public function testBase(): void
     {
         $description = new BotShortDescription('test');
 
-        $this->assertSame('test', $description->shortDescription);
+        assertSame('test', $description->shortDescription);
     }
 
     public function testFromTelegramResult(): void
@@ -23,6 +25,6 @@ final class BotShortDescriptionTest extends TestCase
             'short_description' => 'test',
         ], null, BotShortDescription::class);
 
-        $this->assertSame('test', $description->shortDescription);
+        assertSame('test', $description->shortDescription);
     }
 }

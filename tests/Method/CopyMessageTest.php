@@ -12,15 +12,17 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CopyMessageTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new CopyMessage(1, 2, 3);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('copyMessage', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('copyMessage', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'from_chat_id' => 2,
@@ -52,7 +54,7 @@ final class CopyMessageTest extends TestCase
             17,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 4,
@@ -81,6 +83,6 @@ final class CopyMessageTest extends TestCase
             'message_id' => 7,
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

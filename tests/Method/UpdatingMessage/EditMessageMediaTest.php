@@ -15,6 +15,10 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\Message;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class EditMessageMediaTest extends TestCase
 {
     public function testBase(): void
@@ -24,9 +28,9 @@ final class EditMessageMediaTest extends TestCase
             $media,
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('editMessageMedia', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('editMessageMedia', $method->getApiMethod());
+        assertSame(
             [
                 'media' => $media->toRequestArray(),
             ],
@@ -48,7 +52,7 @@ final class EditMessageMediaTest extends TestCase
             $replyMarkup,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 23,
@@ -72,7 +76,7 @@ final class EditMessageMediaTest extends TestCase
         );
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
@@ -82,7 +86,7 @@ final class EditMessageMediaTest extends TestCase
                 'type' => 'private',
             ],
         ])->call($method);
-        $this->assertInstanceOf(Message::class, $preparedResult);
-        $this->assertSame(7, $preparedResult->messageId);
+        assertInstanceOf(Message::class, $preparedResult);
+        assertSame(7, $preparedResult->messageId);
     }
 }

@@ -8,13 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\VideoChatEnded;
 
+use function PHPUnit\Framework\assertSame;
+
 final class VideoChatEndedTest extends TestCase
 {
     public function testBase(): void
     {
         $videoChatEnded = new VideoChatEnded(12);
 
-        $this->assertSame(12, $videoChatEnded->duration);
+        assertSame(12, $videoChatEnded->duration);
     }
 
     public function testFromTelegramResult(): void
@@ -23,6 +25,6 @@ final class VideoChatEndedTest extends TestCase
             'duration' => 12,
         ], null, VideoChatEnded::class);
 
-        $this->assertSame(12, $videoChatEnded->duration);
+        assertSame(12, $videoChatEnded->duration);
     }
 }

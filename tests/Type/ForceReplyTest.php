@@ -7,16 +7,20 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ForceReplyTest extends TestCase
 {
     public function testBase(): void
     {
         $forceReply = new ForceReply();
 
-        $this->assertNull($forceReply->inputFieldPlaceholder);
-        $this->assertNull($forceReply->selective);
+        assertNull($forceReply->inputFieldPlaceholder);
+        assertNull($forceReply->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'force_reply' => true,
             ],
@@ -28,10 +32,10 @@ final class ForceReplyTest extends TestCase
     {
         $forceReply = new ForceReply('test', false);
 
-        $this->assertSame('test', $forceReply->inputFieldPlaceholder);
-        $this->assertFalse($forceReply->selective);
+        assertSame('test', $forceReply->inputFieldPlaceholder);
+        assertFalse($forceReply->selective);
 
-        $this->assertSame(
+        assertSame(
             [
                 'force_reply' => true,
                 'input_field_placeholder' => 'test',

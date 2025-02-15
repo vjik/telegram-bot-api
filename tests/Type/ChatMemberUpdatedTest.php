@@ -13,6 +13,13 @@ use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\ChatMemberUpdated;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatMemberUpdatedTest extends TestCase
 {
     public function testBase(): void
@@ -24,14 +31,14 @@ final class ChatMemberUpdatedTest extends TestCase
         $newChatMember = new ChatMemberMember($user);
         $chatMemberUpdated = new ChatMemberUpdated($chat, $user, $date, $oldChatMember, $newChatMember);
 
-        $this->assertSame($chat, $chatMemberUpdated->chat);
-        $this->assertSame($user, $chatMemberUpdated->from);
-        $this->assertSame($date, $chatMemberUpdated->date);
-        $this->assertSame($oldChatMember, $chatMemberUpdated->oldChatMember);
-        $this->assertSame($newChatMember, $chatMemberUpdated->newChatMember);
-        $this->assertNull($chatMemberUpdated->inviteLink);
-        $this->assertNull($chatMemberUpdated->viaJoinRequest);
-        $this->assertNull($chatMemberUpdated->viaChatFolderInviteLink);
+        assertSame($chat, $chatMemberUpdated->chat);
+        assertSame($user, $chatMemberUpdated->from);
+        assertSame($date, $chatMemberUpdated->date);
+        assertSame($oldChatMember, $chatMemberUpdated->oldChatMember);
+        assertSame($newChatMember, $chatMemberUpdated->newChatMember);
+        assertNull($chatMemberUpdated->inviteLink);
+        assertNull($chatMemberUpdated->viaJoinRequest);
+        assertNull($chatMemberUpdated->viaChatFolderInviteLink);
     }
 
     public function testFromTelegramResult(): void
@@ -78,16 +85,16 @@ final class ChatMemberUpdatedTest extends TestCase
             'via_chat_folder_invite_link' => false,
         ], null, ChatMemberUpdated::class);
 
-        $this->assertSame(123, $chatMemberUpdated->chat->id);
-        $this->assertSame(5, $chatMemberUpdated->from->id);
-        $this->assertEquals(new DateTimeImmutable('@123456779'), $chatMemberUpdated->date);
-        $this->assertSame(7, $chatMemberUpdated->oldChatMember->user->id);
-        $this->assertSame(8, $chatMemberUpdated->newChatMember->user->id);
+        assertSame(123, $chatMemberUpdated->chat->id);
+        assertSame(5, $chatMemberUpdated->from->id);
+        assertEquals(new DateTimeImmutable('@123456779'), $chatMemberUpdated->date);
+        assertSame(7, $chatMemberUpdated->oldChatMember->user->id);
+        assertSame(8, $chatMemberUpdated->newChatMember->user->id);
 
-        $this->assertInstanceOf(ChatInviteLink::class, $chatMemberUpdated->inviteLink);
-        $this->assertSame('https://t.me/joinchat/123', $chatMemberUpdated->inviteLink->inviteLink);
+        assertInstanceOf(ChatInviteLink::class, $chatMemberUpdated->inviteLink);
+        assertSame('https://t.me/joinchat/123', $chatMemberUpdated->inviteLink->inviteLink);
 
-        $this->assertTrue($chatMemberUpdated->viaJoinRequest);
-        $this->assertFalse($chatMemberUpdated->viaChatFolderInviteLink);
+        assertTrue($chatMemberUpdated->viaJoinRequest);
+        assertFalse($chatMemberUpdated->viaChatFolderInviteLink);
     }
 }

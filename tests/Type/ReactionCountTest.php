@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ReactionCount;
 use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ReactionCountTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +18,8 @@ final class ReactionCountTest extends TestCase
         $reactionType = new ReactionTypeEmoji('👍');
         $count = new ReactionCount($reactionType, 23);
 
-        $this->assertSame($reactionType, $count->type);
-        $this->assertSame(23, $count->totalCount);
+        assertSame($reactionType, $count->type);
+        assertSame(23, $count->totalCount);
     }
 
     public function testFromTelegramResult(): void
@@ -30,7 +32,7 @@ final class ReactionCountTest extends TestCase
             'total_count' => 23,
         ], null, ReactionCount::class);
 
-        $this->assertSame('👍', $count->type->emoji);
-        $this->assertSame(23, $count->totalCount);
+        assertSame('👍', $count->type->emoji);
+        assertSame(23, $count->totalCount);
     }
 }

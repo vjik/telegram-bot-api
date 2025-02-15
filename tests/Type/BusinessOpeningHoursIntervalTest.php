@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessOpeningHoursInterval;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BusinessOpeningHoursIntervalTest extends TestCase
 {
     public function testBase(): void
     {
         $interval = new BusinessOpeningHoursInterval(10, 100);
 
-        $this->assertSame(10, $interval->openingMinute);
-        $this->assertSame(100, $interval->closingMinute);
+        assertSame(10, $interval->openingMinute);
+        assertSame(100, $interval->closingMinute);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class BusinessOpeningHoursIntervalTest extends TestCase
             'closing_minute' => 100,
         ], null, BusinessOpeningHoursInterval::class);
 
-        $this->assertSame(10, $interval->openingMinute);
-        $this->assertSame(100, $interval->closingMinute);
+        assertSame(10, $interval->openingMinute);
+        assertSame(100, $interval->closingMinute);
     }
 }

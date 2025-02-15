@@ -9,21 +9,26 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class MessageEntityTest extends TestCase
 {
     public function testCreate(): void
     {
         $messageEntity = new MessageEntity('bold', 0, 4);
 
-        $this->assertSame('bold', $messageEntity->type);
-        $this->assertSame(0, $messageEntity->offset);
-        $this->assertSame(4, $messageEntity->length);
-        $this->assertNull($messageEntity->url);
-        $this->assertNull($messageEntity->user);
-        $this->assertNull($messageEntity->language);
-        $this->assertNull($messageEntity->customEmojiId);
+        assertSame('bold', $messageEntity->type);
+        assertSame(0, $messageEntity->offset);
+        assertSame(4, $messageEntity->length);
+        assertNull($messageEntity->url);
+        assertNull($messageEntity->user);
+        assertNull($messageEntity->language);
+        assertNull($messageEntity->customEmojiId);
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'bold',
                 'offset' => 0,
@@ -45,7 +50,7 @@ final class MessageEntityTest extends TestCase
             'x6',
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'bold',
                 'offset' => 0,
@@ -79,17 +84,17 @@ final class MessageEntityTest extends TestCase
             'custom_emoji_id' => 'x6',
         ], null, MessageEntity::class);
 
-        $this->assertSame('bold', $messageEntity->type);
-        $this->assertSame(0, $messageEntity->offset);
-        $this->assertSame(4, $messageEntity->length);
-        $this->assertSame('https://example.com/', $messageEntity->url);
+        assertSame('bold', $messageEntity->type);
+        assertSame(0, $messageEntity->offset);
+        assertSame(4, $messageEntity->length);
+        assertSame('https://example.com/', $messageEntity->url);
 
-        $this->assertInstanceOf(User::class, $messageEntity->user);
-        $this->assertSame(1, $messageEntity->user->id);
-        $this->assertFalse($messageEntity->user->isBot);
-        $this->assertSame('Sergei', $messageEntity->user->firstName);
+        assertInstanceOf(User::class, $messageEntity->user);
+        assertSame(1, $messageEntity->user->id);
+        assertFalse($messageEntity->user->isBot);
+        assertSame('Sergei', $messageEntity->user->firstName);
 
-        $this->assertSame('ru', $messageEntity->language);
-        $this->assertSame('x6', $messageEntity->customEmojiId);
+        assertSame('ru', $messageEntity->language);
+        assertSame('x6', $messageEntity->customEmojiId);
     }
 }

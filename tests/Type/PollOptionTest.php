@@ -8,15 +8,19 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PollOption;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class PollOptionTest extends TestCase
 {
     public function testBase(): void
     {
         $option = new PollOption('A', 25);
 
-        $this->assertSame('A', $option->text);
-        $this->assertSame(25, $option->voterCount);
-        $this->assertNull($option->textEntities);
+        assertSame('A', $option->text);
+        assertSame(25, $option->voterCount);
+        assertNull($option->textEntities);
     }
 
     public function testFromTelegramResult(): void
@@ -33,10 +37,10 @@ final class PollOptionTest extends TestCase
             ],
         ], null, PollOption::class);
 
-        $this->assertSame('A', $option->text);
-        $this->assertSame(25, $option->voterCount);
+        assertSame('A', $option->text);
+        assertSame(25, $option->voterCount);
 
-        $this->assertCount(1, $option->textEntities);
-        $this->assertSame(23, $option->textEntities[0]->offset);
+        assertCount(1, $option->textEntities);
+        assertSame(23, $option->textEntities[0]->offset);
     }
 }

@@ -8,15 +8,18 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ForumTopicCreated;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ForumTopicCreatedTest extends TestCase
 {
     public function testBase(): void
     {
         $forumTopicCreated = new ForumTopicCreated('test', 0x123456);
 
-        $this->assertSame('test', $forumTopicCreated->name);
-        $this->assertSame(0x123456, $forumTopicCreated->iconColor);
-        $this->assertNull($forumTopicCreated->iconCustomEmojiId);
+        assertSame('test', $forumTopicCreated->name);
+        assertSame(0x123456, $forumTopicCreated->iconColor);
+        assertNull($forumTopicCreated->iconCustomEmojiId);
     }
 
     public function testFromTelegramResult(): void
@@ -27,8 +30,8 @@ final class ForumTopicCreatedTest extends TestCase
             'icon_custom_emoji_id' => 'x1',
         ], null, ForumTopicCreated::class);
 
-        $this->assertSame('test', $forumTopicCreated->name);
-        $this->assertSame(0x123456, $forumTopicCreated->iconColor);
-        $this->assertSame('x1', $forumTopicCreated->iconCustomEmojiId);
+        assertSame('test', $forumTopicCreated->name);
+        assertSame(0x123456, $forumTopicCreated->iconColor);
+        assertSame('x1', $forumTopicCreated->iconCustomEmojiId);
     }
 }

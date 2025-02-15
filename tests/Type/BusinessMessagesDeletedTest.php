@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessMessagesDeleted;
 use Vjik\TelegramBot\Api\Type\Chat;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BusinessMessagesDeletedTest extends TestCase
 {
     public function testBase(): void
@@ -20,9 +22,9 @@ final class BusinessMessagesDeletedTest extends TestCase
             [1, 2, 3],
         );
 
-        $this->assertSame('cid1', $businessMessagesDeleted->businessConnectionId);
-        $this->assertSame($chat, $businessMessagesDeleted->chat);
-        $this->assertSame([1, 2, 3], $businessMessagesDeleted->messageIds);
+        assertSame('cid1', $businessMessagesDeleted->businessConnectionId);
+        assertSame($chat, $businessMessagesDeleted->chat);
+        assertSame([1, 2, 3], $businessMessagesDeleted->messageIds);
     }
 
     public function testFromTelegramResult(): void
@@ -36,8 +38,8 @@ final class BusinessMessagesDeletedTest extends TestCase
             'message_ids' => [1, 2, 3],
         ], null, BusinessMessagesDeleted::class);
 
-        $this->assertSame('cid1', $businessMessagesDeleted->businessConnectionId);
-        $this->assertSame(97, $businessMessagesDeleted->chat->id);
-        $this->assertSame([1, 2, 3], $businessMessagesDeleted->messageIds);
+        assertSame('cid1', $businessMessagesDeleted->businessConnectionId);
+        assertSame(97, $businessMessagesDeleted->chat->id);
+        assertSame([1, 2, 3], $businessMessagesDeleted->messageIds);
     }
 }

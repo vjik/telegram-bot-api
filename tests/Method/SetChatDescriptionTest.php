@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\SetChatDescription;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetChatDescriptionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetChatDescription(1);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatDescription', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatDescription', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
             ],
@@ -29,9 +32,9 @@ final class SetChatDescriptionTest extends TestCase
     {
         $method = new SetChatDescription(1, 'test');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatDescription', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatDescription', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'description' => 'test',
@@ -46,6 +49,6 @@ final class SetChatDescriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

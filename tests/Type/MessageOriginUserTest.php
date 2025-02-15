@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MessageOriginUser;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertSame;
+
 final class MessageOriginUserTest extends TestCase
 {
     public function testBase(): void
@@ -18,10 +20,10 @@ final class MessageOriginUserTest extends TestCase
         $user = new User(1, false, 'Mike');
         $origin = new MessageOriginUser($date, $user);
 
-        $this->assertSame('user', $origin->getType());
-        $this->assertSame($date, $origin->getDate());
-        $this->assertSame($date, $origin->date);
-        $this->assertSame($user, $origin->senderUser);
+        assertSame('user', $origin->getType());
+        assertSame($date, $origin->getDate());
+        assertSame($date, $origin->date);
+        assertSame($user, $origin->senderUser);
     }
 
     public function testFromTelegramResult(): void
@@ -36,9 +38,9 @@ final class MessageOriginUserTest extends TestCase
             ],
         ], null, MessageOriginUser::class);
 
-        $this->assertSame('user', $origin->getType());
-        $this->assertSame(12412512, $origin->getDate()->getTimestamp());
-        $this->assertSame(12412512, $origin->date->getTimestamp());
-        $this->assertSame(1, $origin->senderUser->id);
+        assertSame('user', $origin->getType());
+        assertSame(12412512, $origin->getDate()->getTimestamp());
+        assertSame(12412512, $origin->date->getTimestamp());
+        assertSame(1, $origin->senderUser->id);
     }
 }

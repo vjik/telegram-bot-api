@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\CustomMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CustomMethodTest extends TestCase
 {
     public function testBase(): void
@@ -23,17 +25,17 @@ final class CustomMethodTest extends TestCase
             new IntegerValue(),
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('getMe', $method->getApiMethod());
-        $this->assertSame(['param1' => 'value1', 'photo' => $photo], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('getMe', $method->getApiMethod());
+        assertSame(['param1' => 'value1', 'photo' => $photo], $method->getData());
 
-        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->call($method));
+        assertSame(33, TestHelper::createSuccessStubApi(33)->call($method));
     }
 
     public function testWithoutSuccessCallback(): void
     {
         $method = new CustomMethod('getMe');
 
-        $this->assertSame(33, TestHelper::createSuccessStubApi(33)->call($method));
+        assertSame(33, TestHelper::createSuccessStubApi(33)->call($method));
     }
 }

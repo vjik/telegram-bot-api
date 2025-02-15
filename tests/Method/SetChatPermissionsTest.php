@@ -10,6 +10,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetChatPermissionsTest extends TestCase
 {
     public function testBase(): void
@@ -17,9 +20,9 @@ final class SetChatPermissionsTest extends TestCase
         $permissions = new ChatPermissions();
         $method = new SetChatPermissions(1, $permissions);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatPermissions', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatPermissions', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'permissions' => $permissions->toRequestArray(),
@@ -33,9 +36,9 @@ final class SetChatPermissionsTest extends TestCase
         $permissions = new ChatPermissions();
         $method = new SetChatPermissions(1, $permissions, true);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatPermissions', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatPermissions', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'permissions' => $permissions->toRequestArray(),
@@ -51,6 +54,6 @@ final class SetChatPermissionsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

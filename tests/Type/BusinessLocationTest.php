@@ -9,14 +9,18 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessLocation;
 use Vjik\TelegramBot\Api\Type\Location;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class BusinessLocationTest extends TestCase
 {
     public function testBase(): void
     {
         $location = new BusinessLocation('street 7');
 
-        $this->assertSame('street 7', $location->address);
-        $this->assertNull($location->location);
+        assertSame('street 7', $location->address);
+        assertNull($location->location);
     }
 
     public function testFromTelegramResult(): void
@@ -29,9 +33,9 @@ final class BusinessLocationTest extends TestCase
             ],
         ], null, BusinessLocation::class);
 
-        $this->assertSame('street 7', $location->address);
+        assertSame('street 7', $location->address);
 
-        $this->assertInstanceOf(Location::class, $location->location);
-        $this->assertSame(23.42, $location->location->latitude);
+        assertInstanceOf(Location::class, $location->location);
+        assertSame(23.42, $location->location->latitude);
     }
 }

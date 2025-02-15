@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\Type\Payment\OrderInfo;
 use Vjik\TelegramBot\Api\Type\Payment\PreCheckoutQuery;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class PreCheckoutQueryTest extends TestCase
 {
     public function testPreCheckoutQuery(): void
@@ -23,13 +27,13 @@ final class PreCheckoutQueryTest extends TestCase
             'pl23',
         );
 
-        $this->assertSame('id', $preCheckoutQuery->id);
-        $this->assertSame($user, $preCheckoutQuery->from);
-        $this->assertSame('RUB', $preCheckoutQuery->currency);
-        $this->assertSame(123, $preCheckoutQuery->totalAmount);
-        $this->assertSame('pl23', $preCheckoutQuery->invoicePayload);
-        $this->assertNull($preCheckoutQuery->shippingOptionId);
-        $this->assertNull($preCheckoutQuery->orderInfo);
+        assertSame('id', $preCheckoutQuery->id);
+        assertSame($user, $preCheckoutQuery->from);
+        assertSame('RUB', $preCheckoutQuery->currency);
+        assertSame(123, $preCheckoutQuery->totalAmount);
+        assertSame('pl23', $preCheckoutQuery->invoicePayload);
+        assertNull($preCheckoutQuery->shippingOptionId);
+        assertNull($preCheckoutQuery->orderInfo);
     }
 
     public function testFromTelegramResult(): void
@@ -50,17 +54,17 @@ final class PreCheckoutQueryTest extends TestCase
             ],
         ], null, PreCheckoutQuery::class);
 
-        $this->assertSame('id', $preCheckoutQuery->id);
+        assertSame('id', $preCheckoutQuery->id);
 
-        $this->assertInstanceOf(User::class, $preCheckoutQuery->from);
-        $this->assertSame(1, $preCheckoutQuery->from->id);
+        assertInstanceOf(User::class, $preCheckoutQuery->from);
+        assertSame(1, $preCheckoutQuery->from->id);
 
-        $this->assertSame('RUB', $preCheckoutQuery->currency);
-        $this->assertSame(123, $preCheckoutQuery->totalAmount);
-        $this->assertSame('pl23', $preCheckoutQuery->invoicePayload);
-        $this->assertSame('o12', $preCheckoutQuery->shippingOptionId);
+        assertSame('RUB', $preCheckoutQuery->currency);
+        assertSame(123, $preCheckoutQuery->totalAmount);
+        assertSame('pl23', $preCheckoutQuery->invoicePayload);
+        assertSame('o12', $preCheckoutQuery->shippingOptionId);
 
-        $this->assertInstanceOf(OrderInfo::class, $preCheckoutQuery->orderInfo);
-        $this->assertSame('OrderName', $preCheckoutQuery->orderInfo->name);
+        assertInstanceOf(OrderInfo::class, $preCheckoutQuery->orderInfo);
+        assertSame('OrderName', $preCheckoutQuery->orderInfo->name);
     }
 }
