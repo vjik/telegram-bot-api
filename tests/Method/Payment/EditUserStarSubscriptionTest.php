@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\Payment\EditUserStarSubscription;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class EditUserStarSubscriptionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new EditUserStarSubscription(1, 'tpcid2', false);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('editUserStarSubscription', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('editUserStarSubscription', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'telegram_payment_charge_id' => 'tpcid2',
@@ -33,6 +36,6 @@ final class EditUserStarSubscriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

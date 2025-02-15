@@ -9,6 +9,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class InlineKeyboardMarkupTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +22,9 @@ final class InlineKeyboardMarkupTest extends TestCase
             [$button],
         ]);
 
-        $this->assertSame([[$button]], $markup->inlineKeyboard);
+        assertSame([[$button]], $markup->inlineKeyboard);
 
-        $this->assertSame(
+        assertSame(
             [
                 'inline_keyboard' => [
                     [
@@ -44,9 +48,9 @@ final class InlineKeyboardMarkupTest extends TestCase
             ],
         ], null, InlineKeyboardMarkup::class);
 
-        $this->assertCount(1, $markup->inlineKeyboard);
-        $this->assertCount(1, $markup->inlineKeyboard[0]);
-        $this->assertInstanceOf(InlineKeyboardButton::class, $markup->inlineKeyboard[0][0]);
-        $this->assertSame('test', $markup->inlineKeyboard[0][0]->text);
+        assertCount(1, $markup->inlineKeyboard);
+        assertCount(1, $markup->inlineKeyboard[0]);
+        assertInstanceOf(InlineKeyboardButton::class, $markup->inlineKeyboard[0][0]);
+        assertSame('test', $markup->inlineKeyboard[0][0]->text);
     }
 }

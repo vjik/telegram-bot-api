@@ -15,38 +15,42 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Yiisoft\Test\Support\Log\SimpleLogger;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class UpdateTest extends TestCase
 {
     public function testBase(): void
     {
         $update = new Update(99);
 
-        $this->assertSame(99, $update->updateId);
-        $this->assertNull($update->message);
-        $this->assertNull($update->editedMessage);
-        $this->assertNull($update->channelPost);
-        $this->assertNull($update->editedChannelPost);
-        $this->assertNull($update->businessConnection);
-        $this->assertNull($update->businessMessage);
-        $this->assertNull($update->editedBusinessMessage);
-        $this->assertNull($update->deletedBusinessMessages);
-        $this->assertNull($update->messageReaction);
-        $this->assertNull($update->messageReactionCount);
-        $this->assertNull($update->inlineQuery);
-        $this->assertNull($update->chosenInlineResult);
-        $this->assertNull($update->callbackQuery);
-        $this->assertNull($update->shippingQuery);
-        $this->assertNull($update->preCheckoutQuery);
-        $this->assertNull($update->poll);
-        $this->assertNull($update->pollAnswer);
-        $this->assertNull($update->myChatMember);
-        $this->assertNull($update->chatMember);
-        $this->assertNull($update->chatJoinRequest);
-        $this->assertNull($update->chatBoost);
-        $this->assertNull($update->removedChatBoost);
-        $this->assertNull($update->purchasedPaidMedia);
-        $this->assertNull($update->getRaw());
-        $this->assertNull($update->getRaw(true));
+        assertSame(99, $update->updateId);
+        assertNull($update->message);
+        assertNull($update->editedMessage);
+        assertNull($update->channelPost);
+        assertNull($update->editedChannelPost);
+        assertNull($update->businessConnection);
+        assertNull($update->businessMessage);
+        assertNull($update->editedBusinessMessage);
+        assertNull($update->deletedBusinessMessages);
+        assertNull($update->messageReaction);
+        assertNull($update->messageReactionCount);
+        assertNull($update->inlineQuery);
+        assertNull($update->chosenInlineResult);
+        assertNull($update->callbackQuery);
+        assertNull($update->shippingQuery);
+        assertNull($update->preCheckoutQuery);
+        assertNull($update->poll);
+        assertNull($update->pollAnswer);
+        assertNull($update->myChatMember);
+        assertNull($update->chatMember);
+        assertNull($update->chatJoinRequest);
+        assertNull($update->chatBoost);
+        assertNull($update->removedChatBoost);
+        assertNull($update->purchasedPaidMedia);
+        assertNull($update->getRaw());
+        assertNull($update->getRaw(true));
     }
 
     public function testFromTelegramResult(): void
@@ -335,40 +339,40 @@ final class UpdateTest extends TestCase
         ];
         $update = (new ObjectFactory())->create($data, null, Update::class);
 
-        $this->assertSame(99, $update->updateId);
-        $this->assertSame(1, $update->message?->messageId);
-        $this->assertSame(2, $update->editedMessage?->messageId);
-        $this->assertSame(3, $update->channelPost?->messageId);
-        $this->assertSame(4, $update->editedChannelPost?->messageId);
-        $this->assertSame('bcid1', $update->businessConnection?->id);
-        $this->assertSame(5, $update->businessMessage?->messageId);
-        $this->assertSame(6, $update->editedBusinessMessage?->messageId);
-        $this->assertSame('bcid2', $update->deletedBusinessMessages?->businessConnectionId);
-        $this->assertSame(79, $update->messageReaction?->messageId);
-        $this->assertSame(80, $update->messageReactionCount?->messageId);
-        $this->assertSame('iqid1', $update->inlineQuery?->id);
-        $this->assertSame('ri1', $update->chosenInlineResult?->resultId);
-        $this->assertSame('cbid1', $update->callbackQuery?->id);
-        $this->assertSame('sqid1', $update->shippingQuery?->id);
-        $this->assertSame('pcqid1', $update->preCheckoutQuery?->id);
-        $this->assertSame('poll1', $update->poll?->id);
-        $this->assertSame('poll2', $update->pollAnswer?->pollId);
-        $this->assertSame(23712, $update->myChatMember?->chat->id);
-        $this->assertSame(2399, $update->chatMember?->chat->id);
-        $this->assertSame(71326, $update->chatJoinRequest?->chat->id);
-        $this->assertSame(23682, $update->chatBoost?->chat->id);
-        $this->assertSame(1735, $update->removedChatBoost?->chat->id);
-        $this->assertSame(1235, $update->purchasedPaidMedia->from->id);
-        $this->assertNull($update->getRaw());
-        $this->assertNull($update->getRaw(true));
+        assertSame(99, $update->updateId);
+        assertSame(1, $update->message?->messageId);
+        assertSame(2, $update->editedMessage?->messageId);
+        assertSame(3, $update->channelPost?->messageId);
+        assertSame(4, $update->editedChannelPost?->messageId);
+        assertSame('bcid1', $update->businessConnection?->id);
+        assertSame(5, $update->businessMessage?->messageId);
+        assertSame(6, $update->editedBusinessMessage?->messageId);
+        assertSame('bcid2', $update->deletedBusinessMessages?->businessConnectionId);
+        assertSame(79, $update->messageReaction?->messageId);
+        assertSame(80, $update->messageReactionCount?->messageId);
+        assertSame('iqid1', $update->inlineQuery?->id);
+        assertSame('ri1', $update->chosenInlineResult?->resultId);
+        assertSame('cbid1', $update->callbackQuery?->id);
+        assertSame('sqid1', $update->shippingQuery?->id);
+        assertSame('pcqid1', $update->preCheckoutQuery?->id);
+        assertSame('poll1', $update->poll?->id);
+        assertSame('poll2', $update->pollAnswer?->pollId);
+        assertSame(23712, $update->myChatMember?->chat->id);
+        assertSame(2399, $update->chatMember?->chat->id);
+        assertSame(71326, $update->chatJoinRequest?->chat->id);
+        assertSame(23682, $update->chatBoost?->chat->id);
+        assertSame(1735, $update->removedChatBoost?->chat->id);
+        assertSame(1235, $update->purchasedPaidMedia->from->id);
+        assertNull($update->getRaw());
+        assertNull($update->getRaw(true));
     }
 
     public function testFromJsonString(): void
     {
         $update = Update::fromJson('{"update_id":33990940}');
-        $this->assertSame(33990940, $update->updateId);
-        $this->assertSame('{"update_id":33990940}', $update->getRaw());
-        $this->assertSame(['update_id' => 33990940], $update->getRaw(true));
+        assertSame(33990940, $update->updateId);
+        assertSame('{"update_id":33990940}', $update->getRaw());
+        assertSame(['update_id' => 33990940], $update->getRaw(true));
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
@@ -390,9 +394,9 @@ final class UpdateTest extends TestCase
         );
 
         $update = Update::fromServerRequest($request);
-        $this->assertSame(33990940, $update->updateId);
-        $this->assertSame('{"update_id":33990940}', $update->getRaw());
-        $this->assertSame(['update_id' => 33990940], $update->getRaw(true));
+        assertSame(33990940, $update->updateId);
+        assertSame('{"update_id":33990940}', $update->getRaw());
+        assertSame(['update_id' => 33990940], $update->getRaw(true));
 
         $this->expectException(TelegramParseResultException::class);
         $this->expectExceptionMessage('Failed to decode JSON.');
@@ -409,9 +413,9 @@ final class UpdateTest extends TestCase
         } catch (Throwable $exception) {
         }
 
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Failed to decode JSON.', $exception->getMessage());
-        $this->assertSame(
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Failed to decode JSON.', $exception->getMessage());
+        assertSame(
             [
                 [
                     'level' => 'error',
@@ -438,11 +442,11 @@ final class UpdateTest extends TestCase
         } catch (Throwable $exception) {
         }
 
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Invalid type of value. Expected type is "array", but got "int".', $exception->getMessage());
 
         if ($useLogger) {
-            $this->assertSame(
+            assertSame(
                 [
                     [
                         'level' => 'error',

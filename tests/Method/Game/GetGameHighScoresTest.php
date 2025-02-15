@@ -10,15 +10,19 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Game\GameHighScore;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class GetGameHighScoresTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetGameHighScores(1);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getGameHighScores', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getGameHighScores', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
             ],
@@ -30,7 +34,7 @@ final class GetGameHighScoresTest extends TestCase
     {
         $method = new GetGameHighScores(1, 2, 3, 'test');
 
-        $this->assertSame(
+        assertSame(
             [
                 'user_id' => 1,
                 'chat_id' => 2,
@@ -57,8 +61,8 @@ final class GetGameHighScoresTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertCount(1, $preparedResult);
-        $this->assertInstanceOf(GameHighScore::class, $preparedResult[0]);
-        $this->assertSame(2, $preparedResult[0]->position);
+        assertCount(1, $preparedResult);
+        assertInstanceOf(GameHighScore::class, $preparedResult[0]);
+        assertSame(2, $preparedResult[0]->position);
     }
 }

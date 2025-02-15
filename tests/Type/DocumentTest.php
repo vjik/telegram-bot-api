@@ -9,18 +9,22 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Document;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class DocumentTest extends TestCase
 {
     public function testBase(): void
     {
         $document = new Document('x1', 'xf1');
 
-        $this->assertSame('x1', $document->fileId);
-        $this->assertSame('xf1', $document->fileUniqueId);
-        $this->assertNull($document->thumbnail);
-        $this->assertNull($document->fileName);
-        $this->assertNull($document->mimeType);
-        $this->assertNull($document->fileSize);
+        assertSame('x1', $document->fileId);
+        assertSame('xf1', $document->fileUniqueId);
+        assertNull($document->thumbnail);
+        assertNull($document->fileName);
+        assertNull($document->mimeType);
+        assertNull($document->fileSize);
     }
 
     public function testFromTelegramResult(): void
@@ -39,15 +43,15 @@ final class DocumentTest extends TestCase
             'file_size' => 123,
         ], null, Document::class);
 
-        $this->assertSame('x1', $document->fileId);
-        $this->assertSame('xf1', $document->fileUniqueId);
+        assertSame('x1', $document->fileId);
+        assertSame('xf1', $document->fileUniqueId);
 
-        $this->assertInstanceOf(PhotoSize::class, $document->thumbnail);
-        $this->assertSame('tf1', $document->thumbnail->fileId);
-        $this->assertSame('tfu1', $document->thumbnail->fileUniqueId);
+        assertInstanceOf(PhotoSize::class, $document->thumbnail);
+        assertSame('tf1', $document->thumbnail->fileId);
+        assertSame('tfu1', $document->thumbnail->fileUniqueId);
 
-        $this->assertSame('face.png', $document->fileName);
-        $this->assertSame('image/png', $document->mimeType);
-        $this->assertSame(123, $document->fileSize);
+        assertSame('face.png', $document->fileName);
+        assertSame('image/png', $document->mimeType);
+        assertSame(123, $document->fileSize);
     }
 }

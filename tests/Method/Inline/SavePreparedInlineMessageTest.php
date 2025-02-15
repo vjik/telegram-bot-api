@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method\Inline;
+namespace Vjik\TelegramBot\Api\Tests\Method\Inline;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Inline\SavePreparedInlineMessage;
@@ -11,6 +11,9 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class SavePreparedInlineMessageTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +21,9 @@ final class SavePreparedInlineMessageTest extends TestCase
         $result = new InlineQueryResultGame('tid', 'Hello');
         $method = new SavePreparedInlineMessage(93, $result);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('savePreparedInlineMessage', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('savePreparedInlineMessage', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 93,
                 'result' => $result->toRequestArray(),
@@ -34,9 +37,9 @@ final class SavePreparedInlineMessageTest extends TestCase
         $result = new InlineQueryResultGame('tid', 'Hello');
         $method = new SavePreparedInlineMessage(91, $result, true, false, true, false);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('savePreparedInlineMessage', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('savePreparedInlineMessage', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 91,
                 'result' => $result->toRequestArray(),
@@ -58,8 +61,8 @@ final class SavePreparedInlineMessageTest extends TestCase
             'expiration_date' => 1731917862,
         ])->call($method);
 
-        $this->assertInstanceOf(PreparedInlineMessage::class, $preparedResult);
-        $this->assertSame('testId', $preparedResult->id);
-        $this->assertSame(1731917862, $preparedResult->expirationDate->getTimestamp());
+        assertInstanceOf(PreparedInlineMessage::class, $preparedResult);
+        assertSame('testId', $preparedResult->id);
+        assertSame(1731917862, $preparedResult->expirationDate->getTimestamp());
     }
 }

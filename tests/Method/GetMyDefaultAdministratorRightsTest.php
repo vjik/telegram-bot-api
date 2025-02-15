@@ -9,22 +9,26 @@ use Vjik\TelegramBot\Api\Method\GetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class GetMyDefaultAdministratorRightsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetMyDefaultAdministratorRights();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getMyDefaultAdministratorRights', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getMyDefaultAdministratorRights', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
     {
         $method = new GetMyDefaultAdministratorRights(true);
 
-        $this->assertSame(
+        assertSame(
             [
                 'for_channels' => true,
             ],
@@ -54,20 +58,20 @@ final class GetMyDefaultAdministratorRightsTest extends TestCase
             'can_manage_topics' => true,
         ])->call($method);
 
-        $this->assertTrue($preparedResult->isAnonymous);
-        $this->assertFalse($preparedResult->canManageChat);
-        $this->assertTrue($preparedResult->canDeleteMessages);
-        $this->assertTrue($preparedResult->canManageVideoChats);
-        $this->assertFalse($preparedResult->canRestrictMembers);
-        $this->assertTrue($preparedResult->canPromoteMembers);
-        $this->assertTrue($preparedResult->canChangeInfo);
-        $this->assertTrue($preparedResult->canInviteUsers);
-        $this->assertTrue($preparedResult->canPostStories);
-        $this->assertTrue($preparedResult->canEditStories);
-        $this->assertFalse($preparedResult->canDeleteStories);
-        $this->assertTrue($preparedResult->canPostMessages);
-        $this->assertTrue($preparedResult->canEditMessages);
-        $this->assertFalse($preparedResult->canPinMessages);
-        $this->assertTrue($preparedResult->canManageTopics);
+        assertTrue($preparedResult->isAnonymous);
+        assertFalse($preparedResult->canManageChat);
+        assertTrue($preparedResult->canDeleteMessages);
+        assertTrue($preparedResult->canManageVideoChats);
+        assertFalse($preparedResult->canRestrictMembers);
+        assertTrue($preparedResult->canPromoteMembers);
+        assertTrue($preparedResult->canChangeInfo);
+        assertTrue($preparedResult->canInviteUsers);
+        assertTrue($preparedResult->canPostStories);
+        assertTrue($preparedResult->canEditStories);
+        assertFalse($preparedResult->canDeleteStories);
+        assertTrue($preparedResult->canPostMessages);
+        assertTrue($preparedResult->canEditMessages);
+        assertFalse($preparedResult->canPinMessages);
+        assertTrue($preparedResult->canManageTopics);
     }
 }

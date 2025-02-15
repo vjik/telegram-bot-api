@@ -11,6 +11,9 @@ use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\MessageReactionUpdated;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class MessageReactionUpdatedTest extends TestCase
 {
     public function testBase(): void
@@ -21,11 +24,11 @@ final class MessageReactionUpdatedTest extends TestCase
         $newReaction = new ReactionTypeCustomEmoji(';)');
         $messageReactionUpdated = new MessageReactionUpdated($chat, 99, $date, [$oldReaction], [$newReaction]);
 
-        $this->assertSame($chat, $messageReactionUpdated->chat);
-        $this->assertSame(99, $messageReactionUpdated->messageId);
-        $this->assertSame($date, $messageReactionUpdated->date);
-        $this->assertSame([$oldReaction], $messageReactionUpdated->oldReaction);
-        $this->assertSame([$newReaction], $messageReactionUpdated->newReaction);
+        assertSame($chat, $messageReactionUpdated->chat);
+        assertSame(99, $messageReactionUpdated->messageId);
+        assertSame($date, $messageReactionUpdated->date);
+        assertSame([$oldReaction], $messageReactionUpdated->oldReaction);
+        assertSame([$newReaction], $messageReactionUpdated->newReaction);
     }
 
     public function testFromTelegramResult(): void
@@ -60,16 +63,16 @@ final class MessageReactionUpdatedTest extends TestCase
             ],
         ], null, MessageReactionUpdated::class);
 
-        $this->assertSame(1, $messageReactionUpdated->chat->id);
-        $this->assertSame(99, $messageReactionUpdated->messageId);
-        $this->assertSame(1623150080, $messageReactionUpdated->date->getTimestamp());
-        $this->assertSame('John', $messageReactionUpdated->user?->firstName);
-        $this->assertSame(2, $messageReactionUpdated->actorChat?->id);
+        assertSame(1, $messageReactionUpdated->chat->id);
+        assertSame(99, $messageReactionUpdated->messageId);
+        assertSame(1623150080, $messageReactionUpdated->date->getTimestamp());
+        assertSame('John', $messageReactionUpdated->user?->firstName);
+        assertSame(2, $messageReactionUpdated->actorChat?->id);
 
-        $this->assertCount(1, $messageReactionUpdated->oldReaction);
-        $this->assertSame('=)', $messageReactionUpdated->oldReaction[0]->emoji);
+        assertCount(1, $messageReactionUpdated->oldReaction);
+        assertSame('=)', $messageReactionUpdated->oldReaction[0]->emoji);
 
-        $this->assertCount(1, $messageReactionUpdated->newReaction);
-        $this->assertSame(';)', $messageReactionUpdated->newReaction[0]->emoji);
+        assertCount(1, $messageReactionUpdated->newReaction);
+        assertSame(';)', $messageReactionUpdated->newReaction[0]->emoji);
     }
 }

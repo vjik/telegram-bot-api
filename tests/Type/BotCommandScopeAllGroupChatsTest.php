@@ -7,15 +7,17 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeAllGroupChats;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BotCommandScopeAllGroupChatsTest extends TestCase
 {
     public function testBase(): void
     {
         $scope = new BotCommandScopeAllGroupChats();
 
-        $this->assertSame('all_group_chats', $scope->getType());
+        assertSame('all_group_chats', $scope->getType());
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'all_group_chats',
             ],

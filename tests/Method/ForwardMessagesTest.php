@@ -10,15 +10,19 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MessageId;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class ForwardMessagesTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new ForwardMessages(1, 2, [3, 4]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('forwardMessages', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('forwardMessages', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'from_chat_id' => 2,
@@ -32,9 +36,9 @@ final class ForwardMessagesTest extends TestCase
     {
         $method = new ForwardMessages(1, 2, [3, 4], 5, true, false);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('forwardMessages', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('forwardMessages', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 5,
@@ -60,10 +64,10 @@ final class ForwardMessagesTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertCount(2, $preparedResult);
-        $this->assertInstanceOf(MessageId::class, $preparedResult[0]);
-        $this->assertInstanceOf(MessageId::class, $preparedResult[1]);
-        $this->assertSame(7, $preparedResult[0]->messageId);
-        $this->assertSame(8, $preparedResult[1]->messageId);
+        assertCount(2, $preparedResult);
+        assertInstanceOf(MessageId::class, $preparedResult[0]);
+        assertInstanceOf(MessageId::class, $preparedResult[1]);
+        assertSame(7, $preparedResult[0]->messageId);
+        assertSame(8, $preparedResult[1]->messageId);
     }
 }

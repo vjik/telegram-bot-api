@@ -10,15 +10,20 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertSame;
+
 final class GetForumTopicIconStickersTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetForumTopicIconStickers();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getForumTopicIconStickers', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getForumTopicIconStickers', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -37,9 +42,9 @@ final class GetForumTopicIconStickersTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertIsArray($preparedResult);
-        $this->assertCount(1, $preparedResult);
-        $this->assertInstanceOf(Sticker::class, $preparedResult[0]);
-        $this->assertSame('x1', $preparedResult[0]->fileId);
+        assertIsArray($preparedResult);
+        assertCount(1, $preparedResult);
+        assertInstanceOf(Sticker::class, $preparedResult[0]);
+        assertSame('x1', $preparedResult[0]->fileId);
     }
 }

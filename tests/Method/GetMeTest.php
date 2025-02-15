@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetMeTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new getMe();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getMe', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getMe', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -30,6 +32,6 @@ final class GetMeTest extends TestCase
             'first_name' => 'Sergei',
         ])->call($method);
 
-        $this->assertSame(1, $preparedResult->id);
+        assertSame(1, $preparedResult->id);
     }
 }

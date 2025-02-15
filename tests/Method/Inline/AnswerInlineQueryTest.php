@@ -11,15 +11,18 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class AnswerInlineQueryTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new AnswerInlineQuery('id1', []);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerInlineQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerInlineQuery', $method->getApiMethod());
+        assertSame(
             [
                 'inline_query_id' => 'id1',
                 'results' => [],
@@ -34,9 +37,9 @@ final class AnswerInlineQueryTest extends TestCase
         $button = new InlineQueryResultsButton('test');
         $method = new AnswerInlineQuery('id2', [$result], 500, true, 'n2', $button);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerInlineQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerInlineQuery', $method->getApiMethod());
+        assertSame(
             [
                 'inline_query_id' => 'id2',
                 'results' => [
@@ -57,6 +60,6 @@ final class AnswerInlineQueryTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

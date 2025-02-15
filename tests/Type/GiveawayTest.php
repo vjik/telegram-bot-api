@@ -10,6 +10,12 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\Giveaway;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class GiveawayTest extends TestCase
 {
     public function testBase(): void
@@ -18,15 +24,15 @@ final class GiveawayTest extends TestCase
         $date = new DateTimeImmutable();
         $giveaway = new Giveaway([$chat], $date, 3);
 
-        $this->assertSame([$chat], $giveaway->chats);
-        $this->assertSame($date, $giveaway->winnersSelectionDate);
-        $this->assertSame(3, $giveaway->winnerCount);
-        $this->assertNull($giveaway->onlyNewMembers);
-        $this->assertNull($giveaway->hasPublicWinners);
-        $this->assertNull($giveaway->prizeDescription);
-        $this->assertNull($giveaway->countryCodes);
-        $this->assertNull($giveaway->premiumSubscriptionMonthCount);
-        $this->assertNull($giveaway->prizeStarCount);
+        assertSame([$chat], $giveaway->chats);
+        assertSame($date, $giveaway->winnersSelectionDate);
+        assertSame(3, $giveaway->winnerCount);
+        assertNull($giveaway->onlyNewMembers);
+        assertNull($giveaway->hasPublicWinners);
+        assertNull($giveaway->prizeDescription);
+        assertNull($giveaway->countryCodes);
+        assertNull($giveaway->premiumSubscriptionMonthCount);
+        assertNull($giveaway->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
@@ -49,18 +55,18 @@ final class GiveawayTest extends TestCase
             Giveaway::class,
         );
 
-        $this->assertCount(1, $giveaway->chats);
-        $this->assertInstanceOf(Chat::class, $giveaway->chats[0]);
-        $this->assertSame(1, $giveaway->chats[0]->id);
-        $this->assertSame('private', $giveaway->chats[0]->type);
+        assertCount(1, $giveaway->chats);
+        assertInstanceOf(Chat::class, $giveaway->chats[0]);
+        assertSame(1, $giveaway->chats[0]->id);
+        assertSame('private', $giveaway->chats[0]->type);
 
-        $this->assertSame(1234567890, $giveaway->winnersSelectionDate->getTimestamp());
-        $this->assertSame(3, $giveaway->winnerCount);
-        $this->assertTrue($giveaway->onlyNewMembers);
-        $this->assertTrue($giveaway->hasPublicWinners);
-        $this->assertSame('prize', $giveaway->prizeDescription);
-        $this->assertSame(['RU'], $giveaway->countryCodes);
-        $this->assertSame(7, $giveaway->premiumSubscriptionMonthCount);
-        $this->assertSame(19, $giveaway->prizeStarCount);
+        assertSame(1234567890, $giveaway->winnersSelectionDate->getTimestamp());
+        assertSame(3, $giveaway->winnerCount);
+        assertTrue($giveaway->onlyNewMembers);
+        assertTrue($giveaway->hasPublicWinners);
+        assertSame('prize', $giveaway->prizeDescription);
+        assertSame(['RU'], $giveaway->countryCodes);
+        assertSame(7, $giveaway->premiumSubscriptionMonthCount);
+        assertSame(19, $giveaway->prizeStarCount);
     }
 }

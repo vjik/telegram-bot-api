@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetBusinessConnectionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetBusinessConnection('b1');
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getBusinessConnection', $method->getApiMethod());
-        $this->assertSame(['business_connection_id' => 'b1'], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getBusinessConnection', $method->getApiMethod());
+        assertSame(['business_connection_id' => 'b1'], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -37,6 +39,6 @@ final class GetBusinessConnectionTest extends TestCase
             'is_enabled' => false,
         ])->call($method);
 
-        $this->assertSame('id1', $preparedResult->id);
+        assertSame('id1', $preparedResult->id);
     }
 }

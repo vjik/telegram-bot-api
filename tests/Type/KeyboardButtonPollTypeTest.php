@@ -7,24 +7,27 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\KeyboardButtonPollType;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class KeyboardButtonPollTypeTest extends TestCase
 {
     public function testBase(): void
     {
         $keyboardButtonPollType = new KeyboardButtonPollType();
 
-        $this->assertNull($keyboardButtonPollType->type);
+        assertNull($keyboardButtonPollType->type);
 
-        $this->assertSame([], $keyboardButtonPollType->toRequestArray());
+        assertSame([], $keyboardButtonPollType->toRequestArray());
     }
 
     public function testFilled(): void
     {
         $keyboardButtonPollType = new KeyboardButtonPollType('test');
 
-        $this->assertSame('test', $keyboardButtonPollType->type);
+        assertSame('test', $keyboardButtonPollType->type);
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'test',
             ],

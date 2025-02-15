@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetMyDefaultAdministratorRightsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetMyDefaultAdministratorRights();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMyDefaultAdministratorRights', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMyDefaultAdministratorRights', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
@@ -26,7 +29,7 @@ final class SetMyDefaultAdministratorRightsTest extends TestCase
         $rights = new ChatAdministratorRights(true, false, true, true, true, true, true, true, true, true, true);
         $method = new SetMyDefaultAdministratorRights($rights, false);
 
-        $this->assertSame(
+        assertSame(
             [
                 'rights' => $rights->toRequestArray(),
                 'for_channels' => false,
@@ -41,6 +44,6 @@ final class SetMyDefaultAdministratorRightsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

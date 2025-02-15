@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQuery;
 use Vjik\TelegramBot\Api\Type\Location;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class InlineQueryTest extends TestCase
 {
     public function testBase(): void
@@ -22,12 +26,12 @@ final class InlineQueryTest extends TestCase
             'offset2',
         );
 
-        $this->assertSame('id1', $inlineQuery->id);
-        $this->assertSame($user, $inlineQuery->from);
-        $this->assertSame('query1', $inlineQuery->query);
-        $this->assertSame('offset2', $inlineQuery->offset);
-        $this->assertNull($inlineQuery->chatType);
-        $this->assertNull($inlineQuery->location);
+        assertSame('id1', $inlineQuery->id);
+        assertSame($user, $inlineQuery->from);
+        assertSame('query1', $inlineQuery->query);
+        assertSame('offset2', $inlineQuery->offset);
+        assertNull($inlineQuery->chatType);
+        assertNull($inlineQuery->location);
     }
 
     public function testFromTelegramResult(): void
@@ -48,18 +52,18 @@ final class InlineQueryTest extends TestCase
             ],
         ], null, InlineQuery::class);
 
-        $this->assertSame('id1', $inlineQuery->id);
+        assertSame('id1', $inlineQuery->id);
 
-        $this->assertSame(1, $inlineQuery->from->id);
-        $this->assertSame(false, $inlineQuery->from->isBot);
-        $this->assertSame('user1', $inlineQuery->from->firstName);
+        assertSame(1, $inlineQuery->from->id);
+        assertSame(false, $inlineQuery->from->isBot);
+        assertSame('user1', $inlineQuery->from->firstName);
 
-        $this->assertSame('query1', $inlineQuery->query);
-        $this->assertSame('offset2', $inlineQuery->offset);
-        $this->assertSame('channel', $inlineQuery->chatType);
+        assertSame('query1', $inlineQuery->query);
+        assertSame('offset2', $inlineQuery->offset);
+        assertSame('channel', $inlineQuery->chatType);
 
-        $this->assertInstanceOf(Location::class, $inlineQuery->location);
-        $this->assertSame(1.2, $inlineQuery->location->latitude);
-        $this->assertSame(3.4, $inlineQuery->location->longitude);
+        assertInstanceOf(Location::class, $inlineQuery->location);
+        assertSame(1.2, $inlineQuery->location->latitude);
+        assertSame(3.4, $inlineQuery->location->longitude);
     }
 }

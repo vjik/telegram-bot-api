@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Type;
+namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaPreview;
+
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
 
 final class PaidMediaPreviewTest extends TestCase
 {
@@ -14,20 +17,20 @@ final class PaidMediaPreviewTest extends TestCase
     {
         $type = new PaidMediaPreview();
 
-        $this->assertSame('preview', $type->getType());
-        $this->assertNull($type->width);
-        $this->assertNull($type->height);
-        $this->assertNull($type->duration);
+        assertSame('preview', $type->getType());
+        assertNull($type->width);
+        assertNull($type->height);
+        assertNull($type->duration);
     }
 
     public function testFull(): void
     {
         $type = new PaidMediaPreview(100, 200, 512);
 
-        $this->assertSame('preview', $type->getType());
-        $this->assertSame(100, $type->width);
-        $this->assertSame(200, $type->height);
-        $this->assertSame(512, $type->duration);
+        assertSame('preview', $type->getType());
+        assertSame(100, $type->width);
+        assertSame(200, $type->height);
+        assertSame(512, $type->duration);
     }
 
     public function testFromTelegramResult(): void
@@ -39,9 +42,9 @@ final class PaidMediaPreviewTest extends TestCase
             'duration' => 512,
         ], null, PaidMediaPreview::class);
 
-        $this->assertSame('preview', $type->getType());
-        $this->assertSame(100, $type->width);
-        $this->assertSame(200, $type->height);
-        $this->assertSame(512, $type->duration);
+        assertSame('preview', $type->getType());
+        assertSame(100, $type->width);
+        assertSame(200, $type->height);
+        assertSame(512, $type->duration);
     }
 }

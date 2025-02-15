@@ -9,13 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 
+use function PHPUnit\Framework\assertSame;
+
 final class TransactionPartnerOtherTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new TransactionPartnerOther();
 
-        $this->assertSame('other', $object->getType());
+        assertSame('other', $object->getType());
     }
 
     public function testFromTelegramResult(): void
@@ -24,7 +26,7 @@ final class TransactionPartnerOtherTest extends TestCase
             'type' => 'other',
         ], null, TransactionPartnerOther::class);
 
-        $this->assertSame('other', $object->getType());
+        assertSame('other', $object->getType());
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

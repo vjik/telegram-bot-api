@@ -9,24 +9,26 @@ use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetStarTransactionsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetStarTransactions();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getStarTransactions', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getStarTransactions', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
     {
         $method = new GetStarTransactions(10, 100);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getStarTransactions', $method->getApiMethod());
-        $this->assertSame([
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getStarTransactions', $method->getApiMethod());
+        assertSame([
             'offset' => 10,
             'limit' => 100,
         ], $method->getData());
@@ -40,6 +42,6 @@ final class GetStarTransactionsTest extends TestCase
             'transactions' => [],
         ])->call($method);
 
-        $this->assertSame([], $preparedResult->transactions);
+        assertSame([], $preparedResult->transactions);
     }
 }

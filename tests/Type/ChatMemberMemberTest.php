@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatMemberMember;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ChatMemberMemberTest extends TestCase
 {
     public function testBase(): void
@@ -16,9 +18,9 @@ final class ChatMemberMemberTest extends TestCase
         $user = new User(123, false, 'John');
         $member = new ChatMemberMember($user);
 
-        $this->assertSame('member', $member->getStatus());
-        $this->assertSame($user, $member->getUser());
-        $this->assertSame($user, $member->user);
+        assertSame('member', $member->getStatus());
+        assertSame($user, $member->getUser());
+        assertSame($user, $member->user);
     }
 
     public function testFromTelegramResult(): void
@@ -31,7 +33,7 @@ final class ChatMemberMemberTest extends TestCase
             ],
         ], null, ChatMemberMember::class);
 
-        $this->assertSame(123, $member->user->id);
+        assertSame(123, $member->user->id);
     }
 
     public function testFromTelegramResultFull(): void
@@ -49,7 +51,7 @@ final class ChatMemberMemberTest extends TestCase
             ChatMemberMember::class,
         );
 
-        $this->assertSame(123, $member->user->id);
-        $this->assertSame(1724317996, $member->untilDate?->getTimestamp());
+        assertSame(123, $member->user->id);
+        assertSame(1724317996, $member->untilDate?->getTimestamp());
     }
 }

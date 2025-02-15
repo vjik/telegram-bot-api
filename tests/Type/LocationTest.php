@@ -8,18 +8,21 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Location;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class LocationTest extends TestCase
 {
     public function testBase(): void
     {
         $location = new Location(1.234, 5.678);
 
-        $this->assertSame(1.234, $location->latitude);
-        $this->assertSame(5.678, $location->longitude);
-        $this->assertNull($location->horizontalAccuracy);
-        $this->assertNull($location->livePeriod);
-        $this->assertNull($location->heading);
-        $this->assertNull($location->proximityAlertRadius);
+        assertSame(1.234, $location->latitude);
+        assertSame(5.678, $location->longitude);
+        assertNull($location->horizontalAccuracy);
+        assertNull($location->livePeriod);
+        assertNull($location->heading);
+        assertNull($location->proximityAlertRadius);
     }
 
     public function testFromTelegramResult(): void
@@ -33,11 +36,11 @@ final class LocationTest extends TestCase
             'proximity_alert_radius' => 100,
         ], null, Location::class);
 
-        $this->assertSame(1.234, $location->latitude);
-        $this->assertSame(5.678, $location->longitude);
-        $this->assertSame(0.1, $location->horizontalAccuracy);
-        $this->assertSame(60, $location->livePeriod);
-        $this->assertSame(90, $location->heading);
-        $this->assertSame(100, $location->proximityAlertRadius);
+        assertSame(1.234, $location->latitude);
+        assertSame(5.678, $location->longitude);
+        assertSame(0.1, $location->horizontalAccuracy);
+        assertSame(60, $location->livePeriod);
+        assertSame(90, $location->heading);
+        assertSame(100, $location->proximityAlertRadius);
     }
 }

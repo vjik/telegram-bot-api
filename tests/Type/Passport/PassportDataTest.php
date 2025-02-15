@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\Type\Passport\EncryptedCredentials;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportData;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class PassportDataTest extends TestCase
 {
     public function testBase(): void
@@ -21,8 +25,8 @@ final class PassportDataTest extends TestCase
             $encryptedCredentials,
         );
 
-        $this->assertSame([$encryptedPassportElement], $passportData->data);
-        $this->assertSame($encryptedCredentials, $passportData->credentials);
+        assertSame([$encryptedPassportElement], $passportData->data);
+        assertSame($encryptedCredentials, $passportData->credentials);
     }
 
     public function testFromTelegramResult(): void
@@ -41,14 +45,14 @@ final class PassportDataTest extends TestCase
             ],
         ], null, PassportData::class);
 
-        $this->assertCount(1, $passportData->data);
-        $this->assertInstanceOf(EncryptedPassportElement::class, $passportData->data[0]);
-        $this->assertSame('personal_details', $passportData->data[0]->type);
-        $this->assertSame('test-hash', $passportData->data[0]->hash);
+        assertCount(1, $passportData->data);
+        assertInstanceOf(EncryptedPassportElement::class, $passportData->data[0]);
+        assertSame('personal_details', $passportData->data[0]->type);
+        assertSame('test-hash', $passportData->data[0]->hash);
 
-        $this->assertInstanceOf(EncryptedCredentials::class, $passportData->credentials);
-        $this->assertSame('1', $passportData->credentials->data);
-        $this->assertSame('2', $passportData->credentials->hash);
-        $this->assertSame('3', $passportData->credentials->secret);
+        assertInstanceOf(EncryptedCredentials::class, $passportData->credentials);
+        assertSame('1', $passportData->credentials->data);
+        assertSame('2', $passportData->credentials->hash);
+        assertSame('3', $passportData->credentials->secret);
     }
 }

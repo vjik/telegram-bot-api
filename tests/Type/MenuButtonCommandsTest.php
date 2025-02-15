@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\MenuButtonCommands;
 
+use function PHPUnit\Framework\assertSame;
+
 final class MenuButtonCommandsTest extends TestCase
 {
     public function testBase(): void
     {
         $button = new MenuButtonCommands();
 
-        $this->assertSame('commands', $button->getType());
+        assertSame('commands', $button->getType());
 
-        $this->assertSame(['type' => 'commands'], $button->toRequestArray());
+        assertSame(['type' => 'commands'], $button->toRequestArray());
     }
 
     public function testFromTelegramResult(): void
@@ -26,7 +28,7 @@ final class MenuButtonCommandsTest extends TestCase
             'type' => 'commands',
         ], null, MenuButtonCommands::class);
 
-        $this->assertSame('commands', $button->getType());
+        assertSame('commands', $button->getType());
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

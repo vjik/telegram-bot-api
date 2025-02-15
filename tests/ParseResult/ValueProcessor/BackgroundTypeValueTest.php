@@ -14,6 +14,8 @@ use Vjik\TelegramBot\Api\Type\BackgroundTypeFill;
 use Vjik\TelegramBot\Api\Type\BackgroundTypePattern;
 use Vjik\TelegramBot\Api\Type\BackgroundTypeWallpaper;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class BackgroundTypeValueTest extends TestCase
 {
     public static function dataBase(): array
@@ -74,7 +76,7 @@ final class BackgroundTypeValueTest extends TestCase
 
         $result = $processor->process($data, null, $objectFactory);
 
-        $this->assertInstanceOf($expectedClass, $result);
+        assertInstanceOf($expectedClass, $result);
     }
 
     public function testUnknown(): void

@@ -11,14 +11,17 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertSame;
+
 final class InputMediaPhotoTest extends TestCase
 {
     public function testBase(): void
     {
         $inputMedia = new InputMediaPhoto('https://example.com/start.png');
 
-        $this->assertSame('photo', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('photo', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'photo',
                 'media' => 'https://example.com/start.png',
@@ -27,14 +30,14 @@ final class InputMediaPhotoTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'photo',
                 'media' => 'https://example.com/start.png',
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertEmpty($fileCollector->get());
+        assertEmpty($fileCollector->get());
     }
 
     public function testFull(): void
@@ -50,8 +53,8 @@ final class InputMediaPhotoTest extends TestCase
             true,
         );
 
-        $this->assertSame('photo', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('photo', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'photo',
                 'media' => $media,
@@ -65,7 +68,7 @@ final class InputMediaPhotoTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'photo',
                 'media' => 'attach://file0',
@@ -77,7 +80,7 @@ final class InputMediaPhotoTest extends TestCase
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $media,
             ],

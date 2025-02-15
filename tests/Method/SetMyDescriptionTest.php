@@ -9,22 +9,25 @@ use Vjik\TelegramBot\Api\Method\SetMyDescription;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetMyDescriptionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetMyDescription();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMyDescription', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMyDescription', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
     {
         $method = new SetMyDescription('test', 'ru');
 
-        $this->assertSame(
+        assertSame(
             [
                 'description' => 'test',
                 'language_code' => 'ru',
@@ -39,6 +42,6 @@ final class SetMyDescriptionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

@@ -7,17 +7,19 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeChatMember;
 
+use function PHPUnit\Framework\assertSame;
+
 final class BotCommandScopeChatMemberTest extends TestCase
 {
     public function testBase(): void
     {
         $scope = new BotCommandScopeChatMember(1, 2);
 
-        $this->assertSame('chat_member', $scope->getType());
-        $this->assertSame(1, $scope->chatId);
-        $this->assertSame(2, $scope->userId);
+        assertSame('chat_member', $scope->getType());
+        assertSame(1, $scope->chatId);
+        assertSame(2, $scope->userId);
 
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'chat_member',
                 'chat_id' => 1,

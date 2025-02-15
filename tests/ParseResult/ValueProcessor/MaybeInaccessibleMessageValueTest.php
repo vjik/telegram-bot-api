@@ -11,6 +11,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\MaybeInaccessibleMessageValue;
 use Vjik\TelegramBot\Api\Type\InaccessibleMessage;
 
+use function PHPUnit\Framework\assertInstanceOf;
+
 final class MaybeInaccessibleMessageValueTest extends TestCase
 {
     public function testInvalidType(): void
@@ -63,6 +65,6 @@ final class MaybeInaccessibleMessageValueTest extends TestCase
             $objectFactory,
         );
 
-        $this->assertInstanceOf(InaccessibleMessage::class, $result);
+        assertInstanceOf(InaccessibleMessage::class, $result);
     }
 }

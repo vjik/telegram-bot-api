@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class DeleteForumTopicTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new DeleteForumTopic(1, 2);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteForumTopic', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteForumTopic', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 2,
@@ -32,6 +35,6 @@ final class DeleteForumTopicTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

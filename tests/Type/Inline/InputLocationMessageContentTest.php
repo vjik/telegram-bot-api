@@ -7,19 +7,22 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Inline;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Inline\InputLocationMessageContent;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class InputLocationMessageContentTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new InputLocationMessageContent(1.1, 2.2);
 
-        $this->assertSame(1.1, $type->latitude);
-        $this->assertSame(2.2, $type->longitude);
-        $this->assertNull($type->horizontalAccuracy);
-        $this->assertNull($type->livePeriod);
-        $this->assertNull($type->heading);
-        $this->assertNull($type->proximityAlertRadius);
-        $this->assertSame(
+        assertSame(1.1, $type->latitude);
+        assertSame(2.2, $type->longitude);
+        assertNull($type->horizontalAccuracy);
+        assertNull($type->livePeriod);
+        assertNull($type->heading);
+        assertNull($type->proximityAlertRadius);
+        assertSame(
             [
                 'latitude' => 1.1,
                 'longitude' => 2.2,
@@ -32,13 +35,13 @@ final class InputLocationMessageContentTest extends TestCase
     {
         $type = new InputLocationMessageContent(1.1, 2.2, 3.4, 60, 90, 100);
 
-        $this->assertSame(1.1, $type->latitude);
-        $this->assertSame(2.2, $type->longitude);
-        $this->assertSame(3.4, $type->horizontalAccuracy);
-        $this->assertSame(60, $type->livePeriod);
-        $this->assertSame(90, $type->heading);
-        $this->assertSame(100, $type->proximityAlertRadius);
-        $this->assertSame(
+        assertSame(1.1, $type->latitude);
+        assertSame(2.2, $type->longitude);
+        assertSame(3.4, $type->horizontalAccuracy);
+        assertSame(60, $type->livePeriod);
+        assertSame(90, $type->heading);
+        assertSame(100, $type->proximityAlertRadius);
+        assertSame(
             [
                 'latitude' => 1.1,
                 'longitude' => 2.2,

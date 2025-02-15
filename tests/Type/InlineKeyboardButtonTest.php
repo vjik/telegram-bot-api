@@ -13,25 +13,30 @@ use Vjik\TelegramBot\Api\Type\LoginUrl;
 use Vjik\TelegramBot\Api\Type\SwitchInlineQueryChosenChat;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class InlineKeyboardButtonTest extends TestCase
 {
     public function testBase(): void
     {
         $button = new InlineKeyboardButton('test');
 
-        $this->assertSame('test', $button->text);
-        $this->assertNull($button->url);
-        $this->assertNull($button->callbackData);
-        $this->assertNull($button->webApp);
-        $this->assertNull($button->loginUrl);
-        $this->assertNull($button->switchInlineQuery);
-        $this->assertNull($button->switchInlineQueryCurrentChat);
-        $this->assertNull($button->switchInlineQueryChosenChat);
-        $this->assertNull($button->copyText);
-        $this->assertNull($button->callbackGame);
-        $this->assertNull($button->pay);
+        assertSame('test', $button->text);
+        assertNull($button->url);
+        assertNull($button->callbackData);
+        assertNull($button->webApp);
+        assertNull($button->loginUrl);
+        assertNull($button->switchInlineQuery);
+        assertNull($button->switchInlineQueryCurrentChat);
+        assertNull($button->switchInlineQueryChosenChat);
+        assertNull($button->copyText);
+        assertNull($button->callbackGame);
+        assertNull($button->pay);
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
             ],
@@ -60,19 +65,19 @@ final class InlineKeyboardButtonTest extends TestCase
             $copyText,
         );
 
-        $this->assertSame('test', $button->text);
-        $this->assertSame('https://example.com', $button->url);
-        $this->assertSame('callback-data', $button->callbackData);
-        $this->assertSame($webApp, $button->webApp);
-        $this->assertSame($loginUrl, $button->loginUrl);
-        $this->assertSame('switch-inline-query', $button->switchInlineQuery);
-        $this->assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
-        $this->assertSame($switchInlineQueryChosenChat, $button->switchInlineQueryChosenChat);
-        $this->assertSame($copyText, $button->copyText);
-        $this->assertSame($callbackGame, $button->callbackGame);
-        $this->assertTrue($button->pay);
+        assertSame('test', $button->text);
+        assertSame('https://example.com', $button->url);
+        assertSame('callback-data', $button->callbackData);
+        assertSame($webApp, $button->webApp);
+        assertSame($loginUrl, $button->loginUrl);
+        assertSame('switch-inline-query', $button->switchInlineQuery);
+        assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
+        assertSame($switchInlineQueryChosenChat, $button->switchInlineQueryChosenChat);
+        assertSame($copyText, $button->copyText);
+        assertSame($callbackGame, $button->callbackGame);
+        assertTrue($button->pay);
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
                 'url' => 'https://example.com',
@@ -106,16 +111,16 @@ final class InlineKeyboardButtonTest extends TestCase
             'pay' => true,
         ], null, InlineKeyboardButton::class);
 
-        $this->assertSame('test', $button->text);
-        $this->assertSame('https://example.com', $button->url);
-        $this->assertSame('callback-data', $button->callbackData);
-        $this->assertSame('https://example.com/test', $button->webApp?->url);
-        $this->assertSame('https://example.com/login', $button->loginUrl?->url);
-        $this->assertSame('switch-inline-query', $button->switchInlineQuery);
-        $this->assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
-        $this->assertSame('dg', $button->switchInlineQueryChosenChat->query);
-        $this->assertSame('Copy it!', $button->copyText->text);
-        $this->assertInstanceOf(CallbackGame::class, $button->callbackGame);
-        $this->assertTrue($button->pay);
+        assertSame('test', $button->text);
+        assertSame('https://example.com', $button->url);
+        assertSame('callback-data', $button->callbackData);
+        assertSame('https://example.com/test', $button->webApp?->url);
+        assertSame('https://example.com/login', $button->loginUrl?->url);
+        assertSame('switch-inline-query', $button->switchInlineQuery);
+        assertSame('switch-inline-query-current-chat', $button->switchInlineQueryCurrentChat);
+        assertSame('dg', $button->switchInlineQueryChosenChat->query);
+        assertSame('Copy it!', $button->copyText->text);
+        assertInstanceOf(CallbackGame::class, $button->callbackGame);
+        assertTrue($button->pay);
     }
 }

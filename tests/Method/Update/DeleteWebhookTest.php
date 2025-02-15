@@ -9,24 +9,27 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class DeleteWebhookTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new DeleteWebhook();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteWebhook', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteWebhook', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
     {
         $method = new DeleteWebhook(true);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteWebhook', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteWebhook', $method->getApiMethod());
+        assertSame(
             [
                 'drop_pending_updates' => true,
             ],
@@ -40,6 +43,6 @@ final class DeleteWebhookTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

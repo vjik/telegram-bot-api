@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Inline\ChosenInlineResult;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ChosenInlineResultTest extends TestCase
 {
     public function testBase(): void
@@ -20,11 +23,11 @@ final class ChosenInlineResultTest extends TestCase
             'query1',
         );
 
-        $this->assertSame('x1', $chosenInlineResult->resultId);
-        $this->assertSame($user, $chosenInlineResult->from);
-        $this->assertSame('query1', $chosenInlineResult->query);
-        $this->assertNull($chosenInlineResult->location);
-        $this->assertNull($chosenInlineResult->inlineMessageId);
+        assertSame('x1', $chosenInlineResult->resultId);
+        assertSame($user, $chosenInlineResult->from);
+        assertSame('query1', $chosenInlineResult->query);
+        assertNull($chosenInlineResult->location);
+        assertNull($chosenInlineResult->inlineMessageId);
     }
 
     public function testFromTelegramResult(): void
@@ -44,16 +47,16 @@ final class ChosenInlineResultTest extends TestCase
             'query' => 'query1',
         ], null, ChosenInlineResult::class);
 
-        $this->assertSame('x1', $chosenInlineResult->resultId);
+        assertSame('x1', $chosenInlineResult->resultId);
 
-        $this->assertSame(1, $chosenInlineResult->from->id);
-        $this->assertSame(false, $chosenInlineResult->from->isBot);
-        $this->assertSame('user1', $chosenInlineResult->from->firstName);
+        assertSame(1, $chosenInlineResult->from->id);
+        assertSame(false, $chosenInlineResult->from->isBot);
+        assertSame('user1', $chosenInlineResult->from->firstName);
 
-        $this->assertSame(1.2, $chosenInlineResult->location->latitude);
-        $this->assertSame(3.4, $chosenInlineResult->location->longitude);
+        assertSame(1.2, $chosenInlineResult->location->latitude);
+        assertSame(3.4, $chosenInlineResult->location->longitude);
 
-        $this->assertSame('m1', $chosenInlineResult->inlineMessageId);
-        $this->assertSame('query1', $chosenInlineResult->query);
+        assertSame('m1', $chosenInlineResult->inlineMessageId);
+        assertSame('query1', $chosenInlineResult->query);
     }
 }

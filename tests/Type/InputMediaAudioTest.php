@@ -11,14 +11,17 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertSame;
+
 final class InputMediaAudioTest extends TestCase
 {
     public function testBase(): void
     {
         $inputMedia = new InputMediaAudio('https://example.com/start.mp3');
 
-        $this->assertSame('audio', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('audio', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'audio',
                 'media' => 'https://example.com/start.mp3',
@@ -27,14 +30,14 @@ final class InputMediaAudioTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'audio',
                 'media' => 'https://example.com/start.mp3',
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertEmpty($fileCollector->get());
+        assertEmpty($fileCollector->get());
     }
 
     public function testFull(): void
@@ -53,8 +56,8 @@ final class InputMediaAudioTest extends TestCase
             'The title',
         );
 
-        $this->assertSame('audio', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('audio', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'audio',
                 'media' => $media,
@@ -70,7 +73,7 @@ final class InputMediaAudioTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'audio',
                 'media' => 'attach://file0',
@@ -84,7 +87,7 @@ final class InputMediaAudioTest extends TestCase
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $media,
                 'file1' => $thumbnail,

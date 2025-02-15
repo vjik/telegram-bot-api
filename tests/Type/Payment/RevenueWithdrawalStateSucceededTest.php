@@ -10,6 +10,8 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateSucceeded;
 
+use function PHPUnit\Framework\assertSame;
+
 final class RevenueWithdrawalStateSucceededTest extends TestCase
 {
     public function testBase(): void
@@ -20,9 +22,9 @@ final class RevenueWithdrawalStateSucceededTest extends TestCase
             'https://example.com/test',
         );
 
-        $this->assertSame('succeeded', $object->getType());
-        $this->assertSame($date, $object->date);
-        $this->assertSame('https://example.com/test', $object->url);
+        assertSame('succeeded', $object->getType());
+        assertSame($date, $object->date);
+        assertSame('https://example.com/test', $object->url);
     }
 
     public function testFromTelegramResult(): void
@@ -34,9 +36,9 @@ final class RevenueWithdrawalStateSucceededTest extends TestCase
             'url' => 'https://example.com/test',
         ], null, RevenueWithdrawalStateSucceeded::class);
 
-        $this->assertSame('succeeded', $object->getType());
-        $this->assertSame($date->getTimestamp(), $object->date->getTimestamp());
-        $this->assertSame('https://example.com/test', $object->url);
+        assertSame('succeeded', $object->getType());
+        assertSame($date->getTimestamp(), $object->date->getTimestamp());
+        assertSame('https://example.com/test', $object->url);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

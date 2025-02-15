@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ForwardMessageTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new ForwardMessage(1, 2, 3);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('forwardMessage', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('forwardMessage', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'from_chat_id' => 2,
@@ -39,7 +41,7 @@ final class ForwardMessageTest extends TestCase
             17,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 4,
@@ -66,6 +68,6 @@ final class ForwardMessageTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ShippingOptionTest extends TestCase
 {
     public function testBase(): void
@@ -19,7 +21,7 @@ final class ShippingOptionTest extends TestCase
             [$price],
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'id' => 'id',
                 'title' => 'title',

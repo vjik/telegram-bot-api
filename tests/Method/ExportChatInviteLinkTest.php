@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ExportChatInviteLinkTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new ExportChatInviteLink(1);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('exportChatInviteLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('exportChatInviteLink', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
             ],
@@ -31,6 +33,6 @@ final class ExportChatInviteLinkTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi('https://t.me/+example')->call($method);
 
-        $this->assertSame('https://t.me/+example', $preparedResult);
+        assertSame('https://t.me/+example', $preparedResult);
     }
 }

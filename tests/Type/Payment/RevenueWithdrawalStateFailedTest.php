@@ -9,13 +9,15 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateFailed;
 
+use function PHPUnit\Framework\assertSame;
+
 final class RevenueWithdrawalStateFailedTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new RevenueWithdrawalStateFailed();
 
-        $this->assertSame('failed', $object->getType());
+        assertSame('failed', $object->getType());
     }
 
     public function testFromTelegramResult(): void
@@ -24,7 +26,7 @@ final class RevenueWithdrawalStateFailedTest extends TestCase
             'type' => 'failed',
         ], null, RevenueWithdrawalStateFailed::class);
 
-        $this->assertSame('failed', $object->getType());
+        assertSame('failed', $object->getType());
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

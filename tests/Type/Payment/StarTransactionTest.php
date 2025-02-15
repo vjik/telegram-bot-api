@@ -11,6 +11,11 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerOther;
 
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class StarTransactionTest extends TestCase
 {
     public function testBase(): void
@@ -18,12 +23,12 @@ final class StarTransactionTest extends TestCase
         $date = new DateTimeImmutable();
         $object = new StarTransaction('id1', 2, $date);
 
-        $this->assertSame('id1', $object->id);
-        $this->assertSame(2, $object->amount);
-        $this->assertSame($date, $object->date);
-        $this->assertNull($object->source);
-        $this->assertNull($object->receiver);
-        $this->assertNull($object->nanostarAmount);
+        assertSame('id1', $object->id);
+        assertSame(2, $object->amount);
+        assertSame($date, $object->date);
+        assertNull($object->source);
+        assertNull($object->receiver);
+        assertNull($object->nanostarAmount);
     }
 
     public function testFull(): void
@@ -40,12 +45,12 @@ final class StarTransactionTest extends TestCase
             900,
         );
 
-        $this->assertSame('id1', $object->id);
-        $this->assertSame(2, $object->amount);
-        $this->assertSame($date, $object->date);
-        $this->assertSame($partner1, $object->source);
-        $this->assertSame($partner2, $object->receiver);
-        $this->assertSame(900, $object->nanostarAmount);
+        assertSame('id1', $object->id);
+        assertSame(2, $object->amount);
+        assertSame($date, $object->date);
+        assertSame($partner1, $object->source);
+        assertSame($partner2, $object->receiver);
+        assertSame(900, $object->nanostarAmount);
     }
 
     public function testFromTelegramResult(): void
@@ -63,12 +68,12 @@ final class StarTransactionTest extends TestCase
             'nanostar_amount' => 900,
         ], null, StarTransaction::class);
 
-        $this->assertSame('id1', $object->id);
-        $this->assertSame(2, $object->amount);
-        $this->assertEquals(new DateTimeImmutable('@123456789'), $object->date);
-        $this->assertInstanceOf(TransactionPartnerOther::class, $object->source);
-        $this->assertInstanceOf(TransactionPartnerOther::class, $object->receiver);
-        $this->assertSame(900, $object->nanostarAmount);
+        assertSame('id1', $object->id);
+        assertSame(2, $object->amount);
+        assertEquals(new DateTimeImmutable('@123456789'), $object->date);
+        assertInstanceOf(TransactionPartnerOther::class, $object->source);
+        assertInstanceOf(TransactionPartnerOther::class, $object->receiver);
+        assertSame(900, $object->nanostarAmount);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

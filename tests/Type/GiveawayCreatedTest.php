@@ -8,13 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\GiveawayCreated;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class GiveawayCreatedTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new GiveawayCreated();
 
-        $this->assertNull($object->prizeStarCount);
+        assertNull($object->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
@@ -27,6 +30,6 @@ final class GiveawayCreatedTest extends TestCase
             GiveawayCreated::class,
         );
 
-        $this->assertSame(23, $object->prizeStarCount);
+        assertSame(23, $object->prizeStarCount);
     }
 }

@@ -11,15 +11,17 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendLocationTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendLocation(12, 1.1, 2.2);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendLocation', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendLocation', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'latitude' => 1.1,
@@ -51,7 +53,7 @@ final class SendLocationTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'test',
                 'chat_id' => 12,
@@ -86,6 +88,6 @@ final class SendLocationTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

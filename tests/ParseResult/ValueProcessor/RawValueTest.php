@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
-namespace ParseResult\ValueProcessor;
+namespace Vjik\TelegramBot\Api\Tests\ParseResult\ValueProcessor;
 
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use stdClass;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\RawValue;
+
+use function PHPUnit\Framework\assertSame;
 
 final class RawValueTest extends TestCase
 {
@@ -23,6 +25,6 @@ final class RawValueTest extends TestCase
     public function testBase(mixed $value): void
     {
         $processor = new RawValue();
-        $this->assertSame($value, $processor->process($value, null, new ObjectFactory()));
+        assertSame($value, $processor->process($value, null, new ObjectFactory()));
     }
 }

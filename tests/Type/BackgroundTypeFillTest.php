@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BackgroundFillSolid;
 use Vjik\TelegramBot\Api\Type\BackgroundTypeFill;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class BackgroundTypeFillTest extends TestCase
 {
     public function testBase(): void
@@ -18,10 +21,10 @@ final class BackgroundTypeFillTest extends TestCase
             95,
         );
 
-        $this->assertSame('fill', $type->getType());
-        $this->assertInstanceOf(BackgroundFillSolid::class, $type->fill);
-        $this->assertSame(0x000000, $type->fill->color);
-        $this->assertSame(95, $type->darkThemeDimming);
+        assertSame('fill', $type->getType());
+        assertInstanceOf(BackgroundFillSolid::class, $type->fill);
+        assertSame(0x000000, $type->fill->color);
+        assertSame(95, $type->darkThemeDimming);
     }
 
     public function testFromTelegramResult(): void
@@ -35,9 +38,9 @@ final class BackgroundTypeFillTest extends TestCase
             'dark_theme_dimming' => 95,
         ], null, BackgroundTypeFill::class);
 
-        $this->assertSame('fill', $type->getType());
-        $this->assertInstanceOf(BackgroundFillSolid::class, $type->fill);
-        $this->assertSame(0x000000, $type->fill->color);
-        $this->assertSame(95, $type->darkThemeDimming);
+        assertSame('fill', $type->getType());
+        assertInstanceOf(BackgroundFillSolid::class, $type->fill);
+        assertSame(0x000000, $type->fill->color);
+        assertSame(95, $type->darkThemeDimming);
     }
 }

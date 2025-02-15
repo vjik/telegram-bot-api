@@ -11,6 +11,12 @@ use Vjik\TelegramBot\Api\Type\PhotoSize;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class StickerTest extends TestCase
 {
     public function testSticker(): void
@@ -25,21 +31,21 @@ final class StickerTest extends TestCase
             true,
         );
 
-        $this->assertSame('x1', $sticker->fileId);
-        $this->assertSame('fullX1', $sticker->fileUniqueId);
-        $this->assertSame('regular', $sticker->type);
-        $this->assertSame(100, $sticker->width);
-        $this->assertSame(120, $sticker->height);
-        $this->assertFalse($sticker->isAnimated);
-        $this->assertTrue($sticker->isVideo);
-        $this->assertNull($sticker->thumbnail);
-        $this->assertNull($sticker->emoji);
-        $this->assertNull($sticker->setName);
-        $this->assertNull($sticker->premiumAnimation);
-        $this->assertNull($sticker->maskPosition);
-        $this->assertNull($sticker->customEmojiId);
-        $this->assertNull($sticker->needsRepainting);
-        $this->assertNull($sticker->fileSize);
+        assertSame('x1', $sticker->fileId);
+        assertSame('fullX1', $sticker->fileUniqueId);
+        assertSame('regular', $sticker->type);
+        assertSame(100, $sticker->width);
+        assertSame(120, $sticker->height);
+        assertFalse($sticker->isAnimated);
+        assertTrue($sticker->isVideo);
+        assertNull($sticker->thumbnail);
+        assertNull($sticker->emoji);
+        assertNull($sticker->setName);
+        assertNull($sticker->premiumAnimation);
+        assertNull($sticker->maskPosition);
+        assertNull($sticker->customEmojiId);
+        assertNull($sticker->needsRepainting);
+        assertNull($sticker->fileSize);
     }
 
     public function testFromTelegramResult(): void
@@ -77,28 +83,28 @@ final class StickerTest extends TestCase
             'file_size' => 123,
         ], null, Sticker::class);
 
-        $this->assertSame('x1', $sticker->fileId);
-        $this->assertSame('fullX1', $sticker->fileUniqueId);
-        $this->assertSame('regular', $sticker->type);
-        $this->assertSame(100, $sticker->width);
-        $this->assertSame(120, $sticker->height);
-        $this->assertFalse($sticker->isAnimated);
-        $this->assertTrue($sticker->isVideo);
+        assertSame('x1', $sticker->fileId);
+        assertSame('fullX1', $sticker->fileUniqueId);
+        assertSame('regular', $sticker->type);
+        assertSame(100, $sticker->width);
+        assertSame(120, $sticker->height);
+        assertFalse($sticker->isAnimated);
+        assertTrue($sticker->isVideo);
 
-        $this->assertInstanceOf(PhotoSize::class, $sticker->thumbnail);
-        $this->assertSame('x2', $sticker->thumbnail->fileId);
+        assertInstanceOf(PhotoSize::class, $sticker->thumbnail);
+        assertSame('x2', $sticker->thumbnail->fileId);
 
-        $this->assertSame('😀', $sticker->emoji);
-        $this->assertSame('hello-name', $sticker->setName);
+        assertSame('😀', $sticker->emoji);
+        assertSame('hello-name', $sticker->setName);
 
-        $this->assertInstanceOf(File::class, $sticker->premiumAnimation);
-        $this->assertSame('x3', $sticker->premiumAnimation->fileId);
+        assertInstanceOf(File::class, $sticker->premiumAnimation);
+        assertSame('x3', $sticker->premiumAnimation->fileId);
 
-        $this->assertInstanceOf(MaskPosition::class, $sticker->maskPosition);
-        $this->assertSame('forehead', $sticker->maskPosition->point);
+        assertInstanceOf(MaskPosition::class, $sticker->maskPosition);
+        assertSame('forehead', $sticker->maskPosition->point);
 
-        $this->assertSame('customEmojiId', $sticker->customEmojiId);
-        $this->assertTrue($sticker->needsRepainting);
-        $this->assertSame(123, $sticker->fileSize);
+        assertSame('customEmojiId', $sticker->customEmojiId);
+        assertTrue($sticker->needsRepainting);
+        assertSame(123, $sticker->fileSize);
     }
 }

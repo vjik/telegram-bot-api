@@ -13,15 +13,17 @@ use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendMessageTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendMessage(12, 'hello');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendMessage', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendMessage', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'text' => 'hello',
@@ -52,7 +54,7 @@ final class SendMessageTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -85,6 +87,6 @@ final class SendMessageTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

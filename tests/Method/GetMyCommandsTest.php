@@ -11,15 +11,19 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeDefault;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class GetMyCommandsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetMyCommands();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getMyCommands', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getMyCommands', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
@@ -27,7 +31,7 @@ final class GetMyCommandsTest extends TestCase
         $scope = new BotCommandScopeDefault();
         $method = new GetMyCommands($scope, 'ru');
 
-        $this->assertSame(
+        assertSame(
             [
                 'scope' => $scope->toRequestArray(),
                 'language_code' => 'ru',
@@ -47,8 +51,8 @@ final class GetMyCommandsTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertCount(1, $preparedResult);
-        $this->assertInstanceOf(BotCommand::class, $preparedResult[0]);
-        $this->assertSame('start', $preparedResult[0]->command);
+        assertCount(1, $preparedResult);
+        assertInstanceOf(BotCommand::class, $preparedResult[0]);
+        assertSame('start', $preparedResult[0]->command);
     }
 }

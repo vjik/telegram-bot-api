@@ -9,17 +9,20 @@ use Vjik\TelegramBot\Api\Type\Inline\InputTextMessageContent;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class InputTextMessageContentTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new InputTextMessageContent('Hello');
 
-        $this->assertSame('Hello', $type->messageText);
-        $this->assertNull($type->parseMode);
-        $this->assertNull($type->entities);
-        $this->assertNull($type->linkPreviewOptions);
-        $this->assertSame(
+        assertSame('Hello', $type->messageText);
+        assertNull($type->parseMode);
+        assertNull($type->entities);
+        assertNull($type->linkPreviewOptions);
+        assertSame(
             [
                 'message_text' => 'Hello',
             ],
@@ -33,11 +36,11 @@ final class InputTextMessageContentTest extends TestCase
         $linkPreviewOptions = new LinkPreviewOptions(false);
         $type = new InputTextMessageContent('Hello', 'MarkdownV2', [$entity], $linkPreviewOptions);
 
-        $this->assertSame('Hello', $type->messageText);
-        $this->assertSame('MarkdownV2', $type->parseMode);
-        $this->assertSame([$entity], $type->entities);
-        $this->assertSame($linkPreviewOptions, $type->linkPreviewOptions);
-        $this->assertSame(
+        assertSame('Hello', $type->messageText);
+        assertSame('MarkdownV2', $type->parseMode);
+        assertSame([$entity], $type->entities);
+        assertSame($linkPreviewOptions, $type->linkPreviewOptions);
+        assertSame(
             [
                 'message_text' => 'Hello',
                 'parse_mode' => 'MarkdownV2',

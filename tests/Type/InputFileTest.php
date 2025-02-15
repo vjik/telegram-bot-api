@@ -10,6 +10,11 @@ use RuntimeException;
 use Throwable;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsResource;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class InputFileTest extends TestCase
 {
     public function testBase(): void
@@ -17,8 +22,8 @@ final class InputFileTest extends TestCase
         $stream = (new StreamFactory())->createStream('test');
         $file = new InputFile($stream);
 
-        $this->assertSame($stream, $file->resource);
-        $this->assertNull($file->filename);
+        assertSame($stream, $file->resource);
+        assertNull($file->filename);
     }
 
     public function testFilled(): void
@@ -26,24 +31,24 @@ final class InputFileTest extends TestCase
         $stream = (new StreamFactory())->createStream('test');
         $file = new InputFile($stream, 'file.txt');
 
-        $this->assertSame($stream, $file->resource);
-        $this->assertSame('file.txt', $file->filename);
+        assertSame($stream, $file->resource);
+        assertSame('file.txt', $file->filename);
     }
 
     public function testFromLocalFile(): void
     {
         $file = InputFile::fromLocalFile(__FILE__);
 
-        $this->assertIsResource($file->resource);
-        $this->assertNull($file->filename);
+        assertIsResource($file->resource);
+        assertNull($file->filename);
     }
 
     public function testFromLocalFileWithName(): void
     {
         $file = InputFile::fromLocalFile(__FILE__, 'test.php');
 
-        $this->assertIsResource($file->resource);
-        $this->assertSame('test.php', $file->filename);
+        assertIsResource($file->resource);
+        assertSame('test.php', $file->filename);
     }
 
     public function testFromLocalNotExistsFile(): void
@@ -64,8 +69,8 @@ final class InputFileTest extends TestCase
 
         restore_error_handler();
 
-        $this->assertSame('fopen(not-exists): Failed to open stream: No such file or directory', $errorMessage);
-        $this->assertInstanceOf(RuntimeException::class, $exception);
-        $this->assertSame('Unable to open file "not-exists".', $exception->getMessage());
+        assertSame('fopen(not-exists): Failed to open stream: No such file or directory', $errorMessage);
+        assertInstanceOf(RuntimeException::class, $exception);
+        assertSame('Unable to open file "not-exists".', $exception->getMessage());
     }
 }

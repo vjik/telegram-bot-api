@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class GetUserProfilePhotosTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetUserProfilePhotos(123);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getUserProfilePhotos', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getUserProfilePhotos', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 123,
             ],
@@ -33,7 +36,7 @@ final class GetUserProfilePhotosTest extends TestCase
             2,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'user_id' => 123,
                 'offset' => 1,
@@ -62,13 +65,13 @@ final class GetUserProfilePhotosTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(1, $preparedResult->totalCount);
-        $this->assertCount(1, $preparedResult->photos);
-        $this->assertCount(1, $preparedResult->photos[0]);
-        $this->assertSame('file_id', $preparedResult->photos[0][0]->fileId);
-        $this->assertSame('file_unique_id', $preparedResult->photos[0][0]->fileUniqueId);
-        $this->assertSame(1, $preparedResult->photos[0][0]->width);
-        $this->assertSame(2, $preparedResult->photos[0][0]->height);
-        $this->assertSame(3, $preparedResult->photos[0][0]->fileSize);
+        assertSame(1, $preparedResult->totalCount);
+        assertCount(1, $preparedResult->photos);
+        assertCount(1, $preparedResult->photos[0]);
+        assertSame('file_id', $preparedResult->photos[0][0]->fileId);
+        assertSame('file_unique_id', $preparedResult->photos[0][0]->fileUniqueId);
+        assertSame(1, $preparedResult->photos[0][0]->width);
+        assertSame(2, $preparedResult->photos[0][0]->height);
+        assertSame(3, $preparedResult->photos[0][0]->fileSize);
     }
 }

@@ -8,17 +8,20 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Voice;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class VoiceTest extends TestCase
 {
     public function testBase(): void
     {
         $voice = new Voice('f1', 'fu1', 23);
 
-        $this->assertSame('f1', $voice->fileId);
-        $this->assertSame('fu1', $voice->fileUniqueId);
-        $this->assertSame(23, $voice->duration);
-        $this->assertNull($voice->mimeType);
-        $this->assertNull($voice->fileSize);
+        assertSame('f1', $voice->fileId);
+        assertSame('fu1', $voice->fileUniqueId);
+        assertSame(23, $voice->duration);
+        assertNull($voice->mimeType);
+        assertNull($voice->fileSize);
     }
 
     public function testFromTelegramResult(): void
@@ -31,10 +34,10 @@ final class VoiceTest extends TestCase
             'file_size' => 100,
         ], null, Voice::class);
 
-        $this->assertSame('f1', $voice->fileId);
-        $this->assertSame('fu1', $voice->fileUniqueId);
-        $this->assertSame(23, $voice->duration);
-        $this->assertSame('audio/mpeg', $voice->mimeType);
-        $this->assertSame(100, $voice->fileSize);
+        assertSame('f1', $voice->fileId);
+        assertSame('fu1', $voice->fileUniqueId);
+        assertSame(23, $voice->duration);
+        assertSame('audio/mpeg', $voice->mimeType);
+        assertSame(100, $voice->fileSize);
     }
 }

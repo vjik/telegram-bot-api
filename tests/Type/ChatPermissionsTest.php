@@ -8,27 +8,32 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatPermissions;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatPermissionsTest extends TestCase
 {
     public function testBase(): void
     {
         $chatPermissions = new ChatPermissions();
 
-        $this->assertNull($chatPermissions->canSendMessages);
-        $this->assertNull($chatPermissions->canSendAudios);
-        $this->assertNull($chatPermissions->canSendDocuments);
-        $this->assertNull($chatPermissions->canSendPhotos);
-        $this->assertNull($chatPermissions->canSendVideos);
-        $this->assertNull($chatPermissions->canSendVideoNotes);
-        $this->assertNull($chatPermissions->canSendVoiceNotes);
-        $this->assertNull($chatPermissions->canSendPolls);
-        $this->assertNull($chatPermissions->canSendOtherMessages);
-        $this->assertNull($chatPermissions->canAddWebPagePreviews);
-        $this->assertNull($chatPermissions->canChangeInfo);
-        $this->assertNull($chatPermissions->canInviteUsers);
-        $this->assertNull($chatPermissions->canPinMessages);
-        $this->assertNull($chatPermissions->canManageTopics);
-        $this->assertSame([], $chatPermissions->toRequestArray());
+        assertNull($chatPermissions->canSendMessages);
+        assertNull($chatPermissions->canSendAudios);
+        assertNull($chatPermissions->canSendDocuments);
+        assertNull($chatPermissions->canSendPhotos);
+        assertNull($chatPermissions->canSendVideos);
+        assertNull($chatPermissions->canSendVideoNotes);
+        assertNull($chatPermissions->canSendVoiceNotes);
+        assertNull($chatPermissions->canSendPolls);
+        assertNull($chatPermissions->canSendOtherMessages);
+        assertNull($chatPermissions->canAddWebPagePreviews);
+        assertNull($chatPermissions->canChangeInfo);
+        assertNull($chatPermissions->canInviteUsers);
+        assertNull($chatPermissions->canPinMessages);
+        assertNull($chatPermissions->canManageTopics);
+        assertSame([], $chatPermissions->toRequestArray());
     }
 
     public function testFull(): void
@@ -50,7 +55,7 @@ final class ChatPermissionsTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'can_send_messages' => true,
                 'can_send_audios' => true,
@@ -90,19 +95,19 @@ final class ChatPermissionsTest extends TestCase
             'can_manage_topics' => true,
         ], null, ChatPermissions::class);
 
-        $this->assertTrue($chatPermissions->canSendMessages);
-        $this->assertFalse($chatPermissions->canSendAudios);
-        $this->assertTrue($chatPermissions->canSendDocuments);
-        $this->assertFalse($chatPermissions->canSendPhotos);
-        $this->assertTrue($chatPermissions->canSendVideos);
-        $this->assertTrue($chatPermissions->canSendVideoNotes);
-        $this->assertTrue($chatPermissions->canSendVoiceNotes);
-        $this->assertTrue($chatPermissions->canSendPolls);
-        $this->assertTrue($chatPermissions->canSendOtherMessages);
-        $this->assertTrue($chatPermissions->canAddWebPagePreviews);
-        $this->assertTrue($chatPermissions->canChangeInfo);
-        $this->assertTrue($chatPermissions->canInviteUsers);
-        $this->assertTrue($chatPermissions->canPinMessages);
-        $this->assertTrue($chatPermissions->canManageTopics);
+        assertTrue($chatPermissions->canSendMessages);
+        assertFalse($chatPermissions->canSendAudios);
+        assertTrue($chatPermissions->canSendDocuments);
+        assertFalse($chatPermissions->canSendPhotos);
+        assertTrue($chatPermissions->canSendVideos);
+        assertTrue($chatPermissions->canSendVideoNotes);
+        assertTrue($chatPermissions->canSendVoiceNotes);
+        assertTrue($chatPermissions->canSendPolls);
+        assertTrue($chatPermissions->canSendOtherMessages);
+        assertTrue($chatPermissions->canAddWebPagePreviews);
+        assertTrue($chatPermissions->canChangeInfo);
+        assertTrue($chatPermissions->canInviteUsers);
+        assertTrue($chatPermissions->canPinMessages);
+        assertTrue($chatPermissions->canManageTopics);
     }
 }

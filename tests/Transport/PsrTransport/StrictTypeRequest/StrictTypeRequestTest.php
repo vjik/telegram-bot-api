@@ -10,6 +10,8 @@ use PHPUnit\Framework\TestCase;
 use Psr\Http\Client\ClientInterface;
 use Vjik\TelegramBot\Api\Transport\PsrTransport;
 
+use function PHPUnit\Framework\assertSame;
+
 final class StrictTypeRequestTest extends TestCase
 {
     public function testWithHeader(): void
@@ -29,7 +31,7 @@ final class StrictTypeRequestTest extends TestCase
 
         $response = $transport->send('getMyName', ['language_code' => 'ru']);
 
-        $this->assertSame(201, $response->statusCode);
-        $this->assertSame('hello', $response->body);
+        assertSame(201, $response->statusCode);
+        assertSame('hello', $response->body);
     }
 }

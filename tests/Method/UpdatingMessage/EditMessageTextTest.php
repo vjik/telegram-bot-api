@@ -15,15 +15,19 @@ use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class EditMessageTextTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new EditMessageText('test');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('editMessageText', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('editMessageText', $method->getApiMethod());
+        assertSame(
             [
                 'text' => 'test',
             ],
@@ -48,7 +52,7 @@ final class EditMessageTextTest extends TestCase
             $replyMarkup,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 23,
@@ -69,7 +73,7 @@ final class EditMessageTextTest extends TestCase
         $method = new EditMessageText('test');
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
 
         $preparedResult = TestHelper::createSuccessStubApi([
             'message_id' => 7,
@@ -79,7 +83,7 @@ final class EditMessageTextTest extends TestCase
                 'type' => 'private',
             ],
         ])->call($method);
-        $this->assertInstanceOf(Message::class, $preparedResult);
-        $this->assertSame(7, $preparedResult->messageId);
+        assertInstanceOf(Message::class, $preparedResult);
+        assertSame(7, $preparedResult->messageId);
     }
 }

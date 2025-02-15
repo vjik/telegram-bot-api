@@ -13,15 +13,17 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendStickerTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SendSticker(12, 'https://example.com/sticker.webp');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendSticker', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendSticker', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'sticker' => 'https://example.com/sticker.webp',
@@ -49,7 +51,7 @@ final class SendStickerTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -80,6 +82,6 @@ final class SendStickerTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

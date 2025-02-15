@@ -11,6 +11,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransaction;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class StarTransactionsTest extends TestCase
 {
     public function testBase(): void
@@ -18,7 +21,7 @@ final class StarTransactionsTest extends TestCase
         $transaction = new StarTransaction('id1', 2, new DateTimeImmutable());
         $object = new StarTransactions([$transaction]);
 
-        $this->assertSame([$transaction], $object->transactions);
+        assertSame([$transaction], $object->transactions);
     }
 
     public function testFromTelegramResult(): void
@@ -33,8 +36,8 @@ final class StarTransactionsTest extends TestCase
             ],
         ], null, StarTransactions::class);
 
-        $this->assertCount(1, $object->transactions);
-        $this->assertSame('id1', $object->transactions[0]->id);
+        assertCount(1, $object->transactions);
+        assertSame('id1', $object->transactions[0]->id);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

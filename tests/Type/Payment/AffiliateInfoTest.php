@@ -2,11 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Type\Payment;
+namespace Vjik\TelegramBot\Api\Tests\Type\Payment;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\AffiliateInfo;
+
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
 
 final class AffiliateInfoTest extends TestCase
 {
@@ -14,11 +17,11 @@ final class AffiliateInfoTest extends TestCase
     {
         $type = new AffiliateInfo(100, 200);
 
-        $this->assertSame(100, $type->commissionPerMille);
-        $this->assertSame(200, $type->amount);
-        $this->assertNull($type->nanostarAmount);
-        $this->assertNull($type->affiliateUser);
-        $this->assertNull($type->affiliateChat);
+        assertSame(100, $type->commissionPerMille);
+        assertSame(200, $type->amount);
+        assertNull($type->nanostarAmount);
+        assertNull($type->affiliateUser);
+        assertNull($type->affiliateChat);
     }
 
     public function testFromTelegramResult(): void
@@ -38,10 +41,10 @@ final class AffiliateInfoTest extends TestCase
             'nanostar_amount' => 300,
         ], null, AffiliateInfo::class);
 
-        $this->assertSame(100, $type->commissionPerMille);
-        $this->assertSame(200, $type->amount);
-        $this->assertSame(300, $type->nanostarAmount);
-        $this->assertSame(123, $type->affiliateUser->id);
-        $this->assertSame(456, $type->affiliateChat->id);
+        assertSame(100, $type->commissionPerMille);
+        assertSame(200, $type->amount);
+        assertSame(300, $type->nanostarAmount);
+        assertSame(123, $type->affiliateUser->id);
+        assertSame(456, $type->affiliateChat->id);
     }
 }

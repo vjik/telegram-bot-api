@@ -8,17 +8,21 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatShared;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ChatSharedTest extends TestCase
 {
     public function testBase(): void
     {
         $chatShared = new ChatShared(12, 89);
 
-        $this->assertSame(12, $chatShared->requestId);
-        $this->assertSame(89, $chatShared->chatId);
-        $this->assertNull($chatShared->title);
-        $this->assertNull($chatShared->username);
-        $this->assertNull($chatShared->photo);
+        assertSame(12, $chatShared->requestId);
+        assertSame(89, $chatShared->chatId);
+        assertNull($chatShared->title);
+        assertNull($chatShared->username);
+        assertNull($chatShared->photo);
     }
 
     public function testFromTelegramResult(): void
@@ -34,13 +38,13 @@ final class ChatSharedTest extends TestCase
             ],
         ], null, ChatShared::class);
 
-        $this->assertSame(12, $chatShared->requestId);
-        $this->assertSame(89, $chatShared->chatId);
-        $this->assertSame('Title', $chatShared->title);
-        $this->assertSame('Vjik', $chatShared->username);
+        assertSame(12, $chatShared->requestId);
+        assertSame(89, $chatShared->chatId);
+        assertSame('Title', $chatShared->title);
+        assertSame('Vjik', $chatShared->username);
 
-        $this->assertCount(2, $chatShared->photo);
-        $this->assertSame('file_id1', $chatShared->photo[0]->fileId);
-        $this->assertSame('file_id2', $chatShared->photo[1]->fileId);
+        assertCount(2, $chatShared->photo);
+        assertSame('file_id1', $chatShared->photo[0]->fileId);
+        assertSame('file_id2', $chatShared->photo[1]->fileId);
     }
 }

@@ -10,6 +10,10 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class BusinessConnectionTest extends TestCase
 {
     public function testBase(): void
@@ -25,12 +29,12 @@ final class BusinessConnectionTest extends TestCase
             false,
         );
 
-        $this->assertSame('id1', $businessConnection->id);
-        $this->assertSame($user, $businessConnection->user);
-        $this->assertSame(23, $businessConnection->userChatId);
-        $this->assertSame($date, $businessConnection->date);
-        $this->assertTrue($businessConnection->canReply);
-        $this->assertFalse($businessConnection->isEnabled);
+        assertSame('id1', $businessConnection->id);
+        assertSame($user, $businessConnection->user);
+        assertSame(23, $businessConnection->userChatId);
+        assertSame($date, $businessConnection->date);
+        assertTrue($businessConnection->canReply);
+        assertFalse($businessConnection->isEnabled);
     }
 
     public function testFromTelegramResult(): void
@@ -48,11 +52,11 @@ final class BusinessConnectionTest extends TestCase
             'is_enabled' => false,
         ], null, BusinessConnection::class);
 
-        $this->assertSame('id1', $businessConnection->id);
-        $this->assertSame(123, $businessConnection->user->id);
-        $this->assertSame(23, $businessConnection->userChatId);
-        $this->assertSame(1717517779, $businessConnection->date->getTimestamp());
-        $this->assertTrue($businessConnection->canReply);
-        $this->assertFalse($businessConnection->isEnabled);
+        assertSame('id1', $businessConnection->id);
+        assertSame(123, $businessConnection->user->id);
+        assertSame(23, $businessConnection->userChatId);
+        assertSame(1717517779, $businessConnection->date->getTimestamp());
+        assertTrue($businessConnection->canReply);
+        assertFalse($businessConnection->isEnabled);
     }
 }

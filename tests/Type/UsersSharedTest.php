@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SharedUser;
 use Vjik\TelegramBot\Api\Type\UsersShared;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
+
 final class UsersSharedTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +19,8 @@ final class UsersSharedTest extends TestCase
         $sharedUser = new SharedUser(12);
         $usersShared = new UsersShared(99, [$sharedUser]);
 
-        $this->assertSame(99, $usersShared->requestId);
-        $this->assertSame([$sharedUser], $usersShared->users);
+        assertSame(99, $usersShared->requestId);
+        assertSame([$sharedUser], $usersShared->users);
     }
 
     public function testFromTelegramResult(): void
@@ -29,9 +32,9 @@ final class UsersSharedTest extends TestCase
             ],
         ], null, UsersShared::class);
 
-        $this->assertSame(99, $usersShared->requestId);
+        assertSame(99, $usersShared->requestId);
 
-        $this->assertCount(1, $usersShared->users);
-        $this->assertSame(12, $usersShared->users[0]->userId);
+        assertCount(1, $usersShared->users);
+        assertSame(12, $usersShared->users[0]->userId);
     }
 }

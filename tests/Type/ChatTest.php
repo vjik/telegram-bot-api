@@ -8,19 +8,23 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatTest extends TestCase
 {
     public function testBase(): void
     {
         $chat = new Chat(1, 'private');
 
-        $this->assertSame(1, $chat->id);
-        $this->assertSame('private', $chat->type);
-        $this->assertNull($chat->title);
-        $this->assertNull($chat->username);
-        $this->assertNull($chat->firstName);
-        $this->assertNull($chat->lastName);
-        $this->assertNull($chat->isForum);
+        assertSame(1, $chat->id);
+        assertSame('private', $chat->type);
+        assertNull($chat->title);
+        assertNull($chat->username);
+        assertNull($chat->firstName);
+        assertNull($chat->lastName);
+        assertNull($chat->isForum);
     }
 
     public function testFromTelegramResult(): void
@@ -35,12 +39,12 @@ final class ChatTest extends TestCase
             'is_forum' => true,
         ], null, Chat::class);
 
-        $this->assertSame(1, $chat->id);
-        $this->assertSame('private', $chat->type);
-        $this->assertSame('Title', $chat->title);
-        $this->assertSame('username', $chat->username);
-        $this->assertSame('First Name', $chat->firstName);
-        $this->assertSame('Last Name', $chat->lastName);
-        $this->assertTrue($chat->isForum);
+        assertSame(1, $chat->id);
+        assertSame('private', $chat->type);
+        assertSame('Title', $chat->title);
+        assertSame('username', $chat->username);
+        assertSame('First Name', $chat->firstName);
+        assertSame('Last Name', $chat->lastName);
+        assertTrue($chat->isForum);
     }
 }

@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class RevokeChatInviteLinkTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new RevokeChatInviteLink(1, 'https://t.me/+example');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('revokeChatInviteLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('revokeChatInviteLink', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'invite_link' => 'https://t.me/+example',
@@ -42,6 +44,6 @@ final class RevokeChatInviteLinkTest extends TestCase
             'is_revoked' => false,
         ])->call($method);
 
-        $this->assertSame(23, $preparedResult->creator->id);
+        assertSame(23, $preparedResult->creator->id);
     }
 }

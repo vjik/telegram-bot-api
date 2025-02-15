@@ -8,15 +8,17 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ReactionTypeCustomEmojiTest extends TestCase
 {
     public function testBase(): void
     {
         $reaction = new ReactionTypeCustomEmoji('👍');
 
-        $this->assertSame('custom_emoji', $reaction->getType());
-        $this->assertSame('👍', $reaction->customEmojiId);
-        $this->assertSame(
+        assertSame('custom_emoji', $reaction->getType());
+        assertSame('👍', $reaction->customEmojiId);
+        assertSame(
             [
                 'type' => 'custom_emoji',
                 'custom_emoji_id' => '👍',
@@ -32,7 +34,7 @@ final class ReactionTypeCustomEmojiTest extends TestCase
             'custom_emoji_id' => '👍',
         ], null, ReactionTypeCustomEmoji::class);
 
-        $this->assertSame('custom_emoji', $reaction->getType());
-        $this->assertSame('👍', $reaction->customEmojiId);
+        assertSame('custom_emoji', $reaction->getType());
+        assertSame('👍', $reaction->customEmojiId);
     }
 }

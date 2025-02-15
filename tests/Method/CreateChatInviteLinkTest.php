@@ -10,15 +10,17 @@ use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CreateChatInviteLinkTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new CreateChatInviteLink(23);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createChatInviteLink', $method->getApiMethod());
-        $this->assertSame(['chat_id' => 23], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createChatInviteLink', $method->getApiMethod());
+        assertSame(['chat_id' => 23], $method->getData());
     }
 
     public function testFull(): void
@@ -26,9 +28,9 @@ final class CreateChatInviteLinkTest extends TestCase
         $date = new DateTimeImmutable();
         $method = new CreateChatInviteLink(1, 'hello', $date, 23, false);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createChatInviteLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createChatInviteLink', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'name' => 'hello',
@@ -56,6 +58,6 @@ final class CreateChatInviteLinkTest extends TestCase
             'is_revoked' => false,
         ])->call($method);
 
-        $this->assertSame(23, $preparedResult->creator->id);
+        assertSame(23, $preparedResult->creator->id);
     }
 }

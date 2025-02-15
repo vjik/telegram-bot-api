@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class CreateNewStickerSetTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new CreateNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createNewStickerSet', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createNewStickerSet', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
                 'name' => 'test_by_bot',
@@ -34,7 +37,7 @@ final class CreateNewStickerSetTest extends TestCase
         $inputSticker = new InputSticker('https://example.com/test.png', 'static', ['😀']);
         $method = new CreateNewStickerSet(1, 'test_by_bot', 'Test Pack', [$inputSticker], 'regular', true);
 
-        $this->assertSame(
+        assertSame(
             [
                 'user_id' => 1,
                 'name' => 'test_by_bot',
@@ -53,6 +56,6 @@ final class CreateNewStickerSetTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

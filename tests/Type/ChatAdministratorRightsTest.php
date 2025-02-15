@@ -8,29 +8,34 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatAdministratorRightsTest extends TestCase
 {
     public function testBase(): void
     {
         $rights = new ChatAdministratorRights(true, true, true, true, true, true, true, true, true, true, false);
 
-        $this->assertTrue($rights->isAnonymous);
-        $this->assertTrue($rights->canManageChat);
-        $this->assertTrue($rights->canDeleteMessages);
-        $this->assertTrue($rights->canManageVideoChats);
-        $this->assertTrue($rights->canRestrictMembers);
-        $this->assertTrue($rights->canPromoteMembers);
-        $this->assertTrue($rights->canChangeInfo);
-        $this->assertTrue($rights->canInviteUsers);
-        $this->assertTrue($rights->canPostStories);
-        $this->assertTrue($rights->canEditStories);
-        $this->assertFalse($rights->canDeleteStories);
-        $this->assertNull($rights->canPostMessages);
-        $this->assertNull($rights->canEditMessages);
-        $this->assertNull($rights->canPinMessages);
-        $this->assertNull($rights->canManageTopics);
+        assertTrue($rights->isAnonymous);
+        assertTrue($rights->canManageChat);
+        assertTrue($rights->canDeleteMessages);
+        assertTrue($rights->canManageVideoChats);
+        assertTrue($rights->canRestrictMembers);
+        assertTrue($rights->canPromoteMembers);
+        assertTrue($rights->canChangeInfo);
+        assertTrue($rights->canInviteUsers);
+        assertTrue($rights->canPostStories);
+        assertTrue($rights->canEditStories);
+        assertFalse($rights->canDeleteStories);
+        assertNull($rights->canPostMessages);
+        assertNull($rights->canEditMessages);
+        assertNull($rights->canPinMessages);
+        assertNull($rights->canManageTopics);
 
-        $this->assertSame(
+        assertSame(
             [
                 'is_anonymous' => true,
                 'can_manage_chat' => true,
@@ -68,20 +73,20 @@ final class ChatAdministratorRightsTest extends TestCase
             'can_manage_topics' => true,
         ], null, ChatAdministratorRights::class);
 
-        $this->assertTrue($type->isAnonymous);
-        $this->assertFalse($type->canManageChat);
-        $this->assertTrue($type->canDeleteMessages);
-        $this->assertTrue($type->canManageVideoChats);
-        $this->assertFalse($type->canRestrictMembers);
-        $this->assertTrue($type->canPromoteMembers);
-        $this->assertTrue($type->canChangeInfo);
-        $this->assertTrue($type->canInviteUsers);
-        $this->assertTrue($type->canPostStories);
-        $this->assertTrue($type->canEditStories);
-        $this->assertFalse($type->canDeleteStories);
-        $this->assertTrue($type->canPostMessages);
-        $this->assertTrue($type->canEditMessages);
-        $this->assertFalse($type->canPinMessages);
-        $this->assertTrue($type->canManageTopics);
+        assertTrue($type->isAnonymous);
+        assertFalse($type->canManageChat);
+        assertTrue($type->canDeleteMessages);
+        assertTrue($type->canManageVideoChats);
+        assertFalse($type->canRestrictMembers);
+        assertTrue($type->canPromoteMembers);
+        assertTrue($type->canChangeInfo);
+        assertTrue($type->canInviteUsers);
+        assertTrue($type->canPostStories);
+        assertTrue($type->canEditStories);
+        assertFalse($type->canDeleteStories);
+        assertTrue($type->canPostMessages);
+        assertTrue($type->canEditMessages);
+        assertFalse($type->canPinMessages);
+        assertTrue($type->canManageTopics);
     }
 }

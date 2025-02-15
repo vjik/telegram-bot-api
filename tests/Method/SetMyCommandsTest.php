@@ -11,6 +11,9 @@ use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeDefault;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetMyCommandsTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +21,9 @@ final class SetMyCommandsTest extends TestCase
         $botCommand = new BotCommand('test', 'Test description');
         $method = new SetMyCommands([$botCommand]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMyCommands', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMyCommands', $method->getApiMethod());
+        assertSame(
             [
                 'commands' => [
                     $botCommand->toRequestArray(),
@@ -36,9 +39,9 @@ final class SetMyCommandsTest extends TestCase
         $scope = new BotCommandScopeDefault();
         $method = new SetMyCommands([$botCommand], $scope, 'ru');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMyCommands', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMyCommands', $method->getApiMethod());
+        assertSame(
             [
                 'commands' => [
                     $botCommand->toRequestArray(),
@@ -56,6 +59,6 @@ final class SetMyCommandsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

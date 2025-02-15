@@ -14,6 +14,11 @@ use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertSame;
+
 final class SendMediaGroupTest extends TestCase
 {
     public function testBase(): void
@@ -21,9 +26,9 @@ final class SendMediaGroupTest extends TestCase
         $inputMedia = new InputMediaPhoto('https://example.com/face.png');
         $method = new SendMediaGroup(12, [$inputMedia]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendMediaGroup', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendMediaGroup', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'media' => [$inputMedia->toRequestArray()],
@@ -49,7 +54,7 @@ final class SendMediaGroupTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid',
                 'chat_id' => 12,
@@ -86,9 +91,9 @@ final class SendMediaGroupTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(Message::class, $result[0]);
-        $this->assertSame(7, $result[0]->messageId);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(Message::class, $result[0]);
+        assertSame(7, $result[0]->messageId);
     }
 }

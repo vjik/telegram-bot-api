@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertSame;
+
 final class InputFileCollectorTest extends TestCase
 {
     public function testBase(): void
@@ -20,7 +22,7 @@ final class InputFileCollectorTest extends TestCase
         $collector->add($file1);
         $collector->add($file2);
 
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $file1,
                 'file1' => $file2,
@@ -37,7 +39,7 @@ final class InputFileCollectorTest extends TestCase
         $collector->add($file1);
         $collector->add($file2);
 
-        $this->assertSame(
+        assertSame(
             [
                 'test23' => $file1,
                 'test24' => $file2,

@@ -7,14 +7,16 @@ namespace Vjik\TelegramBot\Api\Tests\Type\Passport;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementErrorDataField;
 
+use function PHPUnit\Framework\assertSame;
+
 final class PassportElementErrorDataFieldTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new PassportElementErrorDataField('driver_license', 'test.jpg', 'qwerty', 'Test message');
 
-        $this->assertSame('data', $type->getSource());
-        $this->assertSame(
+        assertSame('data', $type->getSource());
+        assertSame(
             [
                 'source' => 'data',
                 'type' => 'driver_license',

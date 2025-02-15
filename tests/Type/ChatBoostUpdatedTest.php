@@ -13,6 +13,9 @@ use Vjik\TelegramBot\Api\Type\ChatBoostSourcePremium;
 use Vjik\TelegramBot\Api\Type\ChatBoostUpdated;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class ChatBoostUpdatedTest extends TestCase
 {
     public function testBase(): void
@@ -28,8 +31,8 @@ final class ChatBoostUpdatedTest extends TestCase
         );
         $chatBoostUpdated = new ChatBoostUpdated($chat, $chatBoost);
 
-        $this->assertSame($chat, $chatBoostUpdated->chat);
-        $this->assertSame($chatBoost, $chatBoostUpdated->boost);
+        assertSame($chat, $chatBoostUpdated->chat);
+        assertSame($chatBoost, $chatBoostUpdated->boost);
     }
 
     public function testFromTelegramResult(): void
@@ -54,13 +57,13 @@ final class ChatBoostUpdatedTest extends TestCase
             ],
         ], null, ChatBoostUpdated::class);
 
-        $this->assertSame(1, $chatBoostUpdated->chat->id);
-        $this->assertSame('private', $chatBoostUpdated->chat->type);
+        assertSame(1, $chatBoostUpdated->chat->id);
+        assertSame('private', $chatBoostUpdated->chat->type);
 
-        $this->assertSame('b1', $chatBoostUpdated->boost->boostId);
-        $this->assertSame(1630000000, $chatBoostUpdated->boost->addDate->getTimestamp());
-        $this->assertSame(1630000001, $chatBoostUpdated->boost->expirationDate->getTimestamp());
-        $this->assertInstanceOf(ChatBoostSourcePremium::class, $chatBoostUpdated->boost->source);
-        $this->assertSame(123, $chatBoostUpdated->boost->source->user->id);
+        assertSame('b1', $chatBoostUpdated->boost->boostId);
+        assertSame(1630000000, $chatBoostUpdated->boost->addDate->getTimestamp());
+        assertSame(1630000001, $chatBoostUpdated->boost->expirationDate->getTimestamp());
+        assertInstanceOf(ChatBoostSourcePremium::class, $chatBoostUpdated->boost->source);
+        assertSame(123, $chatBoostUpdated->boost->source->user->id);
     }
 }

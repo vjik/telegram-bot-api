@@ -10,6 +10,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\MessageOriginChannel;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class MessageOriginChannelTest extends TestCase
 {
     public function testBase(): void
@@ -18,12 +21,12 @@ final class MessageOriginChannelTest extends TestCase
         $chat = new Chat(1, 'private');
         $origin = new MessageOriginChannel($date, $chat, 12);
 
-        $this->assertSame('channel', $origin->getType());
-        $this->assertSame($date, $origin->getDate());
-        $this->assertSame($date, $origin->date);
-        $this->assertSame($chat, $origin->chat);
-        $this->assertSame(12, $origin->messageId);
-        $this->assertNull($origin->authorSignature);
+        assertSame('channel', $origin->getType());
+        assertSame($date, $origin->getDate());
+        assertSame($date, $origin->date);
+        assertSame($chat, $origin->chat);
+        assertSame(12, $origin->messageId);
+        assertNull($origin->authorSignature);
     }
 
     public function testFromTelegramResult(): void
@@ -39,11 +42,11 @@ final class MessageOriginChannelTest extends TestCase
             'author_signature' => 'John Doe',
         ], null, MessageOriginChannel::class);
 
-        $this->assertSame('channel', $origin->getType());
-        $this->assertSame(12412512, $origin->getDate()->getTimestamp());
-        $this->assertSame(12412512, $origin->date->getTimestamp());
-        $this->assertSame(123, $origin->chat->id);
-        $this->assertSame(12, $origin->messageId);
-        $this->assertSame('John Doe', $origin->authorSignature);
+        assertSame('channel', $origin->getType());
+        assertSame(12412512, $origin->getDate()->getTimestamp());
+        assertSame(12412512, $origin->date->getTimestamp());
+        assertSame(123, $origin->chat->id);
+        assertSame(12, $origin->messageId);
+        assertSame('John Doe', $origin->authorSignature);
     }
 }

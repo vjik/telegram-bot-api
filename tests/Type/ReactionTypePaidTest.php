@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ReactionTypePaid;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ReactionTypePaidTest extends TestCase
 {
     public function testBase(): void
     {
         $reaction = new ReactionTypePaid();
 
-        $this->assertSame('paid', $reaction->getType());
-        $this->assertSame(
+        assertSame('paid', $reaction->getType());
+        assertSame(
             [
                 'type' => 'paid',
             ],
@@ -33,6 +35,6 @@ final class ReactionTypePaidTest extends TestCase
             ReactionTypePaid::class,
         );
 
-        $this->assertSame('paid', $reaction->getType());
+        assertSame('paid', $reaction->getType());
     }
 }

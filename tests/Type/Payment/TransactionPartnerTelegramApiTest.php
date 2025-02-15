@@ -9,14 +9,16 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerTelegramApi;
 
+use function PHPUnit\Framework\assertSame;
+
 final class TransactionPartnerTelegramApiTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new TransactionPartnerTelegramApi(3);
 
-        $this->assertSame('telegram_api', $object->getType());
-        $this->assertSame(3, $object->requestCount);
+        assertSame('telegram_api', $object->getType());
+        assertSame(3, $object->requestCount);
     }
 
     public function testFromTelegramResult(): void
@@ -30,8 +32,8 @@ final class TransactionPartnerTelegramApiTest extends TestCase
             TransactionPartnerTelegramApi::class,
         );
 
-        $this->assertSame('telegram_api', $object->getType());
-        $this->assertSame(7, $object->requestCount);
+        assertSame('telegram_api', $object->getType());
+        assertSame(7, $object->requestCount);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

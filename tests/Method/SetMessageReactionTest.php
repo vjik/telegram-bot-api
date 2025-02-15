@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ReactionTypeEmoji;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetMessageReactionTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetMessageReaction(1, 2);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMessageReaction', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMessageReaction', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_id' => 2,
@@ -32,9 +35,9 @@ final class SetMessageReactionTest extends TestCase
         $reactionType = new ReactionTypeEmoji('👍');
         $method = new SetMessageReaction(1, 2, [$reactionType], true);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setMessageReaction', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setMessageReaction', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'message_id' => 2,
@@ -51,6 +54,6 @@ final class SetMessageReactionTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

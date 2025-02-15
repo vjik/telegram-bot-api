@@ -8,16 +8,19 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ForumTopic;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ForumTopicTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new ForumTopic(1, 'test', 0x00FF00);
 
-        $this->assertSame(1, $type->messageThreadId);
-        $this->assertSame('test', $type->name);
-        $this->assertSame(0x00FF00, $type->iconColor);
-        $this->assertNull($type->iconCustomEmojiId);
+        assertSame(1, $type->messageThreadId);
+        assertSame('test', $type->name);
+        assertSame(0x00FF00, $type->iconColor);
+        assertNull($type->iconCustomEmojiId);
     }
 
     public function testFromTelegramResult(): void
@@ -29,9 +32,9 @@ final class ForumTopicTest extends TestCase
             'icon_custom_emoji_id' => '2351346235143',
         ], null, ForumTopic::class);
 
-        $this->assertSame(1, $type->messageThreadId);
-        $this->assertSame('test', $type->name);
-        $this->assertSame(0x00FF00, $type->iconColor);
-        $this->assertSame('2351346235143', $type->iconCustomEmojiId);
+        assertSame(1, $type->messageThreadId);
+        assertSame('test', $type->name);
+        assertSame(0x00FF00, $type->iconColor);
+        assertSame('2351346235143', $type->iconCustomEmojiId);
     }
 }

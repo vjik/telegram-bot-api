@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\WebAppData;
 
+use function PHPUnit\Framework\assertSame;
+
 final class WebAppDataTest extends TestCase
 {
     public function testBase(): void
     {
         $webAppData = new WebAppData('test', 'label');
 
-        $this->assertSame('test', $webAppData->data);
-        $this->assertSame('label', $webAppData->buttonText);
+        assertSame('test', $webAppData->data);
+        assertSame('label', $webAppData->buttonText);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class WebAppDataTest extends TestCase
             'button_text' => 'label',
         ], null, WebAppData::class);
 
-        $this->assertSame('test', $webAppData->data);
-        $this->assertSame('label', $webAppData->buttonText);
+        assertSame('test', $webAppData->data);
+        assertSame('label', $webAppData->buttonText);
     }
 }

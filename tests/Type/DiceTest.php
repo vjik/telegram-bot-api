@@ -8,14 +8,16 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Dice;
 
+use function PHPUnit\Framework\assertSame;
+
 final class DiceTest extends TestCase
 {
     public function testBase(): void
     {
         $dice = new Dice('🎲', 6);
 
-        $this->assertSame('🎲', $dice->emoji);
-        $this->assertSame(6, $dice->value);
+        assertSame('🎲', $dice->emoji);
+        assertSame(6, $dice->value);
     }
 
     public function testFromTelegramResult(): void
@@ -25,7 +27,7 @@ final class DiceTest extends TestCase
             'value' => 6,
         ], null, Dice::class);
 
-        $this->assertSame('🎲', $dice->emoji);
-        $this->assertSame(6, $dice->value);
+        assertSame('🎲', $dice->emoji);
+        assertSame(6, $dice->value);
     }
 }

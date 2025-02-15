@@ -9,6 +9,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\VideoChatScheduled;
 
+use function PHPUnit\Framework\assertSame;
+
 final class VideoChatScheduledTest extends TestCase
 {
     public function testBase(): void
@@ -16,7 +18,7 @@ final class VideoChatScheduledTest extends TestCase
         $date = new DateTimeImmutable();
         $videoChatScheduled = new VideoChatScheduled($date);
 
-        $this->assertSame($date, $videoChatScheduled->startDate);
+        assertSame($date, $videoChatScheduled->startDate);
     }
 
     public function testFromTelegramResult(): void
@@ -25,6 +27,6 @@ final class VideoChatScheduledTest extends TestCase
             'start_date' => 1234567890,
         ], null, VideoChatScheduled::class);
 
-        $this->assertSame(1234567890, $videoChatScheduled->startDate->getTimestamp());
+        assertSame(1234567890, $videoChatScheduled->startDate->getTimestamp());
     }
 }

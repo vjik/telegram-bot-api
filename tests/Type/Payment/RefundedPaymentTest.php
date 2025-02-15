@@ -8,17 +8,20 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RefundedPayment;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class RefundedPaymentTest extends TestCase
 {
     public function testBase(): void
     {
         $type = new RefundedPayment('XTR', 12, 'ip', 'tpid');
 
-        $this->assertSame('XTR', $type->currency);
-        $this->assertSame(12, $type->totalAmount);
-        $this->assertSame('ip', $type->invoicePayload);
-        $this->assertSame('tpid', $type->telegramPaymentChargeId);
-        $this->assertNull($type->providerPaymentChargeId);
+        assertSame('XTR', $type->currency);
+        assertSame(12, $type->totalAmount);
+        assertSame('ip', $type->invoicePayload);
+        assertSame('tpid', $type->telegramPaymentChargeId);
+        assertNull($type->providerPaymentChargeId);
     }
 
     public function testFromTelegramResult(): void
@@ -35,10 +38,10 @@ final class RefundedPaymentTest extends TestCase
             RefundedPayment::class,
         );
 
-        $this->assertSame('XTR', $type->currency);
-        $this->assertSame(12, $type->totalAmount);
-        $this->assertSame('ip', $type->invoicePayload);
-        $this->assertSame('tpid', $type->telegramPaymentChargeId);
-        $this->assertSame('ppcid', $type->providerPaymentChargeId);
+        assertSame('XTR', $type->currency);
+        assertSame(12, $type->totalAmount);
+        assertSame('ip', $type->invoicePayload);
+        assertSame('tpid', $type->telegramPaymentChargeId);
+        assertSame('ppcid', $type->providerPaymentChargeId);
     }
 }

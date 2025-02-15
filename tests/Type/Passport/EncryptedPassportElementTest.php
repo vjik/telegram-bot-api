@@ -9,22 +9,28 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Passport\EncryptedPassportElement;
 use Vjik\TelegramBot\Api\Type\Passport\PassportFile;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class EncryptedPassportElementTest extends TestCase
 {
     public function testBase(): void
     {
         $encryptedPassportElement = new EncryptedPassportElement('personal_details', '2');
 
-        $this->assertSame('personal_details', $encryptedPassportElement->type);
-        $this->assertSame('2', $encryptedPassportElement->hash);
-        $this->assertNull($encryptedPassportElement->data);
-        $this->assertNull($encryptedPassportElement->phoneNumber);
-        $this->assertNull($encryptedPassportElement->email);
-        $this->assertNull($encryptedPassportElement->files);
-        $this->assertNull($encryptedPassportElement->frontSide);
-        $this->assertNull($encryptedPassportElement->reverseSide);
-        $this->assertNull($encryptedPassportElement->selfie);
-        $this->assertNull($encryptedPassportElement->translation);
+        assertSame('personal_details', $encryptedPassportElement->type);
+        assertSame('2', $encryptedPassportElement->hash);
+        assertNull($encryptedPassportElement->data);
+        assertNull($encryptedPassportElement->phoneNumber);
+        assertNull($encryptedPassportElement->email);
+        assertNull($encryptedPassportElement->files);
+        assertNull($encryptedPassportElement->frontSide);
+        assertNull($encryptedPassportElement->reverseSide);
+        assertNull($encryptedPassportElement->selfie);
+        assertNull($encryptedPassportElement->translation);
     }
 
     public function testFromTelegramResult(): void
@@ -71,29 +77,29 @@ final class EncryptedPassportElementTest extends TestCase
             ],
         ], null, EncryptedPassportElement::class);
 
-        $this->assertSame('personal_details', $encryptedPassportElement->type);
-        $this->assertSame('test-hash', $encryptedPassportElement->hash);
-        $this->assertSame('test-data', $encryptedPassportElement->data);
-        $this->assertSame('+71231234567', $encryptedPassportElement->phoneNumber);
-        $this->assertSame('test@example.com', $encryptedPassportElement->email);
+        assertSame('personal_details', $encryptedPassportElement->type);
+        assertSame('test-hash', $encryptedPassportElement->hash);
+        assertSame('test-data', $encryptedPassportElement->data);
+        assertSame('+71231234567', $encryptedPassportElement->phoneNumber);
+        assertSame('test@example.com', $encryptedPassportElement->email);
 
-        $this->assertIsArray($encryptedPassportElement->files);
-        $this->assertCount(1, $encryptedPassportElement->files);
-        $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->files[0]);
-        $this->assertSame('5', $encryptedPassportElement->files[0]->fileId);
+        assertIsArray($encryptedPassportElement->files);
+        assertCount(1, $encryptedPassportElement->files);
+        assertInstanceOf(PassportFile::class, $encryptedPassportElement->files[0]);
+        assertSame('5', $encryptedPassportElement->files[0]->fileId);
 
-        $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->frontSide);
-        $this->assertSame('8', $encryptedPassportElement->frontSide->fileId);
+        assertInstanceOf(PassportFile::class, $encryptedPassportElement->frontSide);
+        assertSame('8', $encryptedPassportElement->frontSide->fileId);
 
-        $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->reverseSide);
-        $this->assertSame('11', $encryptedPassportElement->reverseSide->fileId);
+        assertInstanceOf(PassportFile::class, $encryptedPassportElement->reverseSide);
+        assertSame('11', $encryptedPassportElement->reverseSide->fileId);
 
-        $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->selfie);
-        $this->assertSame('14', $encryptedPassportElement->selfie->fileId);
+        assertInstanceOf(PassportFile::class, $encryptedPassportElement->selfie);
+        assertSame('14', $encryptedPassportElement->selfie->fileId);
 
-        $this->assertIsArray($encryptedPassportElement->translation);
-        $this->assertCount(1, $encryptedPassportElement->translation);
-        $this->assertInstanceOf(PassportFile::class, $encryptedPassportElement->translation[0]);
-        $this->assertSame('17', $encryptedPassportElement->translation[0]->fileId);
+        assertIsArray($encryptedPassportElement->translation);
+        assertCount(1, $encryptedPassportElement->translation);
+        assertInstanceOf(PassportFile::class, $encryptedPassportElement->translation[0]);
+        assertSame('17', $encryptedPassportElement->translation[0]->fileId);
     }
 }

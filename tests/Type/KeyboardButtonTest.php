@@ -11,21 +11,26 @@ use Vjik\TelegramBot\Api\Type\KeyboardButtonRequestChat;
 use Vjik\TelegramBot\Api\Type\KeyboardButtonRequestUsers;
 use Vjik\TelegramBot\Api\Type\WebAppInfo;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class KeyboardButtonTest extends TestCase
 {
     public function testBase(): void
     {
         $button = new KeyboardButton('test');
 
-        $this->assertSame('test', $button->text);
-        $this->assertNull($button->requestUsers);
-        $this->assertNull($button->requestChat);
-        $this->assertNull($button->requestContact);
-        $this->assertNull($button->requestLocation);
-        $this->assertNull($button->requestPoll);
-        $this->assertNull($button->webApp);
+        assertSame('test', $button->text);
+        assertNull($button->requestUsers);
+        assertNull($button->requestChat);
+        assertNull($button->requestContact);
+        assertNull($button->requestLocation);
+        assertNull($button->requestPoll);
+        assertNull($button->webApp);
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
             ],
@@ -49,15 +54,15 @@ final class KeyboardButtonTest extends TestCase
             $webApp,
         );
 
-        $this->assertSame('test', $button->text);
-        $this->assertSame($requestUsers, $button->requestUsers);
-        $this->assertSame($requestChat, $button->requestChat);
-        $this->assertTrue($button->requestContact);
-        $this->assertFalse($button->requestLocation);
-        $this->assertSame($requestPoll, $button->requestPoll);
-        $this->assertSame($webApp, $button->webApp);
+        assertSame('test', $button->text);
+        assertSame($requestUsers, $button->requestUsers);
+        assertSame($requestChat, $button->requestChat);
+        assertTrue($button->requestContact);
+        assertFalse($button->requestLocation);
+        assertSame($requestPoll, $button->requestPoll);
+        assertSame($webApp, $button->webApp);
 
-        $this->assertSame(
+        assertSame(
             [
                 'text' => 'test',
                 'request_users' => $requestUsers->toRequestArray(),

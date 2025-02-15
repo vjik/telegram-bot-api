@@ -12,6 +12,13 @@ use Vjik\TelegramBot\Api\Type\MessageOriginUser;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ExternalReplyInfoTest extends TestCase
 {
     public function testBase(): void
@@ -19,30 +26,30 @@ final class ExternalReplyInfoTest extends TestCase
         $origin = new MessageOriginUser(new DateTimeImmutable(), new User(123, false, 'Vjik'));
         $externalReplyInfo = new ExternalReplyInfo($origin);
 
-        $this->assertSame($origin, $externalReplyInfo->origin);
-        $this->assertNull($externalReplyInfo->chat);
-        $this->assertNull($externalReplyInfo->messageId);
-        $this->assertNull($externalReplyInfo->linkPreviewOptions);
-        $this->assertNull($externalReplyInfo->animation);
-        $this->assertNull($externalReplyInfo->audio);
-        $this->assertNull($externalReplyInfo->document);
-        $this->assertNull($externalReplyInfo->photo);
-        $this->assertNull($externalReplyInfo->sticker);
-        $this->assertNull($externalReplyInfo->story);
-        $this->assertNull($externalReplyInfo->video);
-        $this->assertNull($externalReplyInfo->videoNote);
-        $this->assertNull($externalReplyInfo->voice);
-        $this->assertNull($externalReplyInfo->hasMediaSpoiler);
-        $this->assertNull($externalReplyInfo->contact);
-        $this->assertNull($externalReplyInfo->dice);
-        $this->assertNull($externalReplyInfo->game);
-        $this->assertNull($externalReplyInfo->giveaway);
-        $this->assertNull($externalReplyInfo->giveawayWinners);
-        $this->assertNull($externalReplyInfo->invoice);
-        $this->assertNull($externalReplyInfo->location);
-        $this->assertNull($externalReplyInfo->poll);
-        $this->assertNull($externalReplyInfo->venue);
-        $this->assertNull($externalReplyInfo->paidMedia);
+        assertSame($origin, $externalReplyInfo->origin);
+        assertNull($externalReplyInfo->chat);
+        assertNull($externalReplyInfo->messageId);
+        assertNull($externalReplyInfo->linkPreviewOptions);
+        assertNull($externalReplyInfo->animation);
+        assertNull($externalReplyInfo->audio);
+        assertNull($externalReplyInfo->document);
+        assertNull($externalReplyInfo->photo);
+        assertNull($externalReplyInfo->sticker);
+        assertNull($externalReplyInfo->story);
+        assertNull($externalReplyInfo->video);
+        assertNull($externalReplyInfo->videoNote);
+        assertNull($externalReplyInfo->voice);
+        assertNull($externalReplyInfo->hasMediaSpoiler);
+        assertNull($externalReplyInfo->contact);
+        assertNull($externalReplyInfo->dice);
+        assertNull($externalReplyInfo->game);
+        assertNull($externalReplyInfo->giveaway);
+        assertNull($externalReplyInfo->giveawayWinners);
+        assertNull($externalReplyInfo->invoice);
+        assertNull($externalReplyInfo->location);
+        assertNull($externalReplyInfo->poll);
+        assertNull($externalReplyInfo->venue);
+        assertNull($externalReplyInfo->paidMedia);
     }
 
     public function testFromTelegramResult(): void
@@ -192,35 +199,35 @@ final class ExternalReplyInfoTest extends TestCase
             ],
         ], null, ExternalReplyInfo::class);
 
-        $this->assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);
-        $this->assertSame(123, $externalReplyInfo->origin->senderUser->id);
+        assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);
+        assertSame(123, $externalReplyInfo->origin->senderUser->id);
 
-        $this->assertSame(44, $externalReplyInfo->chat?->id);
-        $this->assertSame(97, $externalReplyInfo->messageId);
-        $this->assertSame('https://example.com/hello', $externalReplyInfo->linkPreviewOptions?->url);
-        $this->assertSame('f1', $externalReplyInfo->animation?->fileId);
-        $this->assertSame('f2', $externalReplyInfo->audio?->fileId);
-        $this->assertSame('f3', $externalReplyInfo->document?->fileId);
+        assertSame(44, $externalReplyInfo->chat?->id);
+        assertSame(97, $externalReplyInfo->messageId);
+        assertSame('https://example.com/hello', $externalReplyInfo->linkPreviewOptions?->url);
+        assertSame('f1', $externalReplyInfo->animation?->fileId);
+        assertSame('f2', $externalReplyInfo->audio?->fileId);
+        assertSame('f3', $externalReplyInfo->document?->fileId);
 
-        $this->assertCount(1, $externalReplyInfo->photo);
-        $this->assertSame('f4', $externalReplyInfo->photo[0]->fileId);
+        assertCount(1, $externalReplyInfo->photo);
+        assertSame('f4', $externalReplyInfo->photo[0]->fileId);
 
-        $this->assertSame('f5', $externalReplyInfo->sticker?->fileId);
-        $this->assertSame(99, $externalReplyInfo->story?->id);
-        $this->assertSame('f6', $externalReplyInfo->video?->fileId);
-        $this->assertSame('f7', $externalReplyInfo->videoNote?->fileId);
-        $this->assertSame('f8', $externalReplyInfo->voice?->fileId);
-        $this->assertTrue($externalReplyInfo->hasMediaSpoiler);
-        $this->assertSame('+1234567890', $externalReplyInfo->contact?->phoneNumber);
-        $this->assertSame('🎲', $externalReplyInfo->dice?->emoji);
-        $this->assertSame('Game', $externalReplyInfo->game?->title);
-        $this->assertSame(35, $externalReplyInfo->giveaway?->winnerCount);
-        $this->assertSame(3461, $externalReplyInfo->giveawayWinners?->giveawayMessageId);
-        $this->assertSame(101, $externalReplyInfo->invoice?->totalAmount);
-        $this->assertSame(55.7558, $externalReplyInfo->location?->latitude);
-        $this->assertSame('pid2354', $externalReplyInfo->poll?->id);
-        $this->assertSame('Venue1', $externalReplyInfo->venue?->title);
-        $this->assertSame(1, $externalReplyInfo->paidMedia?->starCount);
-        $this->assertEquals([new PaidMediaPhoto([])], $externalReplyInfo->paidMedia?->paidMedia);
+        assertSame('f5', $externalReplyInfo->sticker?->fileId);
+        assertSame(99, $externalReplyInfo->story?->id);
+        assertSame('f6', $externalReplyInfo->video?->fileId);
+        assertSame('f7', $externalReplyInfo->videoNote?->fileId);
+        assertSame('f8', $externalReplyInfo->voice?->fileId);
+        assertTrue($externalReplyInfo->hasMediaSpoiler);
+        assertSame('+1234567890', $externalReplyInfo->contact?->phoneNumber);
+        assertSame('🎲', $externalReplyInfo->dice?->emoji);
+        assertSame('Game', $externalReplyInfo->game?->title);
+        assertSame(35, $externalReplyInfo->giveaway?->winnerCount);
+        assertSame(3461, $externalReplyInfo->giveawayWinners?->giveawayMessageId);
+        assertSame(101, $externalReplyInfo->invoice?->totalAmount);
+        assertSame(55.7558, $externalReplyInfo->location?->latitude);
+        assertSame('pid2354', $externalReplyInfo->poll?->id);
+        assertSame('Venue1', $externalReplyInfo->venue?->title);
+        assertSame(1, $externalReplyInfo->paidMedia?->starCount);
+        assertEquals([new PaidMediaPhoto([])], $externalReplyInfo->paidMedia?->paidMedia);
     }
 }

@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\GetChatMemberCount;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetChatMemberCountTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetChatMemberCount(1);
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getChatMemberCount', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getChatMemberCount', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
             ],
@@ -31,6 +33,6 @@ final class GetChatMemberCountTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(23)->call($method);
 
-        $this->assertSame(23, $preparedResult);
+        assertSame(23, $preparedResult);
     }
 }

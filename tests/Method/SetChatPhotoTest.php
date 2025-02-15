@@ -10,6 +10,9 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetChatPhotoTest extends TestCase
 {
     public function testBase(): void
@@ -17,9 +20,9 @@ final class SetChatPhotoTest extends TestCase
         $photo = new InputFile('/path/to/photo.jpg');
         $method = new SetChatPhoto(1, $photo);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatPhoto', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatPhoto', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'photo' => $photo,
@@ -35,6 +38,6 @@ final class SetChatPhotoTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

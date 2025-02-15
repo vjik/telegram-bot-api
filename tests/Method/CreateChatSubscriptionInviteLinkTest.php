@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\CreateChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CreateChatSubscriptionInviteLinkTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new CreateChatSubscriptionInviteLink(10, 20, 30);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createChatSubscriptionInviteLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createChatSubscriptionInviteLink', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 10,
                 'subscription_period' => 20,
@@ -31,9 +33,9 @@ final class CreateChatSubscriptionInviteLinkTest extends TestCase
     {
         $method = new CreateChatSubscriptionInviteLink(10, 20, 30, 'test');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createChatSubscriptionInviteLink', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createChatSubscriptionInviteLink', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 10,
                 'name' => 'test',
@@ -60,6 +62,6 @@ final class CreateChatSubscriptionInviteLinkTest extends TestCase
             'is_revoked' => false,
         ])->call($method);
 
-        $this->assertSame(23, $preparedResult->creator->id);
+        assertSame(23, $preparedResult->creator->id);
     }
 }

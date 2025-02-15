@@ -8,19 +8,24 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SwitchInlineQueryChosenChat;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SwitchInlineQueryChosenChatTest extends TestCase
 {
     public function testBase(): void
     {
         $switchInlineQueryChosenChat = new SwitchInlineQueryChosenChat();
 
-        $this->assertNull($switchInlineQueryChosenChat->query);
-        $this->assertNull($switchInlineQueryChosenChat->allowUserChats);
-        $this->assertNull($switchInlineQueryChosenChat->allowBotChats);
-        $this->assertNull($switchInlineQueryChosenChat->allowGroupChats);
-        $this->assertNull($switchInlineQueryChosenChat->allowChannelChats);
+        assertNull($switchInlineQueryChosenChat->query);
+        assertNull($switchInlineQueryChosenChat->allowUserChats);
+        assertNull($switchInlineQueryChosenChat->allowBotChats);
+        assertNull($switchInlineQueryChosenChat->allowGroupChats);
+        assertNull($switchInlineQueryChosenChat->allowChannelChats);
 
-        $this->assertSame([], $switchInlineQueryChosenChat->toRequestArray());
+        assertSame([], $switchInlineQueryChosenChat->toRequestArray());
     }
 
     public function testFilled(): void
@@ -33,13 +38,13 @@ final class SwitchInlineQueryChosenChatTest extends TestCase
             false,
         );
 
-        $this->assertSame('q1', $switchInlineQueryChosenChat->query);
-        $this->assertTrue($switchInlineQueryChosenChat->allowUserChats);
-        $this->assertTrue($switchInlineQueryChosenChat->allowBotChats);
-        $this->assertFalse($switchInlineQueryChosenChat->allowGroupChats);
-        $this->assertFalse($switchInlineQueryChosenChat->allowChannelChats);
+        assertSame('q1', $switchInlineQueryChosenChat->query);
+        assertTrue($switchInlineQueryChosenChat->allowUserChats);
+        assertTrue($switchInlineQueryChosenChat->allowBotChats);
+        assertFalse($switchInlineQueryChosenChat->allowGroupChats);
+        assertFalse($switchInlineQueryChosenChat->allowChannelChats);
 
-        $this->assertSame(
+        assertSame(
             [
                 'query' => 'q1',
                 'allow_user_chats' => true,
@@ -61,10 +66,10 @@ final class SwitchInlineQueryChosenChatTest extends TestCase
             'allow_channel_chats' => false,
         ], null, SwitchInlineQueryChosenChat::class);
 
-        $this->assertSame('q1', $switchInlineQueryChosenChat->query);
-        $this->assertTrue($switchInlineQueryChosenChat->allowUserChats);
-        $this->assertTrue($switchInlineQueryChosenChat->allowBotChats);
-        $this->assertFalse($switchInlineQueryChosenChat->allowGroupChats);
-        $this->assertFalse($switchInlineQueryChosenChat->allowChannelChats);
+        assertSame('q1', $switchInlineQueryChosenChat->query);
+        assertTrue($switchInlineQueryChosenChat->allowUserChats);
+        assertTrue($switchInlineQueryChosenChat->allowBotChats);
+        assertFalse($switchInlineQueryChosenChat->allowGroupChats);
+        assertFalse($switchInlineQueryChosenChat->allowChannelChats);
     }
 }

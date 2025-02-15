@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetChatAdministratorCustomTitleTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetChatAdministratorCustomTitle(1, 2, 'test');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatAdministratorCustomTitle', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatAdministratorCustomTitle', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'user_id' => 2,
@@ -33,6 +36,6 @@ final class SetChatAdministratorCustomTitleTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

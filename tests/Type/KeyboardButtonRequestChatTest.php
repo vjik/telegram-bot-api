@@ -8,25 +8,30 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\ChatAdministratorRights;
 use Vjik\TelegramBot\Api\Type\KeyboardButtonRequestChat;
 
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class KeyboardButtonRequestChatTest extends TestCase
 {
     public function testBase(): void
     {
         $keyboardButtonRequestChat = new KeyboardButtonRequestChat(1, true);
 
-        $this->assertSame(1, $keyboardButtonRequestChat->requestId);
-        $this->assertTrue($keyboardButtonRequestChat->chatIsChannel);
-        $this->assertNull($keyboardButtonRequestChat->chatIsForum);
-        $this->assertNull($keyboardButtonRequestChat->chatHasUsername);
-        $this->assertNull($keyboardButtonRequestChat->chatIsCreated);
-        $this->assertNull($keyboardButtonRequestChat->userAdministratorRights);
-        $this->assertNull($keyboardButtonRequestChat->botAdministratorRights);
-        $this->assertNull($keyboardButtonRequestChat->botIsMember);
-        $this->assertNull($keyboardButtonRequestChat->requestTitle);
-        $this->assertNull($keyboardButtonRequestChat->requestUsername);
-        $this->assertNull($keyboardButtonRequestChat->requestPhoto);
+        assertSame(1, $keyboardButtonRequestChat->requestId);
+        assertTrue($keyboardButtonRequestChat->chatIsChannel);
+        assertNull($keyboardButtonRequestChat->chatIsForum);
+        assertNull($keyboardButtonRequestChat->chatHasUsername);
+        assertNull($keyboardButtonRequestChat->chatIsCreated);
+        assertNull($keyboardButtonRequestChat->userAdministratorRights);
+        assertNull($keyboardButtonRequestChat->botAdministratorRights);
+        assertNull($keyboardButtonRequestChat->botIsMember);
+        assertNull($keyboardButtonRequestChat->requestTitle);
+        assertNull($keyboardButtonRequestChat->requestUsername);
+        assertNull($keyboardButtonRequestChat->requestPhoto);
 
-        $this->assertSame(
+        assertSame(
             [
                 'request_id' => 1,
                 'chat_is_channel' => true,
@@ -77,19 +82,19 @@ final class KeyboardButtonRequestChatTest extends TestCase
             true,
         );
 
-        $this->assertSame(1, $keyboardButtonRequestChat->requestId);
-        $this->assertTrue($keyboardButtonRequestChat->chatIsChannel);
-        $this->assertFalse($keyboardButtonRequestChat->chatIsForum);
-        $this->assertTrue($keyboardButtonRequestChat->chatHasUsername);
-        $this->assertTrue($keyboardButtonRequestChat->chatIsCreated);
-        $this->assertSame($userAdministratorRights, $keyboardButtonRequestChat->userAdministratorRights);
-        $this->assertSame($botAdministratorRights, $keyboardButtonRequestChat->botAdministratorRights);
-        $this->assertTrue($keyboardButtonRequestChat->botIsMember);
-        $this->assertFalse($keyboardButtonRequestChat->requestTitle);
-        $this->assertFalse($keyboardButtonRequestChat->requestUsername);
-        $this->assertTrue($keyboardButtonRequestChat->requestPhoto);
+        assertSame(1, $keyboardButtonRequestChat->requestId);
+        assertTrue($keyboardButtonRequestChat->chatIsChannel);
+        assertFalse($keyboardButtonRequestChat->chatIsForum);
+        assertTrue($keyboardButtonRequestChat->chatHasUsername);
+        assertTrue($keyboardButtonRequestChat->chatIsCreated);
+        assertSame($userAdministratorRights, $keyboardButtonRequestChat->userAdministratorRights);
+        assertSame($botAdministratorRights, $keyboardButtonRequestChat->botAdministratorRights);
+        assertTrue($keyboardButtonRequestChat->botIsMember);
+        assertFalse($keyboardButtonRequestChat->requestTitle);
+        assertFalse($keyboardButtonRequestChat->requestUsername);
+        assertTrue($keyboardButtonRequestChat->requestPhoto);
 
-        $this->assertSame(
+        assertSame(
             [
                 'request_id' => 1,
                 'chat_is_channel' => true,

@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class CreateForumTopicTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new CreateForumTopic(1, 'test');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createForumTopic', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createForumTopic', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'name' => 'test',
@@ -30,9 +32,9 @@ final class CreateForumTopicTest extends TestCase
     {
         $method = new CreateForumTopic(1, 'test', 0x6FB9F0, '2135123');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('createForumTopic', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('createForumTopic', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
                 'name' => 'test',
@@ -54,6 +56,6 @@ final class CreateForumTopicTest extends TestCase
             'icon_custom_emoji_id' => '2351346235143',
         ])->call($method);
 
-        $this->assertSame(19, $preparedResult->messageThreadId);
+        assertSame(19, $preparedResult->messageThreadId);
     }
 }

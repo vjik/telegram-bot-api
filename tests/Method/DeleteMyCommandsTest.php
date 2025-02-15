@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\BotCommandScopeDefault;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class DeleteMyCommandsTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new DeleteMyCommands();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteMyCommands', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteMyCommands', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
@@ -26,9 +29,9 @@ final class DeleteMyCommandsTest extends TestCase
         $scope = new BotCommandScopeDefault();
         $method = new DeleteMyCommands($scope, 'ru');
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('deleteMyCommands', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('deleteMyCommands', $method->getApiMethod());
+        assertSame(
             [
                 'scope' => $scope->toRequestArray(),
                 'language_code' => 'ru',
@@ -43,6 +46,6 @@ final class DeleteMyCommandsTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

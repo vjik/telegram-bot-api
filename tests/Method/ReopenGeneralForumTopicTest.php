@@ -9,15 +9,18 @@ use Vjik\TelegramBot\Api\Method\ReopenGeneralForumTopic;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ReopenGeneralForumTopicTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new ReopenGeneralForumTopic(1);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('reopenGeneralForumTopic', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('reopenGeneralForumTopic', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 1,
             ],
@@ -31,6 +34,6 @@ final class ReopenGeneralForumTopicTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

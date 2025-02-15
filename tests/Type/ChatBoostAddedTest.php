@@ -8,13 +8,15 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatBoostAdded;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ChatBoostAddedTest extends TestCase
 {
     public function testBase(): void
     {
         $chatBoostAdded = new ChatBoostAdded(4);
 
-        $this->assertSame(4, $chatBoostAdded->boostCount);
+        assertSame(4, $chatBoostAdded->boostCount);
     }
 
     public function testFromTelegramResult(): void
@@ -23,6 +25,6 @@ final class ChatBoostAddedTest extends TestCase
             'boost_count' => 4,
         ], null, ChatBoostAdded::class);
 
-        $this->assertSame(4, $chatBoostAdded->boostCount);
+        assertSame(4, $chatBoostAdded->boostCount);
     }
 }

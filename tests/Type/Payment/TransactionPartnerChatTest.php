@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerChat;
 use Vjik\TelegramBot\Api\Type\Sticker\Gift;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class TransactionPartnerChatTest extends TestCase
 {
     public function testBase(): void
@@ -19,9 +22,9 @@ final class TransactionPartnerChatTest extends TestCase
         $chat = new Chat(123, 'private');
         $object = new TransactionPartnerChat($chat);
 
-        $this->assertSame('chat', $object->getType());
-        $this->assertSame($chat, $object->chat);
-        $this->assertNull($object->gift);
+        assertSame('chat', $object->getType());
+        assertSame($chat, $object->chat);
+        assertNull($object->gift);
     }
 
     public function testFull(): void
@@ -42,9 +45,9 @@ final class TransactionPartnerChatTest extends TestCase
         );
         $object = new TransactionPartnerChat($chat, $gift);
 
-        $this->assertSame('chat', $object->getType());
-        $this->assertSame($chat, $object->chat);
-        $this->assertSame($gift, $object->gift);
+        assertSame('chat', $object->getType());
+        assertSame($chat, $object->chat);
+        assertSame($gift, $object->gift);
     }
 
     public function testFromTelegramResult(): void
@@ -74,9 +77,9 @@ final class TransactionPartnerChatTest extends TestCase
             TransactionPartnerChat::class,
         );
 
-        $this->assertSame('chat', $object->getType());
-        $this->assertSame(123, $object->chat->id);
-        $this->assertSame('test-id1', $object->gift->id);
+        assertSame('chat', $object->getType());
+        assertSame(123, $object->chat->id);
+        assertSame('test-id1', $object->gift->id);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

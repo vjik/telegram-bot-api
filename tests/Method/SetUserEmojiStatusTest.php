@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Method;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Method\SetUserEmojiStatus;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetUserEmojiStatusTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetUserEmojiStatus(1);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setUserEmojiStatus', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setUserEmojiStatus', $method->getApiMethod());
+        assertSame(
             [
                 'user_id' => 1,
             ],
@@ -31,7 +34,7 @@ final class SetUserEmojiStatusTest extends TestCase
         $date = new DateTimeImmutable();
         $method = new SetUserEmojiStatus(9, 'test', $date);
 
-        $this->assertSame(
+        assertSame(
             [
                 'user_id' => 9,
                 'emoji_status_custom_emoji_id' => 'test',
@@ -47,6 +50,6 @@ final class SetUserEmojiStatusTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

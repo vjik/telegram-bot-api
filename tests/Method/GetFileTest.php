@@ -9,15 +9,17 @@ use Vjik\TelegramBot\Api\Method\GetFile;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+
 final class GetFileTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new GetFile('f1');
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getFile', $method->getApiMethod());
-        $this->assertSame(['file_id' => 'f1'], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getFile', $method->getApiMethod());
+        assertSame(['file_id' => 'f1'], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -31,6 +33,6 @@ final class GetFileTest extends TestCase
             'file_path' => 'path/to/file',
         ])->call($method);
 
-        $this->assertSame('x1', $preparedResult->fileId);
+        assertSame('x1', $preparedResult->fileId);
     }
 }

@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\Story;
 
+use function PHPUnit\Framework\assertSame;
+
 final class StoryTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +18,8 @@ final class StoryTest extends TestCase
         $chat = new Chat(1, 'private');
         $story = new Story($chat, 25);
 
-        $this->assertSame($chat, $story->chat);
-        $this->assertSame(25, $story->id);
+        assertSame($chat, $story->chat);
+        assertSame(25, $story->id);
     }
 
     public function testFromTelegramResult(): void
@@ -30,7 +32,7 @@ final class StoryTest extends TestCase
             'id' => 25,
         ], null, Story::class);
 
-        $this->assertSame(1, $story->chat->id);
-        $this->assertSame(25, $story->id);
+        assertSame(1, $story->chat->id);
+        assertSame(25, $story->id);
     }
 }

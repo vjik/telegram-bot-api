@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ProximityAlertTriggered;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertSame;
+
 final class ProximityAlertTriggeredTest extends TestCase
 {
     public function testBase(): void
@@ -17,9 +19,9 @@ final class ProximityAlertTriggeredTest extends TestCase
         $watcher = new User(2, false, 'Mike');
         $proximityAlertTriggered = new ProximityAlertTriggered($traveler, $watcher, 12);
 
-        $this->assertSame($traveler, $proximityAlertTriggered->traveler);
-        $this->assertSame($watcher, $proximityAlertTriggered->watcher);
-        $this->assertSame(12, $proximityAlertTriggered->distance);
+        assertSame($traveler, $proximityAlertTriggered->traveler);
+        assertSame($watcher, $proximityAlertTriggered->watcher);
+        assertSame(12, $proximityAlertTriggered->distance);
     }
 
     public function testFromTelegramResult(): void
@@ -38,8 +40,8 @@ final class ProximityAlertTriggeredTest extends TestCase
             'distance' => 12,
         ], null, ProximityAlertTriggered::class);
 
-        $this->assertSame(1, $proximityAlertTriggered->traveler->id);
-        $this->assertSame(2, $proximityAlertTriggered->watcher->id);
-        $this->assertSame(12, $proximityAlertTriggered->distance);
+        assertSame(1, $proximityAlertTriggered->traveler->id);
+        assertSame(2, $proximityAlertTriggered->watcher->id);
+        assertSame(12, $proximityAlertTriggered->distance);
     }
 }

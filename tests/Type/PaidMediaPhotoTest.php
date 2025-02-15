@@ -2,12 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Type;
+namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\PhotoSize;
+
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
 
 final class PaidMediaPhotoTest extends TestCase
 {
@@ -16,8 +20,8 @@ final class PaidMediaPhotoTest extends TestCase
         $photoSize = new PhotoSize('fileId', 'fileUniqueId', 100, 200);
         $type = new PaidMediaPhoto([$photoSize]);
 
-        $this->assertSame('photo', $type->getType());
-        $this->assertSame([$photoSize], $type->photo);
+        assertSame('photo', $type->getType());
+        assertSame([$photoSize], $type->photo);
     }
 
     public function testFromTelegramResult(): void
@@ -35,13 +39,13 @@ final class PaidMediaPhotoTest extends TestCase
             ],
         ], null, PaidMediaPhoto::class);
 
-        $this->assertSame('photo', $type->getType());
-        $this->assertCount(1, $type->photo);
-        $this->assertInstanceOf(PhotoSize::class, $type->photo[0]);
-        $this->assertSame('fileId', $type->photo[0]->fileId);
-        $this->assertSame('fileUniqueId', $type->photo[0]->fileUniqueId);
-        $this->assertSame(100, $type->photo[0]->width);
-        $this->assertSame(200, $type->photo[0]->height);
-        $this->assertSame(512, $type->photo[0]->fileSize);
+        assertSame('photo', $type->getType());
+        assertCount(1, $type->photo);
+        assertInstanceOf(PhotoSize::class, $type->photo[0]);
+        assertSame('fileId', $type->photo[0]->fileId);
+        assertSame('fileUniqueId', $type->photo[0]->fileUniqueId);
+        assertSame(100, $type->photo[0]->width);
+        assertSame(200, $type->photo[0]->height);
+        assertSame(512, $type->photo[0]->fileSize);
     }
 }

@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\Method\Payment\AnswerPreCheckoutQuery;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class AnswerPreCheckoutQueryTest extends TestCase
 {
     public function testBase(): void
@@ -18,9 +21,9 @@ final class AnswerPreCheckoutQueryTest extends TestCase
             true,
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerPreCheckoutQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerPreCheckoutQuery', $method->getApiMethod());
+        assertSame(
             [
                 'pre_checkout_query_id' => 'qid',
                 'ok' => true,
@@ -37,9 +40,9 @@ final class AnswerPreCheckoutQueryTest extends TestCase
             'error message',
         );
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('answerPreCheckoutQuery', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('answerPreCheckoutQuery', $method->getApiMethod());
+        assertSame(
             [
                 'pre_checkout_query_id' => 'qid',
                 'ok' => true,
@@ -58,6 +61,6 @@ final class AnswerPreCheckoutQueryTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

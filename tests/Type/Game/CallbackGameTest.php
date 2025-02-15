@@ -8,19 +8,22 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Game\CallbackGame;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class CallbackGameTest extends TestCase
 {
     public function testBase(): void
     {
         $callbackGame = new CallbackGame();
 
-        $this->assertSame([], $callbackGame->toRequestArray());
+        assertSame([], $callbackGame->toRequestArray());
     }
 
     public function testFromTelegramResult(): void
     {
         $callbackGame = (new ObjectFactory())->create([], null, CallbackGame::class);
 
-        $this->assertInstanceOf(CallbackGame::class, $callbackGame);
+        assertInstanceOf(CallbackGame::class, $callbackGame);
     }
 }

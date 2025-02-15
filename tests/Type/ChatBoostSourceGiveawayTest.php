@@ -9,18 +9,23 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChatBoostSourceGiveaway;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class ChatBoostSourceGiveawayTest extends TestCase
 {
     public function testBase(): void
     {
         $source = new ChatBoostSourceGiveaway(12);
 
-        $this->assertSame('giveaway', $source->getSource());
-        $this->assertNull($source->getUser());
-        $this->assertSame(12, $source->giveawayMessageId);
-        $this->assertNull($source->user);
-        $this->assertNull($source->isUnclaimed);
-        $this->assertNull($source->prizeStarCount);
+        assertSame('giveaway', $source->getSource());
+        assertNull($source->getUser());
+        assertSame(12, $source->giveawayMessageId);
+        assertNull($source->user);
+        assertNull($source->isUnclaimed);
+        assertNull($source->prizeStarCount);
     }
 
     public function testFromTelegramResult(): void
@@ -41,12 +46,12 @@ final class ChatBoostSourceGiveawayTest extends TestCase
             ChatBoostSourceGiveaway::class,
         );
 
-        $this->assertSame(12, $source->giveawayMessageId);
+        assertSame(12, $source->giveawayMessageId);
 
-        $this->assertInstanceOf(User::class, $source->user);
-        $this->assertSame(7, $source->user->id);
+        assertInstanceOf(User::class, $source->user);
+        assertSame(7, $source->user->id);
 
-        $this->assertTrue($source->isUnclaimed);
-        $this->assertSame(19, $source->prizeStarCount);
+        assertTrue($source->isUnclaimed);
+        assertSame(19, $source->prizeStarCount);
     }
 }

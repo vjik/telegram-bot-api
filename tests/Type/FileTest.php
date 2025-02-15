@@ -8,6 +8,9 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\File;
 
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class FileTest extends TestCase
 {
     public function testFile(): void
@@ -17,10 +20,10 @@ final class FileTest extends TestCase
             'fullX1',
         );
 
-        $this->assertSame('x1', $file->fileId);
-        $this->assertSame('fullX1', $file->fileUniqueId);
-        $this->assertNull($file->fileSize);
-        $this->assertNull($file->filePath);
+        assertSame('x1', $file->fileId);
+        assertSame('fullX1', $file->fileUniqueId);
+        assertNull($file->fileSize);
+        assertNull($file->filePath);
     }
 
     public function testFromTelegramResult(): void
@@ -32,9 +35,9 @@ final class FileTest extends TestCase
             'file_path' => 'path/to/file',
         ], null, File::class);
 
-        $this->assertSame('x1', $file->fileId);
-        $this->assertSame('fullX1', $file->fileUniqueId);
-        $this->assertSame(123, $file->fileSize);
-        $this->assertSame('path/to/file', $file->filePath);
+        assertSame('x1', $file->fileId);
+        assertSame('fullX1', $file->fileUniqueId);
+        assertSame(123, $file->fileSize);
+        assertSame('path/to/file', $file->filePath);
     }
 }

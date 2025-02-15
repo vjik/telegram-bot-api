@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Method\Sticker;
+namespace Vjik\TelegramBot\Api\Tests\Method\Sticker;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\Sticker\GetAvailableGifts;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
+
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertSame;
 
 final class GetAvailableGiftsTest extends TestCase
 {
@@ -15,9 +18,9 @@ final class GetAvailableGiftsTest extends TestCase
     {
         $method = new GetAvailableGifts();
 
-        $this->assertSame(HttpMethod::GET, $method->getHttpMethod());
-        $this->assertSame('getAvailableGifts', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::GET, $method->getHttpMethod());
+        assertSame('getAvailableGifts', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testPrepareResult(): void
@@ -55,6 +58,6 @@ final class GetAvailableGiftsTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertCount(2, $preparedResult->gifts);
+        assertCount(2, $preparedResult->gifts);
     }
 }

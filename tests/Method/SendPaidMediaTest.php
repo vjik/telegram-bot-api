@@ -15,6 +15,8 @@ use Vjik\TelegramBot\Api\Type\InputPaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use function PHPUnit\Framework\assertSame;
+
 final class SendPaidMediaTest extends TestCase
 {
     public function testBase(): void
@@ -22,9 +24,9 @@ final class SendPaidMediaTest extends TestCase
         $inputMedia = new InputPaidMediaPhoto('https://example.com/face.png');
         $method = new SendPaidMedia(12, 25, [$inputMedia]);
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('sendPaidMedia', $method->getApiMethod());
-        $this->assertSame(
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('sendPaidMedia', $method->getApiMethod());
+        assertSame(
             [
                 'chat_id' => 12,
                 'star_count' => 25,
@@ -58,7 +60,7 @@ final class SendPaidMediaTest extends TestCase
             true,
         );
 
-        $this->assertSame(
+        assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
@@ -98,6 +100,6 @@ final class SendPaidMediaTest extends TestCase
             ],
         ])->call($method);
 
-        $this->assertSame(7, $preparedResult->messageId);
+        assertSame(7, $preparedResult->messageId);
     }
 }

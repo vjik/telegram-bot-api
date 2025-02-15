@@ -8,16 +8,21 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\TextQuote;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class TextQuoteTest extends TestCase
 {
     public function testBase(): void
     {
         $textQuote = new TextQuote('test', 23);
 
-        $this->assertSame('test', $textQuote->text);
-        $this->assertSame(23, $textQuote->position);
-        $this->assertNull($textQuote->entities);
-        $this->assertNull($textQuote->isManual);
+        assertSame('test', $textQuote->text);
+        assertSame(23, $textQuote->position);
+        assertNull($textQuote->entities);
+        assertNull($textQuote->isManual);
     }
 
     public function testFromTelegramResult(): void
@@ -35,14 +40,14 @@ final class TextQuoteTest extends TestCase
             'is_manual' => true,
         ], null, TextQuote::class);
 
-        $this->assertSame('test', $textQuote->text);
-        $this->assertSame(23, $textQuote->position);
+        assertSame('test', $textQuote->text);
+        assertSame(23, $textQuote->position);
 
-        $this->assertCount(1, $textQuote->entities);
-        $this->assertSame('bold', $textQuote->entities[0]->type);
-        $this->assertSame(0, $textQuote->entities[0]->offset);
-        $this->assertSame(4, $textQuote->entities[0]->length);
+        assertCount(1, $textQuote->entities);
+        assertSame('bold', $textQuote->entities[0]->type);
+        assertSame(0, $textQuote->entities[0]->offset);
+        assertSame(4, $textQuote->entities[0]->length);
 
-        $this->assertTrue($textQuote->isManual);
+        assertTrue($textQuote->isManual);
     }
 }

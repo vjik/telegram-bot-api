@@ -49,6 +49,16 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 use Yiisoft\Test\Support\Log\SimpleLogger;
 
+use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertIsArray;
+use function PHPUnit\Framework\assertNotSame;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class TelegramBotApiTest extends TestCase
 {
     public function testWithLogger(): void
@@ -70,9 +80,9 @@ final class TelegramBotApiTest extends TestCase
         } catch (TelegramParseResultException) {
         }
 
-        $this->assertNotSame($api1, $api2);
-        $this->assertEmpty($logger1->getMessages());
-        $this->assertCount(2, $logger2->getMessages());
+        assertNotSame($api1, $api2);
+        assertEmpty($logger1->getMessages());
+        assertCount(2, $logger2->getMessages());
     }
 
     public function testCallSuccess(): void
@@ -84,8 +94,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->call($method);
 
-        $this->assertInstanceOf(User::class, $result);
-        $this->assertSame(1, $result->id);
+        assertInstanceOf(User::class, $result);
+        assertSame(1, $result->id);
 
         $decodedResponse = [
             'ok' => true,
@@ -95,7 +105,7 @@ final class TelegramBotApiTest extends TestCase
                 'first_name' => 'Sergei',
             ],
         ];
-        $this->assertSame(
+        assertSame(
             [
                 [
                     'level' => 'info',
@@ -132,7 +142,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->call(new CustomMethod('getMe'));
 
-        $this->assertSame(
+        assertSame(
             [
                 'id' => 1,
                 'is_bot' => false,
@@ -153,12 +163,12 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->call($method);
 
-        $this->assertInstanceOf(FailResult::class, $result);
-        $this->assertSame('test error', $result->description);
-        $this->assertSame(400, $result->errorCode);
+        assertInstanceOf(FailResult::class, $result);
+        assertSame('test error', $result->description);
+        assertSame(400, $result->errorCode);
 
         if ($useLogger) {
-            $this->assertSame(
+            assertSame(
                 [
                     [
                         'level' => 'info',
@@ -199,8 +209,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->call($method);
 
-        $this->assertInstanceOf(FailResult::class, $result);
-        $this->assertNull($result->description);
+        assertInstanceOf(FailResult::class, $result);
+        assertNull($result->description);
     }
 
     public function testCallFailWithInvalidErrorCode(): void
@@ -212,8 +222,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->call($method);
 
-        $this->assertInstanceOf(FailResult::class, $result);
-        $this->assertNull($result->errorCode);
+        assertInstanceOf(FailResult::class, $result);
+        assertNull($result->errorCode);
     }
 
     public function testSuccessResponseWithoutResult(): void
@@ -227,8 +237,8 @@ final class TelegramBotApiTest extends TestCase
             $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Not found "result" field in response. Status code: 200.', $exception->getMessage());
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Not found "result" field in response. Status code: 200.', $exception->getMessage());
     }
 
     public function testResponseWithInvalidJson(): void
@@ -242,8 +252,8 @@ final class TelegramBotApiTest extends TestCase
             $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Failed to decode JSON response. Status code: 200.', $exception->getMessage());
     }
 
     #[TestWith([true])]
@@ -260,11 +270,11 @@ final class TelegramBotApiTest extends TestCase
         } catch (Throwable $exception) {
         }
 
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Not found key "id" in result object.', $exception->getMessage());
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Not found key "id" in result object.', $exception->getMessage());
 
         if ($useLogger) {
-            $this->assertSame(
+            assertSame(
                 [
                     [
                         'level' => 'info',
@@ -300,8 +310,9 @@ final class TelegramBotApiTest extends TestCase
             $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Expected telegram response as array. Got "string".', $exception->getMessage());
+
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Expected telegram response as array. Got "string".', $exception->getMessage());
     }
 
     public function testResponseWithNotBooleanOk(): void
@@ -315,8 +326,9 @@ final class TelegramBotApiTest extends TestCase
             $api->call(new GetMe());
         } catch (Throwable $exception) {
         }
-        $this->assertInstanceOf(TelegramParseResultException::class, $exception);
-        $this->assertSame('Incorrect "ok" field in response. Status code: 200.', $exception->getMessage());
+
+        assertInstanceOf(TelegramParseResultException::class, $exception);
+        assertSame('Incorrect "ok" field in response. Status code: 200.', $exception->getMessage());
     }
 
     public function testMakeUrlPath(): void
@@ -326,7 +338,7 @@ final class TelegramBotApiTest extends TestCase
 
         $api->logout();
 
-        $this->assertSame('https://api.telegram.org/botstub-token/logOut', $transport->urlPath());
+        assertSame('https://api.telegram.org/botstub-token/logOut', $transport->urlPath());
     }
 
     public static function dataMakeFileUrl(): iterable
@@ -356,7 +368,7 @@ final class TelegramBotApiTest extends TestCase
             new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testAnswerCallbackQuery(): void
@@ -365,7 +377,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->answerCallbackQuery('id');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testAnswerInlineQuery(): void
@@ -374,7 +386,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->answerInlineQuery('id', []);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testAnswerPreCheckoutQuery(): void
@@ -383,7 +395,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->answerPreCheckoutQuery('id', true);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testAnswerShippingQuery(): void
@@ -392,7 +404,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->answerShippingQuery('id', true);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testAnswerWebAppQuery(): void
@@ -403,8 +415,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->answerWebAppQuery('id', new InlineQueryResultContact('1', '+79001234567', 'Vjik'));
 
-        $this->assertInstanceOf(SentWebAppMessage::class, $result);
-        $this->assertSame('idMessage', $result->inlineMessageId);
+        assertInstanceOf(SentWebAppMessage::class, $result);
+        assertSame('idMessage', $result->inlineMessageId);
     }
 
     public function testApproveChatJoinRequest(): void
@@ -413,7 +425,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->approveChatJoinRequest(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testBanChatMember(): void
@@ -422,7 +434,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->banChatMember(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testBanChatSenderChat(): void
@@ -431,7 +443,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->banChatSenderChat(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testClose(): void
@@ -440,7 +452,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->close();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testCloseForumTopic(): void
@@ -449,7 +461,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->closeForumTopic(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testCloseGeneralForumTopic(): void
@@ -458,7 +470,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->closeGeneralForumTopic(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testCopyMessage(): void
@@ -467,8 +479,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->copyMessage(100, 200, 1);
 
-        $this->assertInstanceOf(MessageId::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(MessageId::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testCopyMessages(): void
@@ -480,12 +492,12 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->copyMessages(100, 200, [1, 2]);
 
-        $this->assertIsArray($result);
-        $this->assertCount(2, $result);
-        $this->assertInstanceOf(MessageId::class, $result[0]);
-        $this->assertInstanceOf(MessageId::class, $result[1]);
-        $this->assertSame(7, $result[0]->messageId);
-        $this->assertSame(8, $result[1]->messageId);
+        assertIsArray($result);
+        assertCount(2, $result);
+        assertInstanceOf(MessageId::class, $result[0]);
+        assertInstanceOf(MessageId::class, $result[1]);
+        assertSame(7, $result[0]->messageId);
+        assertSame(8, $result[1]->messageId);
     }
 
     public function testCreateChatInviteLink(): void
@@ -504,8 +516,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->createChatInviteLink(1);
 
-        $this->assertInstanceOf(ChatInviteLink::class, $result);
-        $this->assertSame('https//t.me/+example', $result->inviteLink);
+        assertInstanceOf(ChatInviteLink::class, $result);
+        assertSame('https//t.me/+example', $result->inviteLink);
     }
 
     public function testCreateChatSubscriptionInviteLink(): void
@@ -524,8 +536,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->createChatSubscriptionInviteLink(10, 20, 30);
 
-        $this->assertInstanceOf(ChatInviteLink::class, $result);
-        $this->assertSame('https//t.me/+example', $result->inviteLink);
+        assertInstanceOf(ChatInviteLink::class, $result);
+        assertSame('https//t.me/+example', $result->inviteLink);
     }
 
     public function testCreateForumTopic(): void
@@ -539,8 +551,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->createForumTopic(1, 'test');
 
-        $this->assertInstanceOf(ForumTopic::class, $result);
-        $this->assertSame(19, $result->messageThreadId);
+        assertInstanceOf(ForumTopic::class, $result);
+        assertSame(19, $result->messageThreadId);
     }
 
     public function testCreateInvoiceLink(): void
@@ -555,7 +567,7 @@ final class TelegramBotApiTest extends TestCase
             [],
         );
 
-        $this->assertSame('https://example.com/invoice', $result);
+        assertSame('https://example.com/invoice', $result);
     }
 
     public function testCreateNewStickerSet(): void
@@ -564,7 +576,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->createNewStickerSet(1, 'test_by_bot', 'Test Pack', []);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeclineChatJoinRequest(): void
@@ -573,7 +585,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->declineChatJoinRequest(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteChatPhoto(): void
@@ -582,7 +594,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteChatPhoto(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteChatStickerSet(): void
@@ -591,7 +603,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteChatStickerSet(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteForumTopic(): void
@@ -600,7 +612,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteForumTopic(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteMessage(): void
@@ -609,7 +621,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteMessage(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteMessages(): void
@@ -618,7 +630,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteMessages(1, []);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteMyCommands(): void
@@ -627,7 +639,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteMyCommands();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteStickerFromSet(): void
@@ -636,7 +648,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteStickerFromSet('sid');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testDeleteStickerSet(): void
@@ -645,7 +657,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteStickerSet('test_by_bot');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditChatInviteLink(): void
@@ -664,8 +676,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editChatInviteLink(1, 'https//t.me/+example');
 
-        $this->assertInstanceOf(ChatInviteLink::class, $result);
-        $this->assertSame(23, $result->creator->id);
+        assertInstanceOf(ChatInviteLink::class, $result);
+        assertSame(23, $result->creator->id);
     }
 
     public function testEditChatSubscriptionInviteLink(): void
@@ -684,8 +696,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editChatSubscriptionInviteLink(1, 'https//t.me/+example');
 
-        $this->assertInstanceOf(ChatInviteLink::class, $result);
-        $this->assertSame(23, $result->creator->id);
+        assertInstanceOf(ChatInviteLink::class, $result);
+        assertSame(23, $result->creator->id);
     }
 
     public function testEditForumTopic(): void
@@ -694,7 +706,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editForumTopic(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditGeneralForumTopic(): void
@@ -703,7 +715,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editGeneralForumTopic(1, 'test');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditMessageCaption(): void
@@ -712,7 +724,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editMessageCaption();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditMessageLiveLocation(): void
@@ -721,7 +733,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editMessageLiveLocation(51.660781, 39.200296);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditMessageMedia(): void
@@ -732,7 +744,7 @@ final class TelegramBotApiTest extends TestCase
             new InputMediaPhoto('https://example.com/photo.jpg'),
         );
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditMessageReplyMarkup(): void
@@ -741,7 +753,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editMessageReplyMarkup();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditMessageText(): void
@@ -750,7 +762,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editMessageText('test');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testEditUserStarSubscription(): void
@@ -759,7 +771,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->editUserStarSubscription(7, 'id', false);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testExportChatInviteLink(): void
@@ -768,7 +780,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->exportChatInviteLink(1);
 
-        $this->assertSame('https//t.me/+example', $result);
+        assertSame('https//t.me/+example', $result);
     }
 
     public function testForwardMessage(): void
@@ -784,8 +796,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->forwardMessage(100, 200, 15);
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testForwardMessages(): void
@@ -801,12 +813,12 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->forwardMessages(100, 200, [1, 2]);
 
-        $this->assertIsArray($result);
-        $this->assertCount(2, $result);
-        $this->assertInstanceOf(MessageId::class, $result[0]);
-        $this->assertInstanceOf(MessageId::class, $result[1]);
-        $this->assertSame(7, $result[0]->messageId);
-        $this->assertSame(8, $result[1]->messageId);
+        assertIsArray($result);
+        assertCount(2, $result);
+        assertInstanceOf(MessageId::class, $result[0]);
+        assertInstanceOf(MessageId::class, $result[1]);
+        assertSame(7, $result[0]->messageId);
+        assertSame(8, $result[1]->messageId);
     }
 
     public function testDeleteWebhook(): void
@@ -815,7 +827,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->deleteWebhook();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testGetAvailableGifts(): void
@@ -826,7 +838,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getAvailableGifts();
 
-        $this->assertInstanceOf(Gifts::class, $result);
+        assertInstanceOf(Gifts::class, $result);
     }
 
     public function testGetBusinessConnection(): void
@@ -846,8 +858,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getBusinessConnection('b1');
 
-        $this->assertInstanceOf(BusinessConnection::class, $result);
-        $this->assertSame('id1', $result->id);
+        assertInstanceOf(BusinessConnection::class, $result);
+        assertSame('id1', $result->id);
     }
 
     public function testGetChat(): void
@@ -861,8 +873,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getChat(23);
 
-        $this->assertInstanceOf(ChatFullInfo::class, $result);
-        $this->assertSame(23, $result->id);
+        assertInstanceOf(ChatFullInfo::class, $result);
+        assertSame(23, $result->id);
     }
 
     public function testGetChatAdministrators(): void
@@ -876,10 +888,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getChatAdministrators(23);
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(ChatMemberMember::class, $result[0]);
-        $this->assertSame(23, $result[0]->user->id);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(ChatMemberMember::class, $result[0]);
+        assertSame(23, $result[0]->user->id);
     }
 
     public function testGetChatMemberCount(): void
@@ -888,7 +900,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getChatMemberCount(1);
 
-        $this->assertSame(33, $result);
+        assertSame(33, $result);
     }
 
     public function testGetChatMember(): void
@@ -900,8 +912,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getChatMember(1, 2);
 
-        $this->assertInstanceOf(ChatMemberMember::class, $result);
-        $this->assertSame(23, $result->user->id);
+        assertInstanceOf(ChatMemberMember::class, $result);
+        assertSame(23, $result->user->id);
     }
 
     public function testGetChatMenuButton(): void
@@ -912,7 +924,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getChatMenuButton();
 
-        $this->assertInstanceOf(MenuButtonDefault::class, $result);
+        assertInstanceOf(MenuButtonDefault::class, $result);
     }
 
     public function testGetFile(): void
@@ -926,8 +938,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getFile('f1');
 
-        $this->assertInstanceOf(File::class, $result);
-        $this->assertSame('f1', $result->fileId);
+        assertInstanceOf(File::class, $result);
+        assertSame('f1', $result->fileId);
     }
 
     public function testGetForumTopicIconStickers(): void
@@ -946,10 +958,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getForumTopicIconStickers();
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(Sticker::class, $result[0]);
-        $this->assertSame('x1', $result[0]->fileId);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(Sticker::class, $result[0]);
+        assertSame('x1', $result[0]->fileId);
     }
 
     public function testGetGameHighScores(): void
@@ -968,10 +980,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getGameHighScores(1);
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(GameHighScore::class, $result[0]);
-        $this->assertSame(2, $result[0]->position);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(GameHighScore::class, $result[0]);
+        assertSame(2, $result[0]->position);
     }
 
     public function testGetCustomEmojiStickers(): void
@@ -990,10 +1002,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getCustomEmojiStickers(['id1']);
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(Sticker::class, $result[0]);
-        $this->assertSame('x1', $result[0]->fileId);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(Sticker::class, $result[0]);
+        assertSame('x1', $result[0]->fileId);
     }
 
     public function testGetMe(): void
@@ -1006,8 +1018,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMe();
 
-        $this->assertInstanceOf(User::class, $result);
-        $this->assertSame(1, $result->id);
+        assertInstanceOf(User::class, $result);
+        assertSame(1, $result->id);
     }
 
     public function testGetMyCommands(): void
@@ -1021,10 +1033,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMyCommands();
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(BotCommand::class, $result[0]);
-        $this->assertSame('start', $result[0]->command);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(BotCommand::class, $result[0]);
+        assertSame('start', $result[0]->command);
     }
 
     public function testGetMyDefaultAdministratorRights(): void
@@ -1049,21 +1061,21 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMyDefaultAdministratorRights();
 
-        $this->assertTrue($result->isAnonymous);
-        $this->assertFalse($result->canManageChat);
-        $this->assertTrue($result->canDeleteMessages);
-        $this->assertTrue($result->canManageVideoChats);
-        $this->assertFalse($result->canRestrictMembers);
-        $this->assertTrue($result->canPromoteMembers);
-        $this->assertTrue($result->canChangeInfo);
-        $this->assertTrue($result->canInviteUsers);
-        $this->assertTrue($result->canPostStories);
-        $this->assertTrue($result->canEditStories);
-        $this->assertFalse($result->canDeleteStories);
-        $this->assertTrue($result->canPostMessages);
-        $this->assertTrue($result->canEditMessages);
-        $this->assertFalse($result->canPinMessages);
-        $this->assertTrue($result->canManageTopics);
+        assertTrue($result->isAnonymous);
+        assertFalse($result->canManageChat);
+        assertTrue($result->canDeleteMessages);
+        assertTrue($result->canManageVideoChats);
+        assertFalse($result->canRestrictMembers);
+        assertTrue($result->canPromoteMembers);
+        assertTrue($result->canChangeInfo);
+        assertTrue($result->canInviteUsers);
+        assertTrue($result->canPostStories);
+        assertTrue($result->canEditStories);
+        assertFalse($result->canDeleteStories);
+        assertTrue($result->canPostMessages);
+        assertTrue($result->canEditMessages);
+        assertFalse($result->canPinMessages);
+        assertTrue($result->canManageTopics);
     }
 
     public function testGetMyDescription(): void
@@ -1074,8 +1086,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMyDescription();
 
-        $this->assertInstanceOf(BotDescription::class, $result);
-        $this->assertSame('test', $result->description);
+        assertInstanceOf(BotDescription::class, $result);
+        assertSame('test', $result->description);
     }
 
     public function testGetMyName(): void
@@ -1086,8 +1098,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMyName();
 
-        $this->assertInstanceOf(BotName::class, $result);
-        $this->assertSame('test', $result->name);
+        assertInstanceOf(BotName::class, $result);
+        assertSame('test', $result->name);
     }
 
     public function testGetMyShortDescription(): void
@@ -1098,8 +1110,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getMyShortDescription();
 
-        $this->assertInstanceOf(BotShortDescription::class, $result);
-        $this->assertSame('test', $result->shortDescription);
+        assertInstanceOf(BotShortDescription::class, $result);
+        assertSame('test', $result->shortDescription);
     }
 
     public function testGetStarTransactions(): void
@@ -1110,7 +1122,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getStarTransactions();
 
-        $this->assertInstanceOf(StarTransactions::class, $result);
+        assertInstanceOf(StarTransactions::class, $result);
     }
 
     public function testGetStickerSet(): void
@@ -1134,7 +1146,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getStickerSet('test_by_bot');
 
-        $this->assertSame('test name', $result->title);
+        assertSame('test name', $result->title);
     }
 
     public function testGetUpdates(): void
@@ -1146,12 +1158,12 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getUpdates();
 
-        $this->assertIsArray($result);
-        $this->assertCount(2, $result);
-        $this->assertInstanceOf(Update::class, $result[0]);
-        $this->assertInstanceOf(Update::class, $result[1]);
-        $this->assertSame(1, $result[0]->updateId);
-        $this->assertSame(2, $result[1]->updateId);
+        assertIsArray($result);
+        assertCount(2, $result);
+        assertInstanceOf(Update::class, $result[0]);
+        assertInstanceOf(Update::class, $result[1]);
+        assertSame(1, $result[0]->updateId);
+        assertSame(2, $result[1]->updateId);
     }
 
     public function testGetUserChatBoosts(): void
@@ -1162,7 +1174,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getUserChatBoosts(1, 2);
 
-        $this->assertInstanceOf(UserChatBoosts::class, $result);
+        assertInstanceOf(UserChatBoosts::class, $result);
     }
 
     public function testGetUserProfilePhotos(): void
@@ -1184,7 +1196,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getUserProfilePhotos(7);
 
-        $this->assertInstanceOf(UserProfilePhotos::class, $result);
+        assertInstanceOf(UserProfilePhotos::class, $result);
     }
 
     public function testGetWebhookInfo(): void
@@ -1197,8 +1209,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->getWebhookInfo();
 
-        $this->assertInstanceOf(WebhookInfo::class, $result);
-        $this->assertSame('https://example.com/', $result->url);
+        assertInstanceOf(WebhookInfo::class, $result);
+        assertSame('https://example.com/', $result->url);
     }
 
     public function testHideGeneralForumTopic(): void
@@ -1207,7 +1219,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->hideGeneralForumTopic(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testLeaveChat(): void
@@ -1216,7 +1228,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->leaveChat(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testLogOut(): void
@@ -1225,7 +1237,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->logOut();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testPinChatMessage(): void
@@ -1234,7 +1246,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->pinChatMessage(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testPromoteChatMember(): void
@@ -1243,7 +1255,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->promoteChatMember(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testRefundStarPayment(): void
@@ -1252,7 +1264,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->refundStarPayment(1, 'test');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testRemoveChatVerification(): void
@@ -1261,7 +1273,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->removeChatVerification(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testRemoveUserVerification(): void
@@ -1270,7 +1282,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->removeUserVerification(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testReopenForumTopic(): void
@@ -1279,7 +1291,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->reopenForumTopic(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testReopenGeneralForumTopic(): void
@@ -1288,7 +1300,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->reopenGeneralForumTopic(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testReplaceStickerInSet(): void
@@ -1302,7 +1314,7 @@ final class TelegramBotApiTest extends TestCase
             new InputSticker('https://example.com/sticker.webp', 'static', ['😀']),
         );
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testRestrictChatMember(): void
@@ -1311,7 +1323,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->restrictChatMember(1, 2, new ChatPermissions());
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testRevokeChatInviteLink(): void
@@ -1330,8 +1342,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->revokeChatInviteLink(1, 'https//t.me/+example');
 
-        $this->assertInstanceOf(ChatInviteLink::class, $result);
-        $this->assertSame(23, $result->creator->id);
+        assertInstanceOf(ChatInviteLink::class, $result);
+        assertSame(23, $result->creator->id);
     }
 
     public function testSavePreparedInlineMessage(): void
@@ -1343,8 +1355,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->savePreparedInlineMessage(12, new InlineQueryResultGame('test', 'Hello'));
 
-        $this->assertInstanceOf(PreparedInlineMessage::class, $result);
-        $this->assertSame('test-id', $result->id);
+        assertInstanceOf(PreparedInlineMessage::class, $result);
+        assertSame('test-id', $result->id);
     }
 
     public function testSendAnimation(): void
@@ -1360,8 +1372,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendAnimation(12, 'https://example.com/anime.gif');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendAudio(): void
@@ -1377,8 +1389,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendAudio(12, 'https://example.com/audio.mp3');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendChatAction(): void
@@ -1387,7 +1399,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendChatAction(12, 'typing');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSendContact(): void
@@ -1403,8 +1415,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendContact(12, '1234567890', 'John');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendDice(): void
@@ -1420,8 +1432,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendDice(12);
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendDocument(): void
@@ -1437,8 +1449,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendDocument(12, 'https://example.com/file.doc');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendGame(): void
@@ -1454,8 +1466,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendGame(12, 'The Stars');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendGift(): void
@@ -1464,7 +1476,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendGift(12, 'gid');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSendInvoice(): void
@@ -1487,8 +1499,8 @@ final class TelegramBotApiTest extends TestCase
             [],
         );
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendLocation(): void
@@ -1504,8 +1516,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendLocation(12, 1.1, 2.2);
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendMediaGroup(): void
@@ -1523,10 +1535,10 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendMediaGroup(12, []);
 
-        $this->assertIsArray($result);
-        $this->assertCount(1, $result);
-        $this->assertInstanceOf(Message::class, $result[0]);
-        $this->assertSame(7, $result[0]->messageId);
+        assertIsArray($result);
+        assertCount(1, $result);
+        assertInstanceOf(Message::class, $result[0]);
+        assertSame(7, $result[0]->messageId);
     }
 
     public function testSendMessage(): void
@@ -1542,8 +1554,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendMessage(12, 'hello');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendPaidMedia(): void
@@ -1559,8 +1571,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendPaidMedia(12, 25, []);
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendPhoto(): void
@@ -1576,8 +1588,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendPhoto(12, 'https://example.com/i.png');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendPoll(): void
@@ -1593,8 +1605,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendPoll(12, 'How are you?', []);
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendSticker(): void
@@ -1610,8 +1622,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendSticker(12, 'https://example.com/sticker.webp');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendVenue(): void
@@ -1627,8 +1639,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendVenue(12, 1.1, 2.2, 'title', 'address');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendVideo(): void
@@ -1644,8 +1656,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendVideo(12, 'https://example.com/wow.mp4');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
 
@@ -1662,8 +1674,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendVideoNote(12, 'https://example.com/wow.mp4');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSendVoice(): void
@@ -1679,8 +1691,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->sendVoice(12, 'https://example.com/wow.mp3');
 
-        $this->assertInstanceOf(Message::class, $result);
-        $this->assertSame(7, $result->messageId);
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
     }
 
     public function testSetChatAdministratorCustomTitle(): void
@@ -1689,7 +1701,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatAdministratorCustomTitle(1, 2, 'test');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatPermissions(): void
@@ -1698,7 +1710,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatPermissions(1, new ChatPermissions());
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatDescription(): void
@@ -1707,7 +1719,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatDescription(12);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatMenuButton(): void
@@ -1716,7 +1728,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatMenuButton();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatPhoto(): void
@@ -1725,7 +1737,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatPhoto(12, new InputFile((new StreamFactory())->createStream()));
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatStickerSet(): void
@@ -1734,7 +1746,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatStickerSet(1, 'animals_by_bot');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetChatTitle(): void
@@ -1743,7 +1755,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setChatTitle(12, 'test');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetCustomEmojiStickerSetThumbnail(): void
@@ -1752,7 +1764,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setCustomEmojiStickerSetThumbnail('animals_by_my_bor');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetGameScore(): void
@@ -1761,7 +1773,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setGameScore(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMessageReaction(): void
@@ -1770,7 +1782,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setMessageReaction(12, 270);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMyCommands(): void
@@ -1781,7 +1793,7 @@ final class TelegramBotApiTest extends TestCase
             new BotCommand('test', 'Test description'),
         ]);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMyDefaultAdministratorRights(): void
@@ -1790,7 +1802,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setMyDefaultAdministratorRights();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMyDescription(): void
@@ -1799,7 +1811,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setMyDescription();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMyName(): void
@@ -1808,7 +1820,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setMyName();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetMyShortDescription(): void
@@ -1817,7 +1829,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setMyShortDescription();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetPassportDataErrors(): void
@@ -1826,7 +1838,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setPassportDataErrors(1, []);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerEmojiList(): void
@@ -1835,7 +1847,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerEmojiList('sid', ['😎']);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerKeywords(): void
@@ -1844,7 +1856,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerKeywords('sid');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerMaskPosition(): void
@@ -1853,7 +1865,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerMaskPosition('sid');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerPositionInSet(): void
@@ -1862,7 +1874,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerPositionInSet('sid', 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerSetThumbnail(): void
@@ -1871,7 +1883,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerSetThumbnail('animals_by_boy', 123, 'static');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetStickerSetTitle(): void
@@ -1880,7 +1892,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setStickerSetTitle('name_by_bot', 'New Title');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetUserEmojiStatus(): void
@@ -1889,7 +1901,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setUserEmojiStatus(19);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testSetWebhook(): void
@@ -1898,7 +1910,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->setWebhook('https://example.com/webhook');
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testStopMessageLiveLocation(): void
@@ -1907,7 +1919,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->stopMessageLiveLocation();
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testStopPoll(): void
@@ -1927,7 +1939,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->stopPoll(1, 2);
 
-        $this->assertSame('12', $result->id);
+        assertSame('12', $result->id);
     }
 
     public function testUnbanChatMember(): void
@@ -1936,7 +1948,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unbanChatMember(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnbanChatSenderChat(): void
@@ -1945,7 +1957,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unbanChatSenderChat(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnhideGeneralForumTopic(): void
@@ -1954,7 +1966,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unhideGeneralForumTopic(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnpinAllChatMessages(): void
@@ -1963,7 +1975,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unpinAllChatMessages(2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnpinChatMessage(): void
@@ -1972,7 +1984,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unpinChatMessage(2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnpinAllForumTopicMessages(): void
@@ -1981,7 +1993,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unpinAllForumTopicMessages(1, 2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUnpinAllGeneralForumTopicMessages(): void
@@ -1990,7 +2002,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->unpinAllGeneralForumTopicMessages(2);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testUploadStickerFile(): void
@@ -2004,8 +2016,8 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->uploadStickerFile(1, new InputFile((new StreamFactory())->createStream()), 'static');
 
-        $this->assertInstanceOf(File::class, $result);
-        $this->assertSame('f1', $result->fileId);
+        assertInstanceOf(File::class, $result);
+        assertSame('f1', $result->fileId);
     }
 
     public function testVerifyChat(): void
@@ -2014,7 +2026,7 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->verifyChat(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 
     public function testVerifyUser(): void
@@ -2023,6 +2035,6 @@ final class TelegramBotApiTest extends TestCase
 
         $result = $api->verifyUser(1);
 
-        $this->assertTrue($result);
+        assertTrue($result);
     }
 }

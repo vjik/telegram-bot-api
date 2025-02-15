@@ -12,6 +12,10 @@ use Vjik\TelegramBot\Api\Type\ChatInviteLink;
 use Vjik\TelegramBot\Api\Type\ChatJoinRequest;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class ChatJoinRequestTest extends TestCase
 {
     public function testBase(): void
@@ -21,12 +25,12 @@ final class ChatJoinRequestTest extends TestCase
         $date = new DateTimeImmutable();
         $chatJoinRequest = new ChatJoinRequest($chat, $user, 12, $date);
 
-        $this->assertSame($chat, $chatJoinRequest->chat);
-        $this->assertSame($user, $chatJoinRequest->from);
-        $this->assertSame(12, $chatJoinRequest->userChatId);
-        $this->assertSame($date, $chatJoinRequest->date);
-        $this->assertNull($chatJoinRequest->bio);
-        $this->assertNull($chatJoinRequest->inviteLink);
+        assertSame($chat, $chatJoinRequest->chat);
+        assertSame($user, $chatJoinRequest->from);
+        assertSame(12, $chatJoinRequest->userChatId);
+        assertSame($date, $chatJoinRequest->date);
+        assertNull($chatJoinRequest->bio);
+        assertNull($chatJoinRequest->inviteLink);
     }
 
     public function testFromTelegramResult(): void
@@ -59,17 +63,17 @@ final class ChatJoinRequestTest extends TestCase
 
         $chatJoinRequest = (new ObjectFactory())->create($result, null, ChatJoinRequest::class);
 
-        $this->assertInstanceOf(Chat::class, $chatJoinRequest->chat);
-        $this->assertSame(1, $chatJoinRequest->chat->id);
+        assertInstanceOf(Chat::class, $chatJoinRequest->chat);
+        assertSame(1, $chatJoinRequest->chat->id);
 
-        $this->assertInstanceOf(User::class, $chatJoinRequest->from);
-        $this->assertSame(2, $chatJoinRequest->from->id);
+        assertInstanceOf(User::class, $chatJoinRequest->from);
+        assertSame(2, $chatJoinRequest->from->id);
 
-        $this->assertSame(12, $chatJoinRequest->userChatId);
-        $this->assertSame(1631840400, $chatJoinRequest->date?->getTimestamp());
-        $this->assertSame('Test', $chatJoinRequest->bio);
+        assertSame(12, $chatJoinRequest->userChatId);
+        assertSame(1631840400, $chatJoinRequest->date?->getTimestamp());
+        assertSame('Test', $chatJoinRequest->bio);
 
-        $this->assertInstanceOf(ChatInviteLink::class, $chatJoinRequest->inviteLink);
-        $this->assertSame('https://t.me/joinchat/x1', $chatJoinRequest->inviteLink->inviteLink);
+        assertInstanceOf(ChatInviteLink::class, $chatJoinRequest->inviteLink);
+        assertSame('https://t.me/joinchat/x1', $chatJoinRequest->inviteLink->inviteLink);
     }
 }

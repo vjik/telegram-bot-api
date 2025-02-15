@@ -10,14 +10,18 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\RevenueWithdrawalStateFailed;
 use Vjik\TelegramBot\Api\Type\Payment\TransactionPartnerFragment;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
+use function PHPUnit\Framework\assertSame;
+
 final class TransactionPartnerFragmentTest extends TestCase
 {
     public function testBase(): void
     {
         $object = new TransactionPartnerFragment();
 
-        $this->assertSame('fragment', $object->getType());
-        $this->assertNull($object->withdrawalState);
+        assertSame('fragment', $object->getType());
+        assertNull($object->withdrawalState);
     }
 
     public function testFull(): void
@@ -25,8 +29,8 @@ final class TransactionPartnerFragmentTest extends TestCase
         $withdrawalState = new RevenueWithdrawalStateFailed();
         $object = new TransactionPartnerFragment($withdrawalState);
 
-        $this->assertSame('fragment', $object->getType());
-        $this->assertSame($withdrawalState, $object->withdrawalState);
+        assertSame('fragment', $object->getType());
+        assertSame($withdrawalState, $object->withdrawalState);
     }
 
     public function testFromTelegramResult(): void
@@ -38,8 +42,8 @@ final class TransactionPartnerFragmentTest extends TestCase
             ],
         ], null, TransactionPartnerFragment::class);
 
-        $this->assertSame('fragment', $object->getType());
-        $this->assertInstanceOf(RevenueWithdrawalStateFailed::class, $object->withdrawalState);
+        assertSame('fragment', $object->getType());
+        assertInstanceOf(RevenueWithdrawalStateFailed::class, $object->withdrawalState);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

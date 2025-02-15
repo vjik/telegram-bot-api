@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Type;
+namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
@@ -10,14 +10,17 @@ use Vjik\TelegramBot\Api\FileCollector;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputPaidMediaVideo;
 
+use function PHPUnit\Framework\assertEmpty;
+use function PHPUnit\Framework\assertSame;
+
 final class InputPaidMediaVideoTest extends TestCase
 {
     public function testBase(): void
     {
         $inputMedia = new InputPaidMediaVideo('https://example.com/start.mp4');
 
-        $this->assertSame('video', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('video', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'video',
                 'media' => 'https://example.com/start.mp4',
@@ -26,14 +29,14 @@ final class InputPaidMediaVideoTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'video',
                 'media' => 'https://example.com/start.mp4',
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertEmpty($fileCollector->get());
+        assertEmpty($fileCollector->get());
     }
 
     public function testFull(): void
@@ -52,8 +55,8 @@ final class InputPaidMediaVideoTest extends TestCase
             17,
         );
 
-        $this->assertSame('video', $inputMedia->getType());
-        $this->assertSame(
+        assertSame('video', $inputMedia->getType());
+        assertSame(
             [
                 'type' => 'video',
                 'media' => $media,
@@ -69,7 +72,7 @@ final class InputPaidMediaVideoTest extends TestCase
         );
 
         $fileCollector = new FileCollector();
-        $this->assertSame(
+        assertSame(
             [
                 'type' => 'video',
                 'media' => 'attach://file0',
@@ -83,7 +86,7 @@ final class InputPaidMediaVideoTest extends TestCase
             ],
             $inputMedia->toRequestArray($fileCollector),
         );
-        $this->assertSame(
+        assertSame(
             [
                 'file0' => $media,
                 'file1' => $thumbnail,

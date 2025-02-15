@@ -10,15 +10,18 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 
+use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
+
 final class SetChatMenuButtonTest extends TestCase
 {
     public function testBase(): void
     {
         $method = new SetChatMenuButton();
 
-        $this->assertSame(HttpMethod::POST, $method->getHttpMethod());
-        $this->assertSame('setChatMenuButton', $method->getApiMethod());
-        $this->assertSame([], $method->getData());
+        assertSame(HttpMethod::POST, $method->getHttpMethod());
+        assertSame('setChatMenuButton', $method->getApiMethod());
+        assertSame([], $method->getData());
     }
 
     public function testFull(): void
@@ -26,7 +29,7 @@ final class SetChatMenuButtonTest extends TestCase
         $menuButton = new MenuButtonDefault();
         $method = new SetChatMenuButton(99, $menuButton);
 
-        $this->assertSame(
+        assertSame(
             [
                 'chat_id' => 99,
                 'menu_button' => $menuButton->toRequestArray(),
@@ -41,6 +44,6 @@ final class SetChatMenuButtonTest extends TestCase
 
         $preparedResult = TestHelper::createSuccessStubApi(true)->call($method);
 
-        $this->assertTrue($preparedResult);
+        assertTrue($preparedResult);
     }
 }

@@ -9,6 +9,9 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Payment\PaidMediaPurchased;
 use Vjik\TelegramBot\Api\Type\User;
 
+use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertSame;
+
 final class PaidMediaPurchasedTest extends TestCase
 {
     public function testBase(): void
@@ -16,8 +19,8 @@ final class PaidMediaPurchasedTest extends TestCase
         $user = new User(1, false, 'Vjik');
         $object = new PaidMediaPurchased($user, 'payload');
 
-        $this->assertSame($user, $object->from);
-        $this->assertSame('payload', $object->paidMediaPayload);
+        assertSame($user, $object->from);
+        assertSame('payload', $object->paidMediaPayload);
     }
 
     public function testFromTelegramResult(): void
@@ -35,9 +38,9 @@ final class PaidMediaPurchasedTest extends TestCase
             PaidMediaPurchased::class,
         );
 
-        $this->assertInstanceOf(User::class, $object->from);
-        $this->assertSame(1, $object->from->id);
+        assertInstanceOf(User::class, $object->from);
+        assertSame(1, $object->from->id);
 
-        $this->assertSame('test', $object->paidMediaPayload);
+        assertSame('test', $object->paidMediaPayload);
     }
 }
