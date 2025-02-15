@@ -265,6 +265,11 @@ final class TelegramBotApi
             $path = $file;
         }
 
+        /**
+         * @var string $path
+         * @see https://github.com/vimeo/psalm/issues/11285
+         */
+
         return $this->baseUrl . '/file/bot' . $this->token . '/' . $path;
     }
 
