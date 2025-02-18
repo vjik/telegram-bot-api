@@ -8,9 +8,6 @@ use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\Curl\Curl;
 use Vjik\TelegramBot\Api\Curl\CurlInterface;
-use Vjik\TelegramBot\Api\Transport\ApiResponse;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function is_int;

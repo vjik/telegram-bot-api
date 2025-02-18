@@ -6,8 +6,6 @@ namespace Vjik\TelegramBot\Api\Curl;
 
 use CurlHandle;
 
-use Vjik\TelegramBot\Api\Curl\CurlInterface;
-
 use function curl_close;
 use function curl_errno;
 use function curl_error;

@@ -9,6 +9,4 @@ use RuntimeException;
 /**
  * @api
  */
-final class DownloadException extends RuntimeException
-{
-}
+final class DownloadException extends RuntimeException {}

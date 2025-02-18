@@ -9,6 +9,4 @@ use RuntimeException;
 /**
  * @api
  */
-final class CurlException extends RuntimeException
-{
-}
+final class CurlException extends RuntimeException {}

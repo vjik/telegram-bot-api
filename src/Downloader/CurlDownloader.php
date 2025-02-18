@@ -15,8 +15,7 @@ final readonly class CurlDownloader implements DownloaderInterface
 {
     public function __construct(
         private CurlInterface $curl = new Curl(),
-    ) {
-    }
+    ) {}
 
     public function download(string $url, ?string $filePath = null): string
     {
