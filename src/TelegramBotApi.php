@@ -307,14 +307,14 @@ final class TelegramBotApi
      * @throws DownloadException
      * @throws SaveException
      */
-    public function downloadFileTo(string|File $file, string $localFilePath): void
+    public function downloadFileTo(string|File $file, string $savePath): void
     {
         $url = $this->makeFileUrl($file);
         if ($url === null) {
             throw new LogicException('Cannot download file without file path.');
         }
 
-        $this->downloader->downloadTo($url, $localFilePath);
+        $this->downloader->downloadTo($url, $savePath);
     }
 
     /**
