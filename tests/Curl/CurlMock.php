@@ -2,11 +2,11 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
+namespace Vjik\TelegramBot\Api\Tests\Curl;
 
 use CurlHandle;
 use Throwable;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlInterface;
+use Vjik\TelegramBot\Api\Curl\CurlInterface;
 
 use function curl_init;
 

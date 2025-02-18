@@ -2,10 +2,9 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Transport\Curl;
+namespace Vjik\TelegramBot\Api\Curl;
 
 use CurlHandle;
-use RuntimeException;
 
 use function curl_close;
 use function curl_errno;
@@ -30,7 +29,7 @@ final class Curl implements CurlInterface
     {
         $result = curl_exec($handle);
         if ($result === false) {
-            throw new RuntimeException(
+            throw new CurlException(
                 'CURL error: ' . curl_error($handle),
                 curl_errno($handle),
             );
@@ -48,7 +47,7 @@ final class Curl implements CurlInterface
     {
         $result = curl_init();
         if ($result === false) {
-            throw new RuntimeException('Failed to initialize CURL.');
+            throw new CurlException('Failed to initialize CURL.');
         }
 
         return $result;
@@ -58,7 +57,7 @@ final class Curl implements CurlInterface
     {
         $result = curl_setopt_array($handle, $options);
         if ($result === false) {
-            throw new RuntimeException('Failed to set CURL options.');
+            throw new CurlException('Failed to set CURL options.');
         }
     }
 }

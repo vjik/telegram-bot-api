@@ -10,7 +10,8 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 use Throwable;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
+use Vjik\TelegramBot\Api\Tests\Curl\CurlMock;
+use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
