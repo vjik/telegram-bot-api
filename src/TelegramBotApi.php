@@ -9,6 +9,11 @@ use DateTimeInterface;
 use LogicException;
 use Psr\Log\LoggerInterface;
 use SensitiveParameter;
+use Vjik\TelegramBot\Api\Downloader\CurlDownloader;
+use Vjik\TelegramBot\Api\Downloader\DownloaderInterface;
+use Vjik\TelegramBot\Api\Downloader\DownloadException;
+use Vjik\TelegramBot\Api\Downloader\NativeDownloader;
+use Vjik\TelegramBot\Api\Downloader\SaveException;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
@@ -140,7 +145,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -207,12 +212,14 @@ use function extension_loaded;
 final class TelegramBotApi
 {
     private readonly Api $api;
+    private readonly DownloaderInterface $downloader;
 
     public function __construct(
         #[SensitiveParameter]
         private readonly string $token,
         private readonly string $baseUrl = 'https://api.telegram.org',
         ?TransportInterface $transport = null,
+        ?DownloaderInterface $downloader = null,
         private ?LoggerInterface $logger = null,
     ) {
         if ($transport === null) {
@@ -224,6 +231,16 @@ final class TelegramBotApi
                 );
             // @codeCoverageIgnoreEnd
         }
+
+        if ($downloader === null) {
+            // @codeCoverageIgnoreStart
+            $downloader = extension_loaded('curl')
+                ? new CurlDownloader()
+                : new NativeDownloader();
+            // @codeCoverageIgnoreEnd
+        }
+        $this->downloader = $downloader;
+
         $this->api = new Api($token, $baseUrl, $transport);
     }
 
@@ -271,6 +288,33 @@ final class TelegramBotApi
          */
 
         return $this->baseUrl . '/file/bot' . $this->token . '/' . $path;
+    }
+
+    /**
+     * @throws DownloadException
+     */
+    public function downloadFile(string|File $file): string
+    {
+        $url = $this->makeFileUrl($file);
+        if ($url === null) {
+            throw new LogicException('Cannot download file without file path.');
+        }
+
+        return $this->downloader->download($url);
+    }
+
+    /**
+     * @throws DownloadException
+     * @throws SaveException
+     */
+    public function downloadFileTo(string|File $file, string $localFilePath): void
+    {
+        $url = $this->makeFileUrl($file);
+        if ($url === null) {
+            throw new LogicException('Cannot download file without file path.');
+        }
+
+        $this->downloader->downloadTo($url, $localFilePath);
     }
 
     /**

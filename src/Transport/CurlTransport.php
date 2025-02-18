@@ -2,10 +2,12 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Transport\Curl;
+namespace Vjik\TelegramBot\Api\Transport;
 
 use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
+use Vjik\TelegramBot\Api\Curl\Curl;
+use Vjik\TelegramBot\Api\Curl\CurlInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;

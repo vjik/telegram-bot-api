@@ -15,7 +15,7 @@ General usage:
 
 ```php
 use Vjik\TelegramBot\Api\TelegramBotApi;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\CurlTransport;
 
 // Telegram bot authentication token
 $token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
