@@ -252,8 +252,14 @@ final class TelegramBotApi
     }
 
     /**
+     * Make a file URL on Telegram servers.
+     *
      * @see https://core.telegram.org/bots/api#file
      * @see https://core.telegram.org/bots/api#getfile
+     *
+     * @param string|File $file File path or {@see File} object.
+     *
+     * @return string The file URL.
      *
      * @throws LogicException If the file path is not specified in `File` object.
      */
@@ -272,7 +278,14 @@ final class TelegramBotApi
     }
 
     /**
-     * @throws DownloadFileException
+     * Downloads a file from the Telegram servers and returns its content.
+     *
+     * @param string|File $file File path or {@see File} object.
+     *
+     * @return string The file content.
+     *
+     * @throws DownloadFileException If an error occurred while downloading the file.
+     * @throws LogicException If the file path is not specified in `File` object.
      */
     public function downloadFile(string|File $file): string
     {
@@ -282,8 +295,14 @@ final class TelegramBotApi
     }
 
     /**
-     * @throws DownloadFileException
-     * @throws SaveFileException
+     * Downloads a file from the Telegram servers and saves it to a file.
+     *
+     * @param string|File $file File path or {@see File} object.
+     * @param string $savePath The path to save the file.
+     *
+     * @throws DownloadFileException If an error occurred while downloading the file.
+     * @throws SaveFileException If an error occurred while saving the file.
+     * @throws LogicException If the file path is not specified in `File` object.
      */
     public function downloadFileTo(string|File $file, string $savePath): void
     {
