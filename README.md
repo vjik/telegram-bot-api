@@ -118,10 +118,10 @@ $fileContent = $api->downloadFile($file);
 $fileContent = $api->downloadFile('photos/file_2');
 
 // Download and save file by `File` instance
-$fileContent = $api->downloadFileTo($file, '/local/path/file.jpg');
+$fileContent = $api->downloadFileTo($file, '/local/path/to/file.jpg');
 
 // Download and save file by file path
-$fileContent = $api->downloadFileTo('photos/file_2', '/local/path/file.jpg');
+$fileContent = $api->downloadFileTo('photos/file_2', '/local/path/to/file.jpg');
 ```
 
 ### Guides
