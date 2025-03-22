@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Transport;
+namespace Vjik\TelegramBot\Api\Tests\Transport\PsrTransport;
 
 use HttpSoft\Message\Request;
 use HttpSoft\Message\Response;

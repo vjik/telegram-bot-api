@@ -2,13 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
+namespace Vjik\TelegramBot\Api\Tests\Curl;
 
 use CurlHandle;
 use Throwable;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlInterface;
+use Vjik\TelegramBot\Api\Curl\CurlInterface;
 
 use function curl_init;
+use function is_array;
 
 final class CurlMock implements CurlInterface
 {
@@ -18,6 +19,7 @@ final class CurlMock implements CurlInterface
     public function __construct(
         private readonly string|Throwable $execResult = '',
         private readonly array $getinfoResult = [],
+        private readonly ?Throwable $initException = null,
     ) {}
 
     public function close(CurlHandle $handle): void
@@ -31,6 +33,10 @@ final class CurlMock implements CurlInterface
             throw $this->execResult;
         }
 
+        if (is_array($this->options) && isset($this->options[CURLOPT_FILE])) {
+            fwrite($this->options[CURLOPT_FILE], $this->execResult);
+        }
+
         return $this->execResult;
     }
 
@@ -41,6 +47,9 @@ final class CurlMock implements CurlInterface
 
     public function init(): CurlHandle
     {
+        if ($this->initException !== null) {
+            throw $this->initException;
+        }
         return curl_init();
     }
 

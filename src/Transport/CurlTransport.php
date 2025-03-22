@@ -2,13 +2,13 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Transport\Curl;
+namespace Vjik\TelegramBot\Api\Transport;
 
 use CURLStringFile;
 use Psr\Http\Message\StreamInterface;
-use Vjik\TelegramBot\Api\Transport\ApiResponse;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
-use Vjik\TelegramBot\Api\Transport\TransportInterface;
+use Vjik\TelegramBot\Api\Curl\Curl;
+use Vjik\TelegramBot\Api\Curl\CurlException;
+use Vjik\TelegramBot\Api\Curl\CurlInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function is_int;
@@ -55,6 +55,71 @@ final readonly class CurlTransport implements TransportInterface
         }
 
         return new ApiResponse($statusCode, $body);
+    }
+
+    public function downloadFile(string $url): string
+    {
+        $options = [
+            CURLOPT_URL => $url,
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_FAILONERROR => true,
+        ];
+
+        try {
+            $curl = $this->curl->init();
+        } catch (CurlException $exception) {
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
+        }
+
+        try {
+            $this->curl->setopt_array($curl, $options);
+
+            /**
+             * @var string $result `curl_exec` returns string because `CURLOPT_RETURNTRANSFER` is set to `true`.
+             */
+            $result = $this->curl->exec($curl);
+        } catch (CurlException $exception) {
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
+        } finally {
+            $this->curl->close($curl);
+        }
+
+        return $result;
+    }
+
+    public function downloadFileTo(string $url, string $savePath): void
+    {
+        set_error_handler(
+            static function (int $errorNumber, string $errorString): bool {
+                throw new SaveFileException($errorString);
+            },
+        );
+        try {
+            $fileHandler = fopen($savePath, 'wb');
+        } finally {
+            restore_error_handler();
+        }
+
+        $options = [
+            CURLOPT_URL => $url,
+            CURLOPT_FILE => $fileHandler,
+            CURLOPT_FAILONERROR => true,
+        ];
+
+        try {
+            $curl = $this->curl->init();
+        } catch (CurlException $exception) {
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
+        }
+
+        try {
+            $this->curl->setopt_array($curl, $options);
+            $this->curl->exec($curl);
+        } catch (CurlException $exception) {
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
+        } finally {
+            $this->curl->close($curl);
+        }
     }
 
     /**

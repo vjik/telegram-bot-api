@@ -140,7 +140,9 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\DownloadFileException;
+use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -207,6 +209,7 @@ use function extension_loaded;
 final class TelegramBotApi
 {
     private readonly Api $api;
+    private readonly TransportInterface $transport;
 
     public function __construct(
         #[SensitiveParameter]
@@ -224,6 +227,8 @@ final class TelegramBotApi
                 );
             // @codeCoverageIgnoreEnd
         }
+
+        $this->transport = $transport;
         $this->api = new Api($token, $baseUrl, $transport);
     }
 
@@ -247,8 +252,14 @@ final class TelegramBotApi
     }
 
     /**
+     * Make a file URL on Telegram servers.
+     *
      * @see https://core.telegram.org/bots/api#file
      * @see https://core.telegram.org/bots/api#getfile
+     *
+     * @param string|File $file File path or {@see File} object.
+     *
+     * @return string The file URL.
      *
      * @throws LogicException If the file path is not specified in `File` object.
      */
@@ -264,6 +275,41 @@ final class TelegramBotApi
         }
 
         return $this->baseUrl . '/file/bot' . $this->token . '/' . $path;
+    }
+
+    /**
+     * Downloads a file from the Telegram servers and returns its content.
+     *
+     * @param string|File $file File path or {@see File} object.
+     *
+     * @return string The file content.
+     *
+     * @throws DownloadFileException If an error occurred while downloading the file.
+     * @throws LogicException If the file path is not specified in `File` object.
+     */
+    public function downloadFile(string|File $file): string
+    {
+        return $this->transport->downloadFile(
+            $this->makeFileUrl($file),
+        );
+    }
+
+    /**
+     * Downloads a file from the Telegram servers and saves it to a file.
+     *
+     * @param string|File $file File path or {@see File} object.
+     * @param string $savePath The path to save the file.
+     *
+     * @throws DownloadFileException If an error occurred while downloading the file.
+     * @throws SaveFileException If an error occurred while saving the file.
+     * @throws LogicException If the file path is not specified in `File` object.
+     */
+    public function downloadFileTo(string|File $file, string $savePath): void
+    {
+        $this->transport->downloadFileTo(
+            $this->makeFileUrl($file),
+            $savePath,
+        );
     }
 
     /**

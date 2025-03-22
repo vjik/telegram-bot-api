@@ -59,8 +59,8 @@ $api->sendPhoto(
 );
 ```
 
-The result will be either a `FailResult` instance (occuring on an error) or an object of the corresponding type 
-(occuring on success). For example:
+The result will be either a `FailResult` instance (occurring on an error) or an object of the corresponding type 
+(occurring on success). For example:
 
 ```php
 // Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects
@@ -83,24 +83,45 @@ Method names are the same as in the [Telegram Bot API documentation](https://cor
 
 ### Files
 
+#### File URL
+
 Use `TelegramBotApi::makeFileUrl()` method to make a URL for downloading a file from the Telegram server. For example:
 
 ```php
 /**
  * @var \Vjik\TelegramBot\Api\TelegramBotApi $api
- */
- 
-/**
- * By `File` instance
  * @var \Vjik\TelegramBot\Api\Type\File $file 
  */
+ 
+// By `File` instance
 $url = $api->makeFileUrl($file);
 
+// By file path is taken from the Telegram response
+$url = $api->makeFileUrl('photos/file_2');
+```
+
+#### File downloading
+
+Use `TelegramBotApi::downloadFile()` and `TelegramBotApi::downloadFileTo()` methods to download a file from the Telegram
+server. For example:
+
+```php
 /**
- * By file path is taken from the Telegram response
- * @var string $filePath
+ * @var \Vjik\TelegramBot\Api\TelegramBotApi $api
+ * @var \Vjik\TelegramBot\Api\Type\File $file
  */
-$url = $api->makeFileUrl($filePath)
+ 
+// Get file content by `File` instance
+$fileContent = $api->downloadFile($file);
+
+// Get file content by file path
+$fileContent = $api->downloadFile('photos/file_2');
+
+// Download and save file by `File` instance
+$fileContent = $api->downloadFileTo($file, '/local/path/to/file.jpg');
+
+// Download and save file by file path
+$fileContent = $api->downloadFileTo('photos/file_2', '/local/path/to/file.jpg');
 ```
 
 ### Guides

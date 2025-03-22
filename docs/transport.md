@@ -1,7 +1,8 @@
 # Transport
 
-By default `TelegramBotApi` uses cURL to make requests to the Telegram Bot API. But you can use any other
-transport implementation that implements the `Vjik\TelegramBot\Api\Transport\TransportInterface` interface.
+By default `TelegramBotApi` uses cURL to make requests to the Telegram Bot API and download files from Telegram servers.
+But you can use any other transport implementation that implements
+the `Vjik\TelegramBot\Api\Transport\TransportInterface` interface.
 
 Out of the box, available two transport implementations: cURL and PSR.
 
@@ -15,7 +16,7 @@ General usage:
 
 ```php
 use Vjik\TelegramBot\Api\TelegramBotApi;
-use Vjik\TelegramBot\Api\Transport\Curl\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\CurlTransport;
 
 // Telegram bot authentication token
 $token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';

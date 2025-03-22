@@ -2,8 +2,11 @@
 
 ## 0.8.1 under development
 
+- New #152: Add `downloadFile()` and `downloadFileTo()` methods to `TelegramBotApi`.
+- Chg #152: Add `downloadFile()` and `downloadFileTo()` methods to `TransportInterface`.
 - Chg #154: `TelegramBotApi::makeFileUrl()` always returns a string and throw `LogicException` if the file path is not
   specified in `File` object.
+- Chg #152: Move `CurlTransport` from `Vjik\TelegramBot\Api\Transport\Curl` to `Vjik\TelegramBot\Api\Transport`.
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
 
 ## 0.8.0 February 15, 2025

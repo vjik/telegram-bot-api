@@ -19,6 +19,8 @@ final class RealTelegramApiTest extends TestCase
 
 ```shell
 ./vendor/bin/phpunit --group=realApi
+# or
+composer test-real
 ```
 
 ## Unit testing
