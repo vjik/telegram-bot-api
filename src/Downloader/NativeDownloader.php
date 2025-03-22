@@ -11,7 +11,7 @@ namespace Vjik\TelegramBot\Api\Downloader;
  */
 final readonly class NativeDownloader implements DownloaderInterface
 {
-    public function download(string $url, ?string $filePath = null): string
+    public function download(string $url): string
     {
         $result = @file_get_contents($url);
         if ($result === false) {
