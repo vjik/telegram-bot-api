@@ -288,12 +288,9 @@ final class TelegramBotApi
      */
     public function downloadFile(string|File $file): string
     {
-        $url = $this->makeFileUrl($file);
-        if ($url === null) {
-            throw new LogicException('Cannot download file without file path.');
-        }
-
-        return $this->downloader->download($url);
+        return $this->downloader->download(
+            $this->makeFileUrl($file),
+        );
     }
 
     /**
@@ -302,12 +299,10 @@ final class TelegramBotApi
      */
     public function downloadFileTo(string|File $file, string $savePath): void
     {
-        $url = $this->makeFileUrl($file);
-        if ($url === null) {
-            throw new LogicException('Cannot download file without file path.');
-        }
-
-        $this->downloader->downloadTo($url, $savePath);
+        $this->downloader->downloadTo(
+            $this->makeFileUrl($file),
+            $savePath,
+        );
     }
 
     /**
