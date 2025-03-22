@@ -92,7 +92,7 @@ final readonly class CurlTransport implements TransportInterface
         set_error_handler(
             static function (int $errorNumber, string $errorString): bool {
                 throw new SaveFileException($errorString);
-            }
+            },
         );
         try {
             $fileHandler = fopen($savePath, 'wb');

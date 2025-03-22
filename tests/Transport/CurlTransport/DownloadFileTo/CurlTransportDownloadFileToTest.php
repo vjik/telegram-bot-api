@@ -44,7 +44,7 @@ final class CurlTransportDownloadFileToTest extends TestCase
         assertIsArray($curlOptions);
         assertSame(
             [CURLOPT_URL, CURLOPT_FILE, CURLOPT_FAILONERROR],
-            array_keys($curlOptions)
+            array_keys($curlOptions),
         );
         assertSame('https://example.test/test.txt', $curlOptions[CURLOPT_URL]);
         assertIsResource($curlOptions[CURLOPT_FILE]);

@@ -66,7 +66,7 @@ final readonly class PsrTransport implements TransportInterface
         set_error_handler(
             static function (int $errorNumber, string $errorString): bool {
                 throw new SaveFileException($errorString);
-            }
+            },
         );
         try {
             file_put_contents($savePath, $content);
