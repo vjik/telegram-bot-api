@@ -25,12 +25,12 @@ final class TransportMock implements TransportInterface
         return $this->response ?? new ApiResponse(200, '{"ok":true,"result":true}');
     }
 
-    public function download(string $url): string
+    public function downloadFile(string $url): string
     {
         return '';
     }
 
-    public function downloadTo(string $url, string $savePath): void
+    public function downloadFileTo(string $url, string $savePath): void
     {
         // do nothing
     }

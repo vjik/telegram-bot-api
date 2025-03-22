@@ -141,8 +141,8 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
-use Vjik\TelegramBot\Api\Transport\DownloadException;
-use Vjik\TelegramBot\Api\Transport\SaveException;
+use Vjik\TelegramBot\Api\Transport\DownloadFileException;
+use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
@@ -272,22 +272,22 @@ final class TelegramBotApi
     }
 
     /**
-     * @throws DownloadException
+     * @throws DownloadFileException
      */
     public function downloadFile(string|File $file): string
     {
-        return $this->transport->download(
+        return $this->transport->downloadFile(
             $this->makeFileUrl($file),
         );
     }
 
     /**
-     * @throws DownloadException
-     * @throws SaveException
+     * @throws DownloadFileException
+     * @throws SaveFileException
      */
     public function downloadFileTo(string|File $file, string $savePath): void
     {
-        $this->transport->downloadTo(
+        $this->transport->downloadFileTo(
             $this->makeFileUrl($file),
             $savePath,
         );

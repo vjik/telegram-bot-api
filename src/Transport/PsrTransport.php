@@ -51,12 +51,12 @@ final readonly class PsrTransport implements TransportInterface
         );
     }
 
-    public function download(string $url): string
+    public function downloadFile(string $url): string
     {
         return $this->internalDownload($url)->getContents();
     }
 
-    public function downloadTo(string $url, string $savePath): void
+    public function downloadFileTo(string $url, string $savePath): void
     {
         $body = $this->internalDownload($url);
 
@@ -66,12 +66,12 @@ final readonly class PsrTransport implements TransportInterface
         $result = @file_put_contents($savePath, $content);
         if ($result === false) {
             $lastError = error_get_last();
-            throw new SaveException($lastError['message'] ?? 'Unknown save error.');
+            throw new SaveFileException($lastError['message'] ?? 'Unknown save error.');
         }
     }
 
     /**
-     * @throws DownloadException
+     * @throws DownloadFileException
      */
     private function internalDownload(string $url): StreamInterface
     {
@@ -80,7 +80,7 @@ final readonly class PsrTransport implements TransportInterface
         try {
             $response = $this->client->sendRequest($request);
         } catch (ClientExceptionInterface $exception) {
-            throw new DownloadException($exception->getMessage(), previous: $exception);
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
         }
 
         $body = $response->getBody();

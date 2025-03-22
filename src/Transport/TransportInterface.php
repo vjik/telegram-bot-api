@@ -19,13 +19,13 @@ interface TransportInterface
     ): ApiResponse;
 
     /**
-     * @throws DownloadException
+     * @throws DownloadFileException
      */
-    public function download(string $url): string;
+    public function downloadFile(string $url): string;
 
     /**
-     * @throws DownloadException
-     * @throws SaveException
+     * @throws DownloadFileException
+     * @throws SaveFileException
      */
-    public function downloadTo(string $url, string $savePath): void;
+    public function downloadFileTo(string $url, string $savePath): void;
 }

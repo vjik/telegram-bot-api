@@ -57,7 +57,7 @@ final readonly class CurlTransport implements TransportInterface
         return new ApiResponse($statusCode, $body);
     }
 
-    public function download(string $url, ?string $filePath = null): string
+    public function downloadFile(string $url, ?string $filePath = null): string
     {
         $options = [
             CURLOPT_URL => $url,
@@ -68,7 +68,7 @@ final readonly class CurlTransport implements TransportInterface
         try {
             $curl = $this->curl->init();
         } catch (CurlException $exception) {
-            throw new DownloadException($exception->getMessage(), previous: $exception);
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
         }
 
         try {
@@ -79,7 +79,7 @@ final readonly class CurlTransport implements TransportInterface
              */
             $result = $this->curl->exec($curl);
         } catch (CurlException $exception) {
-            throw new DownloadException($exception->getMessage(), previous: $exception);
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
         } finally {
             $this->curl->close($curl);
         }
@@ -87,12 +87,12 @@ final readonly class CurlTransport implements TransportInterface
         return $result;
     }
 
-    public function downloadTo(string $url, string $savePath): void
+    public function downloadFileTo(string $url, string $savePath): void
     {
         $fileHandler = @fopen($savePath, 'wb');
         if ($fileHandler === false) {
             $lastError = error_get_last();
-            throw new SaveException($lastError['message'] ?? 'Failed to open local file for writing.');
+            throw new SaveFileException($lastError['message'] ?? 'Failed to open local file for writing.');
         }
 
         $options = [
@@ -104,14 +104,14 @@ final readonly class CurlTransport implements TransportInterface
         try {
             $curl = $this->curl->init();
         } catch (CurlException $exception) {
-            throw new DownloadException($exception->getMessage(), previous: $exception);
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
         }
 
         try {
             $this->curl->setopt_array($curl, $options);
             $this->curl->exec($curl);
         } catch (CurlException $exception) {
-            throw new DownloadException($exception->getMessage(), previous: $exception);
+            throw new DownloadFileException($exception->getMessage(), previous: $exception);
         } finally {
             $this->curl->close($curl);
         }
