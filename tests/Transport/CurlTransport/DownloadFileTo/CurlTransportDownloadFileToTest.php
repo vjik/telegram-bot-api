@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport\DownloadTo;
+namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport\DownloadFileTo;
 
 use PHPUnit\Framework\TestCase;
 use Throwable;
@@ -21,7 +21,7 @@ use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertStringEqualsFile;
 use function PHPUnit\Framework\assertTrue;
 
-final class CurlTransportDownloadToTest extends TestCase
+final class CurlTransportDownloadFileToTest extends TestCase
 {
     private const RUNTIME_PATH = __DIR__ . '/runtime';
 
