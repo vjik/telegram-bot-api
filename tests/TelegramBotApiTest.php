@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests;
 
 use HttpSoft\Message\StreamFactory;
+use LogicException;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\Attributes\TestWith;
 use PHPUnit\Framework\TestCase;
@@ -343,19 +344,27 @@ final class TelegramBotApiTest extends TestCase
 
     public static function dataMakeFileUrl(): iterable
     {
-        yield [null, new File('id', 'uid')];
         yield ['https://api.telegram.org/file/bot123/hello.png', new File('id', 'uid', filePath: 'hello.png')];
         yield ['https://api.telegram.org/file/bot123/face.jpg', 'face.jpg'];
     }
 
     #[DataProvider('dataMakeFileUrl')]
-    public function testMakeFileUrl(?string $expected, string|File $file): void
+    public function testMakeFileUrl(string $expected, string|File $file): void
     {
-        $api = new TelegramBotApi('123', transport: new TransportMock());
+        $api = new TelegramBotApi('123');
 
         $url = $api->makeFileUrl($file);
-
         self::assertSame($expected, $url);
+    }
+
+    public function testMakeFileUrlWithoutPath(): void
+    {
+        $api = new TelegramBotApi('123');
+        $file = new File('id', 'uid');
+
+        $this->expectException(LogicException::class);
+        $this->expectExceptionMessage('The file path is not specified.');
+        $api->makeFileUrl($file);
     }
 
     public function testAddStickerToSet(): void
