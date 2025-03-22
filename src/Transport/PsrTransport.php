@@ -63,10 +63,15 @@ final readonly class PsrTransport implements TransportInterface
         $content = $body->detach();
         $content ??= $body->getContents();
 
-        $result = @file_put_contents($savePath, $content);
-        if ($result === false) {
-            $lastError = error_get_last();
-            throw new SaveFileException($lastError['message'] ?? 'Unknown save error.');
+        set_error_handler(
+            static function (int $errorNumber, string $errorString): bool {
+                throw new SaveFileException($errorString);
+            }
+        );
+        try {
+            file_put_contents($savePath, $content);
+        } finally {
+            restore_error_handler();
         }
     }
 
