@@ -117,7 +117,7 @@ final class CurlTransportDownloadFileToTest extends TestCase
         try {
             $transport->downloadFileTo(
                 'https://example.test/hello.jpg',
-                self::RUNTIME_PATH . '/close-on-exception.txt'
+                self::RUNTIME_PATH . '/close-on-exception.txt',
             );
         } catch (Throwable) {
         }
