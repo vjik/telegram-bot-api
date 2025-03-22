@@ -7,6 +7,6 @@ namespace Vjik\TelegramBot\Api\Curl;
 use RuntimeException;
 
 /**
- * @api
+ * @internal
  */
 final class CurlException extends RuntimeException {}
