@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport\DownloadFileTo;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Throwable;
 use Vjik\TelegramBot\Api\Curl\CurlException;
 use Vjik\TelegramBot\Api\Tests\Curl\CurlMock;
@@ -106,5 +107,21 @@ final class CurlTransportDownloadFileToTest extends TestCase
         assertInstanceOf(DownloadFileException::class, $exception);
         assertSame('test', $exception->getMessage());
         assertSame($execException, $exception->getPrevious());
+    }
+
+    public function testCloseOnException(): void
+    {
+        $curl = new CurlMock(new RuntimeException());
+        $transport = new CurlTransport($curl);
+
+        try {
+            $transport->downloadFileTo(
+                'https://example.test/hello.jpg',
+                self::RUNTIME_PATH . '/close-on-exception.txt'
+            );
+        } catch (Throwable) {
+        }
+
+        assertSame(1, $curl->getCountCallOfClose());
     }
 }
