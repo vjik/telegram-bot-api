@@ -18,6 +18,7 @@ final class CurlMock implements CurlInterface
     public function __construct(
         private readonly string|Throwable $execResult = '',
         private readonly array $getinfoResult = [],
+        private readonly ?Throwable $initException = null,
     ) {}
 
     public function close(CurlHandle $handle): void
@@ -41,6 +42,9 @@ final class CurlMock implements CurlInterface
 
     public function init(): CurlHandle
     {
+        if ($this->initException !== null) {
+            throw $this->initException;
+        }
         return curl_init();
     }
 

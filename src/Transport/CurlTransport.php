@@ -57,7 +57,7 @@ final readonly class CurlTransport implements TransportInterface
         return new ApiResponse($statusCode, $body);
     }
 
-    public function downloadFile(string $url, ?string $filePath = null): string
+    public function downloadFile(string $url): string
     {
         $options = [
             CURLOPT_URL => $url,

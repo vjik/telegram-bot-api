@@ -10,12 +10,15 @@ use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
 use Throwable;
+use Vjik\TelegramBot\Api\Curl\CurlException;
 use Vjik\TelegramBot\Api\Tests\Curl\CurlMock;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
+use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
 
@@ -229,5 +232,57 @@ final class CurlTransportTest extends TestCase
         }
 
         assertSame(1, $curl->getCountCallOfClose());
+    }
+
+    public function testDownloadFile(): void
+    {
+        $curl = new CurlMock('hello-content');
+        $transport = new CurlTransport($curl);
+
+        $result = $transport->downloadFile('https://example.test/hello.jpg');
+
+        assertSame('hello-content', $result);
+        assertSame(
+            [
+                CURLOPT_URL => 'https://example.test/hello.jpg',
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_FAILONERROR => true,
+            ],
+            $curl->getOptions(),
+        );
+    }
+
+    public function testDownloadFileInitException(): void
+    {
+        $initException = new CurlException('test');
+        $curl = new CurlMock(initException: $initException);
+        $transport = new CurlTransport($curl);
+
+        $exception = null;
+        try {
+            $transport->downloadFile('https://example.test/hello.jpg');
+        } catch (Throwable $exception) {
+        }
+
+        assertInstanceOf(DownloadFileException::class, $exception);
+        assertSame('test', $exception->getMessage());
+        assertSame($initException, $exception->getPrevious());
+    }
+
+    public function testDownloadFileExecException(): void
+    {
+        $execException = new CurlException('test');
+        $curl = new CurlMock(execResult: $execException);
+        $transport = new CurlTransport($curl);
+
+        $exception = null;
+        try {
+            $transport->downloadFile('https://example.test/hello.jpg');
+        } catch (Throwable $exception) {
+        }
+
+        assertInstanceOf(DownloadFileException::class, $exception);
+        assertSame('test', $exception->getMessage());
+        assertSame($execException, $exception->getPrevious());
     }
 }
