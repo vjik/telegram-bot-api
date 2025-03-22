@@ -90,19 +90,14 @@ Use `TelegramBotApi::makeFileUrl()` method to make a URL for downloading a file 
 ```php
 /**
  * @var \Vjik\TelegramBot\Api\TelegramBotApi $api
- */
- 
-/**
- * By `File` instance
  * @var \Vjik\TelegramBot\Api\Type\File $file 
  */
+ 
+// By `File` instance
 $url = $api->makeFileUrl($file);
 
-/**
- * By file path is taken from the Telegram response
- * @var string $filePath
- */
-$url = $api->makeFileUrl($filePath);
+// By file path is taken from the Telegram response
+$url = $api->makeFileUrl('photos/file_2');
 ```
 
 #### File downloading
