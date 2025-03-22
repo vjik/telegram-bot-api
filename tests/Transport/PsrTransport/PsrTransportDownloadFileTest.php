@@ -80,4 +80,37 @@ final class PsrTransportDownloadFileTest extends TestCase
         assertSame('test', $exception->getMessage());
         assertSame($requestException, $exception->getPrevious());
     }
+
+    public function testRewind(): void
+    {
+        $streamFactory = new StreamFactory();
+        $httpRequest = new Request();
+
+        $httpResponse = new Response(200, body: $streamFactory->createStream('hello-content'));
+        $httpResponse->getBody()->getContents();
+
+        $client = $this->createMock(ClientInterface::class);
+        $client
+            ->expects($this->once())
+            ->method('sendRequest')
+            ->with($httpRequest)
+            ->willReturn($httpResponse);
+
+        $requestFactory = $this->createMock(RequestFactoryInterface::class);
+        $requestFactory
+            ->expects($this->once())
+            ->method('createRequest')
+            ->with('GET', 'https://example.com/test.txt')
+            ->willReturn($httpRequest);
+
+        $transport = new PsrTransport(
+            $client,
+            $requestFactory,
+            $streamFactory,
+        );
+
+        $result = $transport->downloadFile('https://example.com/test.txt');
+
+        assertSame('hello-content', $result);
+    }
 }
