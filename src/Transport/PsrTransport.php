@@ -5,10 +5,12 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Transport;
 
 use Http\Message\MultipartStream\MultipartStreamBuilder;
+use Psr\Http\Client\ClientExceptionInterface;
 use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\RequestFactoryInterface;
 use Psr\Http\Message\RequestInterface;
 use Psr\Http\Message\StreamFactoryInterface;
+use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function is_scalar;
@@ -47,6 +49,46 @@ final readonly class PsrTransport implements TransportInterface
             $response->getStatusCode(),
             $body->getContents(),
         );
+    }
+
+    public function download(string $url): string
+    {
+        return $this->internalDownload($url)->getContents();
+    }
+
+    public function downloadTo(string $url, string $savePath): void
+    {
+        $body = $this->internalDownload($url);
+
+        $content = $body->detach();
+        $content ??= $body->getContents();
+
+        $result = @file_put_contents($savePath, $content);
+        if ($result === false) {
+            $lastError = error_get_last();
+            throw new SaveException($lastError['message'] ?? 'Unknown save error.');
+        }
+    }
+
+    /**
+     * @throws DownloadException
+     */
+    private function internalDownload(string $url): StreamInterface
+    {
+        $request = $this->requestFactory->createRequest('GET', $url);
+
+        try {
+            $response = $this->client->sendRequest($request);
+        } catch (ClientExceptionInterface $exception) {
+            throw new DownloadException($exception->getMessage(), previous: $exception);
+        }
+
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        return $body;
     }
 
     /**

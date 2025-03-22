@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Downloader;
+namespace Vjik\TelegramBot\Api\Transport;
 
 use RuntimeException;
 

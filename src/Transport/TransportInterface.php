@@ -17,4 +17,15 @@ interface TransportInterface
         array $data = [],
         HttpMethod $httpMethod = HttpMethod::POST,
     ): ApiResponse;
+
+    /**
+     * @throws DownloadException
+     */
+    public function download(string $url): string;
+
+    /**
+     * @throws DownloadException
+     * @throws SaveException
+     */
+    public function downloadTo(string $url, string $savePath): void;
 }
