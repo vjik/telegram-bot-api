@@ -367,6 +367,31 @@ final class TelegramBotApiTest extends TestCase
         $api->makeFileUrl($file);
     }
 
+    public function testDownloadFile(): void
+    {
+        $transport = new TransportMock();
+        $api = new TelegramBotApi('xyz', transport: $transport);
+
+        $result = $api->downloadFile('test.jpg');
+
+        assertSame('https://api.telegram.org/file/botxyz/test.jpg', $result);
+    }
+
+    public function testDownloadFileTo(): void
+    {
+        $transport = new TransportMock();
+        $api = new TelegramBotApi('xyz', transport: $transport);
+
+        $api->downloadFileTo('test.jpg', 'path/to/my_file.jpg');
+
+        assertSame(
+            [
+                ['https://api.telegram.org/file/botxyz/test.jpg', 'path/to/my_file.jpg'],
+            ],
+            $transport->savedFiles(),
+        );
+    }
+
     public function testAddStickerToSet(): void
     {
         $api = TestHelper::createSuccessStubApi(true);

@@ -12,6 +12,11 @@ final class TransportMock implements TransportInterface
 {
     private ?string $urlPath = null;
 
+    /**
+     * @var list<list{string, string}>
+     */
+    private array $savedFiles = [];
+
     public function __construct(
         private readonly ?ApiResponse $response = null,
     ) {}
@@ -27,12 +32,20 @@ final class TransportMock implements TransportInterface
 
     public function downloadFile(string $url): string
     {
-        return '';
+        return $url;
     }
 
     public function downloadFileTo(string $url, string $savePath): void
     {
-        // do nothing
+        $this->savedFiles[] = [$url, $savePath];
+    }
+
+    /**
+     * @return list<list{string, string}>
+     */
+    public function savedFiles(): array
+    {
+        return $this->savedFiles;
     }
 
     public function urlPath(): ?string
