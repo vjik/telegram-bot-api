@@ -89,10 +89,15 @@ final readonly class CurlTransport implements TransportInterface
 
     public function downloadFileTo(string $url, string $savePath): void
     {
-        $fileHandler = @fopen($savePath, 'wb');
-        if ($fileHandler === false) {
-            $lastError = error_get_last();
-            throw new SaveFileException($lastError['message'] ?? 'Failed to open local file for writing.');
+        set_error_handler(
+            static function (int $errorNumber, string $errorString): bool {
+                throw new SaveFileException($errorString);
+            }
+        );
+        try {
+            $fileHandler = fopen($savePath, 'wb');
+        } finally {
+            restore_error_handler();
         }
 
         $options = [

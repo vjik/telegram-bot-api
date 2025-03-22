@@ -34,6 +34,7 @@
         "php-http/curl-client": "^2.3.3",
         "phpunit/phpunit": "^11.5.14",
         "psr/log": "^3.0.2",
+        "yiisoft/files": "^2.0",
         "yiisoft/test-support": "^3.0.2"
     },
     "suggest": {

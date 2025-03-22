@@ -9,6 +9,7 @@ use Throwable;
 use Vjik\TelegramBot\Api\Curl\CurlInterface;
 
 use function curl_init;
+use function is_array;
 
 final class CurlMock implements CurlInterface
 {
@@ -30,6 +31,10 @@ final class CurlMock implements CurlInterface
     {
         if ($this->execResult instanceof Throwable) {
             throw $this->execResult;
+        }
+
+        if (is_array($this->options) && isset($this->options[CURLOPT_FILE])) {
+            fwrite($this->options[CURLOPT_FILE], $this->execResult);
         }
 
         return $this->execResult;
