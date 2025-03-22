@@ -267,25 +267,18 @@ final class TelegramBotApi
      * @see https://core.telegram.org/bots/api#file
      * @see https://core.telegram.org/bots/api#getfile
      *
-     * @psalm-template TValue as string|File
-     * @psalm-param TValue $file
-     * @psalm-return (TValue is File ? (string|null) : string)
+     * @throws LogicException If the file path is not specified in `File` object.
      */
-    public function makeFileUrl(string|File $file): ?string
+    public function makeFileUrl(string|File $file): string
     {
         if ($file instanceof File) {
             $path = $file->filePath;
             if ($path === null) {
-                return null;
+                throw new LogicException('The file path is not specified.');
             }
         } else {
             $path = $file;
         }
-
-        /**
-         * @var string $path
-         * @see https://github.com/vimeo/psalm/issues/11285
-         */
 
         return $this->baseUrl . '/file/bot' . $this->token . '/' . $path;
     }

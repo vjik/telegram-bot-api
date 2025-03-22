@@ -2,6 +2,8 @@
 
 ## 0.8.1 under development
 
+- Chg #154: `TelegramBotApi::makeFileUrl()` always returns a string and throw `LogicException` if the file path is not
+  specified in `File` object.
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
 
 ## 0.8.0 February 15, 2025
