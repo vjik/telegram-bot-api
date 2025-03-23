@@ -9,7 +9,6 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\ApacheMimeTypeResolver;
 use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\CompositeMimeTypeResolver;
 use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\CustomMimeTypeResolver;
-
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function PHPUnit\Framework\assertNull;
