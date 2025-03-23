@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Transport;
 
 use RuntimeException;
-
 use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\ApacheMimeTypeResolver;
 use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\MimeTypeResolverInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -22,12 +21,8 @@ use function json_encode;
  */
 final readonly class NativeTransport implements TransportInterface
 {
-    private MimeTypeResolverInterface $mimeTypeResolver;
-
-    public function __construct(
-        ?MimeTypeResolverInterface $mimeTypeResolver = null,
-    ) {
-        $this->mimeTypeResolver = $mimeTypeResolver ?? new ApacheMimeTypeResolver();
+    public function __construct(private MimeTypeResolverInterface $mimeTypeResolver = new ApacheMimeTypeResolver())
+    {
     }
 
     public function send(string $urlPath, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse

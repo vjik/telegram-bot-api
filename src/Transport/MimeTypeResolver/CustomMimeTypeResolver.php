@@ -14,8 +14,7 @@ final readonly class CustomMimeTypeResolver implements MimeTypeResolverInterface
      */
     public function __construct(
         private array $map,
-    ) {
-    }
+    ) {}
 
     public function resolve(InputFile $file): ?string
     {
