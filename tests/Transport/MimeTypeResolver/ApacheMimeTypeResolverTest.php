@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Transport\MimeTypeResolver\ApacheMimeTypeResolver;
+namespace Vjik\TelegramBot\Api\Tests\Transport\MimeTypeResolver;
 
 use HttpSoft\Message\Stream;
 use PHPUnit\Framework\Attributes\DataProvider;
@@ -19,8 +19,9 @@ final class ApacheMimeTypeResolverTest extends TestCase
         yield [null, new InputFile(new Stream())];
         yield [null, new InputFile(new Stream(), 'test.non-exist-extension')];
         yield ['image/jpeg', new InputFile(new Stream(), 'test.jpg')];
-        yield ['text/plain', InputFile::fromLocalFile(__DIR__ . '/test.txt')];
-        yield ['text/css', InputFile::fromLocalFile(__DIR__ . '/test.txt', 'test.css')];
+        yield ['image/jpeg', new InputFile(new Stream(), 'TEST.JPG')];
+        yield ['text/plain', InputFile::fromLocalFile(__DIR__ . '/files/test.txt')];
+        yield ['text/css', InputFile::fromLocalFile(__DIR__ . '/files/test.txt', 'test.css')];
     }
 
     #[DataProvider('dataBase')]
