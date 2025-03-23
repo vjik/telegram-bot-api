@@ -21,8 +21,12 @@ use function json_encode;
  */
 final readonly class NativeTransport implements TransportInterface
 {
-    public function __construct(private MimeTypeResolverInterface $mimeTypeResolver = new ApacheMimeTypeResolver())
-    {
+    private MimeTypeResolverInterface $mimeTypeResolver;
+
+    public function __construct(
+        ?MimeTypeResolverInterface $mimeTypeResolver = null,
+    ) {
+        $this->mimeTypeResolver = $mimeTypeResolver ?? new ApacheMimeTypeResolver();
     }
 
     public function send(string $urlPath, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse
