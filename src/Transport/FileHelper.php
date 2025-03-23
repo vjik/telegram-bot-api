@@ -21,10 +21,26 @@ final readonly class FileHelper
             : self::readStream($file->resource);
     }
 
+    public static function extension(InputFile $file): ?string
+    {
+        $filepath = self::filepath($file);
+        return $filepath === null
+            ? null
+            : pathinfo($filepath, PATHINFO_EXTENSION);
+    }
+
     public static function basename(InputFile $file): ?string
     {
+        $filepath = self::filepath($file);
+        return $filepath === null
+            ? null
+            : basename($filepath);
+    }
+
+    private static function filepath(InputFile $file): ?string
+    {
         if ($file->filename !== null) {
-            return basename($file->filename);
+            return $file->filename;
         }
 
         /**
@@ -38,7 +54,7 @@ final readonly class FileHelper
             return null;
         }
 
-        return basename($uri);
+        return $uri;
     }
 
     /**

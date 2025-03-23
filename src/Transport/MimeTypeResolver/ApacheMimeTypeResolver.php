@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport\MimeTypeResolver;
 
+use Vjik\TelegramBot\Api\Transport\FileHelper;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
@@ -997,14 +998,11 @@ final readonly class ApacheMimeTypeResolver implements MimeTypeResolverInterface
 
     public function resolve(InputFile $file): ?string
     {
-        if ($file->filename === null) {
+        $extension = FileHelper::extension($file);
+        if ($extension === null) {
             return null;
         }
 
-        $extension = strtolower(
-            pathinfo($file->filename, PATHINFO_EXTENSION),
-        );
-
-        return self::MAP[$extension] ?? null;
+        return self::MAP[strtolower($extension)] ?? null;
     }
 }
