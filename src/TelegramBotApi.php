@@ -203,6 +203,7 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 use function extension_loaded;
+use function ini_get;
 
 /**
  * @api
@@ -219,12 +220,8 @@ final class TelegramBotApi
         ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
-        if ($transport === null) {
-            $transport = extension_loaded('curl') ? new CurlTransport() : new NativeTransport();
-        }
-
-        $this->transport = $transport;
-        $this->api = new Api($token, $baseUrl, $transport);
+        $this->transport = $transport ?? $this->defaultTransport();
+        $this->api = new Api($token, $baseUrl, $this->transport);
     }
 
     public function withLogger(?LoggerInterface $logger): self
@@ -2660,6 +2657,22 @@ final class TelegramBotApi
     {
         return $this->call(
             new VerifyUser($userId, $customDescription),
+        );
+    }
+
+    private function defaultTransport(): TransportInterface
+    {
+        if (extension_loaded('curl')) {
+            return new CurlTransport();
+        }
+
+        $availableNativeTransport = (bool) ini_get('allow_url_fopen');
+        if ($availableNativeTransport) {
+            return new NativeTransport();
+        }
+
+        throw new LogicException(
+            'Failed to initialize the default transport. Enable cURL PHP extension or provide a transport manually.',
         );
     }
 }

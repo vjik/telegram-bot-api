@@ -6,6 +6,9 @@ namespace Vjik\TelegramBot\Api\Transport\MimeTypeResolver;
 
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+/**
+ * @api
+ */
 final readonly class CompositeMimeTypeResolver implements MimeTypeResolverInterface
 {
     /**

@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
  * @see https://svn.apache.org/repos/asf/httpd/httpd/tags/2.4.9/docs/conf/mime.types
+ *
+ * @api
  */
 final readonly class ApacheMimeTypeResolver implements MimeTypeResolverInterface
 {
