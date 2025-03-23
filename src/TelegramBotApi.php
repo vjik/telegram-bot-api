@@ -142,6 +142,7 @@ use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
+use Vjik\TelegramBot\Api\Transport\NativeTransport;
 use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
@@ -219,13 +220,7 @@ final class TelegramBotApi
         private ?LoggerInterface $logger = null,
     ) {
         if ($transport === null) {
-            // @codeCoverageIgnoreStart
-            $transport = extension_loaded('curl')
-                ? new CurlTransport()
-                : throw new LogicException(
-                    'Failed to initialize the default transport (cURL required). Provide a transport manually.',
-                );
-            // @codeCoverageIgnoreEnd
+            $transport = extension_loaded('curl') ? new CurlTransport() : new NativeTransport();
         }
 
         $this->transport = $transport;

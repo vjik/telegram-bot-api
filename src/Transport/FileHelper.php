@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Transport\Helper;
+namespace Vjik\TelegramBot\Api\Transport;
 
 use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
@@ -12,17 +12,33 @@ use function is_resource;
 /**
  * @internal
  */
-final readonly class FileReader
+final readonly class FileHelper
 {
-    private function __construct()
-    {
-    }
-
     public static function read(InputFile $file): string
     {
         return is_resource($file->resource)
             ? self::readResource($file->resource)
             : self::readStream($file->resource);
+    }
+
+    public static function basename(InputFile $file): ?string
+    {
+        if ($file->filename !== null) {
+            return basename($file->filename);
+        }
+
+        /**
+         * @var string $uri
+         */
+        $uri = is_resource($file->resource)
+            ? stream_get_meta_data($file->resource)['uri']
+            : $file->resource->getMetadata('uri');
+
+        if (str_contains($uri, '://')) {
+            return null;
+        }
+
+        return basename($uri);
     }
 
     /**
