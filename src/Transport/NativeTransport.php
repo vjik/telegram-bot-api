@@ -31,6 +31,8 @@ final readonly class NativeTransport implements TransportInterface
 
     public function send(string $urlPath, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse
     {
+        global $http_response_header;
+
         [$url, $options] = match ($httpMethod) {
             HttpMethod::GET => $this->createGetRequest($urlPath, $data),
             HttpMethod::POST => $this->createPostRequest($urlPath, $data),
