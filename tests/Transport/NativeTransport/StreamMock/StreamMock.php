@@ -32,7 +32,7 @@ final class StreamMock
             file_get_contents(self::CONFIG_FILE),
             true,
             512,
-            JSON_THROW_ON_ERROR
+            JSON_THROW_ON_ERROR,
         );
     }
 
@@ -48,7 +48,7 @@ final class StreamMock
                     'responseHeaders' => $responseHeaders,
                     'responseBody' => $responseBody,
                 ],
-                JSON_THROW_ON_ERROR
+                JSON_THROW_ON_ERROR,
             ),
         );
         if (file_exists(self::REQUEST_FILE)) {
@@ -75,8 +75,8 @@ final class StreamMock
         file_put_contents(
             self::REQUEST_FILE,
             serialize([
-                    'path' => $path,
-                    'options' => stream_context_get_options($this->context),
+                'path' => $path,
+                'options' => stream_context_get_options($this->context),
             ]),
         );
         return true;

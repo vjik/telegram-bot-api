@@ -9,7 +9,6 @@ use stdClass;
 use Vjik\TelegramBot\Api\Tests\Transport\NativeTransport\StreamMock\StreamMock;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\NativeTransport;
-
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function PHPUnit\Framework\assertSame;
@@ -53,9 +52,9 @@ final class NativeTransportTest extends TestCase
                         'method' => 'GET',
                         'ignore_errors' => true,
                     ],
-                ]
+                ],
             ],
-            $request
+            $request,
         );
     }
 
@@ -87,9 +86,9 @@ final class NativeTransportTest extends TestCase
                         'content' => '',
                         'ignore_errors' => true,
                     ],
-                ]
+                ],
             ],
-            $request
+            $request,
         );
     }
 
@@ -125,9 +124,9 @@ final class NativeTransportTest extends TestCase
                         'content' => 'chat_id=123&title=test&object=%7B%7D',
                         'ignore_errors' => true,
                     ],
-                ]
+                ],
             ],
-            $request
+            $request,
         );
     }
 
@@ -162,11 +161,11 @@ final class NativeTransportTest extends TestCase
         assertStringContainsString(file_get_contents(__DIR__ . '/photo.png'), $request['options']['http']['content']);
         assertStringContainsString(
             'Content-Disposition: form-data; name="photo1"; filename="photo.png"',
-            $request['options']['http']['content']
+            $request['options']['http']['content'],
         );
         assertStringContainsString(
             "Content-Disposition: form-data; name=\"age\"\r\n\r\n19",
-            $request['options']['http']['content']
+            $request['options']['http']['content'],
         );
         assertTrue($request['options']['http']['ignore_errors']);
     }
