@@ -115,7 +115,7 @@ final readonly class NativeTransport implements TransportInterface
 
         return [
             $url,
-            ['method' => 'POST'],
+            ['method' => 'GET'],
         ];
     }
 
