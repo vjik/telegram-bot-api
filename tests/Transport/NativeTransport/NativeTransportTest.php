@@ -221,6 +221,42 @@ final class NativeTransportTest extends TestCase
         assertTrue($request['options']['http']['ignore_errors']);
     }
 
+    public function testPostWithFileAndArray(): void
+    {
+        $transport = new NativeTransport();
+
+        StreamMock::enable(
+            responseHeaders: [
+                'HTTP/1.1 200 OK',
+                'Content-Type: text/json',
+            ],
+            responseBody: '{"ok":true,"result":[]}',
+        );
+
+        $transport->send('http://url/method', [
+            'file1' => new InputFile(
+                (new StreamFactory())->createStream('test1'),
+            ),
+            'ages' => [23, 45],
+        ]);
+
+        $request = StreamMock::disable();
+
+        assertTrue(isset($request['options']['http']['content']));
+        assertStringContainsString(
+            "Content-Disposition: form-data; name=\"ages\"\r\n"
+            . "\r\n"
+            . "[23,45]\r\n",
+            $request['options']['http']['content'],
+        );
+        assertStringContainsString(
+            "Content-Disposition: form-data; name=\"file1\"\r\n"
+            . "\r\n"
+            . "test1\r\n",
+            $request['options']['http']['content'],
+        );
+    }
+
     public function testErrorOnSend(): void
     {
         $transport = new NativeTransport();
