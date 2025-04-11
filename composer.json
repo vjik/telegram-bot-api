@@ -32,7 +32,7 @@
         "bamarni/composer-bin-plugin": "^1.8.2",
         "httpsoft/http-message": "^1.1.6",
         "php-http/curl-client": "^2.3.3",
-        "phpunit/phpunit": "^11.5.15",
+        "phpunit/phpunit": "^11.5.17",
         "psr/log": "^3.0.2",
         "yiisoft/files": "^2.0",
         "yiisoft/test-support": "^3.0.2"
@@ -66,7 +66,6 @@
     },
     "config": {
         "sort-packages": true,
-        "bump-after-update": "dev",
         "allow-plugins": {
             "bamarni/composer-bin-plugin": true,
             "composer/package-versions-deprecated": true,
