@@ -13,6 +13,7 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\NativeTransport;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertMatchesRegularExpression;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertStringContainsString;
 use function PHPUnit\Framework\assertStringEndsWith;
@@ -158,8 +159,10 @@ final class NativeTransportTest extends TestCase
         assertSame(['http'], array_keys($request['options']));
         assertSame(['method', 'header', 'content', 'ignore_errors'], array_keys($request['options']['http']));
         assertSame('POST', $request['options']['http']['method']);
-        assertStringStartsWith('Content-type: multipart/form-data; boundary=', $request['options']['http']['header']);
-        assertStringEndsWith('; charset=utf-8', $request['options']['http']['header']);
+        assertMatchesRegularExpression(
+            '~^Content-type: multipart/form-data; boundary=[\da-f]+\.[\da-f]+; charset=utf-8$~',
+            $request['options']['http']['header'],
+        );
         assertStringContainsString(file_get_contents(__DIR__ . '/photo.png'), $request['options']['http']['content']);
         assertStringContainsString(
             'Content-Disposition: form-data; name="photo1"; filename="photo.png"',
