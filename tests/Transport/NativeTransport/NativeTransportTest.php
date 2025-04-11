@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Transport\NativeTransport;
 
+use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use stdClass;
@@ -166,6 +167,55 @@ final class NativeTransportTest extends TestCase
         );
         assertStringContainsString(
             "Content-Disposition: form-data; name=\"age\"\r\n\r\n19",
+            $request['options']['http']['content'],
+        );
+        assertTrue($request['options']['http']['ignore_errors']);
+    }
+
+    public function testPostWithStreamFile(): void
+    {
+        $transport = new NativeTransport();
+
+        StreamMock::enable(
+            responseHeaders: [
+                'HTTP/1.1 200 OK',
+                'Content-Type: text/json',
+            ],
+            responseBody: '{"ok":true,"result":[]}',
+        );
+
+        $response = $transport->send('http://url/sendPhoto', [
+            'file1' => new InputFile(
+                (new StreamFactory())->createStream('test1'),
+            ),
+            'file2' => new InputFile(
+                (new StreamFactory())->createStream('test2'),
+                'test.txt',
+            ),
+        ]);
+
+        $request = StreamMock::disable();
+
+        assertSame(200, $response->statusCode);
+        assertSame('{"ok":true,"result":[]}', $response->body);
+        assertSame('http://url/sendPhoto', $request['path']);
+        assertSame(['http'], array_keys($request['options']));
+        assertSame(['method', 'header', 'content', 'ignore_errors'], array_keys($request['options']['http']));
+        assertSame('POST', $request['options']['http']['method']);
+        assertStringStartsWith('Content-type: multipart/form-data; boundary=', $request['options']['http']['header']);
+        assertStringEndsWith('; charset=utf-8', $request['options']['http']['header']);
+        assertStringContainsString('test2', $request['options']['http']['content']);
+        assertStringContainsString(
+            "Content-Disposition: form-data; name=\"file1\"\r\n"
+            . "\r\n"
+            . "test1\r\n",
+            $request['options']['http']['content'],
+        );
+        assertStringContainsString(
+            "Content-Disposition: form-data; name=\"file2\"; filename=\"test.txt\"\r\n"
+            . "Content-Type: text/plain\r\n"
+            . "\r\n"
+            . "test2\r\n",
             $request['options']['http']['content'],
         );
         assertTrue($request['options']['http']['ignore_errors']);
