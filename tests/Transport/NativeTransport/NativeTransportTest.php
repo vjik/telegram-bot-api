@@ -10,6 +10,7 @@ use RuntimeException;
 use stdClass;
 use Vjik\TelegramBot\Api\Tests\Transport\NativeTransport\StreamMock\StreamMock;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\Transport\MimeTypeResolver\MimeTypeResolverInterface;
 use Vjik\TelegramBot\Api\Transport\NativeTransport;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
@@ -254,6 +255,43 @@ final class NativeTransportTest extends TestCase
         );
         assertStringContainsString(
             "Content-Disposition: form-data; name=\"file1\"\r\n"
+            . "\r\n"
+            . "test1\r\n",
+            $request['options']['http']['content'],
+        );
+    }
+
+    public function testCustomMimeTypeResolver(): void
+    {
+        $transport = new NativeTransport(
+            new class() implements MimeTypeResolverInterface {
+                public function resolve(InputFile $file): ?string
+                {
+                    return 'text/custom';
+                }
+            },
+        );
+
+        StreamMock::enable(
+            responseHeaders: [
+                'HTTP/1.1 200 OK',
+                'Content-Type: text/json',
+            ],
+            responseBody: '{"ok":true,"result":[]}',
+        );
+
+        $transport->send('http://url/method', [
+            'file1' => new InputFile(
+                (new StreamFactory())->createStream('test1'),
+            ),
+        ]);
+
+        $request = StreamMock::disable();
+
+        assertTrue(isset($request['options']['http']['content']));
+        assertStringContainsString(
+            "Content-Disposition: form-data; name=\"file1\"\r\n"
+            . "Content-Type: text/custom\r\n"
             . "\r\n"
             . "test1\r\n",
             $request['options']['http']['content'],
