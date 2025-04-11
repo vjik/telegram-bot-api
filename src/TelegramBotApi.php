@@ -142,6 +142,7 @@ use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
+use Vjik\TelegramBot\Api\Transport\NativeTransport;
 use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\BotCommand;
@@ -202,6 +203,7 @@ use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 use function extension_loaded;
+use function ini_get;
 
 /**
  * @api
@@ -218,18 +220,8 @@ final class TelegramBotApi
         ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
-        if ($transport === null) {
-            // @codeCoverageIgnoreStart
-            $transport = extension_loaded('curl')
-                ? new CurlTransport()
-                : throw new LogicException(
-                    'Failed to initialize the default transport (cURL required). Provide a transport manually.',
-                );
-            // @codeCoverageIgnoreEnd
-        }
-
-        $this->transport = $transport;
-        $this->api = new Api($token, $baseUrl, $transport);
+        $this->transport = $transport ?? $this->defaultTransport();
+        $this->api = new Api($token, $baseUrl, $this->transport);
     }
 
     public function withLogger(?LoggerInterface $logger): self
@@ -2665,6 +2657,25 @@ final class TelegramBotApi
     {
         return $this->call(
             new VerifyUser($userId, $customDescription),
+        );
+    }
+
+    /**
+     * @infection-ignore-all
+     */
+    private function defaultTransport(): TransportInterface
+    {
+        if (extension_loaded('curl')) {
+            return new CurlTransport();
+        }
+
+        $availableNativeTransport = (bool) ini_get('allow_url_fopen');
+        if ($availableNativeTransport) {
+            return new NativeTransport();
+        }
+
+        throw new LogicException(
+            'Failed to initialize the default transport. Enable cURL PHP extension or provide a transport manually.',
         );
     }
 }
