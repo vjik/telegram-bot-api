@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Transport\NativeTransport;
 
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use stdClass;
 use Vjik\TelegramBot\Api\Tests\Transport\NativeTransport\StreamMock\StreamMock;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
@@ -168,5 +169,14 @@ final class NativeTransportTest extends TestCase
             $request['options']['http']['content'],
         );
         assertTrue($request['options']['http']['ignore_errors']);
+    }
+
+    public function testErrorOnSend(): void
+    {
+        $transport = new NativeTransport();
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage('file_get_contents(): Unable to find the wrapper "example"');
+        $transport->send('example://url/logOut');
     }
 }
