@@ -18,11 +18,16 @@ final class NativeTransportDownloadFileTest extends TestCase
         $transport = new NativeTransport();
 
         StreamMock::enable(responseBody: 'hello-content');
-
         $result = $transport->downloadFile('http://example.test/test.txt');
+        $request = StreamMock::disable();
 
-        StreamMock::disable();
-
+        assertSame(
+            [
+                'path' => 'http://example.test/test.txt',
+                'options' => [],
+            ],
+            $request,
+        );
         assertSame('hello-content', $result);
     }
 
