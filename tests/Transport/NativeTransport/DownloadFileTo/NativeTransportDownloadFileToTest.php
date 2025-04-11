@@ -58,7 +58,7 @@ final class NativeTransportDownloadFileToTest extends TestCase
         $exception = null;
         try {
             $transport->downloadFileTo('http://example.test/test.txt', $filePath);
-        } catch (Throwable $exception){
+        } catch (Throwable $exception) {
         } finally {
             StreamMock::disable();
         }
