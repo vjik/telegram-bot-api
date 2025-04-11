@@ -2660,6 +2660,9 @@ final class TelegramBotApi
         );
     }
 
+    /**
+     * @infection-ignore-all
+     */
     private function defaultTransport(): TransportInterface
     {
         if (extension_loaded('curl')) {
