@@ -264,7 +264,7 @@ final class NativeTransportTest extends TestCase
     public function testCustomMimeTypeResolver(): void
     {
         $transport = new NativeTransport(
-            new class() implements MimeTypeResolverInterface {
+            new class implements MimeTypeResolverInterface {
                 public function resolve(InputFile $file): ?string
                 {
                     return 'text/custom';
