@@ -229,4 +229,22 @@ final class NativeTransportTest extends TestCase
         $this->expectExceptionMessage('file_get_contents(): Unable to find the wrapper "example"');
         $transport->send('example://url/logOut');
     }
+
+    public function testWithoutCode(): void
+    {
+        $transport = new NativeTransport();
+
+        StreamMock::enable(
+            responseHeaders: [
+                'Content-Type: text/json',
+            ],
+            responseBody: '{"ok":true,"result":[]}',
+        );
+
+        $response = $transport->send('http://url/logOut');
+
+        StreamMock::disable();
+
+        assertSame(0, $response->statusCode);
+    }
 }
