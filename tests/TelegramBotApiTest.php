@@ -41,6 +41,7 @@ use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\OwnedGifts;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
 use Vjik\TelegramBot\Api\Type\StarAmount;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
@@ -885,6 +886,19 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->getAvailableGifts();
 
         assertInstanceOf(Gifts::class, $result);
+    }
+
+    public function testGetBusinessAccountGifts(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'total_count' => 0,
+            'gifts' => [],
+        ]);
+
+        $result = $api->getBusinessAccountGifts('business_connection_id_123');
+
+        assertInstanceOf(OwnedGifts::class, $result);
+        assertEmpty($result->gifts);
     }
 
     public function testGetBusinessAccountStarBalance(): void

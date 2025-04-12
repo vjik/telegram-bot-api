@@ -36,6 +36,7 @@ use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\Game\GetGameHighScores;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
 use Vjik\TelegramBot\Api\Method\Game\SetGameScore;
+use Vjik\TelegramBot\Api\Method\GetBusinessAccountGifts;
 use Vjik\TelegramBot\Api\Method\GetBusinessAccountStarBalance;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
@@ -193,6 +194,7 @@ use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\OwnedGifts;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
@@ -1034,6 +1036,35 @@ final class TelegramBotApi
     public function getAvailableGifts(): FailResult|Gifts
     {
         return $this->call(new GetAvailableGifts());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    public function getBusinessAccountGifts(
+        string $businessConnectionId,
+        ?bool $excludeUnsaved = null,
+        ?bool $excludeSaved = null,
+        ?bool $excludeUnlimited = null,
+        ?bool $excludeLimited = null,
+        ?bool $excludeUnique = null,
+        ?bool $sortByPrice = null,
+        ?string $offset = null,
+        ?int $limit = null,
+    ): FailResult|OwnedGifts {
+        return $this->call(
+            new GetBusinessAccountGifts(
+                $businessConnectionId,
+                $excludeUnsaved,
+                $excludeSaved,
+                $excludeUnlimited,
+                $excludeLimited,
+                $excludeUnique,
+                $sortByPrice,
+                $offset,
+                $limit,
+            ),
+        );
     }
 
     /**
