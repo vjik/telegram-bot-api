@@ -2072,6 +2072,15 @@ final class TelegramBotApiTest extends TestCase
         assertSame('12', $result->id);
     }
 
+    public function testTransferBusinessAccountStars(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->transferBusinessAccountStars('connection1', 100);
+
+        assertTrue($result);
+    }
+
     public function testUnbanChatMember(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
