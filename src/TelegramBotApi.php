@@ -140,6 +140,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\RemoveBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountBio;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountGiftSettings;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountName;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountUsername;
@@ -151,6 +152,7 @@ use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
+use Vjik\TelegramBot\Api\Type\AcceptedGiftTypes;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
@@ -2300,6 +2302,23 @@ final class TelegramBotApi
     {
         return $this->call(
             new SetBusinessAccountBio($businessConnectionId, $bio),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    public function setBusinessAccountGiftSettings(
+        string $businessConnectionId,
+        bool $showGiftButton,
+        AcceptedGiftTypes $acceptedGiftTypes,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountGiftSettings(
+                $businessConnectionId,
+                $showGiftButton,
+                $acceptedGiftTypes,
+            ),
         );
     }
 

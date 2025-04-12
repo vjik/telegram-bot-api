@@ -18,6 +18,7 @@ use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\TransportMock;
+use Vjik\TelegramBot\Api\Type\AcceptedGiftTypes;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
@@ -1426,6 +1427,19 @@ final class TelegramBotApiTest extends TestCase
         $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setBusinessAccountBio('connection1');
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountGiftSettings(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountGiftSettings(
+            'connection1',
+            true,
+            new AcceptedGiftTypes(true, true, true, false),
+        );
 
         assertTrue($result);
     }
