@@ -51,6 +51,7 @@ final readonly class Message
         public ?true $isFromOffline = null,
         public ?string $mediaGroupId = null,
         public ?string $authorSignature = null,
+        public ?int $paidStarCount = null,
         public ?string $text = null,
         #[ArrayOfObjectsValue(MessageEntity::class)]
         public ?array $entities = null,

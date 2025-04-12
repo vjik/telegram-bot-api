@@ -21,7 +21,7 @@
   `DeleteStory` and `GiftPremiumSubscription` methods.
 - Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
-- New #156: Add `paidMessagePriceChanged`, `gift` and `uniqueGift` fields to `Message` type.
+- New #156: Add `paidMessagePriceChanged`, `paidStarCount`, `gift` and `uniqueGift` fields to `Message` type.
 - New #156: Add `premiumSubscriptionDuration` and `transactionType` fields to `TransactionPartnerUser` type.
 
 ## 0.8.0 February 15, 2025

@@ -57,6 +57,7 @@ final class MessageTest extends TestCase
         assertNull($message->isFromOffline);
         assertNull($message->mediaGroupId);
         assertNull($message->authorSignature);
+        assertNull($message->paidStarCount);
         assertNull($message->text);
         assertNull($message->entities);
         assertNull($message->linkPreviewOptions);
@@ -193,6 +194,7 @@ final class MessageTest extends TestCase
             'is_from_offline' => true,
             'media_group_id' => 'mg34613',
             'author_signature' => 'as235',
+            'paid_star_count' => 22943,
             'text' => 'Hello, World!',
             'entities' => [
                 [
@@ -571,6 +573,7 @@ final class MessageTest extends TestCase
         assertTrue($message->isFromOffline);
         assertSame('mg34613', $message->mediaGroupId);
         assertSame('as235', $message->authorSignature);
+        assertSame(22943, $message->paidStarCount);
         assertSame('Hello, World!', $message->text);
 
         assertCount(1, $message->entities);
