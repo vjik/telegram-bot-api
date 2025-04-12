@@ -11,7 +11,9 @@
 - New #156: Add `BusinessBotRights`, `AcceptedGiftTypes`, `InputProfilePhoto`, `InputProfilePhotoStatic`, 
   `InputProfilePhotoAnimated`, `StarAmount`, `OwnedGift`, `OwnedGiftRegular`, `OwnedGiftUnique`, `OwnedGifts`,
   `UniqueGift`, `UniqueGiftBackdrop`, `UniqueGiftModel`, `UniqueGiftSymbol`, UniqueGiftBackdropColors`, 
-  `InputStoryContent`, `InputStoryContentPhoto` and `InputStoryContentVideo` types.
+  `InputStoryContent`, `InputStoryContentPhoto`, `InputStoryContentVideo`, `StoryArea`, `StoryAreaPosition`,
+  `LocationAddress`, `StoryAreaType`, `StoryAreaTypeLocation`, `StoryAreaTypeSuggestedReaction`, `StoryAreaTypeLink`,
+  `StoryAreaTypeWeather` and `StoryAreaTypeUniqueGift` types.
 - Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`,
   `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`, `RemoveBusinessAccountProfilePhoto`,
