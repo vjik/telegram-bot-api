@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
-
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
 use function PHPUnit\Framework\assertSame;
