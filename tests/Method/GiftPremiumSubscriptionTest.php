@@ -9,6 +9,8 @@ use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 
+use Vjik\TelegramBot\Api\Type\MessageEntity;
+
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
 
@@ -32,13 +34,14 @@ final class GiftPremiumSubscriptionTest extends TestCase
 
     public function testFull(): void
     {
+        $entity = new MessageEntity('bold', 0, 5);
         $method = new GiftPremiumSubscription(
             123456789,
             6,
             1500,
             'Happy Birthday!',
             'Markdown',
-            [],
+            [$entity],
         );
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -50,7 +53,7 @@ final class GiftPremiumSubscriptionTest extends TestCase
                 'star_count' => 1500,
                 'text' => 'Happy Birthday!',
                 'text_parse_mode' => 'Markdown',
-                'text_entities' => [],
+                'text_entities' => [$entity->toRequestArray()],
             ],
             $method->getData(),
         );
