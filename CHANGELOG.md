@@ -13,7 +13,7 @@
   `UniqueGift`, `UniqueGiftBackdrop`, `UniqueGiftModel`, `UniqueGiftSymbol`, `UniqueGiftBackdropColors`,
   `InputStoryContent`, `InputStoryContentPhoto`, `InputStoryContentVideo`, `StoryArea`, `StoryAreaPosition`,
   `LocationAddress`, `StoryAreaType`, `StoryAreaTypeLocation`, `StoryAreaTypeSuggestedReaction`, `StoryAreaTypeLink`,
-  `StoryAreaTypeWeather`, `StoryAreaTypeUniqueGift` and `GiftInfo` types.
+  `StoryAreaTypeWeather`, `StoryAreaTypeUniqueGift`, `GiftInfo` and `UniqueGiftInfo` types.
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`,
   `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`, `RemoveBusinessAccountProfilePhoto`,
   `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance`, `TransferBusinessAccountStars`,
