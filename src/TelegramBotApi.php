@@ -136,6 +136,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
@@ -1301,6 +1302,19 @@ final class TelegramBotApi
                 $canPinMessages,
                 $canManageTopics,
             ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    public function readBusinessMessage(
+        string $businessConnectionId,
+        int $chatId,
+        int $messageId,
+    ): FailResult|true {
+        return $this->call(
+            new ReadBusinessMessage($businessConnectionId, $chatId, $messageId),
         );
     }
 

@@ -1292,6 +1292,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testReadBusinessMessage(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->readBusinessMessage('bid1', 25, 146);
+
+        assertTrue($result);
+    }
+
     public function testRefundStarPayment(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
