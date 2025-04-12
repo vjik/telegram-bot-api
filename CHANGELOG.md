@@ -9,6 +9,7 @@
 - Chg #152: Move `CurlTransport` from `Vjik\TelegramBot\Api\Transport\Curl` to `Vjik\TelegramBot\Api\Transport`.
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
 - New #156: Add `BusinessBotRights` type.
+- Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 
 ## 0.8.0 February 15, 2025
 

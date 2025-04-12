@@ -35,7 +35,7 @@ final class GetBusinessConnectionTest extends TestCase
             ],
             'user_chat_id' => 23,
             'date' => 1717517779,
-            'can_reply' => true,
+            'rights' => [],
             'is_enabled' => false,
         ])->call($method);
 
