@@ -97,6 +97,7 @@ final class MessageTest extends TestCase
         assertNull($message->usersShared);
         assertNull($message->chatShared);
         assertNull($message->gift);
+        assertNull($message->uniqueGift);
         assertNull($message->connectedWebsite);
         assertNull($message->writeAccessAllowed);
         assertNull($message->passportData);
@@ -381,6 +382,52 @@ final class MessageTest extends TestCase
                     'star_count' => 11,
                 ],
             ],
+            'unique_gift' => [
+                'gift' => [
+                    'base_name' => 'BaseName',
+                    'name' => 'uniqueName',
+                    'number' => 1,
+                    'model' => [
+                        'name' => 'test1',
+                        'sticker' => [
+                            'file_id' => 'x1',
+                            'file_unique_id' => 'fullX1',
+                            'type' => 'unique',
+                            'width' => 100,
+                            'height' => 120,
+                            'is_animated' => false,
+                            'is_video' => true,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                    'symbol' => [
+                        'name' => 'test2',
+                        'sticker' => [
+                            'file_id' => 'x1',
+                            'file_unique_id' => 'fullX1',
+                            'type' => 'unique',
+                            'width' => 100,
+                            'height' => 120,
+                            'is_animated' => false,
+                            'is_video' => true,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                    'backdrop' => [
+                        'name' => 'test3',
+                        'colors' => [
+                            'center_color' => 1,
+                            'edge_color' => 2,
+                            'symbol_color' => 3,
+                            'text_color' => 4,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                ],
+                'origin' => 'transfer',
+                'owned_gift_id' => 'owned-id1',
+                'transfer_star_count' => 15,
+            ],
             'connected_website' => 'example.com',
             'write_access_allowed' => [
                 'web_app_name' => 'uqn',
@@ -575,6 +622,7 @@ final class MessageTest extends TestCase
         assertSame(12722, $message->usersShared?->requestId);
         assertSame(364, $message->chatShared?->requestId);
         assertSame('test-id1', $message->gift?->gift->id);
+        assertSame('BaseName', $message->uniqueGift?->gift->baseName);
         assertSame('example.com', $message->connectedWebsite);
         assertSame('uqn', $message->writeAccessAllowed?->webAppName);
         assertSame('asdg23GWEH', $message->passportData?->credentials->hash);
