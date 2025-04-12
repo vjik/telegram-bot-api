@@ -10,16 +10,17 @@
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
 - New #156: Add `BusinessBotRights`, `AcceptedGiftTypes`, `InputProfilePhoto`, `InputProfilePhotoStatic`, 
   `InputProfilePhotoAnimated`, `StarAmount`, `OwnedGift`, `OwnedGiftRegular`, `OwnedGiftUnique`, `OwnedGifts`,
-  `UniqueGift`, `UniqueGiftBackdrop`, `UniqueGiftModel`, `UniqueGiftSymbol`, UniqueGiftBackdropColors`, 
+  `UniqueGift`, `UniqueGiftBackdrop`, `UniqueGiftModel`, `UniqueGiftSymbol`, `UniqueGiftBackdropColors`,
   `InputStoryContent`, `InputStoryContentPhoto`, `InputStoryContentVideo`, `StoryArea`, `StoryAreaPosition`,
   `LocationAddress`, `StoryAreaType`, `StoryAreaTypeLocation`, `StoryAreaTypeSuggestedReaction`, `StoryAreaTypeLink`,
   `StoryAreaTypeWeather` and `StoryAreaTypeUniqueGift` types.
-- Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`,
   `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`, `RemoveBusinessAccountProfilePhoto`,
   `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance`, `TransferBusinessAccountStars`,
   `GetBusinessAccountGifts`, `ConvertGiftToStars`, `UpgradeGift`, `TransferGift`, `PostStory`, `EditStory` and 
   `DeleteStory` methods.
+- Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
+- Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
 
 ## 0.8.0 February 15, 2025
 
