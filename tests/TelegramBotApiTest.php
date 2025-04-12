@@ -823,6 +823,27 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testEditStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
+            ],
+            'id' => 23,
+        ]);
+
+        $result = $api->editStory(
+            'business_connection_id',
+            456,
+            new InputStoryContentPhoto(
+                new InputFile((new StreamFactory())->createStream())
+            ),
+        );
+
+        assertInstanceOf(Story::class, $result);
+    }
+
     public function testEditUserStarSubscription(): void
     {
         $api = TestHelper::createSuccessStubApi(true);

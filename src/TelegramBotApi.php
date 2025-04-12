@@ -31,6 +31,7 @@ use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\EditChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
 use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
+use Vjik\TelegramBot\Api\Method\EditStory;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
@@ -959,6 +960,34 @@ final class TelegramBotApi
                 $entities,
                 $linkPreviewOptions,
                 $replyMarkup,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editstory
+     *
+     * @param MessageEntity[]|null $captionEntities
+     * @param StoryArea[]|null $areas
+     */
+    public function editStory(
+        string $businessConnectionId,
+        int $storyId,
+        InputStoryContent $content,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?array $areas = null,
+    ): FailResult|Story {
+        return $this->call(
+            new EditStory(
+                $businessConnectionId,
+                $storyId,
+                $content,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $areas,
             ),
         );
     }
