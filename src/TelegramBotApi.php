@@ -138,6 +138,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountName;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
@@ -2272,6 +2273,19 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
             ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    public function setBusinessAccountName(
+        string $businessConnectionId,
+        string $firstName,
+        ?string $lastName = null,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountName($businessConnectionId, $firstName, $lastName),
         );
     }
 
