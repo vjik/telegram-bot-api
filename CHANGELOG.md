@@ -15,7 +15,7 @@
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`,
   `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`, `RemoveBusinessAccountProfilePhoto`,
   `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance`, `TransferBusinessAccountStars`,
-  `GetBusinessAccountGifts` and `ConvertGiftToStars` methods.
+  `GetBusinessAccountGifts`, `ConvertGiftToStars` and `UpgradeGift` methods.
 
 ## 0.8.0 February 15, 2025
 

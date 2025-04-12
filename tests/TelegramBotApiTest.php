@@ -2168,6 +2168,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testUpgradeGift(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->upgradeGift('business_connection_id', 'owned_gift_id');
+
+        assertTrue($result);
+    }
+
     public function testUploadStickerFile(): void
     {
         $api = TestHelper::createSuccessStubApi([

@@ -154,6 +154,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
+use Vjik\TelegramBot\Api\Method\UpgradeGift;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
@@ -2814,6 +2815,25 @@ final class TelegramBotApi
     {
         return $this->call(
             new UnpinAllGeneralForumTopicMessages($chatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#upgradegift
+     */
+    public function upgradeGift(
+        string $businessConnectionId,
+        string $ownedGiftId,
+        ?bool $keepOriginalDetails = null,
+        ?int $starCount = null,
+    ): FailResult|true {
+        return $this->call(
+            new UpgradeGift(
+                $businessConnectionId,
+                $ownedGiftId,
+                $keepOriginalDetails,
+                $starCount,
+            ),
         );
     }
 
