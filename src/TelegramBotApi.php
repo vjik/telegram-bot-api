@@ -36,6 +36,7 @@ use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\Game\GetGameHighScores;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
 use Vjik\TelegramBot\Api\Method\Game\SetGameScore;
+use Vjik\TelegramBot\Api\Method\GetBusinessAccountStarBalance;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
@@ -196,6 +197,7 @@ use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\StarAmount;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
@@ -1031,6 +1033,16 @@ final class TelegramBotApi
     public function getAvailableGifts(): FailResult|Gifts
     {
         return $this->call(new GetAvailableGifts());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    public function getBusinessAccountStarBalance(string $businessConnectionId): FailResult|StarAmount
+    {
+        return $this->call(
+            new GetBusinessAccountStarBalance($businessConnectionId)
+        );
     }
 
     /**

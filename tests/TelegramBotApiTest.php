@@ -886,6 +886,19 @@ final class TelegramBotApiTest extends TestCase
         assertInstanceOf(Gifts::class, $result);
     }
 
+    public function testGetBusinessAccountStarBalance(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'amount' => 100,
+        ]);
+
+        $result = $api->getBusinessAccountStarBalance('business_connection_id_123');
+
+        assertInstanceOf(StarAmount::class, $result);
+        assertSame(100, $result->amount);
+        assertNull($result->nanostarAmount);
+    }
+
     public function testGetBusinessConnection(): void
     {
         $api = TestHelper::createSuccessStubApi([
