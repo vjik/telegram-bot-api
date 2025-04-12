@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Method\UpdatingMessage;
+namespace Vjik\TelegramBot\Api\Method;
 
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;

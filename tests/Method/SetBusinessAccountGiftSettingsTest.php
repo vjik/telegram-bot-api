@@ -2,10 +2,10 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountGiftSettings;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountGiftSettings;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\TrueValue;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;

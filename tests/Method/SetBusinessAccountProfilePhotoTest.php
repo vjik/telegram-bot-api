@@ -2,17 +2,15 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
+namespace Vjik\TelegramBot\Api\Tests\Method;
 
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\FileCollector;
-use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountProfilePhoto;
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
-use Vjik\TelegramBot\Api\Type\InputProfilePhoto;
-
 use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
 
 use function PHPUnit\Framework\assertSame;
