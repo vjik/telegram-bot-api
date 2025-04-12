@@ -900,6 +900,15 @@ final class TelegramBotApiTest extends TestCase
         assertSame(8, $result[1]->messageId);
     }
 
+    public function testDeleteStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->deleteStory('business_connection_id', 123);
+
+        $this->assertTrue($result);
+    }
+
     public function testDeleteWebhook(): void
     {
         $api = TestHelper::createSuccessStubApi(true);

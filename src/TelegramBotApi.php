@@ -27,6 +27,7 @@ use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
 use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
+use Vjik\TelegramBot\Api\Method\DeleteStory;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\EditChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
@@ -1067,6 +1068,16 @@ final class TelegramBotApi
                 $disableNotification,
                 $protectContent,
             ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletestory
+     */
+    public function deleteStory(string $businessConnectionId, int $storyId): FailResult|true
+    {
+        return $this->call(
+            new DeleteStory($businessConnectionId, $storyId),
         );
     }
 
