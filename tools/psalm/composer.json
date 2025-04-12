@@ -1,8 +1,5 @@
 {
     "require-dev": {
-        "vimeo/psalm": "^6.9.4"
-    },
-    "config": {
-        "bump-after-update": "dev"
+        "vimeo/psalm": "^6.10.0"
     }
 }

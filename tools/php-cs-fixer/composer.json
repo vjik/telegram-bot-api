@@ -1,8 +1,5 @@
 {
     "require-dev": {
-        "friendsofphp/php-cs-fixer": "^3.73.1"
-    },
-    "config": {
-        "bump-after-update": "dev"
+        "friendsofphp/php-cs-fixer": "^3.75.0"
     }
 }
