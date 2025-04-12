@@ -12,6 +12,7 @@
 - Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`
   and `SetBusinessAccountBio` methods.
+- New #156: Add `InputProfilePhoto`, `InputProfilePhotoStatic` and `InputProfilePhotoAnimated` types.
 
 ## 0.8.0 February 15, 2025
 
