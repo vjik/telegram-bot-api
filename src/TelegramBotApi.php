@@ -132,6 +132,7 @@ use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetTitle;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
 use Vjik\TelegramBot\Api\Method\TransferBusinessAccountStars;
+use Vjik\TelegramBot\Api\Method\TransferGift;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnhideGeneralForumTopic;
@@ -2742,6 +2743,25 @@ final class TelegramBotApi
     {
         return $this->call(
             new TransferBusinessAccountStars($businessConnectionId, $starCount),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#transfergift
+     */
+    public function transferGift(
+        string $businessConnectionId,
+        string $ownedGiftId,
+        int $newOwnerChatId,
+        ?int $starCount = null,
+    ): FailResult|true {
+        return $this->call(
+            new TransferGift(
+                $businessConnectionId,
+                $ownedGiftId,
+                $newOwnerChatId,
+                $starCount,
+            ),
         );
     }
 
