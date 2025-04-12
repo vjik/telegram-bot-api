@@ -129,6 +129,7 @@ use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteBusinessMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
@@ -649,6 +650,20 @@ final class TelegramBotApi
     {
         return $this->call(
             new DeclineChatJoinRequest($chatId, $userId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletebusinessmessages
+     *
+     * @param int[] $messageIds
+     */
+    public function deleteBusinessMessages(
+        string $businessConnectionId,
+        array $messageIds,
+    ): FailResult|true {
+        return $this->call(
+            new DeleteBusinessMessages($businessConnectionId, $messageIds),
         );
     }
 
