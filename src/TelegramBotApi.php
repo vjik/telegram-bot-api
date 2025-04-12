@@ -70,6 +70,7 @@ use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
+use Vjik\TelegramBot\Api\Method\PostStory;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
 use Vjik\TelegramBot\Api\Method\RemoveBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\RemoveChatVerification;
@@ -192,6 +193,7 @@ use Vjik\TelegramBot\Api\Type\InputMediaVideo;
 use Vjik\TelegramBot\Api\Type\InputPaidMedia;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
 use Vjik\TelegramBot\Api\Type\InputProfilePhoto;
+use Vjik\TelegramBot\Api\Type\InputStoryContent;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -213,6 +215,8 @@ use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
+use Vjik\TelegramBot\Api\Type\Story;
+use Vjik\TelegramBot\Api\Type\StoryArea;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 use Vjik\TelegramBot\Api\Type\User;
@@ -1339,6 +1343,38 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->call(
             new PinChatMessage($chatId, $messageId, $disableNotification),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#poststory
+     *
+     * @param MessageEntity[]|null $captionEntities
+     * @param StoryArea[]|null $areas
+     */
+    public function postStory(
+        string $businessConnectionId,
+        InputStoryContent $content,
+        int $activePeriod,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?array $areas = null,
+        ?bool $postToChatPage = null,
+        ?bool $protectContent = null,
+    ): FailResult|Story {
+        return $this->call(
+            new PostStory(
+                $businessConnectionId,
+                $content,
+                $activePeriod,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $areas,
+                $postToChatPage,
+                $protectContent,
+            ),
         );
     }
 

@@ -38,6 +38,7 @@ use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
+use Vjik\TelegramBot\Api\Type\InputStoryContentPhoto;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
@@ -47,6 +48,7 @@ use Vjik\TelegramBot\Api\Type\StarAmount;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
+use Vjik\TelegramBot\Api\Type\Story;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
@@ -1329,6 +1331,27 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->pinChatMessage(1, 2);
 
         assertTrue($result);
+    }
+
+    public function testPostStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
+            ],
+            'id' => 23,
+        ]);
+
+        $result = $api->postStory(
+            'business_connection_id',
+            new InputStoryContentPhoto(
+                new InputFile((new StreamFactory())->createStream())
+            ),
+            86400,
+        );
+
+        assertInstanceOf(Story::class, $result);
     }
 
     public function testPromoteChatMember(): void
