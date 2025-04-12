@@ -36,6 +36,7 @@ use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
+use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
@@ -1425,6 +1426,20 @@ final class TelegramBotApiTest extends TestCase
         $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->setBusinessAccountName('connection1', 'John', 'Doe');
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountProfilePhoto(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountProfilePhoto(
+            'biz123',
+            new InputProfilePhotoStatic(
+                new InputFile((new StreamFactory())->createStream()),
+            ),
+        );
 
         assertTrue($result);
     }

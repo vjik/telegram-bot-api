@@ -140,6 +140,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountBio;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountName;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountUsername;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
@@ -177,6 +178,7 @@ use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\InputMediaVideo;
 use Vjik\TelegramBot\Api\Type\InputPaidMedia;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
+use Vjik\TelegramBot\Api\Type\InputProfilePhoto;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
@@ -2298,6 +2300,19 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->call(
             new SetBusinessAccountName($businessConnectionId, $firstName, $lastName),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    public function setBusinessAccountProfilePhoto(
+        string $businessConnectionId,
+        InputProfilePhoto $photo,
+        ?bool $isPublic = null,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountProfilePhoto($businessConnectionId, $photo, $isPublic),
         );
     }
 
