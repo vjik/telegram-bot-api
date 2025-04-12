@@ -114,6 +114,7 @@ final class MessageTest extends TestCase
         assertNull($message->giveaway);
         assertNull($message->giveawayWinners);
         assertNull($message->giveawayCompleted);
+        assertNull($message->paidMessagePriceChanged);
         assertNull($message->videoChatScheduled);
         assertNull($message->videoChatStarted);
         assertNull($message->videoChatEnded);
@@ -492,6 +493,9 @@ final class MessageTest extends TestCase
             'giveaway_completed' => [
                 'winner_count' => 1679,
             ],
+            'paid_message_price_changed' => [
+                'paid_message_star_count' => 9431,
+            ],
             'video_chat_scheduled' => [
                 'start_date' => 1620000012,
             ],
@@ -639,6 +643,7 @@ final class MessageTest extends TestCase
         assertSame(2981, $message->giveaway?->winnerCount);
         assertSame(4677, $message->giveawayWinners?->chat->id);
         assertSame(1679, $message->giveawayCompleted?->winnerCount);
+        assertSame(9431, $message->paidMessagePriceChanged?->paidMessageStarCount);
         assertSame(1620000012, $message->videoChatScheduled?->startDate->getTimestamp());
         assertInstanceOf(VideoChatStarted::class, $message->videoChatStarted);
         assertSame(313, $message->videoChatEnded?->duration);

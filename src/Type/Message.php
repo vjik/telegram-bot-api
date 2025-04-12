@@ -114,6 +114,7 @@ final readonly class Message
         public ?Giveaway $giveaway = null,
         public ?GiveawayWinners $giveawayWinners = null,
         public ?GiveawayCompleted $giveawayCompleted = null,
+        public ?PaidMessagePriceChanged $paidMessagePriceChanged = null,
         public ?VideoChatScheduled $videoChatScheduled = null,
         public ?VideoChatStarted $videoChatStarted = null,
         public ?VideoChatEnded $videoChatEnded = null,
