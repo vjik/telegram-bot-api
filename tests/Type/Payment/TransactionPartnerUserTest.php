@@ -23,9 +23,10 @@ final class TransactionPartnerUserTest extends TestCase
     public function testBase(): void
     {
         $user = new User(123, false, 'Mike');
-        $object = new TransactionPartnerUser($user);
+        $object = new TransactionPartnerUser('invoice_payment', $user);
 
         assertSame('user', $object->getType());
+        assertSame('invoice_payment', $object->transactionType);
         assertSame($user, $object->user);
         assertNull($object->invoicePayload);
         assertNull($object->paidMedia);
@@ -42,6 +43,7 @@ final class TransactionPartnerUserTest extends TestCase
         $paidMedia = [new PaidMediaPreview(), new PaidMediaPreview()];
         $affiliate = new AffiliateInfo(100, 200);
         $object = new TransactionPartnerUser(
+            'invoice_payment',
             $user,
             'test',
             $paidMedia,
@@ -53,6 +55,7 @@ final class TransactionPartnerUserTest extends TestCase
         );
 
         assertSame('user', $object->getType());
+        assertSame('invoice_payment', $object->transactionType);
         assertSame($user, $object->user);
         assertSame('test', $object->invoicePayload);
         assertSame($paidMedia, $object->paidMedia);
@@ -68,6 +71,7 @@ final class TransactionPartnerUserTest extends TestCase
         $object = (new ObjectFactory())->create(
             [
                 'type' => 'user',
+                'transaction_type' => 'gift_purchase',
                 'user' => [
                     'id' => 123,
                     'is_bot' => false,
@@ -103,6 +107,7 @@ final class TransactionPartnerUserTest extends TestCase
         );
 
         assertSame('user', $object->getType());
+        assertSame('gift_purchase', $object->transactionType);
         assertSame(123, $object->user->id);
         assertSame('test', $object->invoicePayload);
         assertEquals(

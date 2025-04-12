@@ -54,6 +54,7 @@ final class TransactionPartnerValueTest extends TestCase
                 TransactionPartnerUser::class,
                 [
                     'type' => 'user',
+                    'transaction_type' => 'premium_purchase',
                     'user' => [
                         'id' => 12,
                         'is_bot' => false,
