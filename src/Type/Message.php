@@ -96,6 +96,7 @@ final readonly class Message
         public ?SuccessfulPayment $successfulPayment = null,
         public ?UsersShared $usersShared = null,
         public ?ChatShared $chatShared = null,
+        public ?GiftInfo $gift = null,
         public ?string $connectedWebsite = null,
         public ?WriteAccessAllowed $writeAccessAllowed = null,
         public ?PassportData $passportData = null,

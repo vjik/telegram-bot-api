@@ -96,6 +96,7 @@ final class MessageTest extends TestCase
         assertNull($message->successfulPayment);
         assertNull($message->usersShared);
         assertNull($message->chatShared);
+        assertNull($message->gift);
         assertNull($message->connectedWebsite);
         assertNull($message->writeAccessAllowed);
         assertNull($message->passportData);
@@ -365,6 +366,21 @@ final class MessageTest extends TestCase
                 'request_id' => 364,
                 'chat_id' => 2,
             ],
+            'gift' => [
+                'gift' => [
+                    'id' => 'test-id1',
+                    'sticker' => [
+                        'file_id' => 'x1',
+                        'file_unique_id' => 'fullX1',
+                        'type' => 'regular',
+                        'width' => 100,
+                        'height' => 120,
+                        'is_animated' => false,
+                        'is_video' => true,
+                    ],
+                    'star_count' => 11,
+                ],
+            ],
             'connected_website' => 'example.com',
             'write_access_allowed' => [
                 'web_app_name' => 'uqn',
@@ -558,6 +574,7 @@ final class MessageTest extends TestCase
         assertSame('12732', $message->successfulPayment?->telegramPaymentChargeId);
         assertSame(12722, $message->usersShared?->requestId);
         assertSame(364, $message->chatShared?->requestId);
+        assertSame('test-id1', $message->gift?->gift->id);
         assertSame('example.com', $message->connectedWebsite);
         assertSame('uqn', $message->writeAccessAllowed?->webAppName);
         assertSame('asdg23GWEH', $message->passportData?->credentials->hash);
