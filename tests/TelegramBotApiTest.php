@@ -511,6 +511,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testConvertGiftToStars(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->convertGiftToStars('business_connection_id', 'owned_gift_id');
+
+        assertTrue($result);
+    }
+
     public function testCopyMessage(): void
     {
         $api = TestHelper::createSuccessStubApi(['message_id' => 7]);

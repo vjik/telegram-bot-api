@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CloseForumTopic;
 use Vjik\TelegramBot\Api\Method\CloseGeneralForumTopic;
+use Vjik\TelegramBot\Api\Method\ConvertGiftToStars;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
@@ -465,6 +466,18 @@ final class TelegramBotApi
     public function closeGeneralForumTopic(int|string $chatId): FailResult|true
     {
         return $this->call(new CloseGeneralForumTopic($chatId));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#convertgifttostars
+     */
+    public function convertGiftToStars(
+        string $businessConnectionId,
+        string $ownedGiftId,
+    ): FailResult|true {
+        return $this->call(
+            new ConvertGiftToStars($businessConnectionId, $ownedGiftId),
+        );
     }
 
     /**
