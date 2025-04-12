@@ -14,6 +14,8 @@ use Vjik\TelegramBot\Api\Type\InputProfilePhoto;
  * @see https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
  *
  * @template-implements MethodInterface<true>
+ *
+ * @api
  */
 final readonly class SetBusinessAccountProfilePhoto implements MethodInterface
 {

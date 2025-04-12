@@ -12,6 +12,8 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
  * @see https://core.telegram.org/bots/api#setbusinessaccountusername
  *
  * @template-implements MethodInterface<true>
+ *
+ * @api
  */
 final readonly class SetBusinessAccountUsername implements MethodInterface
 {
