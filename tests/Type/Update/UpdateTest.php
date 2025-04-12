@@ -102,7 +102,9 @@ final class UpdateTest extends TestCase
                 ],
                 'user_chat_id' => 73,
                 'date' => 124455000,
-                'can_reply' => true,
+                'rights' => [
+                    'can_reply' => true,
+                ],
                 'is_enabled' => false,
             ],
             'business_message' => [

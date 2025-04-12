@@ -8,6 +8,22 @@
   specified in `File` object.
 - Chg #152: Move `CurlTransport` from `Vjik\TelegramBot\Api\Transport\Curl` to `Vjik\TelegramBot\Api\Transport`.
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
+- New #156: Add `AcceptedGiftTypes`, `BusinessBotRights`, `GiftInfo`, `InputProfilePhotoAnimated`,
+  `InputProfilePhotoStatic`, `InputProfilePhoto`, `InputStoryContentPhoto`, `InputStoryContentVideo`,
+  `InputStoryContent`, `LocationAddress`, `OwnedGiftRegular`, `OwnedGiftUnique`, `OwnedGift`, `OwnedGifts`,
+  `PaidMessagePriceChanged`, `StarAmount`, `StoryAreaPosition`, `StoryAreaTypeLink`, `StoryAreaTypeLocation`,
+  `StoryAreaTypeSuggestedReaction`, `StoryAreaTypeUniqueGift`, `StoryAreaTypeWeather`, `StoryAreaType`, `StoryArea`,
+  `UniqueGiftBackdropColors`, `UniqueGiftBackdrop`, `UniqueGiftInfo`, `UniqueGiftModel`, `UniqueGiftSymbol` and
+  `UniqueGift` types.
+- New #156: Add `DeleteStory`, `GetBusinessAccountGifts`, `ConvertGiftToStars`, `UpgradeGift`, `TransferGift`,
+  `PostStory`, `EditStory`, `GiftPremiumSubscription`, `ReadBusinessMessage`, `DeleteBusinessMessages`,
+  `SetBusinessAccountName`, `SetBusinessAccountUsername`, `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`,
+  `RemoveBusinessAccountProfilePhoto`, `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance` and
+  `TransferBusinessAccountStars` methods.
+- Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
+- Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
+- New #156: Add `paidMessagePriceChanged`, `paidStarCount`, `gift` and `uniqueGift` fields to `Message` type.
+- New #156: Add `premiumSubscriptionDuration` and `transactionType` fields to `TransactionPartnerUser` type.
 
 ## 0.8.0 February 15, 2025
 

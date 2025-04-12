@@ -6,6 +6,7 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
+use Vjik\TelegramBot\Api\Type\AcceptedGiftTypes;
 use Vjik\TelegramBot\Api\Type\Birthdate;
 use Vjik\TelegramBot\Api\Type\BusinessIntro;
 use Vjik\TelegramBot\Api\Type\BusinessLocation;
@@ -19,6 +20,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 
 use function PHPUnit\Framework\assertCount;
+use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertIsArray;
 use function PHPUnit\Framework\assertNull;
@@ -75,7 +77,7 @@ final class ChatFullInfoTest extends TestCase
         assertNull($info->linkedChatId);
         assertNull($info->location);
         assertNull($info->canSendPaidMedia);
-        assertNull($info->canSendGift);
+        assertNull($info->acceptedGiftTypes);
     }
 
     public function testFromTelegramResult(): void
@@ -149,7 +151,12 @@ final class ChatFullInfoTest extends TestCase
             'permissions' => [
                 'can_send_messages' => true,
             ],
-            'can_send_gift' => true,
+            'accepted_gift_types' =>  [
+                'unlimited_gifts' => true,
+                'limited_gifts' => false,
+                'unique_gifts' => true,
+                'premium_subscription' => false,
+            ],
             'slow_mode_delay' => 5,
             'unrestrict_boost_count' => 10,
             'message_auto_delete_time' => 111,
@@ -241,6 +248,10 @@ final class ChatFullInfoTest extends TestCase
         assertSame(55.7558, $info->location->location->latitude);
 
         assertTrue($info->canSendPaidMedia);
-        assertTrue($info->canSendGift);
+        assertInstanceOf(AcceptedGiftTypes::class, $info->acceptedGiftTypes);
+        assertTrue($info->acceptedGiftTypes->unlimitedGifts);
+        assertFalse($info->acceptedGiftTypes->limitedGifts);
+        assertTrue($info->acceptedGiftTypes->uniqueGifts);
+        assertFalse($info->acceptedGiftTypes->premiumSubscription);
     }
 }

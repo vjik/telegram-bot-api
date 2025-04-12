@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\User;
 final readonly class TransactionPartnerUser implements TransactionPartner
 {
     public function __construct(
+        public string $transactionType,
         public User $user,
         public ?string $invoicePayload = null,
         #[ArrayMap(PaidMediaValue::class)]
@@ -24,6 +25,7 @@ final readonly class TransactionPartnerUser implements TransactionPartner
         public ?int $subscriptionPeriod = null,
         public ?string $gift = null,
         public ?AffiliateInfo $affiliate = null,
+        public ?int $premiumSubscriptionDuration = null,
     ) {}
 
     public function getType(): string

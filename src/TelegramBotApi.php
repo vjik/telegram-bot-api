@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
 use Vjik\TelegramBot\Api\Method\CloseForumTopic;
 use Vjik\TelegramBot\Api\Method\CloseGeneralForumTopic;
+use Vjik\TelegramBot\Api\Method\ConvertGiftToStars;
 use Vjik\TelegramBot\Api\Method\CopyMessage;
 use Vjik\TelegramBot\Api\Method\CopyMessages;
 use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
@@ -26,16 +27,20 @@ use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
 use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
 use Vjik\TelegramBot\Api\Method\DeleteMyCommands;
+use Vjik\TelegramBot\Api\Method\DeleteStory;
 use Vjik\TelegramBot\Api\Method\EditChatInviteLink;
 use Vjik\TelegramBot\Api\Method\EditChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\EditForumTopic;
 use Vjik\TelegramBot\Api\Method\EditGeneralForumTopic;
+use Vjik\TelegramBot\Api\Method\EditStory;
 use Vjik\TelegramBot\Api\Method\ExportChatInviteLink;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Method\ForwardMessages;
 use Vjik\TelegramBot\Api\Method\Game\GetGameHighScores;
 use Vjik\TelegramBot\Api\Method\Game\SendGame;
 use Vjik\TelegramBot\Api\Method\Game\SetGameScore;
+use Vjik\TelegramBot\Api\Method\GetBusinessAccountGifts;
+use Vjik\TelegramBot\Api\Method\GetBusinessAccountStarBalance;
 use Vjik\TelegramBot\Api\Method\GetBusinessConnection;
 use Vjik\TelegramBot\Api\Method\GetChat;
 use Vjik\TelegramBot\Api\Method\GetChatAdministrators;
@@ -52,6 +57,7 @@ use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
@@ -67,7 +73,9 @@ use Vjik\TelegramBot\Api\Method\Payment\GetStarTransactions;
 use Vjik\TelegramBot\Api\Method\Payment\RefundStarPayment;
 use Vjik\TelegramBot\Api\Method\Payment\SendInvoice;
 use Vjik\TelegramBot\Api\Method\PinChatMessage;
+use Vjik\TelegramBot\Api\Method\PostStory;
 use Vjik\TelegramBot\Api\Method\PromoteChatMember;
+use Vjik\TelegramBot\Api\Method\RemoveBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\RemoveChatVerification;
 use Vjik\TelegramBot\Api\Method\RemoveUserVerification;
 use Vjik\TelegramBot\Api\Method\ReopenForumTopic;
@@ -90,6 +98,11 @@ use Vjik\TelegramBot\Api\Method\SendVenue;
 use Vjik\TelegramBot\Api\Method\SendVideo;
 use Vjik\TelegramBot\Api\Method\SendVideoNote;
 use Vjik\TelegramBot\Api\Method\SendVoice;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountBio;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountGiftSettings;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountName;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountProfilePhoto;
+use Vjik\TelegramBot\Api\Method\SetBusinessAccountUsername;
 use Vjik\TelegramBot\Api\Method\SetChatAdministratorCustomTitle;
 use Vjik\TelegramBot\Api\Method\SetChatDescription;
 use Vjik\TelegramBot\Api\Method\SetChatMenuButton;
@@ -122,6 +135,8 @@ use Vjik\TelegramBot\Api\Method\Sticker\SetStickerPositionInSet;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetThumbnail;
 use Vjik\TelegramBot\Api\Method\Sticker\SetStickerSetTitle;
 use Vjik\TelegramBot\Api\Method\Sticker\UploadStickerFile;
+use Vjik\TelegramBot\Api\Method\TransferBusinessAccountStars;
+use Vjik\TelegramBot\Api\Method\TransferGift;
 use Vjik\TelegramBot\Api\Method\UnbanChatMember;
 use Vjik\TelegramBot\Api\Method\UnbanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\UnhideGeneralForumTopic;
@@ -129,6 +144,11 @@ use Vjik\TelegramBot\Api\Method\UnpinAllChatMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinAllGeneralForumTopicMessages;
 use Vjik\TelegramBot\Api\Method\UnpinChatMessage;
+use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
+use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
+use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
+use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteBusinessMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\DeleteMessages;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageCaption;
@@ -136,14 +156,17 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopMessageLiveLocation;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
+use Vjik\TelegramBot\Api\Method\UpgradeGift;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
+use Vjik\TelegramBot\Api\Type\AcceptedGiftTypes;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotCommandScope;
 use Vjik\TelegramBot\Api\Type\BotDescription;
@@ -172,11 +195,14 @@ use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\InputMediaVideo;
 use Vjik\TelegramBot\Api\Type\InputPaidMedia;
 use Vjik\TelegramBot\Api\Type\InputPollOption;
+use Vjik\TelegramBot\Api\Type\InputProfilePhoto;
+use Vjik\TelegramBot\Api\Type\InputStoryContent;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MenuButton;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\OwnedGifts;
 use Vjik\TelegramBot\Api\Type\Passport\PassportElementError;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\Payment\ShippingOption;
@@ -186,20 +212,19 @@ use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\StarAmount;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
+use Vjik\TelegramBot\Api\Type\Story;
+use Vjik\TelegramBot\Api\Type\StoryArea;
+use Vjik\TelegramBot\Api\Type\Update\Update;
+use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
-use Vjik\TelegramBot\Api\Method\Update\DeleteWebhook;
-use Vjik\TelegramBot\Api\Method\Update\GetUpdates;
-use Vjik\TelegramBot\Api\Method\Update\GetWebhookInfo;
-use Vjik\TelegramBot\Api\Method\Update\SetWebhook;
-use Vjik\TelegramBot\Api\Type\Update\Update;
-use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
 
 use function extension_loaded;
 
@@ -453,6 +478,18 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#convertgifttostars
+     */
+    public function convertGiftToStars(
+        string $businessConnectionId,
+        string $ownedGiftId,
+    ): FailResult|true {
+        return $this->call(
+            new ConvertGiftToStars($businessConnectionId, $ownedGiftId),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#copymessage
      *
      * @param MessageEntity[]|null $captionEntities
@@ -648,6 +685,20 @@ final class TelegramBotApi
     {
         return $this->call(
             new DeclineChatJoinRequest($chatId, $userId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#deletebusinessmessages
+     *
+     * @param int[] $messageIds
+     */
+    public function deleteBusinessMessages(
+        string $businessConnectionId,
+        array $messageIds,
+    ): FailResult|true {
+        return $this->call(
+            new DeleteBusinessMessages($businessConnectionId, $messageIds),
         );
     }
 
@@ -916,6 +967,34 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#editstory
+     *
+     * @param MessageEntity[]|null $captionEntities
+     * @param StoryArea[]|null $areas
+     */
+    public function editStory(
+        string $businessConnectionId,
+        int $storyId,
+        InputStoryContent $content,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?array $areas = null,
+    ): FailResult|Story {
+        return $this->call(
+            new EditStory(
+                $businessConnectionId,
+                $storyId,
+                $content,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $areas,
+            ),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#edituserstarsubscription
      */
     public function editUserStarSubscription(
@@ -994,6 +1073,16 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#deletestory
+     */
+    public function deleteStory(string $businessConnectionId, int $storyId): FailResult|true
+    {
+        return $this->call(
+            new DeleteStory($businessConnectionId, $storyId),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#deletewebhook
      */
     public function deleteWebhook(?bool $dropPendingUpdates = null): FailResult|true
@@ -1007,6 +1096,45 @@ final class TelegramBotApi
     public function getAvailableGifts(): FailResult|Gifts
     {
         return $this->call(new GetAvailableGifts());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getbusinessaccountgifts
+     */
+    public function getBusinessAccountGifts(
+        string $businessConnectionId,
+        ?bool $excludeUnsaved = null,
+        ?bool $excludeSaved = null,
+        ?bool $excludeUnlimited = null,
+        ?bool $excludeLimited = null,
+        ?bool $excludeUnique = null,
+        ?bool $sortByPrice = null,
+        ?string $offset = null,
+        ?int $limit = null,
+    ): FailResult|OwnedGifts {
+        return $this->call(
+            new GetBusinessAccountGifts(
+                $businessConnectionId,
+                $excludeUnsaved,
+                $excludeSaved,
+                $excludeUnlimited,
+                $excludeLimited,
+                $excludeUnique,
+                $sortByPrice,
+                $offset,
+                $limit,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getbusinessaccountstarbalance
+     */
+    public function getBusinessAccountStarBalance(string $businessConnectionId): FailResult|StarAmount
+    {
+        return $this->call(
+            new GetBusinessAccountStarBalance($businessConnectionId),
+        );
     }
 
     /**
@@ -1219,6 +1347,31 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#giftpremiumsubscription
+     *
+     * @param MessageEntity[]|null $textEntities
+     */
+    public function giftPremiumSubscription(
+        int $userId,
+        int $monthCount,
+        int $starCount,
+        ?string $text = null,
+        ?string $textParseMode = null,
+        ?array $textEntities = null,
+    ): FailResult|true {
+        return $this->call(
+            new GiftPremiumSubscription(
+                $userId,
+                $monthCount,
+                $starCount,
+                $text,
+                $textParseMode,
+                $textEntities,
+            ),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#hidegeneralforumtopic
      */
     public function hideGeneralForumTopic(int|string $chatId): FailResult|true
@@ -1256,6 +1409,38 @@ final class TelegramBotApi
     ): FailResult|true {
         return $this->call(
             new PinChatMessage($chatId, $messageId, $disableNotification),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#poststory
+     *
+     * @param MessageEntity[]|null $captionEntities
+     * @param StoryArea[]|null $areas
+     */
+    public function postStory(
+        string $businessConnectionId,
+        InputStoryContent $content,
+        int $activePeriod,
+        ?string $caption = null,
+        ?string $parseMode = null,
+        ?array $captionEntities = null,
+        ?array $areas = null,
+        ?bool $postToChatPage = null,
+        ?bool $protectContent = null,
+    ): FailResult|Story {
+        return $this->call(
+            new PostStory(
+                $businessConnectionId,
+                $content,
+                $activePeriod,
+                $caption,
+                $parseMode,
+                $captionEntities,
+                $areas,
+                $postToChatPage,
+                $protectContent,
+            ),
         );
     }
 
@@ -1305,12 +1490,37 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#readbusinessmessage
+     */
+    public function readBusinessMessage(
+        string $businessConnectionId,
+        int $chatId,
+        int $messageId,
+    ): FailResult|true {
+        return $this->call(
+            new ReadBusinessMessage($businessConnectionId, $chatId, $messageId),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#refundstarpayment
      */
     public function refundStarPayment(int $userId, string $telegramPaymentChargeId): FailResult|true
     {
         return $this->call(
             new RefundStarPayment($userId, $telegramPaymentChargeId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    public function removeBusinessAccountProfilePhoto(
+        string $businessConnectionId,
+        ?bool $isPublic = null,
+    ): FailResult|true {
+        return $this->call(
+            new RemoveBusinessAccountProfilePhoto($businessConnectionId, $isPublic),
         );
     }
 
@@ -2247,6 +2457,69 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountbio
+     */
+    public function setBusinessAccountBio(string $businessConnectionId, ?string $bio = null): FailResult|true
+    {
+        return $this->call(
+            new SetBusinessAccountBio($businessConnectionId, $bio),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountgiftsettings
+     */
+    public function setBusinessAccountGiftSettings(
+        string $businessConnectionId,
+        bool $showGiftButton,
+        AcceptedGiftTypes $acceptedGiftTypes,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountGiftSettings(
+                $businessConnectionId,
+                $showGiftButton,
+                $acceptedGiftTypes,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountname
+     */
+    public function setBusinessAccountName(
+        string $businessConnectionId,
+        string $firstName,
+        ?string $lastName = null,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountName($businessConnectionId, $firstName, $lastName),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountprofilephoto
+     */
+    public function setBusinessAccountProfilePhoto(
+        string $businessConnectionId,
+        InputProfilePhoto $photo,
+        ?bool $isPublic = null,
+    ): FailResult|true {
+        return $this->call(
+            new SetBusinessAccountProfilePhoto($businessConnectionId, $photo, $isPublic),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#setbusinessaccountusername
+     */
+    public function setBusinessAccountUsername(string $businessConnectionId, ?string $username = null): FailResult|true
+    {
+        return $this->call(
+            new SetBusinessAccountUsername($businessConnectionId, $username),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#setchatadministratorcustomtitle
      */
     public function setChatAdministratorCustomTitle(
@@ -2566,6 +2839,35 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#transferbusinessaccountstars
+     */
+    public function transferBusinessAccountStars(string $businessConnectionId, int $starCount): FailResult|true
+    {
+        return $this->call(
+            new TransferBusinessAccountStars($businessConnectionId, $starCount),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#transfergift
+     */
+    public function transferGift(
+        string $businessConnectionId,
+        string $ownedGiftId,
+        int $newOwnerChatId,
+        ?int $starCount = null,
+    ): FailResult|true {
+        return $this->call(
+            new TransferGift(
+                $businessConnectionId,
+                $ownedGiftId,
+                $newOwnerChatId,
+                $starCount,
+            ),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#unbanchatmember
      */
     public function unbanChatMember(
@@ -2635,6 +2937,25 @@ final class TelegramBotApi
     {
         return $this->call(
             new UnpinAllGeneralForumTopicMessages($chatId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#upgradegift
+     */
+    public function upgradeGift(
+        string $businessConnectionId,
+        string $ownedGiftId,
+        ?bool $keepOriginalDetails = null,
+        ?int $starCount = null,
+    ): FailResult|true {
+        return $this->call(
+            new UpgradeGift(
+                $businessConnectionId,
+                $ownedGiftId,
+                $keepOriginalDetails,
+                $starCount,
+            ),
         );
     }
 
