@@ -33,6 +33,7 @@ final class TransactionPartnerUserTest extends TestCase
         assertNull($object->subscriptionPeriod);
         assertNull($object->gift);
         assertNull($object->affiliate);
+        assertNull($object->premiumSubscriptionDuration);
     }
 
     public function testFull(): void
@@ -48,6 +49,7 @@ final class TransactionPartnerUserTest extends TestCase
             19,
             'The Gift',
             $affiliate,
+            56,
         );
 
         assertSame('user', $object->getType());
@@ -58,6 +60,7 @@ final class TransactionPartnerUserTest extends TestCase
         assertSame(19, $object->subscriptionPeriod);
         assertSame('The Gift', $object->gift);
         assertSame($affiliate, $object->affiliate);
+        assertSame(56, $object->premiumSubscriptionDuration);
     }
 
     public function testFromTelegramResult(): void
@@ -93,6 +96,7 @@ final class TransactionPartnerUserTest extends TestCase
                     ],
                 ],
                 'paid_media_payload' => 'test-payload',
+                'premium_subscription_duration' => 192,
             ],
             null,
             TransactionPartnerUser::class,
@@ -110,6 +114,7 @@ final class TransactionPartnerUserTest extends TestCase
         );
         assertSame('test-payload', $object->paidMediaPayload);
         assertSame(100, $object->affiliate->commissionPerMille);
+        assertSame(192, $object->premiumSubscriptionDuration);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

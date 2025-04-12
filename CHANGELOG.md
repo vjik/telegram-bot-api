@@ -22,6 +22,7 @@
 - Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
 - New #156: Add `gift` and `uniqueGift` fields to `Message` type.
+- New #156: Add `premiumSubscriptionDuration` field to `TransactionPartnerUser` type.
 
 ## 0.8.0 February 15, 2025
 
