@@ -17,8 +17,8 @@
 - New #156: Add `ReadBusinessMessage`, `DeleteBusinessMessages`, `SetBusinessAccountName`, `SetBusinessAccountUsername`,
   `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`, `RemoveBusinessAccountProfilePhoto`,
   `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance`, `TransferBusinessAccountStars`,
-  `GetBusinessAccountGifts`, `ConvertGiftToStars`, `UpgradeGift`, `TransferGift`, `PostStory`, `EditStory` and 
-  `DeleteStory` methods.
+  `GetBusinessAccountGifts`, `ConvertGiftToStars`, `UpgradeGift`, `TransferGift`, `PostStory`, `EditStory`,
+  `DeleteStory` and `GiftPremiumSubscription` methods.
 - Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
 - Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
 - New #156: Add `gift` and `uniqueGift` fields to `Message` type.

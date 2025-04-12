@@ -1327,6 +1327,15 @@ final class TelegramBotApiTest extends TestCase
         assertSame('https://example.com/', $result->url);
     }
 
+    public function testGiftPremiumSubscription(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->giftPremiumSubscription(123456789, 3, 1000);
+
+        $this->assertTrue($result);
+    }
+
     public function testHideGeneralForumTopic(): void
     {
         $api = TestHelper::createSuccessStubApi(true);

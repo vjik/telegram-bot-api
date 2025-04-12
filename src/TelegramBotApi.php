@@ -57,6 +57,7 @@ use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
+use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
 use Vjik\TelegramBot\Api\Method\HideGeneralForumTopic;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerInlineQuery;
 use Vjik\TelegramBot\Api\Method\Inline\AnswerWebAppQuery;
@@ -1343,6 +1344,31 @@ final class TelegramBotApi
     public function getWebhookInfo(): FailResult|WebhookInfo
     {
         return $this->call(new GetWebhookInfo());
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#giftpremiumsubscription
+     *
+     * @param MessageEntity[]|null $textEntities
+     */
+    public function giftPremiumSubscription(
+        int $userId,
+        int $monthCount,
+        int $starCount,
+        ?string $text = null,
+        ?string $textParseMode = null,
+        ?array $textEntities = null,
+    ): FailResult|true {
+        return $this->call(
+            new GiftPremiumSubscription(
+                $userId,
+                $monthCount,
+                $starCount,
+                $text,
+                $textParseMode,
+                $textEntities,
+            ),
+        );
     }
 
     /**
