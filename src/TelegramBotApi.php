@@ -138,6 +138,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageMedia;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageReplyMarkup;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\EditMessageText;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
+use Vjik\TelegramBot\Api\Method\UpdatingMessage\RemoveBusinessAccountProfilePhoto;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountBio;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountName;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\SetBusinessAccountProfilePhoto;
@@ -1345,6 +1346,18 @@ final class TelegramBotApi
     {
         return $this->call(
             new RefundStarPayment($userId, $telegramPaymentChargeId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#removebusinessaccountprofilephoto
+     */
+    public function removeBusinessAccountProfilePhoto(
+        string $businessConnectionId,
+        ?bool $isPublic = null,
+    ): FailResult|true {
+        return $this->call(
+            new RemoveBusinessAccountProfilePhoto($businessConnectionId, $isPublic),
         );
     }
 

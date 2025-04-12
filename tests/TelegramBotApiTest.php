@@ -1320,6 +1320,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testRemoveBusinessAccountProfilePhoto(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->removeBusinessAccountProfilePhoto('connection1');
+
+        assertTrue($result);
+    }
+
     public function testRemoveChatVerification(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
