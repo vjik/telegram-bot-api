@@ -837,7 +837,7 @@ final class TelegramBotApiTest extends TestCase
             'business_connection_id',
             456,
             new InputStoryContentPhoto(
-                new InputFile((new StreamFactory())->createStream())
+                new InputFile((new StreamFactory())->createStream()),
             ),
         );
 
@@ -1385,7 +1385,7 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->postStory(
             'business_connection_id',
             new InputStoryContentPhoto(
-                new InputFile((new StreamFactory())->createStream())
+                new InputFile((new StreamFactory())->createStream()),
             ),
             86400,
         );
@@ -2174,7 +2174,7 @@ final class TelegramBotApiTest extends TestCase
         $result = $api->transferGift(
             'business_connection_id',
             'owned_gift_id',
-            123456789
+            123456789,
         );
 
         assertTrue($result);

@@ -22,8 +22,7 @@ final readonly class UpgradeGift implements MethodInterface
         private string $ownedGiftId,
         private ?bool $keepOriginalDetails = null,
         private ?int $starCount = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

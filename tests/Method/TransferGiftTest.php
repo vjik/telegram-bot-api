@@ -36,7 +36,7 @@ final class TransferGiftTest extends TestCase
             'business_connection_id',
             'owned_gift_id',
             123456789,
-            10
+            10,
         );
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());

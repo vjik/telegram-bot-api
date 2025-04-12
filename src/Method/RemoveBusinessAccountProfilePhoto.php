@@ -20,8 +20,7 @@ final readonly class RemoveBusinessAccountProfilePhoto implements MethodInterfac
     public function __construct(
         private string $businessConnectionId,
         private ?bool $isPublic = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

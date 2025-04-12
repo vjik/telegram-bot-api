@@ -41,7 +41,7 @@ final class OwnedGiftUniqueTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftSymbol(
                 'id2',
@@ -54,12 +54,12 @@ final class OwnedGiftUniqueTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftBackdrop(
                 'id3',
                 new UniqueGiftBackdropColors(1, 2, 3, 4),
-                200
+                200,
             ),
         );
         $sendDate = new DateTimeImmutable();
@@ -92,7 +92,7 @@ final class OwnedGiftUniqueTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftSymbol(
                 'id2',
@@ -105,12 +105,12 @@ final class OwnedGiftUniqueTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftBackdrop(
                 'id3',
                 new UniqueGiftBackdropColors(1, 2, 3, 4),
-                200
+                200,
             ),
         );
         $sendDate = new DateTimeImmutable();
@@ -122,7 +122,7 @@ final class OwnedGiftUniqueTest extends TestCase
             $senderUser,
             true,
             true,
-            10
+            10,
         );
 
         assertSame($gift, $ownedGift->gift);

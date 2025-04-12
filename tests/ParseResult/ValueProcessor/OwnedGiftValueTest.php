@@ -9,16 +9,13 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\OwnedGiftValue;
-
 use Vjik\TelegramBot\Api\Type\OwnedGiftRegular;
-
 use Vjik\TelegramBot\Api\Type\OwnedGiftUnique;
 
 use function PHPUnit\Framework\assertInstanceOf;
 
 final class OwnedGiftValueTest extends TestCase
 {
-
     public static function dataBase(): array
     {
         return [

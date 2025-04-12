@@ -20,8 +20,7 @@ final readonly class DeleteStory implements MethodInterface
     public function __construct(
         private string $businessConnectionId,
         private int $storyId,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

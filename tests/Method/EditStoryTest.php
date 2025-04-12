@@ -88,7 +88,7 @@ final class EditStoryTest extends TestCase
         $method = new EditStory(
             'bcid1',
             123,
-            new InputStoryContentPhoto(new InputFile((new StreamFactory())->createStream()))
+            new InputStoryContentPhoto(new InputFile((new StreamFactory())->createStream())),
         );
 
         $result = TestHelper::createSuccessStubApi([

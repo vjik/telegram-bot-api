@@ -18,8 +18,7 @@ final readonly class InputStoryContentVideo implements InputStoryContent
         public ?float $duration = null,
         public ?float $coverFrameTimestamp = null,
         public ?bool $isAnimation = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

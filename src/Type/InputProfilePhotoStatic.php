@@ -15,8 +15,7 @@ final readonly class InputProfilePhotoStatic implements InputProfilePhoto
 {
     public function __construct(
         public InputFile $photo,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

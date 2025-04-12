@@ -38,7 +38,7 @@ final class GiftPremiumSubscriptionTest extends TestCase
             1500,
             'Happy Birthday!',
             'Markdown',
-            []
+            [],
         );
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());

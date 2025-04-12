@@ -28,8 +28,7 @@ final readonly class GiftPremiumSubscription implements MethodInterface
         private ?string $text = null,
         private ?string $textParseMode = null,
         private ?array $textEntities = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

@@ -1133,7 +1133,7 @@ final class TelegramBotApi
     public function getBusinessAccountStarBalance(string $businessConnectionId): FailResult|StarAmount
     {
         return $this->call(
-            new GetBusinessAccountStarBalance($businessConnectionId)
+            new GetBusinessAccountStarBalance($businessConnectionId),
         );
     }
 

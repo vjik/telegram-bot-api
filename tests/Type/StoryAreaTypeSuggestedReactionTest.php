@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Type;
 
 use PHPUnit\Framework\TestCase;
-use Vjik\TelegramBot\Api\Type\ReactionType;
 use Vjik\TelegramBot\Api\Type\ReactionTypeCustomEmoji;
 use Vjik\TelegramBot\Api\Type\StoryAreaTypeSuggestedReaction;
 
@@ -28,7 +27,7 @@ final class StoryAreaTypeSuggestedReactionTest extends TestCase
                 'type' => 'suggested_reaction',
                 'reaction_type' => $reactionType->toRequestArray(),
             ],
-            $type->toRequestArray()
+            $type->toRequestArray(),
         );
     }
 
@@ -38,7 +37,7 @@ final class StoryAreaTypeSuggestedReactionTest extends TestCase
         $suggestedReaction = new StoryAreaTypeSuggestedReaction(
             $reactionType,
             true,
-            false
+            false,
         );
 
         assertSame($reactionType, $suggestedReaction->reactionType);
@@ -52,7 +51,7 @@ final class StoryAreaTypeSuggestedReactionTest extends TestCase
                 'is_dark' => true,
                 'is_flipped' => false,
             ],
-            $suggestedReaction->toRequestArray()
+            $suggestedReaction->toRequestArray(),
         );
     }
 }

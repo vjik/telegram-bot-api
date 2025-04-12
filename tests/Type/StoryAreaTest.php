@@ -24,7 +24,7 @@ final class StoryAreaTest extends TestCase
                 'position' => $position->toRequestArray(),
                 'type' => $type->toRequestArray(),
             ],
-            $storyArea->toRequestArray()
+            $storyArea->toRequestArray(),
         );
     }
 }

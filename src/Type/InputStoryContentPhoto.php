@@ -15,8 +15,7 @@ final readonly class InputStoryContentPhoto implements InputStoryContent
 {
     public function __construct(
         public InputFile $photo,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

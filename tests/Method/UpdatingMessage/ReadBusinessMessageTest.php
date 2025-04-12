@@ -6,7 +6,6 @@ namespace Vjik\TelegramBot\Api\Tests\Method\UpdatingMessage;
 
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\UpdatingMessage\ReadBusinessMessage;
-
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 

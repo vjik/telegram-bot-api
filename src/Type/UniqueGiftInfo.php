@@ -16,6 +16,5 @@ final readonly class UniqueGiftInfo
         public string $origin,
         public ?string $ownedGiftId = null,
         public ?int $transferStarCount = null,
-    ) {
-    }
+    ) {}
 }

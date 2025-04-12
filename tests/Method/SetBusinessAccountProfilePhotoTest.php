@@ -30,7 +30,7 @@ final class SetBusinessAccountProfilePhotoTest extends TestCase
             [
                 'business_connection_id' => 'bcid1',
                 'photo' => $photo->toRequestArray(new FileCollector()),
-                'file0' => $file
+                'file0' => $file,
             ],
             $method->getData(),
         );
@@ -47,7 +47,7 @@ final class SetBusinessAccountProfilePhotoTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'photo' => $photo->toRequestArray(new FileCollector()),
                 'is_public' => true,
-                'file0' => $file
+                'file0' => $file,
             ],
             $method->getData(),
         );

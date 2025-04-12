@@ -22,8 +22,7 @@ final readonly class TransferGift implements MethodInterface
         private string $ownedGiftId,
         private int $newOwnerChatId,
         private ?int $starCount = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

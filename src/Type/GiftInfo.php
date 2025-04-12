@@ -27,6 +27,5 @@ final readonly class GiftInfo
         #[ArrayOfObjectsValue(MessageEntity::class)]
         public ?array $entities = null,
         public ?true $isPrivate = null,
-    ) {
-    }
+    ) {}
 }

@@ -14,7 +14,7 @@ final class StoryAreaTypeLinkTest extends TestCase
     public function testBase(): void
     {
         $link = new StoryAreaTypeLink(
-            url: 'https://example.com'
+            url: 'https://example.com',
         );
 
         assertSame('https://example.com', $link->url);
@@ -25,7 +25,7 @@ final class StoryAreaTypeLinkTest extends TestCase
                 'type' => 'link',
                 'url' => 'https://example.com',
             ],
-            $link->toRequestArray()
+            $link->toRequestArray(),
         );
     }
 }

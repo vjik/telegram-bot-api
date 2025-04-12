@@ -16,8 +16,7 @@ final readonly class AcceptedGiftTypes
         public bool $limitedGifts,
         public bool $uniqueGifts,
         public bool $premiumSubscription,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

@@ -92,7 +92,7 @@ final class PostStoryTest extends TestCase
         $method = new PostStory(
             'bcid1',
             new InputStoryContentPhoto(new InputFile((new StreamFactory())->createStream())),
-            86400
+            86400,
         );
 
         $result = TestHelper::createSuccessStubApi([

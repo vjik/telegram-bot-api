@@ -13,8 +13,7 @@ final readonly class StoryAreaTypeLink implements StoryAreaType
 {
     public function __construct(
         public string $url,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

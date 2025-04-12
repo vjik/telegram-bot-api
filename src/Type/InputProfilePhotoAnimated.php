@@ -16,8 +16,7 @@ final readonly class InputProfilePhotoAnimated implements InputProfilePhoto
     public function __construct(
         public InputFile $animation,
         public ?float $mainFrameTimestamp = null,
-    ) {
-    }
+    ) {}
 
     public function getType(): string
     {

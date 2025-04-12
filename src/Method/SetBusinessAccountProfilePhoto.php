@@ -21,8 +21,7 @@ final readonly class SetBusinessAccountProfilePhoto implements MethodInterface
         private string $businessConnectionId,
         private InputProfilePhoto $photo,
         private ?bool $isPublic = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

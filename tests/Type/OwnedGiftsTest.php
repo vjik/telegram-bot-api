@@ -7,12 +7,9 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
-use Vjik\TelegramBot\Api\Type\OwnedGift;
 use Vjik\TelegramBot\Api\Type\OwnedGiftRegular;
 use Vjik\TelegramBot\Api\Type\OwnedGifts;
-
 use Vjik\TelegramBot\Api\Type\Sticker\Gift;
-
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 use function PHPUnit\Framework\assertCount;

@@ -23,17 +23,17 @@ final class UniqueGiftTest extends TestCase
         $model = new UniqueGiftModel(
             'modelId',
             new Sticker('stickerId', 'uniqueStickerId', 'unique', 100, 120, false, true),
-            500
+            500,
         );
         $symbol = new UniqueGiftSymbol(
             'symbolId',
             new Sticker('stickerId', 'uniqueStickerId', 'unique', 100, 120, false, true),
-            300
+            300,
         );
         $backdrop = new UniqueGiftBackdrop(
             'backdropId',
             new UniqueGiftBackdropColors(1, 2, 3, 4),
-            200
+            200,
         );
 
         $type = new UniqueGift('baseName', 'uniqueName', 1, $model, $symbol, $backdrop);

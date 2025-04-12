@@ -13,6 +13,5 @@ final readonly class PaidMessagePriceChanged
 {
     public function __construct(
         public int $paidMessageStarCount,
-    ) {
-    }
+    ) {}
 }

@@ -17,7 +17,7 @@ final class StoryAreaTypeLocationTest extends TestCase
     {
         $location = new StoryAreaTypeLocation(
             latitude: 37.7749,
-            longitude: -122.4194
+            longitude: -122.4194,
         );
 
         assertSame(37.7749, $location->latitude);
@@ -30,7 +30,7 @@ final class StoryAreaTypeLocationTest extends TestCase
                 'latitude' => 37.7749,
                 'longitude' => -122.4194,
             ],
-            $location->toRequestArray()
+            $location->toRequestArray(),
         );
     }
 
@@ -40,13 +40,13 @@ final class StoryAreaTypeLocationTest extends TestCase
             countryCode: 'US',
             state: 'California',
             city: 'San Francisco',
-            street: 'Market Street'
+            street: 'Market Street',
         );
 
         $location = new StoryAreaTypeLocation(
             latitude: 37.7749,
             longitude: -122.4194,
-            address: $address
+            address: $address,
         );
 
         assertSame(37.7749, $location->latitude);
@@ -65,7 +65,7 @@ final class StoryAreaTypeLocationTest extends TestCase
                     'street' => 'Market Street',
                 ],
             ],
-            $location->toRequestArray()
+            $location->toRequestArray(),
         );
     }
 }

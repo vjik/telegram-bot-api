@@ -22,7 +22,7 @@ final class SetBusinessAccountUsernameTest extends TestCase
         assertSame('setBusinessAccountUsername', $method->getApiMethod());
         assertSame(
             ['business_connection_id' => 'connection1'],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -35,7 +35,7 @@ final class SetBusinessAccountUsernameTest extends TestCase
                 'business_connection_id' => 'connection1',
                 'username' => 'test_name',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

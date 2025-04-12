@@ -24,7 +24,7 @@ final class RemoveBusinessAccountProfilePhotoTest extends TestCase
             [
                 'business_connection_id' => 'connection123',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
@@ -37,7 +37,7 @@ final class RemoveBusinessAccountProfilePhotoTest extends TestCase
                 'business_connection_id' => 'connection123',
                 'is_public' => true,
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 

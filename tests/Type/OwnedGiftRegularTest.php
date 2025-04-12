@@ -85,7 +85,7 @@ final class OwnedGiftRegularTest extends TestCase
             true,
             true,
             10,
-            5
+            5,
         );
 
         assertSame($gift, $ownedGift->gift);

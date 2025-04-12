@@ -35,7 +35,7 @@ final class UpgradeGiftTest extends TestCase
             'business_connection_id',
             'owned_gift_id',
             true,
-            10
+            10,
         );
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());

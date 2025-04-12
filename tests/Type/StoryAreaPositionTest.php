@@ -19,7 +19,7 @@ final class StoryAreaPositionTest extends TestCase
             widthPercentage: 30.0,
             heightPercentage: 40.0,
             rotationAngle: 15.0,
-            cornerRadiusPercentage: 5.0
+            cornerRadiusPercentage: 5.0,
         );
 
         assertSame(50.0, $position->xPercentage);
@@ -38,7 +38,7 @@ final class StoryAreaPositionTest extends TestCase
             widthPercentage: 30.0,
             heightPercentage: 40.0,
             rotationAngle: 15.0,
-            cornerRadiusPercentage: 5.0
+            cornerRadiusPercentage: 5.0,
         );
 
         assertSame(
@@ -50,7 +50,7 @@ final class StoryAreaPositionTest extends TestCase
                 'rotation_angle' => 15.0,
                 'corner_radius_percentage' => 5.0,
             ],
-            $position->toRequestArray()
+            $position->toRequestArray(),
         );
     }
 }

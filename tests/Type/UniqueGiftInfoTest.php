@@ -11,7 +11,6 @@ use Vjik\TelegramBot\Api\Type\UniqueGiftBackdrop;
 use Vjik\TelegramBot\Api\Type\UniqueGiftBackdropColors;
 use Vjik\TelegramBot\Api\Type\UniqueGiftInfo;
 use Vjik\TelegramBot\Api\Type\UniqueGift;
-
 use Vjik\TelegramBot\Api\Type\UniqueGiftModel;
 use Vjik\TelegramBot\Api\Type\UniqueGiftSymbol;
 
@@ -38,7 +37,7 @@ final class UniqueGiftInfoTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftSymbol(
                 'id2',
@@ -51,12 +50,12 @@ final class UniqueGiftInfoTest extends TestCase
                     false,
                     true,
                 ),
-                200
+                200,
             ),
             new UniqueGiftBackdrop(
                 'id3',
                 new UniqueGiftBackdropColors(1, 2, 3, 4),
-                200
+                200,
             ),
         );
         $uniqueGiftInfo = new UniqueGiftInfo($gift, 'upgrade');

@@ -16,7 +16,7 @@ final class StoryAreaTypeWeatherTest extends TestCase
         $weather = new StoryAreaTypeWeather(
             temperature: 25.5,
             emoji: '☀️',
-            backgroundColor: 0xFFFFFF
+            backgroundColor: 0xFFFFFF,
         );
 
         assertSame(25.5, $weather->temperature);
@@ -31,7 +31,7 @@ final class StoryAreaTypeWeatherTest extends TestCase
                 'emoji' => '☀️',
                 'background_color' => 0xFFFFFF,
             ],
-            $weather->toRequestArray()
+            $weather->toRequestArray(),
         );
     }
 }

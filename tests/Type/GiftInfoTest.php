@@ -9,7 +9,6 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\GiftInfo;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\Sticker\Gift;
-
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 
 use function PHPUnit\Framework\assertInstanceOf;

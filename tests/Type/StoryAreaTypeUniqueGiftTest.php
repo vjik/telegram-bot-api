@@ -14,7 +14,7 @@ final class StoryAreaTypeUniqueGiftTest extends TestCase
     public function testBase(): void
     {
         $uniqueGift = new StoryAreaTypeUniqueGift(
-            name: 'Golden Trophy'
+            name: 'Golden Trophy',
         );
 
         assertSame('Golden Trophy', $uniqueGift->name);
@@ -25,7 +25,7 @@ final class StoryAreaTypeUniqueGiftTest extends TestCase
                 'type' => 'unique_gift',
                 'name' => 'Golden Trophy',
             ],
-            $uniqueGift->toRequestArray()
+            $uniqueGift->toRequestArray(),
         );
     }
 }

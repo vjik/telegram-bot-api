@@ -35,7 +35,7 @@ final class SetBusinessAccountBioTest extends TestCase
                 'business_connection_id' => 'connection1',
                 'bio' => 'Короткое описание аккаунта',
             ],
-            $method->getData()
+            $method->getData(),
         );
     }
 
