@@ -26,6 +26,29 @@ $transport = new CurlTransport();
 $api = new TelegramBotApi($token, transport: $transport);
 ```
 
+## Native
+
+The `NativeTransport` uses native PHP functions `file_get_contents()` and `file_put_contents()` to make requests to 
+the Telegram Bot API and not require any additional extensions.
+
+> Note: `NativeTransport` requires that
+> [`allow_url_fopen`](https://www.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen) option be
+> enabled.
+
+General usage:
+
+```php
+use Vjik\TelegramBot\Api\TelegramBotApi;
+use Vjik\TelegramBot\Api\Transport\NativeTransport;
+
+// Telegram bot authentication token
+$token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
+
+$transport = new NativeTransport();
+
+$api = new TelegramBotApi($token, transport: $transport);
+```
+
 ## PSR
 
 PSR transport requires the [PSR-18](https://www.php-fig.org/psr/psr-18/) HTTP client and [PSR-17](https://www.php-fig.org/psr/psr-17/) HTTP factories.
