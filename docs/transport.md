@@ -49,8 +49,8 @@ $transport = new NativeTransport();
 $api = new TelegramBotApi($token, transport: $transport);
 ```
 
-Native transport uses instance of `MimeTypeResolverInterface` for resolving MIME types when build API request with
-files. 
+Native transport uses instance of `MimeTypeResolverInterface` passed through the constructor for resolving MIME types
+when build API request with files. 
 
 Available resolvers:
 
