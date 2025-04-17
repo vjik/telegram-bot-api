@@ -2983,6 +2983,7 @@ final class TelegramBotApi
 
     /**
      * @infection-ignore-all
+     * @codeCoverageIgnore
      */
     private function defaultTransport(): TransportInterface
     {
