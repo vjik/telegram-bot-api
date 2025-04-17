@@ -4,7 +4,7 @@ By default `TelegramBotApi` uses cURL to make requests to the Telegram Bot API a
 But you can use any other transport implementation that implements
 the `Vjik\TelegramBot\Api\Transport\TransportInterface` interface.
 
-Out of the box, available two transport implementations: cURL and PSR.
+Out of the box, available three transport implementations: cURL, native and PSR.
 
 ## cURL
 
@@ -48,6 +48,17 @@ $transport = new NativeTransport();
 
 $api = new TelegramBotApi($token, transport: $transport);
 ```
+
+Native transport uses instance of `MimeTypeResolverInterface` for resolving MIME types when build API request with
+files. 
+
+Available resolvers:
+
+- `ApacheMimeTypeResolver` - based on file extension and 
+  [Apache's `mime.types` file](https://svn.apache.org/repos/asf/httpd/httpd/tags/2.4.9/docs/conf/mime.types) (uses 
+  by default);
+- `CustomMimeTypeResolver` - based on file extension and custom MIME types map;
+- `CompositeMimeTypeResolver` - allows to combine multiple resolvers into one.
 
 ## PSR
 
