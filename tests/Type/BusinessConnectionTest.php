@@ -7,10 +7,12 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
+use Vjik\TelegramBot\Api\Type\BusinessBotRights;
 use Vjik\TelegramBot\Api\Type\BusinessConnection;
 use Vjik\TelegramBot\Api\Type\User;
 
 use function PHPUnit\Framework\assertFalse;
+use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
 
@@ -20,12 +22,13 @@ final class BusinessConnectionTest extends TestCase
     {
         $user = new User(123, false, 'Sergei');
         $date = new DateTimeImmutable();
+        $rights = new BusinessBotRights();
         $businessConnection = new BusinessConnection(
             'id1',
             $user,
             23,
             $date,
-            true,
+            $rights,
             false,
         );
 
@@ -33,7 +36,7 @@ final class BusinessConnectionTest extends TestCase
         assertSame($user, $businessConnection->user);
         assertSame(23, $businessConnection->userChatId);
         assertSame($date, $businessConnection->date);
-        assertTrue($businessConnection->canReply);
+        assertSame($rights, $businessConnection->rights);
         assertFalse($businessConnection->isEnabled);
     }
 
@@ -48,7 +51,9 @@ final class BusinessConnectionTest extends TestCase
             ],
             'user_chat_id' => 23,
             'date' => 1717517779,
-            'can_reply' => true,
+            'rights' => [
+                'can_edit_bio' => true,
+            ],
             'is_enabled' => false,
         ], null, BusinessConnection::class);
 
@@ -56,7 +61,8 @@ final class BusinessConnectionTest extends TestCase
         assertSame(123, $businessConnection->user->id);
         assertSame(23, $businessConnection->userChatId);
         assertSame(1717517779, $businessConnection->date->getTimestamp());
-        assertTrue($businessConnection->canReply);
+        assertInstanceOf(BusinessBotRights::class, $businessConnection->rights);
+        assertTrue($businessConnection->rights->canEditBio);
         assertFalse($businessConnection->isEnabled);
     }
 }

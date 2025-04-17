@@ -23,9 +23,10 @@ final class TransactionPartnerUserTest extends TestCase
     public function testBase(): void
     {
         $user = new User(123, false, 'Mike');
-        $object = new TransactionPartnerUser($user);
+        $object = new TransactionPartnerUser('invoice_payment', $user);
 
         assertSame('user', $object->getType());
+        assertSame('invoice_payment', $object->transactionType);
         assertSame($user, $object->user);
         assertNull($object->invoicePayload);
         assertNull($object->paidMedia);
@@ -33,6 +34,7 @@ final class TransactionPartnerUserTest extends TestCase
         assertNull($object->subscriptionPeriod);
         assertNull($object->gift);
         assertNull($object->affiliate);
+        assertNull($object->premiumSubscriptionDuration);
     }
 
     public function testFull(): void
@@ -41,6 +43,7 @@ final class TransactionPartnerUserTest extends TestCase
         $paidMedia = [new PaidMediaPreview(), new PaidMediaPreview()];
         $affiliate = new AffiliateInfo(100, 200);
         $object = new TransactionPartnerUser(
+            'invoice_payment',
             $user,
             'test',
             $paidMedia,
@@ -48,9 +51,11 @@ final class TransactionPartnerUserTest extends TestCase
             19,
             'The Gift',
             $affiliate,
+            56,
         );
 
         assertSame('user', $object->getType());
+        assertSame('invoice_payment', $object->transactionType);
         assertSame($user, $object->user);
         assertSame('test', $object->invoicePayload);
         assertSame($paidMedia, $object->paidMedia);
@@ -58,6 +63,7 @@ final class TransactionPartnerUserTest extends TestCase
         assertSame(19, $object->subscriptionPeriod);
         assertSame('The Gift', $object->gift);
         assertSame($affiliate, $object->affiliate);
+        assertSame(56, $object->premiumSubscriptionDuration);
     }
 
     public function testFromTelegramResult(): void
@@ -65,6 +71,7 @@ final class TransactionPartnerUserTest extends TestCase
         $object = (new ObjectFactory())->create(
             [
                 'type' => 'user',
+                'transaction_type' => 'gift_purchase',
                 'user' => [
                     'id' => 123,
                     'is_bot' => false,
@@ -93,12 +100,14 @@ final class TransactionPartnerUserTest extends TestCase
                     ],
                 ],
                 'paid_media_payload' => 'test-payload',
+                'premium_subscription_duration' => 192,
             ],
             null,
             TransactionPartnerUser::class,
         );
 
         assertSame('user', $object->getType());
+        assertSame('gift_purchase', $object->transactionType);
         assertSame(123, $object->user->id);
         assertSame('test', $object->invoicePayload);
         assertEquals(
@@ -110,6 +119,7 @@ final class TransactionPartnerUserTest extends TestCase
         );
         assertSame('test-payload', $object->paidMediaPayload);
         assertSame(100, $object->affiliate->commissionPerMille);
+        assertSame(192, $object->premiumSubscriptionDuration);
     }
 
     public function testFromTelegramResultWithInvalidResult(): void

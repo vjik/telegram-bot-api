@@ -1,0 +1,30 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Type;
+
+use DateTimeImmutable;
+
+/**
+ * @see https://core.telegram.org/bots/api#ownedgiftunique
+ *
+ * @api
+ */
+final readonly class OwnedGiftUnique implements OwnedGift
+{
+    public function __construct(
+        public UniqueGift $gift,
+        public DateTimeImmutable $sendDate,
+        public ?string $ownedGiftId = null,
+        public ?User $senderUser = null,
+        public ?true $isSaved = null,
+        public ?true $canBeTransferred = null,
+        public ?int $transferStarCount = null,
+    ) {}
+
+    public function getType(): string
+    {
+        return 'unique';
+    }
+}

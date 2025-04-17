@@ -1,12 +1,28 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.8.1 under development
+## 0.9.0 April 12, 2025
 
 - New #152: Add `downloadFile()` and `downloadFileTo()` methods to `TelegramBotApi`.
+- New #156: Add `AcceptedGiftTypes`, `BusinessBotRights`, `GiftInfo`, `InputProfilePhotoAnimated`,
+  `InputProfilePhotoStatic`, `InputProfilePhoto`, `InputStoryContentPhoto`, `InputStoryContentVideo`,
+  `InputStoryContent`, `LocationAddress`, `OwnedGiftRegular`, `OwnedGiftUnique`, `OwnedGift`, `OwnedGifts`,
+  `PaidMessagePriceChanged`, `StarAmount`, `StoryAreaPosition`, `StoryAreaTypeLink`, `StoryAreaTypeLocation`,
+  `StoryAreaTypeSuggestedReaction`, `StoryAreaTypeUniqueGift`, `StoryAreaTypeWeather`, `StoryAreaType`, `StoryArea`,
+  `UniqueGiftBackdropColors`, `UniqueGiftBackdrop`, `UniqueGiftInfo`, `UniqueGiftModel`, `UniqueGiftSymbol` and
+  `UniqueGift` types.
+- New #156: Add `DeleteStory`, `GetBusinessAccountGifts`, `ConvertGiftToStars`, `UpgradeGift`, `TransferGift`,
+  `PostStory`, `EditStory`, `GiftPremiumSubscription`, `ReadBusinessMessage`, `DeleteBusinessMessages`,
+  `SetBusinessAccountName`, `SetBusinessAccountUsername`, `SetBusinessAccountBio`, `SetBusinessAccountProfilePhoto`,
+  `RemoveBusinessAccountProfilePhoto`, `SetBusinessAccountGiftSettings`, `GetBusinessAccountStarBalance` and
+  `TransferBusinessAccountStars` methods.
+- New #156: Add `paidMessagePriceChanged`, `paidStarCount`, `gift` and `uniqueGift` fields to `Message` type.
+- New #156: Add `premiumSubscriptionDuration` and `transactionType` fields to `TransactionPartnerUser` type.
 - Chg #152: Add `downloadFile()` and `downloadFileTo()` methods to `TransportInterface`.
+- Chg #152: Move `CurlTransport` from `Vjik\TelegramBot\Api\Transport\Curl` to `Vjik\TelegramBot\Api\Transport`.
 - Chg #154: `TelegramBotApi::makeFileUrl()` always returns a string and throw `LogicException` if the file path is not
   specified in `File` object.
-- Chg #152: Move `CurlTransport` from `Vjik\TelegramBot\Api\Transport\Curl` to `Vjik\TelegramBot\Api\Transport`.
+- Chg #156: In `BusinessConnection` type replace `canReply` field with `rights` field of `BusinessBotRights` type.
+- Chg #156: In `ChatFullInfo` type replace `canSendGift` field with `acceptedGiftTypes` field.
 - Enh #151: Add `SensitiveParameter` attribute to token parameters in `TelegramBotApi` methods.
 
 ## 0.8.0 February 15, 2025
@@ -14,7 +30,7 @@
 - New #148: Add `TelegramBotApi::makeFileUrl()` method.
 - Chg #145: Remove `ApiUrlGenerator`.
 - Chg #145: Move `$token` and `$baseUrl` parameters from transport classes (`CurlTransport`, `PsrTransport`) to
-  `TelegramBotApi`. 
+  `TelegramBotApi`.
 - Chg #145: Change `$apiMethod` parameter to `$urlPath` in `TransportInterface::send()` method.
 - Enh #145: Make `$transport` in `TelegramBotApi` optional (cURL transport will be used by default).
 - Enh #147: Use `SensitiveParameter` attribute to mark sensitive parameters.
@@ -40,7 +56,7 @@
 
 ## 0.6.0 January 24, 2025
 
-- Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and 
+- Chg #132: Rename definitions "telegram client" to "transport", "telegram response" to "api response" and
   "telegram request" to "method". Classes, namespaces, and variables rename accordingly.
 - Chg #132: Remove `TelegramRequest`.
 - Chg #132: Rename `TelegramClientInterface` to `TransportInterface` and change `send()` method signature.
@@ -85,7 +101,7 @@
 
 - New #124: Add `CopyTextButton` type.
 - New #124: Add `copyText` field to `InlineKeyboardButton` type.
-- New #124: Add `allowPaidBroadcast` field to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`, `sendAudio`, 
+- New #124: Add `allowPaidBroadcast` field to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`, `sendAudio`,
   `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, `sendVenue`,
   `sendContact`, `sendPoll`, `sendDice`, `sendInvoice`, `sendGame`, `sendMediaGroup` and `copyMessage` methods.
 - New #124: Add `TransactionPartnerTelegramApi` type.
@@ -95,7 +111,7 @@
 
 - Enh #119: Use fully qualified function calls to improve performance.
 - Enh #119: Use more specific psalm annotations.
-- Bug #121: Rename `PaidMediaPurchased` property `paidMediaPayload` to `payload`. 
+- Bug #121: Rename `PaidMediaPurchased` property `paidMediaPayload` to `payload`.
 
 ## 0.4.3 September 06, 2024
 
@@ -103,7 +119,7 @@
 - New #118: Add `purchasedPaidMedia` field to `Update` type.
 - New #118: Add `paidMediaPayload` field to `TransactionPartnerUser` type.
 - New #118: Add `payload` parameter to `SendPaidMedia` method.
-- New #118: Add `prizeStarCount ` field to `GiveawayCreated`, `Giveaway`, `GiveawayWinners` and 
+- New #118: Add `prizeStarCount ` field to `GiveawayCreated`, `Giveaway`, `GiveawayWinners` and
   `ChatBoostSourceGiveaway` types.
 - New #118: Add `isStarGiveaway` field to `GiveawayCompleted` type.
 - Enh #118: Bump `php-http/multipart-stream-builder` dependency to `^1.4.2` version.
@@ -124,7 +140,7 @@
 
 ## 0.4.0 July 10, 2024
 
-- New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or 
+- New #103: Add `Update::getRaw()` method that returns raw data if type created by `Update::fromJson()` or
   `Update::fromServerRequest()`.
 - New #106, #112: Add logging.
 - Chg #105: Remove `InvalidResponseFormatException` in favor `TelegramParseResultException`.
@@ -152,7 +168,7 @@
 - New #19: Add `sendAudio` method.
 - New #20: Add `sendDocument` method.
 - New #21: Add `sendVideo` method.
-- New #22: Add `getStarTransactions` method and `StarTransactions`, `StarTransaction`, `TransactionPartner`, 
+- New #22: Add `getStarTransactions` method and `StarTransactions`, `StarTransaction`, `TransactionPartner`,
   `RevenueWithdrawalState` types.
 - New #23: Add `logOut` and `close` methods.
 - New #25: Add `forwardMessage` and `forwardMessages` methods, and `MessageId` type.
@@ -227,6 +243,6 @@
 - Bug #48: Fix incorrect string values addition to POST request with files in `PsrTelegramClient`.
 - Bug #53: Fix incorrect array values addition to GET request in `PsrTelegramClient`.
 
-## 0.1.0 June 10, 2024 
+## 0.1.0 June 10, 2024
 
 - Initial release.

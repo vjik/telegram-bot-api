@@ -57,6 +57,7 @@ final class MessageTest extends TestCase
         assertNull($message->isFromOffline);
         assertNull($message->mediaGroupId);
         assertNull($message->authorSignature);
+        assertNull($message->paidStarCount);
         assertNull($message->text);
         assertNull($message->entities);
         assertNull($message->linkPreviewOptions);
@@ -96,6 +97,8 @@ final class MessageTest extends TestCase
         assertNull($message->successfulPayment);
         assertNull($message->usersShared);
         assertNull($message->chatShared);
+        assertNull($message->gift);
+        assertNull($message->uniqueGift);
         assertNull($message->connectedWebsite);
         assertNull($message->writeAccessAllowed);
         assertNull($message->passportData);
@@ -112,6 +115,7 @@ final class MessageTest extends TestCase
         assertNull($message->giveaway);
         assertNull($message->giveawayWinners);
         assertNull($message->giveawayCompleted);
+        assertNull($message->paidMessagePriceChanged);
         assertNull($message->videoChatScheduled);
         assertNull($message->videoChatStarted);
         assertNull($message->videoChatEnded);
@@ -190,6 +194,7 @@ final class MessageTest extends TestCase
             'is_from_offline' => true,
             'media_group_id' => 'mg34613',
             'author_signature' => 'as235',
+            'paid_star_count' => 22943,
             'text' => 'Hello, World!',
             'entities' => [
                 [
@@ -365,6 +370,67 @@ final class MessageTest extends TestCase
                 'request_id' => 364,
                 'chat_id' => 2,
             ],
+            'gift' => [
+                'gift' => [
+                    'id' => 'test-id1',
+                    'sticker' => [
+                        'file_id' => 'x1',
+                        'file_unique_id' => 'fullX1',
+                        'type' => 'regular',
+                        'width' => 100,
+                        'height' => 120,
+                        'is_animated' => false,
+                        'is_video' => true,
+                    ],
+                    'star_count' => 11,
+                ],
+            ],
+            'unique_gift' => [
+                'gift' => [
+                    'base_name' => 'BaseName',
+                    'name' => 'uniqueName',
+                    'number' => 1,
+                    'model' => [
+                        'name' => 'test1',
+                        'sticker' => [
+                            'file_id' => 'x1',
+                            'file_unique_id' => 'fullX1',
+                            'type' => 'unique',
+                            'width' => 100,
+                            'height' => 120,
+                            'is_animated' => false,
+                            'is_video' => true,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                    'symbol' => [
+                        'name' => 'test2',
+                        'sticker' => [
+                            'file_id' => 'x1',
+                            'file_unique_id' => 'fullX1',
+                            'type' => 'unique',
+                            'width' => 100,
+                            'height' => 120,
+                            'is_animated' => false,
+                            'is_video' => true,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                    'backdrop' => [
+                        'name' => 'test3',
+                        'colors' => [
+                            'center_color' => 1,
+                            'edge_color' => 2,
+                            'symbol_color' => 3,
+                            'text_color' => 4,
+                        ],
+                        'rarity_per_mille' => 200,
+                    ],
+                ],
+                'origin' => 'transfer',
+                'owned_gift_id' => 'owned-id1',
+                'transfer_star_count' => 15,
+            ],
             'connected_website' => 'example.com',
             'write_access_allowed' => [
                 'web_app_name' => 'uqn',
@@ -428,6 +494,9 @@ final class MessageTest extends TestCase
             ],
             'giveaway_completed' => [
                 'winner_count' => 1679,
+            ],
+            'paid_message_price_changed' => [
+                'paid_message_star_count' => 9431,
             ],
             'video_chat_scheduled' => [
                 'start_date' => 1620000012,
@@ -504,6 +573,7 @@ final class MessageTest extends TestCase
         assertTrue($message->isFromOffline);
         assertSame('mg34613', $message->mediaGroupId);
         assertSame('as235', $message->authorSignature);
+        assertSame(22943, $message->paidStarCount);
         assertSame('Hello, World!', $message->text);
 
         assertCount(1, $message->entities);
@@ -558,6 +628,8 @@ final class MessageTest extends TestCase
         assertSame('12732', $message->successfulPayment?->telegramPaymentChargeId);
         assertSame(12722, $message->usersShared?->requestId);
         assertSame(364, $message->chatShared?->requestId);
+        assertSame('test-id1', $message->gift?->gift->id);
+        assertSame('BaseName', $message->uniqueGift?->gift->baseName);
         assertSame('example.com', $message->connectedWebsite);
         assertSame('uqn', $message->writeAccessAllowed?->webAppName);
         assertSame('asdg23GWEH', $message->passportData?->credentials->hash);
@@ -574,6 +646,7 @@ final class MessageTest extends TestCase
         assertSame(2981, $message->giveaway?->winnerCount);
         assertSame(4677, $message->giveawayWinners?->chat->id);
         assertSame(1679, $message->giveawayCompleted?->winnerCount);
+        assertSame(9431, $message->paidMessagePriceChanged?->paidMessageStarCount);
         assertSame(1620000012, $message->videoChatScheduled?->startDate->getTimestamp());
         assertInstanceOf(VideoChatStarted::class, $message->videoChatStarted);
         assertSame(313, $message->videoChatEnded?->duration);

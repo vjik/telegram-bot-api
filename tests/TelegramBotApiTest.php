@@ -18,6 +18,7 @@ use Vjik\TelegramBot\Api\Method\GetMe;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\TelegramBotApi;
 use Vjik\TelegramBot\Api\Tests\Support\TransportMock;
+use Vjik\TelegramBot\Api\Type\AcceptedGiftTypes;
 use Vjik\TelegramBot\Api\Type\BotCommand;
 use Vjik\TelegramBot\Api\Type\BotDescription;
 use Vjik\TelegramBot\Api\Type\BotName;
@@ -36,13 +37,18 @@ use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
+use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
+use Vjik\TelegramBot\Api\Type\InputStoryContentPhoto;
 use Vjik\TelegramBot\Api\Type\MenuButtonDefault;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\MessageId;
+use Vjik\TelegramBot\Api\Type\OwnedGifts;
 use Vjik\TelegramBot\Api\Type\Payment\StarTransactions;
+use Vjik\TelegramBot\Api\Type\StarAmount;
 use Vjik\TelegramBot\Api\Type\Sticker\Gifts;
 use Vjik\TelegramBot\Api\Type\Sticker\InputSticker;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
+use Vjik\TelegramBot\Api\Type\Story;
 use Vjik\TelegramBot\Api\Type\User;
 use Vjik\TelegramBot\Api\Type\UserChatBoosts;
 use Vjik\TelegramBot\Api\Type\UserProfilePhotos;
@@ -507,6 +513,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testConvertGiftToStars(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->convertGiftToStars('business_connection_id', 'owned_gift_id');
+
+        assertTrue($result);
+    }
+
     public function testCopyMessage(): void
     {
         $api = TestHelper::createSuccessStubApi(['message_id' => 7]);
@@ -618,6 +633,15 @@ final class TelegramBotApiTest extends TestCase
         $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->declineChatJoinRequest(1, 2);
+
+        assertTrue($result);
+    }
+
+    public function testDeleteBusinessMessages(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->deleteBusinessMessages('connection1', [123, 456]);
 
         assertTrue($result);
     }
@@ -799,6 +823,27 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testEditStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
+            ],
+            'id' => 23,
+        ]);
+
+        $result = $api->editStory(
+            'business_connection_id',
+            456,
+            new InputStoryContentPhoto(
+                new InputFile((new StreamFactory())->createStream()),
+            ),
+        );
+
+        assertInstanceOf(Story::class, $result);
+    }
+
     public function testEditUserStarSubscription(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
@@ -855,6 +900,15 @@ final class TelegramBotApiTest extends TestCase
         assertSame(8, $result[1]->messageId);
     }
 
+    public function testDeleteStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->deleteStory('business_connection_id', 123);
+
+        $this->assertTrue($result);
+    }
+
     public function testDeleteWebhook(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
@@ -875,6 +929,32 @@ final class TelegramBotApiTest extends TestCase
         assertInstanceOf(Gifts::class, $result);
     }
 
+    public function testGetBusinessAccountGifts(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'total_count' => 0,
+            'gifts' => [],
+        ]);
+
+        $result = $api->getBusinessAccountGifts('business_connection_id_123');
+
+        assertInstanceOf(OwnedGifts::class, $result);
+        assertEmpty($result->gifts);
+    }
+
+    public function testGetBusinessAccountStarBalance(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'amount' => 100,
+        ]);
+
+        $result = $api->getBusinessAccountStarBalance('business_connection_id_123');
+
+        assertInstanceOf(StarAmount::class, $result);
+        assertSame(100, $result->amount);
+        assertNull($result->nanostarAmount);
+    }
+
     public function testGetBusinessConnection(): void
     {
         $api = TestHelper::createSuccessStubApi([
@@ -886,7 +966,7 @@ final class TelegramBotApiTest extends TestCase
             ],
             'user_chat_id' => 23,
             'date' => 1717517779,
-            'can_reply' => true,
+            'rights' => [],
             'is_enabled' => false,
         ]);
 
@@ -1247,6 +1327,15 @@ final class TelegramBotApiTest extends TestCase
         assertSame('https://example.com/', $result->url);
     }
 
+    public function testGiftPremiumSubscription(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->giftPremiumSubscription(123456789, 3, 1000);
+
+        $this->assertTrue($result);
+    }
+
     public function testHideGeneralForumTopic(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
@@ -1283,6 +1372,27 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testPostStory(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
+            ],
+            'id' => 23,
+        ]);
+
+        $result = $api->postStory(
+            'business_connection_id',
+            new InputStoryContentPhoto(
+                new InputFile((new StreamFactory())->createStream()),
+            ),
+            86400,
+        );
+
+        assertInstanceOf(Story::class, $result);
+    }
+
     public function testPromoteChatMember(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
@@ -1292,11 +1402,29 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testReadBusinessMessage(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->readBusinessMessage('bid1', 25, 146);
+
+        assertTrue($result);
+    }
+
     public function testRefundStarPayment(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->refundStarPayment(1, 'test');
+
+        assertTrue($result);
+    }
+
+    public function testRemoveBusinessAccountProfilePhoto(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->removeBusinessAccountProfilePhoto('connection1');
 
         assertTrue($result);
     }
@@ -1391,6 +1519,60 @@ final class TelegramBotApiTest extends TestCase
 
         assertInstanceOf(PreparedInlineMessage::class, $result);
         assertSame('test-id', $result->id);
+    }
+
+    public function testSetBusinessAccountBio(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountBio('connection1');
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountGiftSettings(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountGiftSettings(
+            'connection1',
+            true,
+            new AcceptedGiftTypes(true, true, true, false),
+        );
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountName(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountName('connection1', 'John', 'Doe');
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountProfilePhoto(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountProfilePhoto(
+            'biz123',
+            new InputProfilePhotoStatic(
+                new InputFile((new StreamFactory())->createStream()),
+            ),
+        );
+
+        assertTrue($result);
+    }
+
+    public function testSetBusinessAccountUsername(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->setBusinessAccountUsername('connection1', 'test_name');
+
+        assertTrue($result);
     }
 
     public function testSendAnimation(): void
@@ -1976,6 +2158,28 @@ final class TelegramBotApiTest extends TestCase
         assertSame('12', $result->id);
     }
 
+    public function testTransferBusinessAccountStars(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->transferBusinessAccountStars('connection1', 100);
+
+        assertTrue($result);
+    }
+
+    public function testTransferGift(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->transferGift(
+            'business_connection_id',
+            'owned_gift_id',
+            123456789,
+        );
+
+        assertTrue($result);
+    }
+
     public function testUnbanChatMember(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
@@ -2035,6 +2239,15 @@ final class TelegramBotApiTest extends TestCase
         $api = TestHelper::createSuccessStubApi(true);
 
         $result = $api->unpinAllGeneralForumTopicMessages(2);
+
+        assertTrue($result);
+    }
+
+    public function testUpgradeGift(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->upgradeGift('business_connection_id', 'owned_gift_id');
 
         assertTrue($result);
     }
