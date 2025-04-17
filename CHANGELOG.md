@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.9.1 under development
+
+- New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.  
+
 ## 0.9.0 April 12, 2025
 
 - New #152: Add `downloadFile()` and `downloadFileTo()` methods to `TelegramBotApi`.

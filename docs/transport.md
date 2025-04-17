@@ -4,7 +4,7 @@ By default `TelegramBotApi` uses cURL to make requests to the Telegram Bot API a
 But you can use any other transport implementation that implements
 the `Vjik\TelegramBot\Api\Transport\TransportInterface` interface.
 
-Out of the box, available two transport implementations: cURL and PSR.
+Out of the box, available three transport implementations: cURL, native and PSR.
 
 ## cURL
 
@@ -25,6 +25,40 @@ $transport = new CurlTransport();
 
 $api = new TelegramBotApi($token, transport: $transport);
 ```
+
+## Native
+
+The `NativeTransport` uses native PHP functions `file_get_contents()` and `file_put_contents()` to make requests to 
+the Telegram Bot API and not require any additional extensions.
+
+> Note: `NativeTransport` requires that
+> [`allow_url_fopen`](https://www.php.net/manual/en/filesystem.configuration.php#ini.allow-url-fopen) option be
+> enabled.
+
+General usage:
+
+```php
+use Vjik\TelegramBot\Api\TelegramBotApi;
+use Vjik\TelegramBot\Api\Transport\NativeTransport;
+
+// Telegram bot authentication token
+$token = '110201543:AAHdqTcvCH1vGWJxfSeofSAs0K5PALDsaw';
+
+$transport = new NativeTransport();
+
+$api = new TelegramBotApi($token, transport: $transport);
+```
+
+Native transport uses instance of `MimeTypeResolverInterface` passed through the constructor for resolving MIME types
+when build API request with files. 
+
+Available resolvers:
+
+- `ApacheMimeTypeResolver` - based on file extension and 
+  [Apache's `mime.types` file](https://svn.apache.org/repos/asf/httpd/httpd/tags/2.4.9/docs/conf/mime.types) (uses 
+  by default);
+- `CustomMimeTypeResolver` - based on file extension and custom MIME types map;
+- `CompositeMimeTypeResolver` - allows to combine multiple resolvers into one.
 
 ## PSR
 
