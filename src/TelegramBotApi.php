@@ -245,7 +245,7 @@ final class TelegramBotApi
         ?TransportInterface $transport = null,
         private ?LoggerInterface $logger = null,
     ) {
-        $this->transport = $transport ?? $this->defaultTransport();
+        $this->transport = $transport ?? $this->createDefaultTransport();
         $this->api = new Api($token, $baseUrl, $this->transport);
     }
 
@@ -2985,7 +2985,7 @@ final class TelegramBotApi
      * @infection-ignore-all
      * @codeCoverageIgnore
      */
-    private function defaultTransport(): TransportInterface
+    private function createDefaultTransport(): TransportInterface
     {
         if (extension_loaded('curl')) {
             return new CurlTransport();
