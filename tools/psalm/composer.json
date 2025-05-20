@@ -1,5 +1,5 @@
 {
     "require-dev": {
-        "vimeo/psalm": "^6.10.0"
+        "vimeo/psalm": "^6.10.3"
     }
 }
