@@ -68,7 +68,7 @@ final readonly class FileHelper
         }
 
         /**
-         * @var string We assume, that `$resource` is correct, so `stream_get_contents` never returns `false`.
+         * @var string We assume that `$resource` is correct, so `stream_get_contents()` never returns `false`.
          */
         return stream_get_contents($resource);
     }
