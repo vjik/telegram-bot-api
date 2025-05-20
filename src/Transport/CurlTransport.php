@@ -5,14 +5,12 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Transport;
 
 use CURLStringFile;
-use Psr\Http\Message\StreamInterface;
 use Vjik\TelegramBot\Api\Curl\Curl;
 use Vjik\TelegramBot\Api\Curl\CurlException;
 use Vjik\TelegramBot\Api\Curl\CurlInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 use function is_int;
-use function is_resource;
 use function is_scalar;
 use function json_encode;
 
@@ -136,9 +134,7 @@ final readonly class CurlTransport implements TransportInterface
 
             if ($value instanceof InputFile) {
                 $postFields[$key] = new CURLStringFile(
-                    is_resource($value->resource)
-                        ? $this->readResource($value->resource)
-                        : $this->readStream($value->resource),
+                    FileHelper::read($value),
                     $value->filename ?? '',
                 );
                 continue;
@@ -173,30 +169,5 @@ final readonly class CurlTransport implements TransportInterface
             CURLOPT_HTTPGET => true,
             CURLOPT_URL => $url,
         ];
-    }
-
-    /**
-     * @param resource $resource
-     */
-    private function readResource(mixed $resource): string
-    {
-        $metadata = stream_get_meta_data($resource);
-        if ($metadata['seekable']) {
-            rewind($resource);
-        }
-
-        /**
-         * @var string We assume, that `$resource` is correct, so `stream_get_contents` never returns `false`.
-         */
-        return stream_get_contents($resource);
-    }
-
-    private function readStream(StreamInterface $stream): string
-    {
-        if ($stream->isSeekable()) {
-            $stream->rewind();
-        }
-
-        return $stream->getContents();
     }
 }
