@@ -21,7 +21,7 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "php": "^8.2",
+        "php-64bit": "^8.2",
         "php-http/multipart-stream-builder": "^1.4.2",
         "psr/http-client": "^1.0",
         "psr/http-factory": "^1.1",
