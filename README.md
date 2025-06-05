@@ -13,7 +13,7 @@ The package provides a simple and convenient way to interact with the Telegram B
 
 ## Requirements
 
-- PHP 8.2 or higher.
+- PHP (64-bit) 8.2 or higher.
 
 ## Installation
 
