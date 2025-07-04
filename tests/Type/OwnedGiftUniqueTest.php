@@ -73,6 +73,7 @@ final class OwnedGiftUniqueTest extends TestCase
         assertNull($ownedGift->isSaved);
         assertNull($ownedGift->canBeTransferred);
         assertNull($ownedGift->transferStarCount);
+        assertNull($ownedGift->nextTransferDate);
     }
 
     public function testFull(): void
@@ -115,6 +116,7 @@ final class OwnedGiftUniqueTest extends TestCase
         );
         $sendDate = new DateTimeImmutable();
         $senderUser = new User(123, false, 'John');
+        $nextTransferDate = new DateTimeImmutable('+1 day');
         $ownedGift = new OwnedGiftUnique(
             $gift,
             $sendDate,
@@ -123,6 +125,7 @@ final class OwnedGiftUniqueTest extends TestCase
             true,
             true,
             10,
+            $nextTransferDate
         );
 
         assertSame($gift, $ownedGift->gift);
@@ -133,6 +136,7 @@ final class OwnedGiftUniqueTest extends TestCase
         assertSame(true, $ownedGift->canBeTransferred);
         assertSame(10, $ownedGift->transferStarCount);
         assertSame('unique', $ownedGift->getType());
+        assertSame($nextTransferDate, $ownedGift->nextTransferDate);
     }
 
     public function testFromTelegramResult(): void
@@ -189,6 +193,7 @@ final class OwnedGiftUniqueTest extends TestCase
             'is_saved' => true,
             'can_be_transferred' => true,
             'transfer_star_count' => 10,
+            'next_transfer_date' => 1723050000,
         ], null, OwnedGiftUnique::class);
 
         assertInstanceOf(OwnedGiftUnique::class, $ownedGift);
@@ -200,5 +205,6 @@ final class OwnedGiftUniqueTest extends TestCase
         assertTrue($ownedGift->isSaved);
         assertTrue($ownedGift->canBeTransferred);
         assertSame(10, $ownedGift->transferStarCount);
+        assertSame(1723050000, $ownedGift->nextTransferDate?->getTimestamp());
     }
 }
