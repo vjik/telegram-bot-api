@@ -124,5 +124,6 @@ final readonly class Message
         public ?InlineKeyboardMarkup $replyMarkup = null,
         public ?PaidMediaInfo $paidMedia = null,
         public ?RefundedPayment $refundedPayment = null,
+        public ?Checklist $checklist = null,
     ) {}
 }

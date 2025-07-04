@@ -8,6 +8,8 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
+use Vjik\TelegramBot\Api\Type\Checklist;
+use Vjik\TelegramBot\Api\Type\ChecklistTask;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
 use Vjik\TelegramBot\Api\Type\ForumTopicReopened;
@@ -123,6 +125,7 @@ final class MessageTest extends TestCase
         assertNull($message->webAppData);
         assertNull($message->replyMarkup);
         assertNull($message->refundedPayment);
+        assertNull($message->checklist);
     }
 
     public function testFromTelegramResult(): void
@@ -543,6 +546,13 @@ final class MessageTest extends TestCase
                 'invoice_payload' => 'ip',
                 'telegram_payment_charge_id' => 'tpid',
             ],
+            'checklist' => [
+                'title' => 'My Checklist',
+                'tasks' => [
+                    ['id' => 1, 'text' => 'Task 1'],
+                    ['id' => 2, 'text' => 'Task 2'],
+                ],
+            ]
         ], null, Message::class);
 
         assertSame(7, $message->messageId);
@@ -656,5 +666,12 @@ final class MessageTest extends TestCase
         assertSame(1, $message->paidMedia?->starCount);
         assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
         assertEquals(new RefundedPayment('XTR', 12, 'ip', 'tpid'), $message->refundedPayment);
+        assertEquals(
+            new Checklist(
+                'My Checklist',
+                [new ChecklistTask(1, 'Task 1'), new ChecklistTask(2, 'Task 2')],
+            ),
+            $message->checklist,
+        );
     }
 }
