@@ -25,5 +25,4 @@ return RectorConfig::configure()
         ClosureToArrowFunctionRector::class,
         NullToStrictStringFuncCallArgRector::class,
         ClassPropertyAssignToConstructorPromotionRector::class,
-        NewInInitializerRector::class,
     ]);
