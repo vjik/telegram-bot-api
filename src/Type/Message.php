@@ -125,5 +125,6 @@ final readonly class Message
         public ?PaidMediaInfo $paidMedia = null,
         public ?RefundedPayment $refundedPayment = null,
         public ?Checklist $checklist = null,
+        public ?ChecklistTasksDone $checklistTasksDone = null,
     ) {}
 }
