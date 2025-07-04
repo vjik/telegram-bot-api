@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksDone;
-
 use Vjik\TelegramBot\Api\Type\Message;
 
 use function PHPUnit\Framework\assertInstanceOf;

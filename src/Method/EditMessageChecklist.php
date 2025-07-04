@@ -24,8 +24,7 @@ final readonly class EditMessageChecklist implements MethodInterface
         private int $messageId,
         private InputChecklist $checklist,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

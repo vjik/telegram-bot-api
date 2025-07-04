@@ -206,7 +206,7 @@ final class ExternalReplyInfoTest extends TestCase
                     ['id' => 1, 'text' => 'Task 1'],
                     ['id' => 2, 'text' => 'Task 2'],
                 ],
-            ]
+            ],
         ], null, ExternalReplyInfo::class);
 
         assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);

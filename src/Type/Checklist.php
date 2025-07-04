@@ -25,6 +25,5 @@ final readonly class Checklist
         public ?array $titleEntities = null,
         public ?true $othersCanAddTasks = null,
         public ?true $othersCanMarkTasksAsDone = null,
-    ) {
-    }
+    ) {}
 }

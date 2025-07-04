@@ -14,6 +14,5 @@ final readonly class DirectMessagePriceChanged
     public function __construct(
         public bool $areDirectMessagesEnabled,
         public ?int $directMessageStarCount = null,
-    ) {
-    }
+    ) {}
 }

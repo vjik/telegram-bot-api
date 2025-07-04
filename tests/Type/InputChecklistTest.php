@@ -7,7 +7,6 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Type\InputChecklist;
 use Vjik\TelegramBot\Api\Type\InputChecklistTask;
-
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 
 use function PHPUnit\Framework\assertNull;

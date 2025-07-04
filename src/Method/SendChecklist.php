@@ -28,8 +28,7 @@ final readonly class SendChecklist implements MethodInterface
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?InlineKeyboardMarkup $replyMarkup = null,
-    ) {
-    }
+    ) {}
 
     public function getHttpMethod(): HttpMethod
     {

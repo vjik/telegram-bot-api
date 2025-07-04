@@ -125,7 +125,7 @@ final class OwnedGiftUniqueTest extends TestCase
             true,
             true,
             10,
-            $nextTransferDate
+            $nextTransferDate,
         );
 
         assertSame($gift, $ownedGift->gift);

@@ -19,8 +19,7 @@ final readonly class InputChecklistTask
         public string $text,
         public ?string $parseMode = null,
         public ?array $textEntities = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

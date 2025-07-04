@@ -24,6 +24,5 @@ final readonly class ChecklistTasksDone
         public ?array $markedAsDoneTaskIds = null,
         #[ArrayMap(IntegerValue::class)]
         public ?array $markedAsNotDoneTaskIds = null,
-    ) {
-    }
+    ) {}
 }

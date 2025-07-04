@@ -62,6 +62,6 @@ final class ChecklistTest extends TestCase
         assertSame(4, $checklist->titleEntities[0]->length);
 
         assertTrue($checklist->othersCanAddTasks);
-        assertTrue($checklist->othersCanMarkTasksAsDone);;
+        assertTrue($checklist->othersCanMarkTasksAsDone);
     }
 }

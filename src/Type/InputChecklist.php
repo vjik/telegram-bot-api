@@ -22,8 +22,7 @@ final readonly class InputChecklist
         public ?array $titleEntities = null,
         public ?bool $othersCanAddTasks = null,
         public ?true $othersCanMarkTasksAsDone = null,
-    ) {
-    }
+    ) {}
 
     public function toRequestArray(): array
     {

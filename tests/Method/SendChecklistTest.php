@@ -11,7 +11,6 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\InputChecklist;
 use Vjik\TelegramBot\Api\Type\InputChecklistTask;
-
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
 use function PHPUnit\Framework\assertSame;
