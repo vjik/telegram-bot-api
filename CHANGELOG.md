@@ -2,8 +2,16 @@
 
 ## 0.9.1 under development
 
-- New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.
 - Chg #160: Change PHP constraint in `composer.json` from `php` to `php-64bit`.
+- New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.
+- New #162: Add `ChecklistTask`, `Checklist`, `InputChecklistTask`, `InputChecklist`, `ChecklistTasksDone`,
+  `ChecklistTasksAdded` and `DirectMessagePriceChanged` types.
+- New #162: Add `checklist`, `checklistTasksDone`, `checklistTasksAdded` and `directMessagePriceChanged` fields to
+  `Message` type.
+- New #162: Add `checklist` field to `ExternalReplyInfo` type.
+- New #162: Add `sendChecklist`, `editMessageChecklist` and `getMyStarBalance` methods.
+- New #162: Add `nextTransferDate` field to `OwnedGiftUnique` type.
+- New #162: Add `nextTransferDate` and `lastResaleStarCount` fields to `UniqueGiftInfo` type.
 
 ## 0.9.0 April 12, 2025
 

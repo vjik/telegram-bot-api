@@ -8,6 +8,11 @@ use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
+use Vjik\TelegramBot\Api\Type\Checklist;
+use Vjik\TelegramBot\Api\Type\ChecklistTask;
+use Vjik\TelegramBot\Api\Type\ChecklistTasksAdded;
+use Vjik\TelegramBot\Api\Type\ChecklistTasksDone;
+use Vjik\TelegramBot\Api\Type\DirectMessagePriceChanged;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
 use Vjik\TelegramBot\Api\Type\ForumTopicReopened;
@@ -22,6 +27,7 @@ use Vjik\TelegramBot\Api\Type\VideoChatStarted;
 
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertSame;
@@ -123,6 +129,10 @@ final class MessageTest extends TestCase
         assertNull($message->webAppData);
         assertNull($message->replyMarkup);
         assertNull($message->refundedPayment);
+        assertNull($message->directMessagePriceChanged);
+        assertNull($message->checklist);
+        assertNull($message->checklistTasksDone);
+        assertNull($message->checklistTasksAdded);
     }
 
     public function testFromTelegramResult(): void
@@ -543,6 +553,23 @@ final class MessageTest extends TestCase
                 'invoice_payload' => 'ip',
                 'telegram_payment_charge_id' => 'tpid',
             ],
+            'direct_message_price_changed' => [
+                'are_direct_messages_enabled' => false,
+            ],
+            'checklist' => [
+                'title' => 'My Checklist',
+                'tasks' => [
+                    ['id' => 1, 'text' => 'Task 1'],
+                    ['id' => 2, 'text' => 'Task 2'],
+                ],
+            ],
+            'checklist_tasks_done' => [],
+            'checklist_tasks_added' => [
+                'tasks' => [
+                    ['id' => 3, 'text' => 'Task 3'],
+                    ['id' => 4, 'text' => 'Task 4'],
+                ],
+            ],
         ], null, Message::class);
 
         assertSame(7, $message->messageId);
@@ -656,5 +683,17 @@ final class MessageTest extends TestCase
         assertSame(1, $message->paidMedia?->starCount);
         assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
         assertEquals(new RefundedPayment('XTR', 12, 'ip', 'tpid'), $message->refundedPayment);
+        assertInstanceOf(DirectMessagePriceChanged::class, $message->directMessagePriceChanged);
+        assertFalse($message->directMessagePriceChanged?->areDirectMessagesEnabled);
+        assertEquals(
+            new Checklist(
+                'My Checklist',
+                [new ChecklistTask(1, 'Task 1'), new ChecklistTask(2, 'Task 2')],
+            ),
+            $message->checklist,
+        );
+        assertInstanceOf(ChecklistTasksDone::class, $message->checklistTasksDone);
+        assertInstanceOf(ChecklistTasksAdded::class, $message->checklistTasksAdded);
+        assertCount(2, $message->checklistTasksAdded->tasks);
     }
 }

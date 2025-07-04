@@ -21,6 +21,7 @@ final readonly class OwnedGiftUnique implements OwnedGift
         public ?true $isSaved = null,
         public ?true $canBeTransferred = null,
         public ?int $transferStarCount = null,
+        public ?DateTimeImmutable $nextTransferDate = null,
     ) {}
 
     public function getType(): string

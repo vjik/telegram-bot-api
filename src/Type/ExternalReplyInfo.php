@@ -45,5 +45,6 @@ final readonly class ExternalReplyInfo
         public ?Poll $poll = null,
         public ?Venue $venue = null,
         public ?PaidMediaInfo $paidMedia = null,
+        public ?Checklist $checklist = null,
     ) {}
 }

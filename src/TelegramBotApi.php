@@ -55,6 +55,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\GetMyStarBalance;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
@@ -85,6 +86,7 @@ use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
+use Vjik\TelegramBot\Api\Method\SendChecklist;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendDocument;
@@ -162,6 +164,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\UpgradeGift;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
+use Vjik\TelegramBot\Api\Method\EditMessageChecklist;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\NativeTransport;
@@ -188,6 +191,7 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
+use Vjik\TelegramBot\Api\Type\InputChecklist;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMedia;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
@@ -907,6 +911,27 @@ final class TelegramBotApi
     }
 
     /**
+     * @see https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    public function editMessageChecklist(
+        string $businessConnectionId,
+        int $chatId,
+        int $messageId,
+        InputChecklist $checklist,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->call(
+            new EditMessageChecklist(
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $checklist,
+                $replyMarkup,
+            ),
+        );
+    }
+
+    /**
      * @see https://core.telegram.org/bots/api#editmessagereplymarkup
      */
     public function editMessageReplyMarkup(
@@ -1270,6 +1295,14 @@ final class TelegramBotApi
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
         return $this->call(new GetMyShortDescription($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmystarbalance
+     */
+    public function getMyStarBalance(): FailResult|StarAmount
+    {
+        return $this->call(new GetMyStarBalance());
     }
 
     /**
@@ -1768,6 +1801,33 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendchecklist
+     */
+    public function sendChecklist(
+        string $businessConnectionId,
+        int $chatId,
+        InputChecklist $checklist,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->call(
+            new SendChecklist(
+                $businessConnectionId,
+                $chatId,
+                $checklist,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
             ),
         );
     }

@@ -7,6 +7,8 @@ namespace Vjik\TelegramBot\Api\Tests\Type;
 use DateTimeImmutable;
 use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
+use Vjik\TelegramBot\Api\Type\Checklist;
+use Vjik\TelegramBot\Api\Type\ChecklistTask;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\MessageOriginUser;
 use Vjik\TelegramBot\Api\Type\PaidMediaPhoto;
@@ -50,6 +52,7 @@ final class ExternalReplyInfoTest extends TestCase
         assertNull($externalReplyInfo->poll);
         assertNull($externalReplyInfo->venue);
         assertNull($externalReplyInfo->paidMedia);
+        assertNull($externalReplyInfo->checklist);
     }
 
     public function testFromTelegramResult(): void
@@ -197,6 +200,13 @@ final class ExternalReplyInfoTest extends TestCase
                     ],
                 ],
             ],
+            'checklist' => [
+                'title' => 'My Checklist',
+                'tasks' => [
+                    ['id' => 1, 'text' => 'Task 1'],
+                    ['id' => 2, 'text' => 'Task 2'],
+                ],
+            ],
         ], null, ExternalReplyInfo::class);
 
         assertInstanceOf(MessageOriginUser::class, $externalReplyInfo->origin);
@@ -229,5 +239,12 @@ final class ExternalReplyInfoTest extends TestCase
         assertSame('Venue1', $externalReplyInfo->venue?->title);
         assertSame(1, $externalReplyInfo->paidMedia?->starCount);
         assertEquals([new PaidMediaPhoto([])], $externalReplyInfo->paidMedia?->paidMedia);
+        assertEquals(
+            new Checklist(
+                'My Checklist',
+                [new ChecklistTask(1, 'Task 1'), new ChecklistTask(2, 'Task 2')],
+            ),
+            $externalReplyInfo->checklist,
+        );
     }
 }
