@@ -8,7 +8,7 @@
   `ChecklistTasksAdded` types.
 - New #162: Add `checklist`, `checklistTasksDone` and `checklistTasksAdded` fields to `Message` type.
 - New #162: Add `checklist` field to `ExternalReplyInfo` type.
-- New #162: Add `sendChecklist` and `editMessageChecklist` methods.
+- New #162: Add `sendChecklist`, `editMessageChecklist` and `getMyStarBalance` methods.
 - New #162: Add `nextTransferDate` field to `OwnedGiftUnique` type.
 - New #162: Add `nextTransferDate` and `lastResaleStarCount` fields to `UniqueGiftInfo` type.
 

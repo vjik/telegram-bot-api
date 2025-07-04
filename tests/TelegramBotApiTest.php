@@ -1246,6 +1246,18 @@ final class TelegramBotApiTest extends TestCase
         assertSame('test', $result->shortDescription);
     }
 
+    public function testGetMyStarBalance(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'amount' => 7,
+        ]);
+
+        $result = $api->getMyStarBalance();
+
+        assertInstanceOf(StarAmount::class, $result);
+        assertSame(7, $result->amount);
+    }
+
     public function testGetStarTransactions(): void
     {
         $api = TestHelper::createSuccessStubApi([

@@ -55,6 +55,7 @@ use Vjik\TelegramBot\Api\Method\GetMyDefaultAdministratorRights;
 use Vjik\TelegramBot\Api\Method\GetMyDescription;
 use Vjik\TelegramBot\Api\Method\GetMyName;
 use Vjik\TelegramBot\Api\Method\GetMyShortDescription;
+use Vjik\TelegramBot\Api\Method\GetMyStarBalance;
 use Vjik\TelegramBot\Api\Method\GetUserChatBoosts;
 use Vjik\TelegramBot\Api\Method\GetUserProfilePhotos;
 use Vjik\TelegramBot\Api\Method\GiftPremiumSubscription;
@@ -1294,6 +1295,14 @@ final class TelegramBotApi
     public function getMyShortDescription(?string $languageCode = null): FailResult|BotShortDescription
     {
         return $this->call(new GetMyShortDescription($languageCode));
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#getmystarbalance
+     */
+    public function getMyStarBalance(): FailResult|StarAmount
+    {
+        return $this->call(new GetMyStarBalance());
     }
 
     /**
