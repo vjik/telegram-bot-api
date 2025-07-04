@@ -8,6 +8,7 @@
   `ChecklistTasksAdded` types.
 - New #162: Add `checklist`, `checklistTasksDone` and `checklistTasksAdded` fields to `Message` type.
 - New #162: Add `checklist` field to `ExternalReplyInfo` type.
+- New #162: Add `sendChecklist` method.
 
 ## 0.9.0 April 12, 2025
 

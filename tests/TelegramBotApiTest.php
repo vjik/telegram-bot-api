@@ -35,6 +35,7 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultContact;
 use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultGame;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
+use Vjik\TelegramBot\Api\Type\InputChecklist;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMediaPhoto;
 use Vjik\TelegramBot\Api\Type\InputProfilePhotoStatic;
@@ -1630,6 +1631,23 @@ final class TelegramBotApiTest extends TestCase
         ]);
 
         $result = $api->sendContact(12, '1234567890', 'John');
+
+        assertInstanceOf(Message::class, $result);
+        assertSame(7, $result->messageId);
+    }
+
+    public function testSendChecklist(): void
+    {
+        $api = TestHelper::createSuccessStubApi([
+            'message_id' => 7,
+            'date' => 1620000000,
+            'chat' => [
+                'id' => 1,
+                'type' => 'private',
+            ],
+        ]);
+
+        $result = $api->sendChecklist('bcid1', 23, new InputChecklist('Title', []));
 
         assertInstanceOf(Message::class, $result);
         assertSame(7, $result->messageId);

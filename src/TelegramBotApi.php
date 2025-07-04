@@ -85,6 +85,7 @@ use Vjik\TelegramBot\Api\Method\RevokeChatInviteLink;
 use Vjik\TelegramBot\Api\Method\SendAnimation;
 use Vjik\TelegramBot\Api\Method\SendAudio;
 use Vjik\TelegramBot\Api\Method\SendChatAction;
+use Vjik\TelegramBot\Api\Method\SendChecklist;
 use Vjik\TelegramBot\Api\Method\SendContact;
 use Vjik\TelegramBot\Api\Method\SendDice;
 use Vjik\TelegramBot\Api\Method\SendDocument;
@@ -188,6 +189,7 @@ use Vjik\TelegramBot\Api\Type\Inline\InlineQueryResultsButton;
 use Vjik\TelegramBot\Api\Type\Inline\PreparedInlineMessage;
 use Vjik\TelegramBot\Api\Type\Inline\SentWebAppMessage;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
+use Vjik\TelegramBot\Api\Type\InputChecklist;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputMedia;
 use Vjik\TelegramBot\Api\Type\InputMediaAudio;
@@ -1768,6 +1770,33 @@ final class TelegramBotApi
                 $replyParameters,
                 $replyMarkup,
                 $allowPaidBroadcast,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#sendchecklist
+     */
+    public function sendChecklist(
+        string $businessConnectionId,
+        int $chatId,
+        InputChecklist $checklist,
+        ?bool $disableNotification = null,
+        ?bool $protectContent = null,
+        ?string $messageEffectId = null,
+        ?ReplyParameters $replyParameters = null,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->call(
+            new SendChecklist(
+                $businessConnectionId,
+                $chatId,
+                $checklist,
+                $disableNotification,
+                $protectContent,
+                $messageEffectId,
+                $replyParameters,
+                $replyMarkup,
             ),
         );
     }
