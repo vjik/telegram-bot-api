@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.9.1 under development
+## 0.9.1 July 4, 2025
 
 - Chg #160: Change PHP constraint in `composer.json` from `php` to `php-64bit`.
 - New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.
