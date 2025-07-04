@@ -163,6 +163,7 @@ use Vjik\TelegramBot\Api\Method\UpdatingMessage\StopPoll;
 use Vjik\TelegramBot\Api\Method\UpgradeGift;
 use Vjik\TelegramBot\Api\Method\VerifyChat;
 use Vjik\TelegramBot\Api\Method\VerifyUser;
+use Vjik\TelegramBot\Api\Method\EditMessageChecklist;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\NativeTransport;
@@ -903,6 +904,27 @@ final class TelegramBotApi
                 $chatId,
                 $messageId,
                 $inlineMessageId,
+                $replyMarkup,
+            ),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#editmessagechecklist
+     */
+    public function editMessageChecklist(
+        string $businessConnectionId,
+        int $chatId,
+        int $messageId,
+        InputChecklist $checklist,
+        ?InlineKeyboardMarkup $replyMarkup = null,
+    ): FailResult|Message {
+        return $this->call(
+            new EditMessageChecklist(
+                $businessConnectionId,
+                $chatId,
+                $messageId,
+                $checklist,
                 $replyMarkup,
             ),
         );
