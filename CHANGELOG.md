@@ -10,6 +10,7 @@
 - New #162: Add `checklist` field to `ExternalReplyInfo` type.
 - New #162: Add `sendChecklist` and `editMessageChecklist` methods.
 - New #162: Add `nextTransferDate` field to `OwnedGiftUnique` type.
+- New #162: Add `nextTransferDate` and `lastResaleStarCount` fields to `UniqueGiftInfo` type.
 
 ## 0.9.0 April 12, 2025
 
