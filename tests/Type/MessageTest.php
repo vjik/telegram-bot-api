@@ -684,7 +684,7 @@ final class MessageTest extends TestCase
         assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
         assertEquals(new RefundedPayment('XTR', 12, 'ip', 'tpid'), $message->refundedPayment);
         assertInstanceOf(DirectMessagePriceChanged::class, $message->directMessagePriceChanged);
-        assertFalse($message->directMessagePriceChanged?->false);
+        assertFalse($message->directMessagePriceChanged?->areDirectMessagesEnabled);
         assertEquals(
             new Checklist(
                 'My Checklist',
