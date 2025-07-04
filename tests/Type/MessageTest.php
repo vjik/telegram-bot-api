@@ -10,6 +10,7 @@ use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\Chat;
 use Vjik\TelegramBot\Api\Type\Checklist;
 use Vjik\TelegramBot\Api\Type\ChecklistTask;
+use Vjik\TelegramBot\Api\Type\ChecklistTasksAdded;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksDone;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
@@ -128,6 +129,7 @@ final class MessageTest extends TestCase
         assertNull($message->refundedPayment);
         assertNull($message->checklist);
         assertNull($message->checklistTasksDone);
+        assertNull($message->checklistTasksAdded);
     }
 
     public function testFromTelegramResult(): void
@@ -556,6 +558,12 @@ final class MessageTest extends TestCase
                 ],
             ],
             'checklist_tasks_done' => [],
+            'checklist_tasks_added' => [
+                'tasks' => [
+                    ['id' => 3, 'text' => 'Task 3'],
+                    ['id' => 4, 'text' => 'Task 4'],
+                ],
+            ],
         ], null, Message::class);
 
         assertSame(7, $message->messageId);
@@ -677,5 +685,7 @@ final class MessageTest extends TestCase
             $message->checklist,
         );
         assertInstanceOf(ChecklistTasksDone::class, $message->checklistTasksDone);
+        assertInstanceOf(ChecklistTasksAdded::class, $message->checklistTasksAdded);
+        assertCount(2, $message->checklistTasksAdded->tasks);
     }
 }

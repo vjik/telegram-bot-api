@@ -6,7 +6,7 @@
 - New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.
 - New #162: Add `ChecklistTask`, `Checklist`, `InputChecklistTask`, `InputChecklist`, `ChecklistTasksDone` and
   `ChecklistTasksAdded` types.
-- New #162: Add `checklist` and `checklistTasksDone` fields to `Message` type.
+- New #162: Add `checklist`, `checklistTasksDone` and `checklistTasksAdded` fields to `Message` type.
 - New #162: Add `checklist` field to `ExternalReplyInfo` type.
 
 ## 0.9.0 April 12, 2025

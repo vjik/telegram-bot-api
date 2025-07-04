@@ -126,5 +126,6 @@ final readonly class Message
         public ?RefundedPayment $refundedPayment = null,
         public ?Checklist $checklist = null,
         public ?ChecklistTasksDone $checklistTasksDone = null,
+        public ?ChecklistTasksAdded $checklistTasksAdded = null,
     ) {}
 }
