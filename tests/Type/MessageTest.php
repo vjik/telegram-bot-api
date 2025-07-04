@@ -12,6 +12,7 @@ use Vjik\TelegramBot\Api\Type\Checklist;
 use Vjik\TelegramBot\Api\Type\ChecklistTask;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksAdded;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksDone;
+use Vjik\TelegramBot\Api\Type\DirectMessagePriceChanged;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
 use Vjik\TelegramBot\Api\Type\ForumTopicReopened;
@@ -26,6 +27,7 @@ use Vjik\TelegramBot\Api\Type\VideoChatStarted;
 
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertFalse;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertSame;
@@ -127,6 +129,7 @@ final class MessageTest extends TestCase
         assertNull($message->webAppData);
         assertNull($message->replyMarkup);
         assertNull($message->refundedPayment);
+        assertNull($message->directMessagePriceChanged);
         assertNull($message->checklist);
         assertNull($message->checklistTasksDone);
         assertNull($message->checklistTasksAdded);
@@ -550,6 +553,9 @@ final class MessageTest extends TestCase
                 'invoice_payload' => 'ip',
                 'telegram_payment_charge_id' => 'tpid',
             ],
+            'direct_message_price_changed' => [
+                'are_direct_messages_enabled' => false,
+            ],
             'checklist' => [
                 'title' => 'My Checklist',
                 'tasks' => [
@@ -677,6 +683,8 @@ final class MessageTest extends TestCase
         assertSame(1, $message->paidMedia?->starCount);
         assertEquals([new PaidMediaPhoto([])], $message->paidMedia?->paidMedia);
         assertEquals(new RefundedPayment('XTR', 12, 'ip', 'tpid'), $message->refundedPayment);
+        assertInstanceOf(DirectMessagePriceChanged::class, $message->directMessagePriceChanged);
+        assertFalse($message->directMessagePriceChanged?->false);
         assertEquals(
             new Checklist(
                 'My Checklist',
