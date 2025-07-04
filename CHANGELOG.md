@@ -4,7 +4,7 @@
 
 - Chg #160: Change PHP constraint in `composer.json` from `php` to `php-64bit`.
 - New #155: Add `NativeTransport` that used native `file_get_contents()` and `file_put_contents()` functions.
-- New #162: Add `ChecklistTask` type.
+- New #162: Add `ChecklistTask` and `Checklist` types.
 
 ## 0.9.0 April 12, 2025
 
