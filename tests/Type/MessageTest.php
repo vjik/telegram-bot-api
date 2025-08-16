@@ -137,6 +137,7 @@ final class MessageTest extends TestCase
         assertNull($message->checklistTasksAdded);
         assertNull($message->replyToChecklistTaskId);
         assertNull($message->directMessagesTopic);
+        assertNull($message->suggestedPostInfo);
     }
 
     public function testFromTelegramResult(): void
@@ -224,6 +225,14 @@ final class MessageTest extends TestCase
             ],
             'link_preview_options' => [
                 'url' => 'https://example.com/lpo',
+            ],
+            'suggested_post_info' => [
+                'state' => 'pending',
+                'price' => [
+                    'currency' => 'XTR',
+                    'amount' => 100,
+                ],
+                'send_date' => 1640995200,
             ],
             'effect_id' => 'e235',
             'animation' => [
@@ -707,5 +716,9 @@ final class MessageTest extends TestCase
         assertCount(2, $message->checklistTasksAdded->tasks);
         assertSame(789, $message->replyToChecklistTaskId);
         assertSame(12345, $message->directMessagesTopic?->topicId);
+        assertSame('pending', $message->suggestedPostInfo?->state);
+        assertSame('XTR', $message->suggestedPostInfo?->price?->currency);
+        assertSame(100, $message->suggestedPostInfo?->price?->amount);
+        assertSame(1640995200, $message->suggestedPostInfo?->sendDate);
     }
 }
