@@ -8,7 +8,6 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\Method\ForwardMessage;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 

@@ -12,7 +12,6 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardButton;
 use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 

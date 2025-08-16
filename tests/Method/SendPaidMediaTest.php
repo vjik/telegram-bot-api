@@ -14,7 +14,6 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputPaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 

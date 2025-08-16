@@ -10,7 +10,6 @@ use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Tests\Support\TestHelper;
 use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 

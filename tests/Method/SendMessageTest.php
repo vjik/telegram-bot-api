@@ -12,9 +12,7 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\LinkPreviewOptions;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
-
 use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 
 use function PHPUnit\Framework\assertSame;

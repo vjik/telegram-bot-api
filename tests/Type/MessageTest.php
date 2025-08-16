@@ -13,7 +13,6 @@ use Vjik\TelegramBot\Api\Type\ChecklistTask;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksAdded;
 use Vjik\TelegramBot\Api\Type\ChecklistTasksDone;
 use Vjik\TelegramBot\Api\Type\DirectMessagePriceChanged;
-use Vjik\TelegramBot\Api\Type\DirectMessagesTopic;
 use Vjik\TelegramBot\Api\Type\ExternalReplyInfo;
 use Vjik\TelegramBot\Api\Type\ForumTopicClosed;
 use Vjik\TelegramBot\Api\Type\ForumTopicReopened;
