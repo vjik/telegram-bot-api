@@ -69,5 +69,6 @@ final readonly class ChatFullInfo
         public ?true $canSendPaidMedia = null,
         public ?AcceptedGiftTypes $acceptedGiftTypes = null,
         public ?true $isDirectMessages = null,
+        public ?Chat $parentChat = null,
     ) {}
 }

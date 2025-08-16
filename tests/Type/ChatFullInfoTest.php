@@ -79,6 +79,7 @@ final class ChatFullInfoTest extends TestCase
         assertNull($info->canSendPaidMedia);
         assertNull($info->acceptedGiftTypes);
         assertNull($info->isDirectMessages);
+        assertNull($info->parentChat);
     }
 
     public function testFromTelegramResult(): void
@@ -123,6 +124,10 @@ final class ChatFullInfoTest extends TestCase
             'personal_chat' => [
                 'id' => 42,
                 'type' => 'private',
+            ],
+            'parent_chat' => [
+                'id' => 987,
+                'type' => 'channel',
             ],
             'available_reactions' => [
                 [
@@ -256,5 +261,6 @@ final class ChatFullInfoTest extends TestCase
         assertTrue($info->acceptedGiftTypes->uniqueGifts);
         assertFalse($info->acceptedGiftTypes->premiumSubscription);
         assertTrue($info->isDirectMessages);
+        assertSame(987, $info->parentChat?->id);
     }
 }
