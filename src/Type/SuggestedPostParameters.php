@@ -1,0 +1,18 @@
+<?php
+
+declare(strict_types=1);
+
+namespace Vjik\TelegramBot\Api\Type;
+
+/**
+ * @see https://core.telegram.org/bots/api#suggestedpostparameters
+ *
+ * @api
+ */
+final readonly class SuggestedPostParameters
+{
+    public function __construct(
+        public ?SuggestedPostPrice $price = null,
+        public ?int $sendDate = null,
+    ) {}
+}
