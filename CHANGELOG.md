@@ -20,6 +20,7 @@
   `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `copyMessage` and `forwardMessage` methods.
 - New #164: Add `messageThreadId` parameter to `SendPaidMedia` method.
 - New #164: Add `approveSuggestedPost` method.
+- New #164: Add `declineSuggestedPost` method.
 
 ## 0.9.1 July 4, 2025
 

@@ -24,6 +24,7 @@ use Vjik\TelegramBot\Api\Method\CreateChatInviteLink;
 use Vjik\TelegramBot\Api\Method\CreateChatSubscriptionInviteLink;
 use Vjik\TelegramBot\Api\Method\CreateForumTopic;
 use Vjik\TelegramBot\Api\Method\DeclineChatJoinRequest;
+use Vjik\TelegramBot\Api\Method\DeclineSuggestedPost;
 use Vjik\TelegramBot\Api\Method\DeleteChatPhoto;
 use Vjik\TelegramBot\Api\Method\DeleteChatStickerSet;
 use Vjik\TelegramBot\Api\Method\DeleteForumTopic;
@@ -699,6 +700,16 @@ final class TelegramBotApi
     {
         return $this->call(
             new DeclineChatJoinRequest($chatId, $userId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#declinesuggestedpost
+     */
+    public function declineSuggestedPost(int $chatId, int $messageId, ?string $comment = null): FailResult|true
+    {
+        return $this->call(
+            new DeclineSuggestedPost($chatId, $messageId, $comment),
         );
     }
 
