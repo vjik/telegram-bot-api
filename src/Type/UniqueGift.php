@@ -18,5 +18,6 @@ final readonly class UniqueGift
         public UniqueGiftModel $model,
         public UniqueGiftSymbol $symbol,
         public UniqueGiftBackdrop $backdrop,
+        public ?Chat $publisherChat = null,
     ) {}
 }

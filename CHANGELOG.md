@@ -4,6 +4,7 @@
 
 - New #164: Add `checklistTaskId` field to `ReplyParameters` type.
 - New #164: Add `replyToChecklistTaskId` field to `Message` type.
+- New #164: Add `publisherChat` field to `Gift` and `UniqueGift` types.
 
 ## 0.9.1 July 4, 2025
 
