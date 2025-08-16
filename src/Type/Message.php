@@ -129,5 +129,6 @@ final readonly class Message
         public ?ChecklistTasksDone $checklistTasksDone = null,
         public ?ChecklistTasksAdded $checklistTasksAdded = null,
         public ?int $replyToChecklistTaskId = null,
+        public ?DirectMessagesTopic $directMessagesTopic = null,
     ) {}
 }
