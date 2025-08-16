@@ -78,6 +78,7 @@ final class ChatFullInfoTest extends TestCase
         assertNull($info->location);
         assertNull($info->canSendPaidMedia);
         assertNull($info->acceptedGiftTypes);
+        assertNull($info->isDirectMessages);
     }
 
     public function testFromTelegramResult(): void
@@ -92,6 +93,7 @@ final class ChatFullInfoTest extends TestCase
             'first_name' => 'Bruce',
             'last_name' => 'Willy',
             'is_forum' => true,
+            'is_direct_messages' => true,
             'photo' => [
                 'small_file_id' => '123',
                 'small_file_unique_id' => 'u123',
@@ -253,5 +255,6 @@ final class ChatFullInfoTest extends TestCase
         assertFalse($info->acceptedGiftTypes->limitedGifts);
         assertTrue($info->acceptedGiftTypes->uniqueGifts);
         assertFalse($info->acceptedGiftTypes->premiumSubscription);
+        assertTrue($info->isDirectMessages);
     }
 }

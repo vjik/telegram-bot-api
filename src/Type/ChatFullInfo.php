@@ -68,5 +68,6 @@ final readonly class ChatFullInfo
         public ?ChatLocation $location = null,
         public ?true $canSendPaidMedia = null,
         public ?AcceptedGiftTypes $acceptedGiftTypes = null,
+        public ?true $isDirectMessages = null,
     ) {}
 }
