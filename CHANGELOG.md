@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.9.2 under development
+
+- New #164: Add `checklistTaskId` field to `ReplyParameters` type.
+
 ## 0.9.1 July 4, 2025
 
 - Chg #160: Change PHP constraint in `composer.json` from `php` to `php-64bit`.
