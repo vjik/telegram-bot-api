@@ -21,6 +21,7 @@
 - New #164: Add `messageThreadId` parameter to `SendPaidMedia` method.
 - New #164: Add `approveSuggestedPost` method.
 - New #164: Add `declineSuggestedPost` method.
+- New #164: Add `canManageDirectMessages` field to `ChatMemberAdministrator` and `ChatAdministratorRights` types.
 
 ## 0.9.1 July 4, 2025
 
