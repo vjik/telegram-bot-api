@@ -11,6 +11,7 @@ use Psr\Log\LoggerInterface;
 use SensitiveParameter;
 use Vjik\TelegramBot\Api\Method\AnswerCallbackQuery;
 use Vjik\TelegramBot\Api\Method\ApproveChatJoinRequest;
+use Vjik\TelegramBot\Api\Method\ApproveSuggestedPost;
 use Vjik\TelegramBot\Api\Method\BanChatMember;
 use Vjik\TelegramBot\Api\Method\BanChatSenderChat;
 use Vjik\TelegramBot\Api\Method\Close;
@@ -423,6 +424,16 @@ final class TelegramBotApi
     {
         return $this->call(
             new ApproveChatJoinRequest($chatId, $userId),
+        );
+    }
+
+    /**
+     * @see https://core.telegram.org/bots/api#approvesuggestedpost
+     */
+    public function approveSuggestedPost(int $chatId, int $messageId, ?int $sendDate = null): FailResult|true
+    {
+        return $this->call(
+            new ApproveSuggestedPost($chatId, $messageId, $sendDate),
         );
     }
 

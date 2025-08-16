@@ -469,6 +469,15 @@ final class TelegramBotApiTest extends TestCase
         assertTrue($result);
     }
 
+    public function testApproveSuggestedPost(): void
+    {
+        $api = TestHelper::createSuccessStubApi(true);
+
+        $result = $api->approveSuggestedPost(1, 2);
+
+        assertTrue($result);
+    }
+
     public function testBanChatMember(): void
     {
         $api = TestHelper::createSuccessStubApi(true);
