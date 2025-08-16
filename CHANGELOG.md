@@ -7,6 +7,7 @@
 - New #164: Add `publisherChat` field to `Gift` and `UniqueGift` types.
 - New #164: Add `isDirectMessages` field to `Chat` and `ChatFullInfo` types.
 - New #164: Add `parentChat` field to `ChatFullInfo` type.
+- New #164: Add `DirectMessagesTopic` type.
 
 ## 0.9.1 July 4, 2025
 
