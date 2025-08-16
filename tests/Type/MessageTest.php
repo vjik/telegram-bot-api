@@ -138,6 +138,7 @@ final class MessageTest extends TestCase
         assertNull($message->replyToChecklistTaskId);
         assertNull($message->directMessagesTopic);
         assertNull($message->suggestedPostInfo);
+        assertNull($message->suggestedPostApproved);
     }
 
     public function testFromTelegramResult(): void
@@ -526,6 +527,13 @@ final class MessageTest extends TestCase
             'paid_message_price_changed' => [
                 'paid_message_star_count' => 9431,
             ],
+            'suggested_post_approved' => [
+                'send_date' => 1672531200,
+                'price' => [
+                    'currency' => 'TON',
+                    'amount' => 5000000,
+                ],
+            ],
             'video_chat_scheduled' => [
                 'start_date' => 1620000012,
             ],
@@ -720,5 +728,6 @@ final class MessageTest extends TestCase
         assertSame('XTR', $message->suggestedPostInfo?->price?->currency);
         assertSame(100, $message->suggestedPostInfo?->price?->amount);
         assertSame(1640995200, $message->suggestedPostInfo?->sendDate);
+        assertSame(1672531200, $message->suggestedPostApproved?->sendDate);
     }
 }

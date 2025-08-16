@@ -132,5 +132,6 @@ final readonly class Message
         public ?DirectMessagesTopic $directMessagesTopic = null,
         public ?true $isPaidPost = null,
         public ?SuggestedPostInfo $suggestedPostInfo = null,
+        public ?SuggestedPostApproved $suggestedPostApproved = null,
     ) {}
 }
