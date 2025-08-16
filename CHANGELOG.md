@@ -3,39 +3,26 @@
 ## 0.9.2 under development
 
 - New #164: Add `checklistTaskId` field to `ReplyParameters` type.
-- New #164: Add `replyToChecklistTaskId` field to `Message` type.
 - New #164: Add `publisherChat` field to `Gift` and `UniqueGift` types.
 - New #164: Add `isDirectMessages` field to `Chat` and `ChatFullInfo` types.
 - New #164: Add `parentChat` field to `ChatFullInfo` type.
-- New #164: Add `DirectMessagesTopic` type.
-- New #164: Add `directMessagesTopic` field to `Message` type.
 - New #164: Add `directMessagesTopicId` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
   `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, 
   `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `sendMediaGroup`, `copyMessage`, `copyMessages`, 
   `forwardMessage` and `forwardMessages` methods.
-- New #164: Add `SuggestedPostPrice` type.
-- New #164: Add `SuggestedPostParameters` type.
 - New #164: Add `suggestedPostParameters` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
   `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`,
   `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `copyMessage` and `forwardMessage` methods.
 - New #164: Add `messageThreadId` parameter to `SendPaidMedia` method.
-- New #164: Add `approveSuggestedPost` method.
-- New #164: Add `declineSuggestedPost` method.
+- New #164: Add `approveSuggestedPost` and `declineSuggestedPost` methods.
 - New #164: Add `canManageDirectMessages` field to `ChatMemberAdministrator` and `ChatAdministratorRights` types.
 - New #164: Add `canManageDirectMessages` parameter to `promoteChatMember` method.
-- New #164: Add `isPaidPost` field to `Message` type.
-- New #164: Add `SuggestedPostInfo` type.
-- New #164: Add `suggestedPostInfo` field to `Message` type.
-- New #164: Add `SuggestedPostApproved` type.
-- New #164: Add `suggestedPostApproved` field to `Message` type.
-- New #164: Add `SuggestedPostApprovalFailed` type.
-- New #164: Add `suggestedPostApprovalFailed` field to `Message` type.
-- New #164: Add `SuggestedPostDeclined` type.
-- New #164: Add `suggestedPostDeclined` field to `Message` type.
-- New #164: Add `SuggestedPostPaid` type.
-- New #164: Add `suggestedPostPaid` field to `Message` type.
-- New #164: Add `SuggestedPostRefunded` type.
-- New #164: Add `suggestedPostRefunded` field to `Message` type.
+- New #164: Add `DirectMessagesTopic`, `SuggestedPostPrice`, `SuggestedPostParameters`, `SuggestedPostInfo`,
+  `SuggestedPostApproved`, `SuggestedPostApprovalFailed`, `SuggestedPostDeclined`, `SuggestedPostPaid` and 
+  `SuggestedPostRefunded` types.
+- New #164: Add `replyToChecklistTaskId`, `directMessagesTopic`, `isPaidPost`, `suggestedPostInfo`,
+  `suggestedPostApproved`, `suggestedPostApprovalFailed`, `suggestedPostDeclined`, `suggestedPostPaid` and 
+  `suggestedPostRefunded` fields to `Message` type.
 
 ## 0.9.1 July 4, 2025
 
