@@ -133,5 +133,9 @@ final readonly class Message
         public ?true $isPaidPost = null,
         public ?SuggestedPostInfo $suggestedPostInfo = null,
         public ?SuggestedPostApproved $suggestedPostApproved = null,
+        public ?SuggestedPostApprovalFailed $suggestedPostApprovalFailed = null,
+        public ?SuggestedPostDeclined $suggestedPostDeclined = null,
+        public ?SuggestedPostPaid $suggestedPostPaid = null,
+        public ?SuggestedPostRefunded $suggestedPostRefunded = null,
     ) {}
 }

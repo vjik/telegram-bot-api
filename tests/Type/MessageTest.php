@@ -139,6 +139,10 @@ final class MessageTest extends TestCase
         assertNull($message->directMessagesTopic);
         assertNull($message->suggestedPostInfo);
         assertNull($message->suggestedPostApproved);
+        assertNull($message->suggestedPostApprovalFailed);
+        assertNull($message->suggestedPostDeclined);
+        assertNull($message->suggestedPostPaid);
+        assertNull($message->suggestedPostRefunded);
     }
 
     public function testFromTelegramResult(): void
@@ -534,6 +538,21 @@ final class MessageTest extends TestCase
                     'amount' => 5000000,
                 ],
             ],
+            'suggested_post_approval_failed' => [
+                'price' => [
+                    'currency' => 'XTR',
+                    'amount' => 100,
+                ],
+            ],
+            'suggested_post_declined' => [
+                'comment' => 'insufficient_funds',
+            ],
+            'suggested_post_paid' => [
+                'currency' => 'RUB',
+            ],
+            'suggested_post_refunded' => [
+                'reason' => 'refund_reason',
+            ],
             'video_chat_scheduled' => [
                 'start_date' => 1620000012,
             ],
@@ -729,5 +748,9 @@ final class MessageTest extends TestCase
         assertSame(100, $message->suggestedPostInfo?->price?->amount);
         assertSame(1640995200, $message->suggestedPostInfo?->sendDate);
         assertSame(1672531200, $message->suggestedPostApproved?->sendDate);
+        assertSame(100, $message->suggestedPostApprovalFailed?->price?->amount);
+        assertSame('insufficient_funds', $message->suggestedPostDeclined?->comment);
+        assertSame('RUB', $message->suggestedPostPaid?->currency);
+        assertSame('refund_reason', $message->suggestedPostRefunded?->reason);
     }
 }
