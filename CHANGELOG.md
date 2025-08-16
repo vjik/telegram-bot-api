@@ -31,6 +31,7 @@
 - New #164: Add `SuggestedPostApprovalFailed` type.
 - New #164: Add `SuggestedPostDeclined` type.
 - New #164: Add `SuggestedPostPaid` type.
+- New #164: Add `SuggestedPostRefunded` type.
 
 ## 0.9.1 July 4, 2025
 
