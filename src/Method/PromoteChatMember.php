@@ -33,6 +33,7 @@ final readonly class PromoteChatMember implements MethodInterface
         private ?bool $canEditMessages = null,
         private ?bool $canPinMessages = null,
         private ?bool $canManageTopics = null,
+        private ?bool $canManageDirectMessages = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -66,6 +67,7 @@ final readonly class PromoteChatMember implements MethodInterface
                 'can_edit_messages' => $this->canEditMessages,
                 'can_pin_messages' => $this->canPinMessages,
                 'can_manage_topics' => $this->canManageTopics,
+                'can_manage_direct_messages' => $this->canManageDirectMessages,
             ],
             static fn(mixed $value): bool => $value !== null,
         );
