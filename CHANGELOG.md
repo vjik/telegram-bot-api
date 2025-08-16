@@ -28,6 +28,7 @@
 - New #164: Add `suggestedPostInfo` field to `Message` type.
 - New #164: Add `SuggestedPostApproved` type.
 - New #164: Add `suggestedPostApproved` field to `Message` type.
+- New #164: Add `SuggestedPostApprovalFailed` type.
 
 ## 0.9.1 July 4, 2025
 
