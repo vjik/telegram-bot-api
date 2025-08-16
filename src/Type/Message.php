@@ -130,5 +130,6 @@ final readonly class Message
         public ?ChecklistTasksAdded $checklistTasksAdded = null,
         public ?int $replyToChecklistTaskId = null,
         public ?DirectMessagesTopic $directMessagesTopic = null,
+        public ?true $isPaidPost = null,
     ) {}
 }

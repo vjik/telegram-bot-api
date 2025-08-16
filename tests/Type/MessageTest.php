@@ -62,6 +62,7 @@ final class MessageTest extends TestCase
         assertNull($message->editDate);
         assertNull($message->hasProtectedContent);
         assertNull($message->isFromOffline);
+        assertNull($message->isPaidPost);
         assertNull($message->mediaGroupId);
         assertNull($message->authorSignature);
         assertNull($message->paidStarCount);
@@ -209,6 +210,7 @@ final class MessageTest extends TestCase
             'edit_date' => 65416841123,
             'has_protected_content' => true,
             'is_from_offline' => true,
+            'is_paid_post' => true,
             'media_group_id' => 'mg34613',
             'author_signature' => 'as235',
             'paid_star_count' => 22943,
@@ -605,6 +607,7 @@ final class MessageTest extends TestCase
         assertSame(65416841123, $message->editDate?->getTimestamp());
         assertTrue($message->hasProtectedContent);
         assertTrue($message->isFromOffline);
+        assertTrue($message->isPaidPost);
         assertSame('mg34613', $message->mediaGroupId);
         assertSame('as235', $message->authorSignature);
         assertSame(22943, $message->paidStarCount);
