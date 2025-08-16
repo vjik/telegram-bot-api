@@ -24,6 +24,7 @@
 - New #164: Add `canManageDirectMessages` field to `ChatMemberAdministrator` and `ChatAdministratorRights` types.
 - New #164: Add `canManageDirectMessages` parameter to `promoteChatMember` method.
 - New #164: Add `isPaidPost` field to `Message` type.
+- New #164: Add `SuggestedPostInfo` type.
 
 ## 0.9.1 July 4, 2025
 
