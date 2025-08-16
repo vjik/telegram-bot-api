@@ -58,6 +58,7 @@ final class SendPaidMediaTest extends TestCase
             'bcid1',
             'test-payload',
             true,
+            123,
         );
 
         assertSame(
@@ -81,6 +82,7 @@ final class SendPaidMediaTest extends TestCase
                 'allow_paid_broadcast' => true,
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
+                'direct_messages_topic_id' => 123,
                 'file0' => $file,
             ],
             $method->getData(),

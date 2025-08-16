@@ -27,6 +27,7 @@ final readonly class CopyMessages implements MethodInterface
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
         private ?bool $removeCaption = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -50,6 +51,7 @@ final readonly class CopyMessages implements MethodInterface
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'remove_caption' => $this->removeCaption,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

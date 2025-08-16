@@ -49,6 +49,7 @@ final readonly class SendVideo implements MethodInterface
         private ?bool $allowPaidBroadcast = null,
         private string|InputFile|null $cover = null,
         private ?int $startTimestamp = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -90,6 +91,7 @@ final readonly class SendVideo implements MethodInterface
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

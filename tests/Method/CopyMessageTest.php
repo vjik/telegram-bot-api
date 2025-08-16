@@ -52,6 +52,7 @@ final class CopyMessageTest extends TestCase
             $replyMarkup,
             true,
             17,
+            123,
         );
 
         assertSame(
@@ -70,6 +71,7 @@ final class CopyMessageTest extends TestCase
                 'allow_paid_broadcast' => true,
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

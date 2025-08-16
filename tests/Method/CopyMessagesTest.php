@@ -34,7 +34,7 @@ final class CopyMessagesTest extends TestCase
 
     public function testFull(): void
     {
-        $method = new CopyMessages(1, 2, [3, 4], 5, true, false, true);
+        $method = new CopyMessages(1, 2, [3, 4], 5, true, false, true, 123);
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());
         assertSame('copyMessages', $method->getApiMethod());
@@ -47,6 +47,7 @@ final class CopyMessagesTest extends TestCase
                 'disable_notification' => true,
                 'protect_content' => false,
                 'remove_caption' => true,
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

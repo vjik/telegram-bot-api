@@ -34,7 +34,7 @@ final class ForwardMessagesTest extends TestCase
 
     public function testFull(): void
     {
-        $method = new ForwardMessages(1, 2, [3, 4], 5, true, false);
+        $method = new ForwardMessages(1, 2, [3, 4], 5, true, false, 123);
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());
         assertSame('forwardMessages', $method->getApiMethod());
@@ -46,6 +46,7 @@ final class ForwardMessagesTest extends TestCase
                 'message_ids' => [3, 4],
                 'disable_notification' => true,
                 'protect_content' => false,
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

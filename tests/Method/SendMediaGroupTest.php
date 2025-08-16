@@ -52,6 +52,7 @@ final class SendMediaGroupTest extends TestCase
             'id1',
             $replyParameters,
             true,
+            123,
         );
 
         assertSame(
@@ -70,6 +71,7 @@ final class SendMediaGroupTest extends TestCase
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'id1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
+                'direct_messages_topic_id' => 123,
                 'file0' => $file,
             ],
             $method->getData(),

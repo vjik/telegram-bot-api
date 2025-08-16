@@ -40,6 +40,7 @@ final readonly class CopyMessage implements MethodInterface
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
         private ?int $videoStartTimestamp = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
 
@@ -74,6 +75,7 @@ final readonly class CopyMessage implements MethodInterface
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

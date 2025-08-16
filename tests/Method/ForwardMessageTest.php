@@ -39,6 +39,7 @@ final class ForwardMessageTest extends TestCase
             true,
             false,
             17,
+            123,
         );
 
         assertSame(
@@ -50,6 +51,7 @@ final class ForwardMessageTest extends TestCase
                 'disable_notification' => true,
                 'protect_content' => false,
                 'message_id' => 3,
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

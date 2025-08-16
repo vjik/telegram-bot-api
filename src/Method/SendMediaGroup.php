@@ -35,6 +35,7 @@ final readonly class SendMediaGroup implements MethodInterface
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -70,6 +71,7 @@ final readonly class SendMediaGroup implements MethodInterface
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 ...$fileCollector->get(),
             ],
             static fn(mixed $value): bool => $value !== null,

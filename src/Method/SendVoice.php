@@ -41,6 +41,7 @@ final readonly class SendVoice implements MethodInterface
         private ?ReplyParameters $replyParameters = null,
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -74,6 +75,7 @@ final readonly class SendVoice implements MethodInterface
                 'message_effect_id' => $this->messageEffectId,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

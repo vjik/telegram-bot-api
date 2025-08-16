@@ -52,6 +52,7 @@ final class SendVideoNoteTest extends TestCase
             $replyParameters,
             $replyMarkup,
             true,
+            123,
         );
 
         assertSame(
@@ -69,6 +70,7 @@ final class SendVideoNoteTest extends TestCase
                 'message_effect_id' => 'meID',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

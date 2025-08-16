@@ -24,6 +24,7 @@ final readonly class ForwardMessage implements MethodInterface
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
         private ?int $videoStartTimestamp = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -47,6 +48,7 @@ final readonly class ForwardMessage implements MethodInterface
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'message_id' => $this->messageId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

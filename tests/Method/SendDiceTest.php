@@ -44,6 +44,7 @@ final class SendDiceTest extends TestCase
             $replyParameters,
             $replyMarkup,
             true,
+            123,
         );
 
         assertSame(
@@ -58,6 +59,7 @@ final class SendDiceTest extends TestCase
                 'message_effect_id' => 'meid1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
+                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

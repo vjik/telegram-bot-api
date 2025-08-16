@@ -26,6 +26,7 @@ final readonly class ForwardMessages implements MethodInterface
         private ?int $messageThreadId = null,
         private ?bool $disableNotification = null,
         private ?bool $protectContent = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -48,6 +49,7 @@ final readonly class ForwardMessages implements MethodInterface
                 'message_ids' => $this->messageIds,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

@@ -43,6 +43,7 @@ final readonly class SendPaidMedia implements MethodInterface
         private ?string $businessConnectionId = null,
         private ?string $payload = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -84,6 +85,7 @@ final readonly class SendPaidMedia implements MethodInterface
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 ...$fileCollector->get(),
             ],
             static fn(mixed $value): bool => $value !== null,
