@@ -65,12 +65,14 @@ final class SendPaidMediaTest extends TestCase
             new SuggestedPostParameters(
                 new SuggestedPostPrice('USD', 10),
             ),
+            777,
         );
 
         assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
+                'message_thread_id' => 777,
                 'direct_messages_topic_id' => 123,
                 'star_count' => 25,
                 'media' => [

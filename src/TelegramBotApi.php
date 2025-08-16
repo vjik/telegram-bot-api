@@ -2219,6 +2219,7 @@ final class TelegramBotApi
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
         ?SuggestedPostParameters $suggestedPostParameters = null,
+        ?int $messageThreadId = null,
     ): FailResult|Message {
         return $this->call(
             new SendPaidMedia(
@@ -2238,6 +2239,7 @@ final class TelegramBotApi
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
                 $suggestedPostParameters,
+                $messageThreadId,
             ),
         );
     }

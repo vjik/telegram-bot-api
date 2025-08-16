@@ -18,6 +18,7 @@
 - New #164: Add `suggestedPostParameters` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
   `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`,
   `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `copyMessage` and `forwardMessage` methods.
+- New #164: Add `messageThreadId` parameter to `SendPaidMedia` method.
 
 ## 0.9.1 July 4, 2025
 
