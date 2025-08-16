@@ -53,12 +53,16 @@ final class LoginUrlTest extends TestCase
 
     public function testFromTelegramResult(): void
     {
-        $loginUrl = (new ObjectFactory())->create([
-            'url' => 'https://example.com/',
-            'forward_text' => 'ft',
-            'bot_username' => 'bun',
-            'request_write_access' => false,
-        ], null, LoginUrl::class);
+        $loginUrl = (new ObjectFactory())->create(
+            [
+                'url' => 'https://example.com/',
+                'forward_text' => 'ft',
+                'bot_username' => 'bun',
+                'request_write_access' => false,
+            ],
+            null,
+            LoginUrl::class,
+        );
 
         assertSame('https://example.com/', $loginUrl->url);
         assertSame('ft', $loginUrl->forwardText);

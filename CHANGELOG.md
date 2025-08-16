@@ -1,5 +1,29 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.9.2 August 16, 2025
+
+- New #164: Add `checklistTaskId` field to `ReplyParameters` type.
+- New #164: Add `publisherChat` field to `Gift` and `UniqueGift` types.
+- New #164: Add `isDirectMessages` field to `Chat` and `ChatFullInfo` types.
+- New #164: Add `parentChat` field to `ChatFullInfo` type.
+- New #164: Add `directMessagesTopicId` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
+  `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, 
+  `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `sendMediaGroup`, `copyMessage`, `copyMessages`, 
+  `forwardMessage` and `forwardMessages` methods.
+- New #164: Add `suggestedPostParameters` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
+  `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`,
+  `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `copyMessage` and `forwardMessage` methods.
+- New #164: Add `messageThreadId` parameter to `SendPaidMedia` method.
+- New #164: Add `approveSuggestedPost` and `declineSuggestedPost` methods.
+- New #164: Add `canManageDirectMessages` field to `ChatMemberAdministrator` and `ChatAdministratorRights` types.
+- New #164: Add `canManageDirectMessages` parameter to `promoteChatMember` method.
+- New #164: Add `DirectMessagesTopic`, `SuggestedPostPrice`, `SuggestedPostParameters`, `SuggestedPostInfo`,
+  `SuggestedPostApproved`, `SuggestedPostApprovalFailed`, `SuggestedPostDeclined`, `SuggestedPostPaid` and 
+  `SuggestedPostRefunded` types.
+- New #164: Add `replyToChecklistTaskId`, `directMessagesTopic`, `isPaidPost`, `suggestedPostInfo`,
+  `suggestedPostApproved`, `suggestedPostApprovalFailed`, `suggestedPostDeclined`, `suggestedPostPaid` and 
+  `suggestedPostRefunded` fields to `Message` type.
+
 ## 0.9.1 July 4, 2025
 
 - Chg #160: Change PHP constraint in `composer.json` from `php` to `php-64bit`.

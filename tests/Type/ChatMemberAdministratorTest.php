@@ -55,6 +55,7 @@ final class ChatMemberAdministratorTest extends TestCase
         assertNull($member->canPinMessages);
         assertNull($member->canManageTopics);
         assertNull($member->customTitle);
+        assertNull($member->canManageDirectMessages);
     }
 
     public function testFromTelegramResult(): void
@@ -81,6 +82,7 @@ final class ChatMemberAdministratorTest extends TestCase
             'can_edit_messages' => false,
             'can_pin_messages' => true,
             'can_manage_topics' => false,
+            'can_manage_direct_messages' => true,
             'custom_title' => 'Custom title',
         ], null, ChatMemberAdministrator::class);
 
@@ -102,5 +104,6 @@ final class ChatMemberAdministratorTest extends TestCase
         assertTrue($member->canPinMessages);
         assertFalse($member->canManageTopics);
         assertSame('Custom title', $member->customTitle);
+        assertTrue($member->canManageDirectMessages);
     }
 }

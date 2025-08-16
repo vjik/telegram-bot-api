@@ -52,6 +52,7 @@ final class SendMediaGroupTest extends TestCase
             'id1',
             $replyParameters,
             true,
+            123,
         );
 
         assertSame(
@@ -59,6 +60,7 @@ final class SendMediaGroupTest extends TestCase
                 'business_connection_id' => 'bcid',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'media' => [
                     [
                         'type' => 'photo',

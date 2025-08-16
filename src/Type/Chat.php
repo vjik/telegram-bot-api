@@ -19,5 +19,6 @@ final readonly class Chat
         public ?string $firstName = null,
         public ?string $lastName = null,
         public ?true $isForum = null,
+        public ?true $isDirectMessages = null,
     ) {}
 }

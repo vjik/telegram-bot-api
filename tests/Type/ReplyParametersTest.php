@@ -25,6 +25,7 @@ final class ReplyParametersTest extends TestCase
         assertNull($replyParameters->quoteParseMode);
         assertNull($replyParameters->quoteEntities);
         assertNull($replyParameters->quotePosition);
+        assertNull($replyParameters->checklistTaskId);
 
         assertSame(
             [
@@ -45,6 +46,7 @@ final class ReplyParametersTest extends TestCase
             'best',
             [$quoteEntity],
             23,
+            456,
         );
 
         assertSame(99, $replyParameters->messageId);
@@ -54,6 +56,7 @@ final class ReplyParametersTest extends TestCase
         assertSame('best', $replyParameters->quoteParseMode);
         assertSame([$quoteEntity], $replyParameters->quoteEntities);
         assertSame(23, $replyParameters->quotePosition);
+        assertSame(456, $replyParameters->checklistTaskId);
 
         assertSame(
             [
@@ -64,6 +67,7 @@ final class ReplyParametersTest extends TestCase
                 'quote_parse_mode' => 'best',
                 'quote_entities' => [$quoteEntity->toRequestArray()],
                 'quote_position' => 23,
+                'checklist_task_id' => 456,
             ],
             $replyParameters->toRequestArray(),
         );

@@ -36,6 +36,7 @@ final class GiftTest extends TestCase
         assertSame(12, $object->starCount);
         assertNull($object->totalCount);
         assertNull($object->remainingCount);
+        assertNull($object->publisherChat);
     }
 
     public function testFromTelegramResult(): void
@@ -55,6 +56,10 @@ final class GiftTest extends TestCase
             'upgrade_star_count' => 53,
             'total_count' => 200,
             'remaining_count' => 30,
+            'publisher_chat' => [
+                'id' => 456,
+                'type' => 'channel',
+            ],
         ], null, Gift::class);
 
         assertSame('test-id', $object->id);
@@ -63,5 +68,6 @@ final class GiftTest extends TestCase
         assertSame(53, $object->upgradeStarCount);
         assertSame(200, $object->totalCount);
         assertSame(30, $object->remainingCount);
+        assertSame(456, $object->publisherChat?->id);
     }
 }

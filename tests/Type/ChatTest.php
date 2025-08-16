@@ -25,6 +25,7 @@ final class ChatTest extends TestCase
         assertNull($chat->firstName);
         assertNull($chat->lastName);
         assertNull($chat->isForum);
+        assertNull($chat->isDirectMessages);
     }
 
     public function testFromTelegramResult(): void
@@ -37,6 +38,7 @@ final class ChatTest extends TestCase
             'first_name' => 'First Name',
             'last_name' => 'Last Name',
             'is_forum' => true,
+            'is_direct_messages' => true,
         ], null, Chat::class);
 
         assertSame(1, $chat->id);
@@ -46,5 +48,6 @@ final class ChatTest extends TestCase
         assertSame('First Name', $chat->firstName);
         assertSame('Last Name', $chat->lastName);
         assertTrue($chat->isForum);
+        assertTrue($chat->isDirectMessages);
     }
 }

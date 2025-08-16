@@ -34,7 +34,7 @@ final class CopyMessagesTest extends TestCase
 
     public function testFull(): void
     {
-        $method = new CopyMessages(1, 2, [3, 4], 5, true, false, true);
+        $method = new CopyMessages(1, 2, [3, 4], 5, true, false, true, 123);
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());
         assertSame('copyMessages', $method->getApiMethod());
@@ -42,6 +42,7 @@ final class CopyMessagesTest extends TestCase
             [
                 'chat_id' => 1,
                 'message_thread_id' => 5,
+                'direct_messages_topic_id' => 123,
                 'from_chat_id' => 2,
                 'message_ids' => [3, 4],
                 'disable_notification' => true,

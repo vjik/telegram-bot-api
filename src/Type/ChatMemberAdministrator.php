@@ -30,6 +30,7 @@ final readonly class ChatMemberAdministrator implements ChatMember
         public ?bool $canPinMessages = null,
         public ?bool $canManageTopics = null,
         public ?string $customTitle = null,
+        public ?bool $canManageDirectMessages = null,
     ) {}
 
     public function getStatus(): string

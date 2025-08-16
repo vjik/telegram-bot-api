@@ -14,6 +14,8 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\InputPaidMediaPhoto;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 
 use function PHPUnit\Framework\assertSame;
 
@@ -58,12 +60,19 @@ final class SendPaidMediaTest extends TestCase
             'bcid1',
             'test-payload',
             true,
+            123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
+            777,
         );
 
         assertSame(
             [
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
+                'message_thread_id' => 777,
+                'direct_messages_topic_id' => 123,
                 'star_count' => 25,
                 'media' => [
                     [
@@ -79,6 +88,12 @@ final class SendPaidMediaTest extends TestCase
                 'disable_notification' => false,
                 'protect_content' => true,
                 'allow_paid_broadcast' => true,
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
                 'file0' => $file,

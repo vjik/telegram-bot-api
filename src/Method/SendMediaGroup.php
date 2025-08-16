@@ -35,6 +35,7 @@ final readonly class SendMediaGroup implements MethodInterface
         private ?string $messageEffectId = null,
         private ?ReplyParameters $replyParameters = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $directMessagesTopicId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -64,6 +65,7 @@ final readonly class SendMediaGroup implements MethodInterface
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'media' => $media,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,

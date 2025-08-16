@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendpaidmedia
@@ -43,6 +44,9 @@ final readonly class SendPaidMedia implements MethodInterface
         private ?string $businessConnectionId = null,
         private ?string $payload = null,
         private ?bool $allowPaidBroadcast = null,
+        private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
+        private ?int $messageThreadId = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -69,6 +73,8 @@ final readonly class SendPaidMedia implements MethodInterface
             [
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
+                'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'star_count' => $this->starCount,
                 'media' => $media,
                 'payload' => $this->payload,
@@ -82,6 +88,7 @@ final readonly class SendPaidMedia implements MethodInterface
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
                 ...$fileCollector->get(),

@@ -61,6 +61,7 @@ final class MessageTest extends TestCase
         assertNull($message->editDate);
         assertNull($message->hasProtectedContent);
         assertNull($message->isFromOffline);
+        assertNull($message->isPaidPost);
         assertNull($message->mediaGroupId);
         assertNull($message->authorSignature);
         assertNull($message->paidStarCount);
@@ -133,6 +134,14 @@ final class MessageTest extends TestCase
         assertNull($message->checklist);
         assertNull($message->checklistTasksDone);
         assertNull($message->checklistTasksAdded);
+        assertNull($message->replyToChecklistTaskId);
+        assertNull($message->directMessagesTopic);
+        assertNull($message->suggestedPostInfo);
+        assertNull($message->suggestedPostApproved);
+        assertNull($message->suggestedPostApprovalFailed);
+        assertNull($message->suggestedPostDeclined);
+        assertNull($message->suggestedPostPaid);
+        assertNull($message->suggestedPostRefunded);
     }
 
     public function testFromTelegramResult(): void
@@ -145,6 +154,9 @@ final class MessageTest extends TestCase
                 'type' => 'private',
             ],
             'message_thread_id' => 3,
+            'direct_messages_topic' => [
+                'topic_id' => 12345,
+            ],
             'from' => [
                 'id' => 7,
                 'is_bot' => false,
@@ -194,6 +206,7 @@ final class MessageTest extends TestCase
                 ],
                 'id' => 8863,
             ],
+            'reply_to_checklist_task_id' => 789,
             'via_bot' => [
                 'id' => 127,
                 'is_bot' => false,
@@ -202,6 +215,7 @@ final class MessageTest extends TestCase
             'edit_date' => 65416841123,
             'has_protected_content' => true,
             'is_from_offline' => true,
+            'is_paid_post' => true,
             'media_group_id' => 'mg34613',
             'author_signature' => 'as235',
             'paid_star_count' => 22943,
@@ -215,6 +229,14 @@ final class MessageTest extends TestCase
             ],
             'link_preview_options' => [
                 'url' => 'https://example.com/lpo',
+            ],
+            'suggested_post_info' => [
+                'state' => 'pending',
+                'price' => [
+                    'currency' => 'XTR',
+                    'amount' => 100,
+                ],
+                'send_date' => 1640995200,
             ],
             'effect_id' => 'e235',
             'animation' => [
@@ -508,6 +530,28 @@ final class MessageTest extends TestCase
             'paid_message_price_changed' => [
                 'paid_message_star_count' => 9431,
             ],
+            'suggested_post_approved' => [
+                'send_date' => 1672531200,
+                'price' => [
+                    'currency' => 'TON',
+                    'amount' => 5000000,
+                ],
+            ],
+            'suggested_post_approval_failed' => [
+                'price' => [
+                    'currency' => 'XTR',
+                    'amount' => 100,
+                ],
+            ],
+            'suggested_post_declined' => [
+                'comment' => 'insufficient_funds',
+            ],
+            'suggested_post_paid' => [
+                'currency' => 'RUB',
+            ],
+            'suggested_post_refunded' => [
+                'reason' => 'refund_reason',
+            ],
             'video_chat_scheduled' => [
                 'start_date' => 1620000012,
             ],
@@ -598,6 +642,7 @@ final class MessageTest extends TestCase
         assertSame(65416841123, $message->editDate?->getTimestamp());
         assertTrue($message->hasProtectedContent);
         assertTrue($message->isFromOffline);
+        assertTrue($message->isPaidPost);
         assertSame('mg34613', $message->mediaGroupId);
         assertSame('as235', $message->authorSignature);
         assertSame(22943, $message->paidStarCount);
@@ -695,5 +740,16 @@ final class MessageTest extends TestCase
         assertInstanceOf(ChecklistTasksDone::class, $message->checklistTasksDone);
         assertInstanceOf(ChecklistTasksAdded::class, $message->checklistTasksAdded);
         assertCount(2, $message->checklistTasksAdded->tasks);
+        assertSame(789, $message->replyToChecklistTaskId);
+        assertSame(12345, $message->directMessagesTopic?->topicId);
+        assertSame('pending', $message->suggestedPostInfo?->state);
+        assertSame('XTR', $message->suggestedPostInfo?->price?->currency);
+        assertSame(100, $message->suggestedPostInfo?->price?->amount);
+        assertSame(1640995200, $message->suggestedPostInfo?->sendDate);
+        assertSame(1672531200, $message->suggestedPostApproved?->sendDate);
+        assertSame(100, $message->suggestedPostApprovalFailed?->price?->amount);
+        assertSame('insufficient_funds', $message->suggestedPostDeclined?->comment);
+        assertSame('RUB', $message->suggestedPostPaid?->currency);
+        assertSame('refund_reason', $message->suggestedPostRefunded?->reason);
     }
 }

@@ -128,5 +128,14 @@ final readonly class Message
         public ?Checklist $checklist = null,
         public ?ChecklistTasksDone $checklistTasksDone = null,
         public ?ChecklistTasksAdded $checklistTasksAdded = null,
+        public ?int $replyToChecklistTaskId = null,
+        public ?DirectMessagesTopic $directMessagesTopic = null,
+        public ?true $isPaidPost = null,
+        public ?SuggestedPostInfo $suggestedPostInfo = null,
+        public ?SuggestedPostApproved $suggestedPostApproved = null,
+        public ?SuggestedPostApprovalFailed $suggestedPostApprovalFailed = null,
+        public ?SuggestedPostDeclined $suggestedPostDeclined = null,
+        public ?SuggestedPostPaid $suggestedPostPaid = null,
+        public ?SuggestedPostRefunded $suggestedPostRefunded = null,
     ) {}
 }

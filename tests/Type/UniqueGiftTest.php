@@ -14,6 +14,7 @@ use Vjik\TelegramBot\Api\Type\UniqueGiftModel;
 use Vjik\TelegramBot\Api\Type\UniqueGiftSymbol;
 
 use function PHPUnit\Framework\assertInstanceOf;
+use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertSame;
 
 final class UniqueGiftTest extends TestCase
@@ -44,6 +45,7 @@ final class UniqueGiftTest extends TestCase
         assertSame($model, $type->model);
         assertSame($symbol, $type->symbol);
         assertSame($backdrop, $type->backdrop);
+        assertNull($type->publisherChat);
     }
 
     public function testFromTelegramResult(): void
@@ -88,6 +90,10 @@ final class UniqueGiftTest extends TestCase
                 ],
                 'rarity_per_mille' => 200,
             ],
+            'publisher_chat' => [
+                'id' => 789,
+                'type' => 'channel',
+            ],
         ], null, UniqueGift::class);
 
         assertInstanceOf(UniqueGift::class, $type);
@@ -106,5 +112,6 @@ final class UniqueGiftTest extends TestCase
         assertSame('backdropId', $type->backdrop->name);
         assertSame(1, $type->backdrop->colors->centerColor);
         assertSame(200, $type->backdrop->rarityPerMille);
+        assertSame(789, $type->publisherChat?->id);
     }
 }

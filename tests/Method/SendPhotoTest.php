@@ -13,6 +13,8 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
 
 use function PHPUnit\Framework\assertSame;
 
@@ -55,6 +57,10 @@ final class SendPhotoTest extends TestCase
             $replyParameters,
             $replyMarkup,
             true,
+            123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
         );
 
         assertSame(
@@ -63,6 +69,7 @@ final class SendPhotoTest extends TestCase
                 'photo' => $photo,
                 'business_connection_id' => 'bcid1',
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'caption' => 'Caption',
                 'parse_mode' => 'parse',
                 'caption_entities' => [$entity->toRequestArray()],
@@ -72,6 +79,12 @@ final class SendPhotoTest extends TestCase
                 'protect_content' => false,
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid1',
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
             ],

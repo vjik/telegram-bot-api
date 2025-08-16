@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendvideo
@@ -49,6 +50,8 @@ final readonly class SendVideo implements MethodInterface
         private ?bool $allowPaidBroadcast = null,
         private string|InputFile|null $cover = null,
         private ?int $startTimestamp = null,
+        private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -68,6 +71,7 @@ final readonly class SendVideo implements MethodInterface
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'video' => $this->video,
                 'duration' => $this->duration,
                 'width' => $this->width,
@@ -88,6 +92,7 @@ final readonly class SendVideo implements MethodInterface
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
             ],

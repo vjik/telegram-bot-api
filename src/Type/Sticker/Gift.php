@@ -4,6 +4,8 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Type\Sticker;
 
+use Vjik\TelegramBot\Api\Type\Chat;
+
 /**
  * @see https://core.telegram.org/bots/api#gift
  *
@@ -18,5 +20,6 @@ final readonly class Gift
         public ?int $totalCount = null,
         public ?int $remainingCount = null,
         public ?int $upgradeStarCount = null,
+        public ?Chat $publisherChat = null,
     ) {}
 }
