@@ -1,6 +1,6 @@
 # Telegram Bot API for PHP Change Log
 
-## 0.9.2 under development
+## 0.9.2 August 16, 2025
 
 - New #164: Add `checklistTaskId` field to `ReplyParameters` type.
 - New #164: Add `publisherChat` field to `Gift` and `UniqueGift` types.
