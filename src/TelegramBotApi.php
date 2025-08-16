@@ -224,6 +224,7 @@ use Vjik\TelegramBot\Api\Type\Sticker\MaskPosition;
 use Vjik\TelegramBot\Api\Type\Sticker\Sticker;
 use Vjik\TelegramBot\Api\Type\Sticker\StickerSet;
 use Vjik\TelegramBot\Api\Type\Story;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 use Vjik\TelegramBot\Api\Type\StoryArea;
 use Vjik\TelegramBot\Api\Type\Update\Update;
 use Vjik\TelegramBot\Api\Type\Update\WebhookInfo;
@@ -506,6 +507,7 @@ final class TelegramBotApi
         ?bool $allowPaidBroadcast = null,
         ?int $videoStartTimestamp = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|MessageId {
         return $this->call(
             new CopyMessage(
@@ -524,6 +526,7 @@ final class TelegramBotApi
                 $allowPaidBroadcast,
                 $videoStartTimestamp,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1054,6 +1057,7 @@ final class TelegramBotApi
         ?bool $protectContent = null,
         ?int $videoStartTimestamp = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new ForwardMessage(
@@ -1065,6 +1069,7 @@ final class TelegramBotApi
                 $protectContent,
                 $videoStartTimestamp,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1685,6 +1690,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendAnimation(
@@ -1708,6 +1714,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1736,6 +1743,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendAudio(
@@ -1757,6 +1765,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1798,6 +1807,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendContact(
@@ -1815,6 +1825,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1861,6 +1872,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendDice(
@@ -1875,6 +1887,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -1901,6 +1914,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendDocument(
@@ -1920,6 +1934,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2020,6 +2035,7 @@ final class TelegramBotApi
         ?InlineKeyboardMarkup $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendInvoice(
@@ -2053,6 +2069,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2077,6 +2094,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendLocation(
@@ -2096,6 +2114,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2154,6 +2173,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendMessage(
@@ -2171,6 +2191,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2197,6 +2218,7 @@ final class TelegramBotApi
         ?string $payload = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendPaidMedia(
@@ -2215,6 +2237,7 @@ final class TelegramBotApi
                 $payload,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2241,6 +2264,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendPhoto(
@@ -2260,6 +2284,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2341,6 +2366,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendSticker(
@@ -2356,6 +2382,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2382,6 +2409,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendVenue(
@@ -2403,6 +2431,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2436,6 +2465,7 @@ final class TelegramBotApi
         string|InputFile|null $cover = null,
         ?int $startTimestamp = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendVideo(
@@ -2462,6 +2492,7 @@ final class TelegramBotApi
                 $cover,
                 $startTimestamp,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2484,6 +2515,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendVideoNote(
@@ -2501,6 +2533,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }
@@ -2526,6 +2559,7 @@ final class TelegramBotApi
         InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         ?bool $allowPaidBroadcast = null,
         ?int $directMessagesTopicId = null,
+        ?SuggestedPostParameters $suggestedPostParameters = null,
     ): FailResult|Message {
         return $this->call(
             new SendVoice(
@@ -2544,6 +2578,7 @@ final class TelegramBotApi
                 $replyMarkup,
                 $allowPaidBroadcast,
                 $directMessagesTopicId,
+                $suggestedPostParameters,
             ),
         );
     }

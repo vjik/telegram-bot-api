@@ -9,9 +9,15 @@
 - New #164: Add `parentChat` field to `ChatFullInfo` type.
 - New #164: Add `DirectMessagesTopic` type.
 - New #164: Add `directMessagesTopic` field to `Message` type.
-- New #164: Add `directMessagesTopicId` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`, `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `sendMediaGroup`, `copyMessage`, `copyMessages`, `forwardMessage` and `forwardMessages` methods.
+- New #164: Add `directMessagesTopicId` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
+  `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`, 
+  `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `sendMediaGroup`, `copyMessage`, `copyMessages`, 
+  `forwardMessage` and `forwardMessages` methods.
 - New #164: Add `SuggestedPostPrice` type.
 - New #164: Add `SuggestedPostParameters` type.
+- New #164: Add `suggestedPostParameters` parameter to `sendMessage`, `sendPhoto`, `sendVideo`, `sendAnimation`,
+  `sendAudio`, `sendDocument`, `sendPaidMedia`, `sendSticker`, `sendVideoNote`, `sendVoice`, `sendLocation`,
+  `sendVenue`, `sendContact`, `sendDice`, `sendInvoice`, `copyMessage` and `forwardMessage` methods.
 
 ## 0.9.1 July 4, 2025
 

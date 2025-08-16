@@ -14,6 +14,7 @@ use Vjik\TelegramBot\Api\Type\MessageId;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#copymessage
@@ -41,6 +42,7 @@ final readonly class CopyMessage implements MethodInterface
         private ?bool $allowPaidBroadcast = null,
         private ?int $videoStartTimestamp = null,
         private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
 
@@ -60,6 +62,7 @@ final readonly class CopyMessage implements MethodInterface
             [
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'from_chat_id' => $this->fromChatId,
                 'message_id' => $this->messageId,
                 'video_start_timestamp' => $this->videoStartTimestamp,
@@ -73,9 +76,9 @@ final readonly class CopyMessage implements MethodInterface
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

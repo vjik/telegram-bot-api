@@ -12,6 +12,7 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendinvoice
@@ -56,6 +57,7 @@ final readonly class SendInvoice implements MethodInterface
         private ?InlineKeyboardMarkup $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
         private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -74,6 +76,7 @@ final readonly class SendInvoice implements MethodInterface
             [
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'title' => $this->title,
                 'description' => $this->description,
                 'payload' => $this->payload,
@@ -102,9 +105,9 @@ final readonly class SendInvoice implements MethodInterface
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

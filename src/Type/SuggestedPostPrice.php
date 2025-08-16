@@ -15,4 +15,12 @@ final readonly class SuggestedPostPrice
         public string $currency,
         public int $amount,
     ) {}
+
+    public function toRequestArray(): array
+    {
+        return [
+            'currency' => $this->currency,
+            'amount' => $this->amount,
+        ];
+    }
 }

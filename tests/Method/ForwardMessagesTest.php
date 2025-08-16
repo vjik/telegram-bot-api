@@ -42,11 +42,11 @@ final class ForwardMessagesTest extends TestCase
             [
                 'chat_id' => 1,
                 'message_thread_id' => 5,
+                'direct_messages_topic_id' => 123,
                 'from_chat_id' => 2,
                 'message_ids' => [3, 4],
                 'disable_notification' => true,
                 'protect_content' => false,
-                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

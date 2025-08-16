@@ -15,4 +15,15 @@ final readonly class SuggestedPostParameters
         public ?SuggestedPostPrice $price = null,
         public ?int $sendDate = null,
     ) {}
+
+    public function toRequestArray(): array
+    {
+        return array_filter(
+            [
+                'price' => $this->price?->toRequestArray(),
+                'send_date' => $this->sendDate,
+            ],
+            static fn(mixed $value): bool => $value !== null,
+        );
+    }
 }

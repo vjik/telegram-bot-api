@@ -14,6 +14,7 @@ use Vjik\TelegramBot\Api\Type\Message;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendvideonote
@@ -37,6 +38,7 @@ final readonly class SendVideoNote implements MethodInterface
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
         private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -56,6 +58,7 @@ final readonly class SendVideoNote implements MethodInterface
                 'business_connection_id' => $this->businessConnectionId,
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'video_note' => $this->videoNote,
                 'duration' => $this->duration,
                 'length' => $this->length,
@@ -64,9 +67,9 @@ final readonly class SendVideoNote implements MethodInterface
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

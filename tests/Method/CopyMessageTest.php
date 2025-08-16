@@ -12,6 +12,9 @@ use Vjik\TelegramBot\Api\Type\ForceReply;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
+
 use function PHPUnit\Framework\assertSame;
 
 final class CopyMessageTest extends TestCase
@@ -53,12 +56,16 @@ final class CopyMessageTest extends TestCase
             true,
             17,
             123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
         );
 
         assertSame(
             [
                 'chat_id' => 1,
                 'message_thread_id' => 4,
+                'direct_messages_topic_id' => 123,
                 'from_chat_id' => 2,
                 'message_id' => 3,
                 'video_start_timestamp' => 17,
@@ -69,9 +76,14 @@ final class CopyMessageTest extends TestCase
                 'disable_notification' => false,
                 'protect_content' => true,
                 'allow_paid_broadcast' => true,
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
-                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

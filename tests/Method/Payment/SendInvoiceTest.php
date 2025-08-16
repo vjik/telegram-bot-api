@@ -13,6 +13,9 @@ use Vjik\TelegramBot\Api\Type\InlineKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\Payment\LabeledPrice;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
+
 use function PHPUnit\Framework\assertSame;
 
 final class SendInvoiceTest extends TestCase
@@ -80,6 +83,9 @@ final class SendInvoiceTest extends TestCase
             $replyMarkup,
             true,
             123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
         );
 
         assertSame(HttpMethod::POST, $method->getHttpMethod());
@@ -88,6 +94,7 @@ final class SendInvoiceTest extends TestCase
             [
                 'chat_id' => 1,
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'title' => 'The title',
                 'description' => 'The description',
                 'payload' => 'The payload',
@@ -113,9 +120,14 @@ final class SendInvoiceTest extends TestCase
                 'protect_content' => true,
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meid99',
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
-                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

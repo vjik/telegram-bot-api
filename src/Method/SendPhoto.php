@@ -15,6 +15,7 @@ use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardMarkup;
 use Vjik\TelegramBot\Api\Type\ReplyKeyboardRemove;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#sendphoto
@@ -43,6 +44,7 @@ final readonly class SendPhoto implements MethodInterface
         private InlineKeyboardMarkup|ReplyKeyboardMarkup|ReplyKeyboardRemove|ForceReply|null $replyMarkup = null,
         private ?bool $allowPaidBroadcast = null,
         private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -63,6 +65,7 @@ final readonly class SendPhoto implements MethodInterface
                 'photo' => $this->photo,
                 'business_connection_id' => $this->businessConnectionId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'caption' => $this->caption,
                 'parse_mode' => $this->parseMode,
                 'caption_entities' => $this->captionEntities === null ? null : array_map(
@@ -75,9 +78,9 @@ final readonly class SendPhoto implements MethodInterface
                 'protect_content' => $this->protectContent,
                 'allow_paid_broadcast' => $this->allowPaidBroadcast,
                 'message_effect_id' => $this->messageEffectId,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'reply_parameters' => $this->replyParameters?->toRequestArray(),
                 'reply_markup' => $this->replyMarkup?->toRequestArray(),
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

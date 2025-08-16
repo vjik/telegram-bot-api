@@ -8,6 +8,7 @@ use Vjik\TelegramBot\Api\ParseResult\ValueProcessor\ObjectValue;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\Message;
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
 /**
  * @see https://core.telegram.org/bots/api#forwardmessage
@@ -25,6 +26,7 @@ final readonly class ForwardMessage implements MethodInterface
         private ?bool $protectContent = null,
         private ?int $videoStartTimestamp = null,
         private ?int $directMessagesTopicId = null,
+        private ?SuggestedPostParameters $suggestedPostParameters = null,
     ) {}
 
     public function getHttpMethod(): HttpMethod
@@ -43,12 +45,13 @@ final readonly class ForwardMessage implements MethodInterface
             [
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'from_chat_id' => $this->fromChatId,
                 'video_start_timestamp' => $this->videoStartTimestamp,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
+                'suggested_post_parameters' => $this->suggestedPostParameters?->toRequestArray(),
                 'message_id' => $this->messageId,
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

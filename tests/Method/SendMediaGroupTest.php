@@ -60,6 +60,7 @@ final class SendMediaGroupTest extends TestCase
                 'business_connection_id' => 'bcid',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'media' => [
                     [
                         'type' => 'photo',
@@ -71,7 +72,6 @@ final class SendMediaGroupTest extends TestCase
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'id1',
                 'reply_parameters' => $replyParameters->toRequestArray(),
-                'direct_messages_topic_id' => 123,
                 'file0' => $file,
             ],
             $method->getData(),

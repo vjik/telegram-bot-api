@@ -46,12 +46,12 @@ final readonly class CopyMessages implements MethodInterface
             [
                 'chat_id' => $this->chatId,
                 'message_thread_id' => $this->messageThreadId,
+                'direct_messages_topic_id' => $this->directMessagesTopicId,
                 'from_chat_id' => $this->fromChatId,
                 'message_ids' => $this->messageIds,
                 'disable_notification' => $this->disableNotification,
                 'protect_content' => $this->protectContent,
                 'remove_caption' => $this->removeCaption,
-                'direct_messages_topic_id' => $this->directMessagesTopicId,
             ],
             static fn(mixed $value): bool => $value !== null,
         );

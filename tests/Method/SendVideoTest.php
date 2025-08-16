@@ -14,6 +14,9 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
+
 use function PHPUnit\Framework\assertSame;
 
 final class SendVideoTest extends TestCase
@@ -64,6 +67,9 @@ final class SendVideoTest extends TestCase
             'attach://file1',
             17,
             123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
         );
 
         assertSame(
@@ -71,6 +77,7 @@ final class SendVideoTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'video' => $video,
                 'duration' => 500,
                 'width' => 300,
@@ -88,9 +95,14 @@ final class SendVideoTest extends TestCase
                 'protect_content' => true,
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
-                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

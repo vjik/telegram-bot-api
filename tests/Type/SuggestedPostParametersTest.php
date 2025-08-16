@@ -8,6 +8,8 @@ use PHPUnit\Framework\TestCase;
 use Vjik\TelegramBot\Api\ParseResult\ObjectFactory;
 use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
 
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
+
 use function PHPUnit\Framework\assertNull;
 use function PHPUnit\Framework\assertSame;
 
@@ -19,6 +21,26 @@ final class SuggestedPostParametersTest extends TestCase
 
         assertNull($parameters->price);
         assertNull($parameters->sendDate);
+        assertSame([], $parameters->toRequestArray());
+    }
+
+    public function testFull(): void
+    {
+        $parameters = new SuggestedPostParameters(
+            price: new SuggestedPostPrice('XTR', 50),
+            sendDate: 1620000300,
+        );
+
+        assertSame(
+            [
+                'price' => [
+                    'currency' => 'XTR',
+                    'amount' => 50,
+                ],
+                'send_date' => 1620000300,
+            ],
+            $parameters->toRequestArray(),
+        );
     }
 
     public function testFromTelegramResult(): void

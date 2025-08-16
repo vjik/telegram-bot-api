@@ -14,6 +14,9 @@ use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\MessageEntity;
 use Vjik\TelegramBot\Api\Type\ReplyParameters;
 
+use Vjik\TelegramBot\Api\Type\SuggestedPostParameters;
+use Vjik\TelegramBot\Api\Type\SuggestedPostPrice;
+
 use function PHPUnit\Framework\assertSame;
 
 final class SendDocumentTest extends TestCase
@@ -57,6 +60,9 @@ final class SendDocumentTest extends TestCase
             $replyMarkup,
             true,
             123,
+            new SuggestedPostParameters(
+                new SuggestedPostPrice('USD', 10),
+            ),
         );
 
         assertSame(
@@ -64,6 +70,7 @@ final class SendDocumentTest extends TestCase
                 'business_connection_id' => 'bcid1',
                 'chat_id' => 12,
                 'message_thread_id' => 99,
+                'direct_messages_topic_id' => 123,
                 'document' => $document,
                 'thumbnail' => $thumbnail,
                 'caption' => 'Caption',
@@ -74,9 +81,14 @@ final class SendDocumentTest extends TestCase
                 'protect_content' => false,
                 'allow_paid_broadcast' => true,
                 'message_effect_id' => 'meID',
+                'suggested_post_parameters' => [
+                    'price' => [
+                        'currency' => 'USD',
+                        'amount' => 10,
+                    ],
+                ],
                 'reply_parameters' => $replyParameters->toRequestArray(),
                 'reply_markup' => $replyMarkup->toRequestArray(),
-                'direct_messages_topic_id' => 123,
             ],
             $method->getData(),
         );

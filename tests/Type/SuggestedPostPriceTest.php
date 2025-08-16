@@ -18,6 +18,13 @@ final class SuggestedPostPriceTest extends TestCase
 
         assertSame('XTR', $price->currency);
         assertSame(50, $price->amount);
+        assertSame(
+            [
+                'currency' => 'XTR',
+                'amount' => 50,
+            ],
+            $price->toRequestArray(),
+        );
     }
 
     public function testFromTelegramResult(): void
