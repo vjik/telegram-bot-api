@@ -133,6 +133,7 @@ final class MessageTest extends TestCase
         assertNull($message->checklist);
         assertNull($message->checklistTasksDone);
         assertNull($message->checklistTasksAdded);
+        assertNull($message->replyToChecklistTaskId);
     }
 
     public function testFromTelegramResult(): void
@@ -194,6 +195,7 @@ final class MessageTest extends TestCase
                 ],
                 'id' => 8863,
             ],
+            'reply_to_checklist_task_id' => 789,
             'via_bot' => [
                 'id' => 127,
                 'is_bot' => false,
@@ -695,5 +697,6 @@ final class MessageTest extends TestCase
         assertInstanceOf(ChecklistTasksDone::class, $message->checklistTasksDone);
         assertInstanceOf(ChecklistTasksAdded::class, $message->checklistTasksAdded);
         assertCount(2, $message->checklistTasksAdded->tasks);
+        assertSame(789, $message->replyToChecklistTaskId);
     }
 }

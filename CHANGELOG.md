@@ -3,6 +3,7 @@
 ## 0.9.2 under development
 
 - New #164: Add `checklistTaskId` field to `ReplyParameters` type.
+- New #164: Add `replyToChecklistTaskId` field to `Message` type.
 
 ## 0.9.1 July 4, 2025
 
