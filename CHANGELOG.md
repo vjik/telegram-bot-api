@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.9.3 under development
+
+- New #167: Add webhook response factories: `ArrayResponseFactory`, `JsonResponseFactory` and `PsrResponseFactory`.
+
 ## 0.9.2 August 16, 2025
 
 - New #164: Add `checklistTaskId` field to `ReplyParameters` type.
