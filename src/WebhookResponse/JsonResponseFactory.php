@@ -8,6 +8,9 @@ use Vjik\TelegramBot\Api\MethodInterface;
 
 use function json_encode;
 
+/**
+ * @api
+ */
 final readonly class JsonResponseFactory
 {
     private ArrayResponseFactory $arrayWebhookResponse;

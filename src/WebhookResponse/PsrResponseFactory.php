@@ -9,6 +9,9 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Vjik\TelegramBot\Api\MethodInterface;
 
+/**
+ * @api
+ */
 final readonly class PsrResponseFactory
 {
     private JsonResponseFactory $jsonWebhookResponse;

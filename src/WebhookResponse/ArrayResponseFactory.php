@@ -8,6 +8,9 @@ use LogicException;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+/**
+ * @api
+ */
 final readonly class ArrayResponseFactory
 {
     public function create(MethodInterface $method): array
