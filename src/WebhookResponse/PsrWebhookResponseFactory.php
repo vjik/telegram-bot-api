@@ -12,21 +12,20 @@ use Vjik\TelegramBot\Api\MethodInterface;
 /**
  * @api
  */
-final readonly class PsrResponseFactory
+final readonly class PsrWebhookResponseFactory
 {
-    private JsonResponseFactory $jsonWebhookResponse;
-
     public function __construct(
         private ResponseFactoryInterface $responseFactory,
         private StreamFactoryInterface $streamFactory,
-    ) {
-        $this->jsonWebhookResponse = new JsonResponseFactory();
-    }
+    ) {}
 
+    /**
+     * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
+     */
     public function create(MethodInterface $method): ResponseInterface
     {
         $body = $this->streamFactory->createStream(
-            $this->jsonWebhookResponse->create($method),
+            WebhookResponse::prepareJson($method),
         );
 
         return $this->responseFactory
