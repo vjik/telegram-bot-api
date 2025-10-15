@@ -31,11 +31,7 @@ final readonly class WebhookResponse
     public static function prepareData(MethodInterface $method): array
     {
         $data = $method->getData();
-        foreach ($data as $value) {
-            if ($value instanceof InputFile) {
-                throw new MethodNotSupportedException('InputFile is not supported in Webhook response.');
-            }
-        }
+        self::assertDataSupport($data);
 
         return [
             'method' => $method->getApiMethod(),
@@ -45,12 +41,23 @@ final readonly class WebhookResponse
 
     public static function isSupported(MethodInterface $method): bool
     {
-        foreach ($method->getData() as $value) {
+        try {
+            self::assertDataSupport($method->getData());
+            return true;
+        } catch (MethodNotSupportedException) {
+            return false;
+        }
+    }
+
+    /**
+     * @throws MethodNotSupportedException If {@see InputFile} is used in method data.
+     */
+    private static function assertDataSupport(array $data): void
+    {
+        foreach ($data as $value) {
             if ($value instanceof InputFile) {
-                return false;
+                throw new MethodNotSupportedException('InputFile is not supported in Webhook response.');
             }
         }
-
-        return true;
     }
 }
