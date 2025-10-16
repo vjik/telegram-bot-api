@@ -7,42 +7,37 @@ namespace Vjik\TelegramBot\Api\WebhookResponse;
 use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
-use function json_encode;
-
 /**
  * @api
  */
 final readonly class WebhookResponse
 {
+    private string $apiMethod;
+    private array $apiData;
+
+    public function __construct(MethodInterface $method)
+    {
+        $this->apiMethod = $method->getApiMethod();
+        $this->apiData = $method->getData();
+    }
+
     /**
      * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
      */
-    public static function prepareJson(MethodInterface $method): string
+    public function getData(): array
     {
-        return json_encode(
-            self::prepareData($method),
-            JSON_THROW_ON_ERROR,
-        );
-    }
-
-    /**
-     * @throws MethodNotSupportedException If {@see InputFile} is used in method data.
-     */
-    public static function prepareData(MethodInterface $method): array
-    {
-        $data = $method->getData();
-        self::assertDataSupport($data);
+        $this->assertSupport();
 
         return [
-            'method' => $method->getApiMethod(),
-            ...$method->getData(),
+            'method' => $this->apiMethod,
+            ...$this->apiData,
         ];
     }
 
-    public static function isSupported(MethodInterface $method): bool
+    public function isSupported(): bool
     {
         try {
-            self::assertDataSupport($method->getData());
+            $this->assertSupport();
             return true;
         } catch (MethodNotSupportedException) {
             return false;
@@ -52,9 +47,9 @@ final readonly class WebhookResponse
     /**
      * @throws MethodNotSupportedException If {@see InputFile} is used in method data.
      */
-    private static function assertDataSupport(array $data): void
+    private function assertSupport(): void
     {
-        foreach ($data as $value) {
+        foreach ($this->apiData as $value) {
             if ($value instanceof InputFile) {
                 throw new MethodNotSupportedException('InputFile is not supported in Webhook response.');
             }

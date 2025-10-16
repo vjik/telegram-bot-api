@@ -9,6 +9,8 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamFactoryInterface;
 use Vjik\TelegramBot\Api\MethodInterface;
 
+use function json_encode;
+
 /**
  * @api
  */
@@ -22,10 +24,18 @@ final readonly class PsrWebhookResponseFactory
     /**
      * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
      */
-    public function create(MethodInterface $method): ResponseInterface
+    public function byMethod(MethodInterface $method): ResponseInterface
+    {
+        return $this->byWebhookResponse(new WebhookResponse($method));
+    }
+
+    /**
+     * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
+     */
+    public function byWebhookResponse(WebhookResponse $webhookResponse): ResponseInterface
     {
         $body = $this->streamFactory->createStream(
-            WebhookResponse::prepareJson($method),
+            json_encode($webhookResponse->getData(), JSON_THROW_ON_ERROR),
         );
 
         return $this->responseFactory
