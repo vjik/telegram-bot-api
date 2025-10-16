@@ -2,8 +2,8 @@
 
 ## 0.9.3 under development
 
-- New #167: Add webhook PSR-7 response factory `PsrWebhookResponseFactory` and `WebhookResponse` helper to prepare
-  webhook response data.
+- New #167: Add `WebhookResponse` class that represents method as response on webhook.
+- New #167: Add webhook response factories `PsrWebhookResponseFactory`, `JsonWebhookResponseFactory`.
 
 ## 0.9.2 August 16, 2025
 
