@@ -14,16 +14,16 @@ final readonly class JsonWebhookResponseFactory
     /**
      * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
      */
-    public function byMethod(MethodInterface $method): string
+    public function create(WebhookResponse $webhookResponse): string
     {
-        return $this->byWebhookResponse(new WebhookResponse($method));
+        return json_encode($webhookResponse->getData(), JSON_THROW_ON_ERROR);
     }
 
     /**
      * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
      */
-    public function byWebhookResponse(WebhookResponse $webhookResponse): string
+    public function byMethod(MethodInterface $method): string
     {
-        return json_encode($webhookResponse->getData(), JSON_THROW_ON_ERROR);
+        return $this->create(new WebhookResponse($method));
     }
 }

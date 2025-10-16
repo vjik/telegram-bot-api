@@ -24,15 +24,7 @@ final readonly class PsrWebhookResponseFactory
     /**
      * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
      */
-    public function byMethod(MethodInterface $method): ResponseInterface
-    {
-        return $this->byWebhookResponse(new WebhookResponse($method));
-    }
-
-    /**
-     * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
-     */
-    public function byWebhookResponse(WebhookResponse $webhookResponse): ResponseInterface
+    public function create(WebhookResponse $webhookResponse): ResponseInterface
     {
         $body = $this->streamFactory->createStream(
             json_encode($webhookResponse->getData(), JSON_THROW_ON_ERROR),
@@ -43,5 +35,13 @@ final readonly class PsrWebhookResponseFactory
             ->withBody($body)
             ->withHeader('Content-Type', 'application/json; charset=utf-8')
             ->withHeader('Content-Length', (string) $body->getSize());
+    }
+
+    /**
+     * @throws MethodNotSupportedException If method doesn't support sending via a webhook response.
+     */
+    public function byMethod(MethodInterface $method): ResponseInterface
+    {
+        return $this->create(new WebhookResponse($method));
     }
 }
