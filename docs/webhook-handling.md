@@ -1,5 +1,7 @@
 # Webhook handling
 
+This guide explains how to handle incoming webhook updates from Telegram and how to respond to them.
+
 ## `Update` object
 
 You can create an `Update` object by several ways:
@@ -109,3 +111,122 @@ $update = new Update(
     message: $message,
 );
 ```
+
+## Webhook responses
+
+According to the Telegram Bot API 
+[documentation](https://core.telegram.org/bots/faq#how-can-i-make-requests-in-response-to-updates),
+you can respond to webhook updates by returning a JSON-serialized method in the HTTP response body. This allows you to
+make one Bot API request without waiting for a response from your server.
+
+### Creating webhook responses
+
+The `WebhookResponse` class represents a method as a response to a webhook. You can create it from any method object:
+
+```php
+use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\WebhookResponse\WebhookResponse;
+
+$method = new SendMessage(chatId: 12345, text: 'Hello!');
+$webhookResponse = new WebhookResponse($method);
+
+// Check if the method is supported for webhook responses (doesn't use InputFile)
+if ($webhookResponse->isSupported()) {
+    $data = $webhookResponse->getData();
+    // Returns: ['method' => 'sendMessage', 'chat_id' => 12345, 'text' => 'Hello!']
+}
+```
+
+### PSR-7 response factory
+
+The `PsrWebhookResponseFactory` creates PSR-7 compliant HTTP responses for webhook handlers:
+
+```php
+use Psr\Http\Message\ResponseFactoryInterface;
+use Psr\Http\Message\StreamFactoryInterface;
+use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\WebhookResponse\PsrWebhookResponseFactory;
+use Vjik\TelegramBot\Api\WebhookResponse\WebhookResponse;
+
+/**
+ * @var ResponseFactoryInterface $responseFactory
+ * @var StreamFactoryInterface $streamFactory
+ */
+
+$factory = new PsrWebhookResponseFactory($responseFactory, $streamFactory);
+
+// Create response from WebhookResponse object
+$webhookResponse = new WebhookResponse(new SendMessage(chatId: 12345, text: 'Hello!'));
+$response = $factory->create($webhookResponse);
+
+// Or create response directly from method, if you sure that InputFile is not used
+$method = new SendMessage(chatId: 12345, text: 'Hello!');
+$response = $factory->byMethod($method);
+```
+
+The factory automatically:
+
+- encodes the data as JSON;
+- sets the `Content-Type` header to `application/json; charset=utf-8`;
+- sets the `Content-Length` header.
+
+### JSON response factory
+
+The `JsonWebhookResponseFactory` creates JSON strings for webhook responses:
+
+```php
+use Vjik\TelegramBot\Api\Method\SendMessage;
+use Vjik\TelegramBot\Api\WebhookResponse\JsonWebhookResponseFactory;
+use Vjik\TelegramBot\Api\WebhookResponse\WebhookResponse;
+
+$factory = new JsonWebhookResponseFactory();
+
+// Create JSON from WebhookResponse object
+$webhookResponse = new WebhookResponse(new SendMessage(chatId: 12345, text: 'Hello!'));
+$json = $factory->create($webhookResponse);
+
+// Or create JSON directly from method
+$method = new SendMessage(chatId: 12345, text: 'Hello!');
+$json = $factory->byMethod($method);
+
+// Now you can send this JSON in your HTTP response body
+header('Content-Type: application/json; charset=utf-8');
+echo $json;
+```
+
+### Limitations
+
+Webhook responses have an important limitation: they **do not support file uploads** (methods using `InputFile`).
+This is because webhook responses are sent as JSON, and file uploads require multipart form data.
+
+If you try to create a webhook response with a method that uses `InputFile`, the following will happen:
+
+- `isSupported()` will return `false`;
+- `getData()` will throw `MethodNotSupportedException`.
+
+```php
+use Vjik\TelegramBot\Api\Method\SendPhoto;
+use Vjik\TelegramBot\Api\Type\InputFile;
+use Vjik\TelegramBot\Api\WebhookResponse\WebhookResponse;
+use Vjik\TelegramBot\Api\WebhookResponse\MethodNotSupportedException;
+
+$method = new SendPhoto(
+    chatId: 12345,
+    photo: InputFile::fromLocalFile('/path/to/photo.jpg'),
+);
+
+$webhookResponse = new WebhookResponse($method);
+
+if (!$webhookResponse->isSupported()) {
+    // Method contains InputFile - cannot be sent via webhook response
+    // You'll need to make a separate API call for this
+}
+
+try {
+    $data = $webhookResponse->getData();
+} catch (MethodNotSupportedException $e) {
+    // Exception: "InputFile is not supported in Webhook response."
+}
+```
+
+For methods with file uploads, you must use the regular `TelegramBotApi` instance to make the request separately.
