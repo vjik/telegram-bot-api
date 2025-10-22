@@ -159,7 +159,7 @@ $factory = new PsrWebhookResponseFactory($responseFactory, $streamFactory);
 $webhookResponse = new WebhookResponse(new SendMessage(chatId: 12345, text: 'Hello!'));
 $response = $factory->create($webhookResponse);
 
-// Or create response directly from method, if you sure that InputFile is not used
+// Or create response directly from method, if you are sure that InputFile is not used
 $method = new SendMessage(chatId: 12345, text: 'Hello!');
 $response = $factory->byMethod($method);
 ```
