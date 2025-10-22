@@ -48,6 +48,7 @@ final class WebhookResponseTest extends TestCase
         assertFalse($webhookResponse->isSupported());
 
         $this->expectException(MethodNotSupportedException::class);
+        $this->expectExceptionMessage('InputFile is not supported in Webhook response.');
         $webhookResponse->getData();
     }
 }
