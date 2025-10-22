@@ -8,6 +8,8 @@ use Vjik\TelegramBot\Api\MethodInterface;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
 /**
+ * @see https://core.telegram.org/bots/faq#how-can-i-make-requests-in-response-to-updates
+ *
  * @api
  */
 final readonly class WebhookResponse

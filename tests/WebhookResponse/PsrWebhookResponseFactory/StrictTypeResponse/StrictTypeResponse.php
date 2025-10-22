@@ -37,12 +37,6 @@ final class StrictTypeResponse implements ResponseInterface
         return $this->traitWithHeader($name, $value);
     }
 
-    /**
-     * Validate that header values are strings, not integers or other types.
-     * This catches the mutant where (string) cast is removed from $body->getSize().
-     *
-     * @throws LogicException if value is not a string or array of strings
-     */
     private function checkValue($value): void
     {
         if (is_string($value)) {
