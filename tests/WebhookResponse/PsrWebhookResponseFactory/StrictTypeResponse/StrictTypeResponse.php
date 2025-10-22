@@ -44,7 +44,7 @@ final class StrictTypeResponse implements ResponseInterface
         }
 
         throw new LogicException(
-            'Invalid header value: expected string, got ' . get_debug_type($value)
+            'Invalid header value: expected string, got ' . get_debug_type($value),
         );
     }
 }
