@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api\Tests\WebhookResponse;
+namespace Vjik\TelegramBot\Api\Tests\WebhookResponse\PsrWebhookResponseFactory;
 
 use HttpSoft\Message\ResponseFactory;
 use HttpSoft\Message\StreamFactory;
