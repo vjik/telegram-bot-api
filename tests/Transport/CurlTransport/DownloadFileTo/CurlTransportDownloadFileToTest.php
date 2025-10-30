@@ -18,7 +18,6 @@ use Yiisoft\Files\FileHelper;
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertFileExists;
 use function PHPUnit\Framework\assertInstanceOf;
-use function PHPUnit\Framework\assertIsArray;
 use function PHPUnit\Framework\assertIsResource;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertStringEqualsFile;
