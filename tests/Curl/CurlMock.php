@@ -15,7 +15,7 @@ use function is_array;
 final class CurlMock implements CurlInterface
 {
     private ?array $options = null;
-    private ?array $shareOptions = null;
+    private array $shareOptions = [];
     private int $countCallOfClose = 0;
 
     public function __construct(
@@ -62,7 +62,6 @@ final class CurlMock implements CurlInterface
 
     public function share_setopt(CurlShareHandle $handle, int $option, mixed $value): void
     {
-        $this->shareOptions ??= [];
         $this->shareOptions[] = [$option, $value];
     }
 
@@ -71,7 +70,7 @@ final class CurlMock implements CurlInterface
         return $this->options;
     }
 
-    public function getShareOptions(): ?array
+    public function getShareOptions(): array
     {
         return $this->shareOptions;
     }
