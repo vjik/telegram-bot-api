@@ -14,7 +14,7 @@ $finder = (new Finder())->in([
 return (new Config())
     ->setParallelConfig(ParallelConfigFactory::detect())
     ->setRules([
-        '@PER-CS2.0' => true,
+        '@PER-CS3.0' => true,
         'no_unused_imports' => true,
     ])
     ->setFinder($finder);
