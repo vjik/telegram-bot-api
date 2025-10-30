@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Curl;
 
 use CurlHandle;
+use CurlShareHandle;
 
 /**
  * @internal
@@ -29,4 +30,9 @@ interface CurlInterface
      * @throws CurlException
      */
     public function setopt_array(CurlHandle $handle, array $options): void;
+
+    /**
+     * @throws CurlException
+     */
+    public function share_setopt(CurlShareHandle $handle, int $option, mixed $value): void;
 }

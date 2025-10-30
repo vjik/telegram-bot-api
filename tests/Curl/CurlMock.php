@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Tests\Curl;
 
 use CurlHandle;
+use CurlShareHandle;
 use Throwable;
 use Vjik\TelegramBot\Api\Curl\CurlInterface;
 
@@ -14,6 +15,7 @@ use function is_array;
 final class CurlMock implements CurlInterface
 {
     private ?array $options = null;
+    private array $shareOptions = [];
     private int $countCallOfClose = 0;
 
     public function __construct(
@@ -58,9 +60,19 @@ final class CurlMock implements CurlInterface
         $this->options = $options;
     }
 
+    public function share_setopt(CurlShareHandle $handle, int $option, mixed $value): void
+    {
+        $this->shareOptions[] = [$option, $value];
+    }
+
     public function getOptions(): ?array
     {
         return $this->options;
+    }
+
+    public function getShareOptions(): array
+    {
+        return $this->shareOptions;
     }
 
     public function getCountCallOfClose(): int
