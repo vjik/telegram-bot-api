@@ -16,6 +16,7 @@ use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertArrayHasKey;
 use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
 use function PHPUnit\Framework\assertInstanceOf;
@@ -233,5 +234,24 @@ final class CurlTransportTest extends TestCase
         }
 
         assertSame(1, $curl->getCountCallOfClose());
+    }
+
+    public function testShareOptions(): void
+    {
+        $curl = new CurlMock(
+            execResult: '{"ok":true,"result":[]}',
+            getinfoResult: [CURLINFO_HTTP_CODE => 200],
+        );
+
+        (new CurlTransport($curl))->send('getMe');
+
+        assertSame(
+            [
+                [CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE],
+                [CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS],
+                [CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION],
+            ],
+            $curl->getShareOptions(),
+        );
     }
 }

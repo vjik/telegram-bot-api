@@ -179,15 +179,12 @@ final readonly class CurlTransport implements TransportInterface
         ];
     }
 
-    /**
-     * @psalm-suppress UnusedFunctionCall https://github.com/vimeo/psalm/issues/11581
-     */
     private function createCurlShareHandle(): CurlShareHandle
     {
         $handle = curl_share_init();
-        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
-        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
-        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+        $this->curl->share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+        $this->curl->share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+        $this->curl->share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
         return $handle;
     }
 }

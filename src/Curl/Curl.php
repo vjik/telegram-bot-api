@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Vjik\TelegramBot\Api\Curl;
 
 use CurlHandle;
+use CurlShareHandle;
 
 use function curl_close;
 use function curl_errno;
@@ -58,6 +59,14 @@ final class Curl implements CurlInterface
         $result = curl_setopt_array($handle, $options);
         if ($result === false) {
             throw new CurlException('Failed to set CURL options.');
+        }
+    }
+
+    public function share_setopt(CurlShareHandle $handle, int $option, mixed $value): void
+    {
+        $result = curl_share_setopt($handle, $option, $value);
+        if ($result === false) {
+            throw new CurlException('Failed to set option for a cURL share handle.');
         }
     }
 }
