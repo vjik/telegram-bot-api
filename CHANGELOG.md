@@ -1,5 +1,9 @@
 # Telegram Bot API for PHP Change Log
 
+## 0.9.4 under development
+
+- Enh #170: Improve `CurlTransport` performance by sharing data between cURL handles (@vjik)
+
 ## 0.9.3 October 22, 2025
 
 - New #167: Add `WebhookResponse` class that represents method as response on webhook.

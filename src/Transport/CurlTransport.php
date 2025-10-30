@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport;
 
+use CurlShareHandle;
 use CURLStringFile;
 use Vjik\TelegramBot\Api\Curl\Curl;
 use Vjik\TelegramBot\Api\Curl\CurlException;
@@ -19,9 +20,13 @@ use function json_encode;
  */
 final readonly class CurlTransport implements TransportInterface
 {
+    private CurlShareHandle $curlShareHandle;
+
     public function __construct(
         private CurlInterface $curl = new Curl(),
-    ) {}
+    ) {
+        $this->curlShareHandle = $this->createCurlShareHandle();
+    }
 
     /**
      * @psalm-param array<string, mixed> $data
@@ -33,6 +38,7 @@ final readonly class CurlTransport implements TransportInterface
             HttpMethod::POST => $this->createPostOptions($urlPath, $data),
         };
         $options[CURLOPT_RETURNTRANSFER] = true;
+        $options[CURLOPT_SHARE] = $this->curlShareHandle;
 
         $curl = $this->curl->init();
 
@@ -61,6 +67,7 @@ final readonly class CurlTransport implements TransportInterface
             CURLOPT_URL => $url,
             CURLOPT_RETURNTRANSFER => true,
             CURLOPT_FAILONERROR => true,
+            CURLOPT_SHARE => $this->curlShareHandle,
         ];
 
         try {
@@ -102,6 +109,7 @@ final readonly class CurlTransport implements TransportInterface
             CURLOPT_URL => $url,
             CURLOPT_FILE => $fileHandler,
             CURLOPT_FAILONERROR => true,
+            CURLOPT_SHARE => $this->curlShareHandle,
         ];
 
         try {
@@ -169,5 +177,17 @@ final readonly class CurlTransport implements TransportInterface
             CURLOPT_HTTPGET => true,
             CURLOPT_URL => $url,
         ];
+    }
+
+    /**
+     * @psalm-suppress UnusedFunctionCall https://github.com/vimeo/psalm/issues/11581
+     */
+    private function createCurlShareHandle(): CurlShareHandle
+    {
+        $handle = curl_share_init();
+        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_COOKIE);
+        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_DNS);
+        curl_share_setopt($handle, CURLSHOPT_SHARE, CURL_LOCK_DATA_SSL_SESSION);
+        return $handle;
     }
 }

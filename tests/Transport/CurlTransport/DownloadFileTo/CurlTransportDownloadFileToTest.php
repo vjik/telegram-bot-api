@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport\DownloadFileTo;
 
+use CurlShareHandle;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
@@ -14,6 +15,7 @@ use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 use Vjik\TelegramBot\Api\Transport\SaveFileException;
 use Yiisoft\Files\FileHelper;
 
+use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertFileExists;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertIsArray;
@@ -41,15 +43,12 @@ final class CurlTransportDownloadFileToTest extends TestCase
 
         $transport->downloadFileTo('https://example.test/test.txt', $filePath);
 
-        $curlOptions = $curl->getOptions();
-        assertIsArray($curlOptions);
-        assertSame(
-            [CURLOPT_URL, CURLOPT_FILE, CURLOPT_FAILONERROR],
-            array_keys($curlOptions),
-        );
-        assertSame('https://example.test/test.txt', $curlOptions[CURLOPT_URL]);
-        assertIsResource($curlOptions[CURLOPT_FILE]);
-        assertTrue($curlOptions[CURLOPT_FAILONERROR]);
+        $options = $curl->getOptions();
+        assertCount(4, $options);
+        assertSame('https://example.test/test.txt', $options[CURLOPT_URL]);
+        assertIsResource($options[CURLOPT_FILE]);
+        assertTrue($options[CURLOPT_FAILONERROR]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
 
         assertFileExists($filePath);
         assertStringEqualsFile($filePath, 'hello-content');

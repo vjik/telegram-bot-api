@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
 
+use CurlShareHandle;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 use Throwable;
@@ -12,8 +13,10 @@ use Vjik\TelegramBot\Api\Tests\Curl\CurlMock;
 use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\DownloadFileException;
 
+use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertSame;
+use function PHPUnit\Framework\assertTrue;
 
 final class CurlTransportDownloadFileTest extends TestCase
 {
@@ -25,14 +28,13 @@ final class CurlTransportDownloadFileTest extends TestCase
         $result = $transport->downloadFile('https://example.test/hello.jpg');
 
         assertSame('hello-content', $result);
-        assertSame(
-            [
-                CURLOPT_URL => 'https://example.test/hello.jpg',
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_FAILONERROR => true,
-            ],
-            $curl->getOptions(),
-        );
+
+        $options = $curl->getOptions();
+        assertCount(4, $options);
+        assertSame('https://example.test/hello.jpg', $options[CURLOPT_URL]);
+        assertTrue($options[CURLOPT_RETURNTRANSFER]);
+        assertTrue($options[CURLOPT_FAILONERROR]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     public function testInitException(): void

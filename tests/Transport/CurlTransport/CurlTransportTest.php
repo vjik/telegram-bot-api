@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Transport\CurlTransport;
 
+use CurlShareHandle;
 use CURLStringFile;
 use HttpSoft\Message\StreamFactory;
 use PHPUnit\Framework\TestCase;
@@ -15,7 +16,9 @@ use Vjik\TelegramBot\Api\Transport\CurlTransport;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Type\InputFile;
 
+use function PHPUnit\Framework\assertCount;
 use function PHPUnit\Framework\assertEquals;
+use function PHPUnit\Framework\assertInstanceOf;
 use function PHPUnit\Framework\assertSame;
 use function PHPUnit\Framework\assertTrue;
 
@@ -40,14 +43,13 @@ final class CurlTransportTest extends TestCase
 
         assertSame(200, $response->statusCode);
         assertSame('{"ok":true,"result":[]}', $response->body);
-        assertSame(
-            [
-                CURLOPT_HTTPGET => true,
-                CURLOPT_URL => '//url/getMe?key=value&array=%5B1%2C%22test%22%5D',
-                CURLOPT_RETURNTRANSFER => true,
-            ],
-            $curl->getOptions(),
-        );
+
+        $options = $curl->getOptions();
+        assertCount(4, $options);
+        assertTrue($options[CURLOPT_HTTPGET]);
+        assertSame('//url/getMe?key=value&array=%5B1%2C%22test%22%5D', $options[CURLOPT_URL]);
+        assertTrue($options[CURLOPT_RETURNTRANSFER]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     public function testPost(): void
@@ -62,15 +64,14 @@ final class CurlTransportTest extends TestCase
 
         assertSame(200, $response->statusCode);
         assertSame('{"ok":true,"result":[]}', $response->body);
-        assertSame(
-            [
-                CURLOPT_POST => true,
-                CURLOPT_URL => '//url/logOut',
-                CURLOPT_POSTFIELDS => [],
-                CURLOPT_RETURNTRANSFER => true,
-            ],
-            $curl->getOptions(),
-        );
+
+        $options = $curl->getOptions();
+        assertCount(5, $options);
+        assertTrue($options[CURLOPT_POST]);
+        assertSame('//url/logOut', $options[CURLOPT_URL]);
+        assertSame([], $options[CURLOPT_POSTFIELDS]);
+        assertTrue($options[CURLOPT_RETURNTRANSFER]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     public function testPostWithParams(): void
@@ -87,19 +88,20 @@ final class CurlTransportTest extends TestCase
             'object' => new stdClass(),
         ]);
 
+        $options = $curl->getOptions();
+        assertCount(5, $options);
+        assertTrue($options[CURLOPT_POST]);
+        assertSame('//url/setChatTitle', $options[CURLOPT_URL]);
         assertSame(
             [
-                CURLOPT_POST => true,
-                CURLOPT_URL => '//url/setChatTitle',
-                CURLOPT_POSTFIELDS => [
-                    'chat_id' => 123,
-                    'title' => 'test',
-                    'object' => '{}',
-                ],
-                CURLOPT_RETURNTRANSFER => true,
+                'chat_id' => 123,
+                'title' => 'test',
+                'object' => '{}',
             ],
-            $curl->getOptions(),
+            $options[CURLOPT_POSTFIELDS],
         );
+        assertTrue($options[CURLOPT_RETURNTRANSFER]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     public function testWithoutCode(): void
@@ -132,9 +134,9 @@ final class CurlTransportTest extends TestCase
         assertSame('{"ok":true,"result":[]}', $response->body);
 
         $options = $curl->getOptions();
-        assertSame([CURLOPT_POST, CURLOPT_URL, CURLOPT_POSTFIELDS, CURLOPT_RETURNTRANSFER], array_keys($options));
-        assertTrue($options[CURLOPT_POST] ?? null);
-        assertSame('//url/sendPhoto', $options[CURLOPT_URL] ?? null);
+        assertCount(5, $options);
+        assertTrue($options[CURLOPT_POST]);
+        assertSame('//url/sendPhoto', $options[CURLOPT_URL]);
         assertEquals(
             [
                 'photo1' => new CURLStringFile(
@@ -146,8 +148,10 @@ final class CurlTransportTest extends TestCase
                     'photo.png',
                 ),
             ],
-            $options[CURLOPT_POSTFIELDS] ?? null,
+            $options[CURLOPT_POSTFIELDS],
         );
+        assertTrue($options[CURLOPT_RETURNTRANSFER]);
+        assertInstanceOf(CurlShareHandle::class, $options[CURLOPT_SHARE]);
     }
 
     public function testPostWithStreamFile(): void
