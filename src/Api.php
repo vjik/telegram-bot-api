@@ -10,6 +10,7 @@ use SensitiveParameter;
 use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
 use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
+use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
@@ -50,11 +51,15 @@ final readonly class Api
             LogContextFactory::sendRequest($method),
         );
 
-        $response = $this->transport->send(
-            $this->makeUrlPath($method->getApiMethod()),
-            $method->getData(),
-            $method->getHttpMethod(),
-        );
+        if ($method->getHttpMethod() === HttpMethod::GET) {
+            $response = $this->sendGetRequest($method->getApiMethod(), $method->getData());
+        } else {
+            $response = $this->transport->send(
+                $this->makeUrlPath($method->getApiMethod()),
+                $method->getData(),
+                $method->getHttpMethod(),
+            );
+        }
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -104,6 +109,24 @@ final readonly class Api
         }
 
         return $result;
+    }
+
+    /**
+     * @param array<string, mixed> $data
+     */
+    private function sendGetRequest(string $apiMethod, array $data): ApiResponse
+    {
+        $queryParameters = array_map(
+            static fn($value) => is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR),
+            $data,
+        );
+
+        $url = $this->makeUrlPath($apiMethod);
+        if (!empty($queryParameters)) {
+            $url .= '?' . http_build_query($queryParameters);
+        }
+
+        return $this->transport->get($url);
     }
 
     private function makeUrlPath(string $apiMethod): string

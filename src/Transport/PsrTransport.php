@@ -28,6 +28,28 @@ final readonly class PsrTransport implements TransportInterface
         private StreamFactoryInterface $streamFactory,
     ) {}
 
+    public function get(string $url): ApiResponse
+    {
+        return $this->sendRequest(
+            $this->requestFactory->createRequest('GET', $url),
+        );
+    }
+
+    private function sendRequest(RequestInterface $request): ApiResponse
+    {
+        $response = $this->client->sendRequest($request);
+
+        $body = $response->getBody();
+        if ($body->isSeekable()) {
+            $body->rewind();
+        }
+
+        return new ApiResponse(
+            $response->getStatusCode(),
+            $body->getContents(),
+        );
+    }
+
     public function send(
         string $urlPath,
         array $data = [],

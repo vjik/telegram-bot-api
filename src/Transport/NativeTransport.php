@@ -29,6 +29,50 @@ final readonly class NativeTransport implements TransportInterface
         $this->mimeTypeResolver = $mimeTypeResolver ?? new ApacheMimeTypeResolver();
     }
 
+    public function get(string $url): ApiResponse
+    {
+        return $this->sendRequest([
+            $url,
+            ['method' => 'GET'],
+        ]);
+    }
+
+    /**
+     * @psalm-param array{0: string, ...} $options
+     */
+    private function sendRequest(array $options): ApiResponse
+    {
+        global $http_response_header;
+
+        $options['ignore_errors'] = true;
+
+        $context = stream_context_create(['http' => $options]);
+
+        set_error_handler(
+            static function (int $errorNumber, string $errorString): bool {
+                throw new RuntimeException($errorString);
+            },
+        );
+        try {
+            /**
+             * @var string $body We throw an exception on error, so `file_get_contents()` returns the string.
+             */
+            $body = file_get_contents($options[0], context: $context);
+        } finally {
+            restore_error_handler();
+        }
+
+        /**
+         * @psalm-var non-empty-list<string> $http_response_header
+         * @see https://www.php.net/manual/reserved.variables.httpresponseheader.php
+         */
+
+        return new ApiResponse(
+            $this->parseStatusCode($http_response_header),
+            $body,
+        );
+    }
+
     public function send(string $urlPath, array $data = [], HttpMethod $httpMethod = HttpMethod::POST): ApiResponse
     {
         global $http_response_header;

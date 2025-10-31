@@ -9,6 +9,8 @@ namespace Vjik\TelegramBot\Api\Transport;
  */
 interface TransportInterface
 {
+    public function get(string $url): ApiResponse;
+
     /**
      * @psalm-param array<string, mixed> $data
      */

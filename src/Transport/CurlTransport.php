@@ -28,6 +28,41 @@ final readonly class CurlTransport implements TransportInterface
         $this->curlShareHandle = $this->createCurlShareHandle();
     }
 
+    public function get(string $url): ApiResponse
+    {
+        $options = [
+            CURLOPT_HTTPGET => true,
+            CURLOPT_URL => $url,
+        ];
+        return $this->sendRequest($options);
+    }
+
+    private function sendRequest(array $options): ApiResponse
+    {
+        $options[CURLOPT_RETURNTRANSFER] = true;
+        $options[CURLOPT_SHARE] = $this->curlShareHandle;
+
+        $curl = $this->curl->init();
+
+        try {
+            $this->curl->setopt_array($curl, $options);
+
+            /**
+             * @var string $body `curl_exec` returns string because `CURLOPT_RETURNTRANSFER` is set to `true`.
+             */
+            $body = $this->curl->exec($curl);
+
+            $statusCode = $this->curl->getinfo($curl, CURLINFO_HTTP_CODE);
+            if (!is_int($statusCode)) {
+                $statusCode = 0;
+            }
+        } finally {
+            $this->curl->close($curl);
+        }
+
+        return new ApiResponse($statusCode, $body);
+    }
+
     /**
      * @psalm-param array<string, mixed> $data
      */
