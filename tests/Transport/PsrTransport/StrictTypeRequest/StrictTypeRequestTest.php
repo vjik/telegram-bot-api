@@ -29,7 +29,7 @@ final class StrictTypeRequestTest extends TestCase
             $streamFactory,
         );
 
-        $response = $transport->send('getMyName', ['language_code' => 'ru']);
+        $response = $transport->get('getMyName');
 
         assertSame(201, $response->statusCode);
         assertSame('hello', $response->body);

@@ -12,14 +12,17 @@ use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
+use Vjik\TelegramBot\Api\Type\InputFile;
 use Vjik\TelegramBot\Api\Type\ResponseParameters;
 
 use function array_key_exists;
 use function is_array;
 use function is_bool;
 use function is_int;
+use function is_scalar;
 use function is_string;
 use function json_decode;
+use function strlen;
 
 /**
  * @internal
@@ -51,15 +54,11 @@ final readonly class Api
             LogContextFactory::sendRequest($method),
         );
 
-        if ($method->getHttpMethod() === HttpMethod::GET) {
-            $response = $this->sendGetRequest($method->getApiMethod(), $method->getData());
-        } else {
-            $response = $this->transport->send(
-                $this->makeUrlPath($method->getApiMethod()),
-                $method->getData(),
-                $method->getHttpMethod(),
-            );
-        }
+        $url = $this->baseUrl . '/bot' . $this->token . '/' . $method->getApiMethod();
+        $response = match ($method->getHttpMethod()) {
+            HttpMethod::GET => $this->sendGetRequest($url, $method->getData()),
+            HttpMethod::POST => $this->sendPostRequest($url, $method->getData()),
+        };
 
         try {
             $decodedBody = json_decode($response->body, true, flags: JSON_THROW_ON_ERROR);
@@ -112,16 +111,15 @@ final readonly class Api
     }
 
     /**
-     * @param array<string, mixed> $data
+     * @psalm-param array<string, mixed> $data
      */
-    private function sendGetRequest(string $apiMethod, array $data): ApiResponse
+    private function sendGetRequest(string $url, array $data): ApiResponse
     {
         $queryParameters = array_map(
             static fn($value) => is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR),
             $data,
         );
 
-        $url = $this->makeUrlPath($apiMethod);
         if (!empty($queryParameters)) {
             $url .= '?' . http_build_query($queryParameters);
         }
@@ -129,9 +127,37 @@ final readonly class Api
         return $this->transport->get($url);
     }
 
-    private function makeUrlPath(string $apiMethod): string
+    /**
+     * @psalm-param array<string, mixed> $data
+     */
+    private function sendPostRequest(string $url, array $data): ApiResponse
     {
-        return $this->baseUrl . '/bot' . $this->token . '/' . $apiMethod;
+        $files = [];
+        foreach ($data as $key => $value) {
+            if ($value instanceof InputFile) {
+                $files[$key] = $value;
+                unset($data[$key]);
+            }
+        }
+
+        if (empty($files)) {
+            $content = json_encode($data, JSON_THROW_ON_ERROR);
+            return $this->transport->post(
+                $url,
+                $content,
+                [
+                    'Content-Length' => (string) strlen($content),
+                    'Content-Type' => 'application/json; charset=utf-8',
+                ],
+            );
+        }
+
+        $data = array_map(
+            static fn(mixed $value) => is_scalar($value) ? $value : json_encode($value, JSON_THROW_ON_ERROR),
+            $data,
+        );
+
+        return $this->transport->postWithFiles($url, $data, $files);
     }
 
     /**

@@ -346,7 +346,7 @@ final class TelegramBotApiTest extends TestCase
 
         $api->logout();
 
-        assertSame('https://api.telegram.org/botstub-token/logOut', $transport->urlPath());
+        assertSame('https://api.telegram.org/botstub-token/logOut', $transport->url());
     }
 
     public static function dataMakeFileUrl(): iterable
