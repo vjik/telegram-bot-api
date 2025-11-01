@@ -1,4 +1,10 @@
-# Telegram Bot API for PHP
+<div align="center">
+    <a href="https://github.com/phptg">
+        <img src="logo.png" alt="PHPTG">
+    </a>
+    <h1 align="center">Telegram Bot API for PHP</h1>
+    <br>
+</div>
 
 [![Latest Stable Version](https://poser.pugx.org/phptg/bot-api/v)](https://packagist.org/packages/phptg/bot-api)
 [![Total Downloads](https://poser.pugx.org/phptg/bot-api/downloads)](https://packagist.org/packages/phptg/bot-api)
