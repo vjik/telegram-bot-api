@@ -2,6 +2,7 @@
 
 ## 0.9.4 under development
 
+- Chg #172: Rename package from `vjik/telegram-bot-api` to `phptg/bot-api` (@vjik)
 - Enh #170: Improve `CurlTransport` performance by sharing data between cURL handles (@vjik)
 
 ## 0.9.3 October 22, 2025

@@ -1,11 +1,11 @@
 # Telegram Bot API for PHP
 
-[![Latest Stable Version](https://poser.pugx.org/vjik/telegram-bot-api/v)](https://packagist.org/packages/vjik/telegram-bot-api)
-[![Total Downloads](https://poser.pugx.org/vjik/telegram-bot-api/downloads)](https://packagist.org/packages/vjik/telegram-bot-api)
-[![Build status](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml/badge.svg)](https://github.com/vjik/telegram-bot-api/actions/workflows/build.yml)
-[![Coverage Status](https://coveralls.io/repos/github/vjik/telegram-bot-api/badge.svg)](https://coveralls.io/github/vjik/telegram-bot-api)
-[![Mutation score](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fvjik%2Ftelegram-bot-api%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/vjik/telegram-bot-api/master)
-[![Static analysis](https://github.com/vjik/telegram-bot-api/actions/workflows/static.yml/badge.svg?branch=master)](https://github.com/vjik/telegram-bot-api/actions/workflows/static.yml?query=branch%3Amaster)
+[![Latest Stable Version](https://poser.pugx.org/phptg/bot-api/v)](https://packagist.org/packages/phptg/bot-api)
+[![Total Downloads](https://poser.pugx.org/phptg/bot-api/downloads)](https://packagist.org/packages/phptg/bot-api)
+[![Build status](https://github.com/phptg/bot-api/actions/workflows/build.yml/badge.svg)](https://github.com/phptg/bot-api/actions/workflows/build.yml)
+[![Coverage Status](https://coveralls.io/repos/github/phptg/bot-api/badge.svg)](https://coveralls.io/github/phptg/bot-api)
+[![Mutation score](https://img.shields.io/endpoint?style=flat&url=https%3A%2F%2Fbadge-api.stryker-mutator.io%2Fgithub.com%2Fphptg%2Fbot-api%2Fmaster)](https://dashboard.stryker-mutator.io/reports/github.com/phptg/bot-api/master)
+[![Static analysis](https://github.com/phptg/bot-api/actions/workflows/static.yml/badge.svg?branch=master)](https://github.com/phptg/bot-api/actions/workflows/static.yml?query=branch%3Amaster)
 
 The package provides a simple and convenient way to interact with the Telegram Bot API.
 
@@ -20,7 +20,7 @@ The package provides a simple and convenient way to interact with the Telegram B
 The package can be installed with [Composer](https://getcomposer.org/download/):
 
 ```shell
-composer require vjik/telegram-bot-api
+composer require phptg/bot-api
 ```
 
 ## General usage
@@ -137,7 +137,7 @@ If you have any questions or problems with this package, use [author telegram ch
 
 ## License
 
-The `vjik/telegram-bot-api` is free software. It is released under the terms of the BSD License.
+The `phptg/bot-api` is free software. It is released under the terms of the BSD License.
 Please see [`LICENSE`](./LICENSE.md) for more information.
 
 ## Credits
