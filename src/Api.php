@@ -2,16 +2,16 @@
 
 declare(strict_types=1);
 
-namespace Vjik\TelegramBot\Api;
+namespace Phptg\BotApi;
 
 use JsonException;
 use Psr\Log\LoggerInterface;
 use SensitiveParameter;
-use Vjik\TelegramBot\Api\ParseResult\ResultFactory;
-use Vjik\TelegramBot\Api\ParseResult\TelegramParseResultException;
-use Vjik\TelegramBot\Api\Transport\ApiResponse;
-use Vjik\TelegramBot\Api\Transport\TransportInterface;
-use Vjik\TelegramBot\Api\Type\ResponseParameters;
+use Phptg\BotApi\ParseResult\ResultFactory;
+use Phptg\BotApi\ParseResult\TelegramParseResultException;
+use Phptg\BotApi\Transport\ApiResponse;
+use Phptg\BotApi\Transport\TransportInterface;
+use Phptg\BotApi\Type\ResponseParameters;
 
 use function array_key_exists;
 use function is_array;

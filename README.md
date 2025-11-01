@@ -28,7 +28,7 @@ composer require phptg/bot-api
 To make requests to the Telegram Bot API, you need to create an instance of the `TelegramBotApi` class.
 
 ```php
-use Vjik\TelegramBot\Api\TelegramBotApi;
+use Phptg\BotApi\TelegramBotApi;
 
 // API
 $api = new TelegramBotApi(
@@ -41,7 +41,7 @@ Now you can use the `$api` instance to interact with the Telegram Bot API. Metho
 the [Telegram Bot API documentation](https://core.telegram.org/bots/api). For example:
 
 ```php
-use Vjik\TelegramBot\Api\Type\InputFile
+use Phptg\BotApi\Type\InputFile
 
 // Specify a URL for outgoing webhook
 $api->setWebhook('https://example.com/webhook');
@@ -63,7 +63,7 @@ The result will be either a `FailResult` instance (occurring on an error) or an 
 (occurring on success). For example:
 
 ```php
-// Result is an array of `Vjik\TelegramBot\Api\Update\Update` objects
+// Result is an array of `Phptg\BotApi\Update\Update` objects
 $updates = $api->getUpdates();
 ```
 
@@ -90,8 +90,8 @@ Use `TelegramBotApi::makeFileUrl()` method to make a URL for downloading a file 
 
 ```php
 /**
- * @var \Vjik\TelegramBot\Api\TelegramBotApi $api
- * @var \Vjik\TelegramBot\Api\Type\File $file 
+ * @var \Phptg\BotApi\TelegramBotApi $api
+ * @var \Phptg\BotApi\Type\File $file 
  */
  
 // By `File` instance
@@ -108,8 +108,8 @@ server. For example:
 
 ```php
 /**
- * @var \Vjik\TelegramBot\Api\TelegramBotApi $api
- * @var \Vjik\TelegramBot\Api\Type\File $file
+ * @var \Phptg\BotApi\TelegramBotApi $api
+ * @var \Phptg\BotApi\Type\File $file
  */
  
 // Get file content by `File` instance
