@@ -4,16 +4,15 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Tests\Support;
 
-use Vjik\TelegramBot\Api\Transport\HttpMethod;
 use Vjik\TelegramBot\Api\Transport\TransportInterface;
 use Vjik\TelegramBot\Api\Transport\ApiResponse;
 
 final class TransportMock implements TransportInterface
 {
-    private ?string $urlPath = null;
+    private ?string $url = null;
 
     /**
-     * @var list<list{string, string}>
+     * @psalm-var list<list{string, string}>
      */
     private array $savedFiles = [];
 
@@ -21,12 +20,21 @@ final class TransportMock implements TransportInterface
         private readonly ?ApiResponse $response = null,
     ) {}
 
-    public function send(
-        string $urlPath,
-        array $data = [],
-        HttpMethod $httpMethod = HttpMethod::POST,
-    ): ApiResponse {
-        $this->urlPath = $urlPath;
+    public function get(string $url): ApiResponse
+    {
+        $this->url = $url;
+        return $this->response ?? new ApiResponse(200, '{"ok":true,"result":true}');
+    }
+
+    public function post(string $url, string $body, array $headers): ApiResponse
+    {
+        $this->url = $url;
+        return $this->response ?? new ApiResponse(200, '{"ok":true,"result":true}');
+    }
+
+    public function postWithFiles(string $url, array $data, array $files): ApiResponse
+    {
+        $this->url = $url;
         return $this->response ?? new ApiResponse(200, '{"ok":true,"result":true}');
     }
 
@@ -41,15 +49,15 @@ final class TransportMock implements TransportInterface
     }
 
     /**
-     * @return list<list{string, string}>
+     * @psalm-return list<list{string, string}>
      */
     public function savedFiles(): array
     {
         return $this->savedFiles;
     }
 
-    public function urlPath(): ?string
+    public function url(): ?string
     {
-        return $this->urlPath;
+        return $this->url;
     }
 }

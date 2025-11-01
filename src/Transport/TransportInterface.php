@@ -4,19 +4,25 @@ declare(strict_types=1);
 
 namespace Vjik\TelegramBot\Api\Transport;
 
+use Vjik\TelegramBot\Api\Type\InputFile;
+
 /**
  * @api
  */
 interface TransportInterface
 {
+    public function get(string $url): ApiResponse;
+
     /**
-     * @psalm-param array<string, mixed> $data
+     * @psalm-param array<string, string> $headers
      */
-    public function send(
-        string $urlPath,
-        array $data = [],
-        HttpMethod $httpMethod = HttpMethod::POST,
-    ): ApiResponse;
+    public function post(string $url, string $body, array $headers): ApiResponse;
+
+    /**
+     * @psalm-param array<string, scalar> $data
+     * @psalm-param array<string, InputFile> $files
+     */
+    public function postWithFiles(string $url, array $data, array $files): ApiResponse;
 
     /**
      * Downloads a file by URL.
